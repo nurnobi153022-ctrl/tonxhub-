@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Depot BD</title>
+    <style>
+        /* Basic Reset & Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        h1, h2, h3, h4 {
+            color: #ffffff;
+            margin-bottom: 0.75em;
+        }
+
+        h2.section-title {
+            font-size: 2em;
+            text-align: center;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding-top: 20px;
+        }
+
+        a {
+            color: #FF6600;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            text-align: center;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn-order {
+            background-color: #FF6600;
+            color: white;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn-order:hover {
+            background-color: #e65c00;
+            transform: translateY(-2px);
+        }
+
+        /* Header */
+        header {
+            background-color: #000000;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .logo {
+            font-size: 2em;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff8a00, #e52e71, #4dabf7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+        }
+        
+        .search-bar-container {
+            display: flex;
+            justify-content: center;
+            padding: 0 15px;
+            margin-bottom: 15px;
+        }
+
+        .search-bar-container input[type="search"] {
+            width: 100%;
+            max-width: 500px;
+            padding: 10px 15px;
+            border-radius: 20px;
+            border: 1px solid #333;
+            background-color: #2a2a2a;
+            color: #e0e0e0;
+            font-size: 1em;
+        }
+        .search-bar-container input[type="search"]::placeholder {
+            color: #888;
+        }
+
+        /* Navigation Categories */
+        .main-nav {
+            background-color: #1a1a1a;
+            padding: 10px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .main-nav ul {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .main-nav li {
+            margin: 5px 10px;
+        }
+        .main-nav a.nav-link {
+            padding: 8px 18px;
+            border-radius: 20px;
+            color: #ccc;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .main-nav a.nav-link.active,
+        .main-nav a.nav-link:hover {
+            background-color: #FF6600;
+            color: #ffffff;
+        }
+
+        /* Advertisement Slider Section */
+        .advertisement-slider-section {
+            padding: 20px 0;
+            background-color: #0f0f0f; /* Slightly different dark shade */
+        }
+        .slider-container {
+            position: relative;
+            max-width: 900px; /* Adjust as needed */
+            margin: auto;
+            overflow: hidden; /* Hides slides outside the container */
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .slide {
+            display: none; /* Hidden by default */
+            width: 100%;
+        }
+        .slide.active-slide {
+            display: block; /* Show active slide */
+        }
+        .slide img {
+            width: 100%;
+            height: auto; 
+            max-height: 400px; 
+            object-fit: cover; 
+            display: block;
+            border-radius: 8px;
+        }
+        .slide-caption {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background-color: rgba(0,0,0,0.7);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+        .prev-slide, .next-slide {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            background-color: rgba(0,0,0,0.4);
+        }
+        .next-slide {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+        .prev-slide:hover, .next-slide:hover {
+            background-color: rgba(255,102,0,0.8); 
+        }
+
+
+        /* Page Sections */
+        .page-section {
+            display: none;
+            padding: 20px 0;
+        }
+        .page-section.active {
+            display: block;
+        }
+        #main-content-wrapper.hidden {
+            display: none;
+        }
+
+        /* Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 20px;
+        }
+
+        .product-card {
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-image { 
+            width: 100%;
+            height: 180px; 
+            object-fit: cover; 
+            border-radius: 6px;
+            margin-bottom: 10px;
+            background-color: #2a2a2a; 
+        }
+
+        .product-card h3 {
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            color: #f0f0f0;
+            flex-grow: 1; 
+            min-height: 40px; 
+        }
+
+        .product-card .price {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #FF6600;
+            margin-bottom: 10px;
+        }
+        .product-card .price del {
+            font-size: 0.8em;
+            color: #999;
+            margin-left: 5px;
+        }
+
+
+        /* Styles for Order Page Section */
+        #page-order .container, #page-privacy .container, #page-about .container {
+            max-width: 700px; 
+            margin: 20px auto;
+            background-color: #1e1e1e;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        #page-order h1, #page-privacy h1, #page-about h1 {
+            color: #FF6600;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .product-display {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .order-product-image-container { 
+            display: flex;
+            justify-content: center;
+            gap: 15px; 
+            margin: 10px auto;
+        }
+        .order-product-image-placeholder { 
+            width: 45%; 
+            max-width: 200px; 
+            height: 150px; 
+            background-color: #2a2a2a;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+            font-style: italic;
+            overflow: hidden; 
+        }
+        .order-product-image-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+            border-radius: 6px;
+        }
+        .product-name-order { 
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #FF6600;
+            margin-bottom: 5px;
+            margin-top: 15px;
+        }
+        .product-price-order { 
+            font-size: 1.3em;
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+        .product-price-order del { /* Style for original price in order page */
+            font-size: 0.8em;
+            color: #999;
+            margin-left: 8px;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #ccc;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"],
+        .form-group input[type="number"],
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #333;
+            background-color: #2c2c2c;
+            color: #e0e0e0;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #FF6600;
+            color: white;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .btn-submit:hover {
+            background-color: #e65c00;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #4dabf7;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Styles for Privacy & About Page Sections */
+        #page-privacy .container h2, #page-about .container h2 {
+             color: #ffffff;
+             margin-top: 20px;
+             margin-bottom: 10px;
+        }
+        #page-privacy .container p, #page-about .container p,
+        #page-privacy .container ul, #page-about .container ul {
+             margin-bottom: 15px;
+        }
+         #page-privacy .container ul li, #page-about .container ul li {
+            margin-left: 20px;
+            list-style: disc;
+         }
+
+
+        /* Footer */
+        footer {
+            background-color: #000000;
+            color: #a0a0a0;
+            padding: 40px 0 20px;
+            text-align: center;
+            margin-top: 30px;
+        }
+        .footer-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+            padding: 0 10px;
+        }
+        .footer-column h4 {
+            color: #ffffff;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        .footer-column ul li {
+            margin-bottom: 8px;
+        }
+        .footer-column ul li a {
+            color: #a0a0a0;
+        }
+        .footer-column ul li a:hover {
+            color: #FF6600;
+        }
+        .social-links a {
+            margin-right: 10px;
+            color: #a0a0a0;
+        }
+        .social-links a:hover {
+            color: #FF6600;
+        }
+        .newsletter-form {
+            display: flex;
+            margin-top: 10px;
+        }
+        .newsletter-form input[type="email"] {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #333;
+            background-color: #2c2c2c;
+            color: #e0e0e0;
+            border-radius: 5px 0 0 5px;
+            border-right: none;
+        }
+        .newsletter-form button {
+            padding: 10px 15px;
+            background-color: #FF6600;
+            color: white;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            font-weight: normal;
+        }
+        .newsletter-form button:hover {
+            background-color: #e65c00;
+        }
+        .copyright {
+            border-top: 1px solid #333;
+            padding-top: 20px;
+            font-size: 0.9em;
+        }
+
+        /* Floating WhatsApp Button */
+        .whatsapp-float {
+            position: fixed;
+            padding: 10px 15px;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25D366;
+            color: white;
+            border-radius: 25px;
+            text-align: center;
+            font-size: 0.9em;
+            font-weight: bold;
+            box-shadow: 2px 2px 6px rgba(0,0,0,0.4);
+            z-index: 100;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        .whatsapp-float img {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+        }
+        .whatsapp-float:hover {
+            background-color: #1EBE57;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .logo { font-size: 1.8em; }
+            .main-nav ul {
+                justify-content: flex-start;
+                overflow-x: auto;
+                white-space: nowrap;
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+            .main-nav ul::-webkit-scrollbar { display: none; }
+            .main-nav li { margin: 5px 8px; }
+            .main-nav a.nav-link { font-size: 0.85em; padding: 7px 15px; }
+            h2.section-title { font-size: 1.6em; }
+            .footer-container { flex-direction: column; align-items: center; text-align: center; }
+            .footer-column { text-align: center; margin-bottom: 20px; }
+            .whatsapp-float { font-size: 0.8em; padding: 8px 12px; }
+            .whatsapp-float img { width: 18px; height: 18px; }
+            .slide-caption { font-size: 1em; padding: 8px 12px; bottom: 10px; left: 10px;}
+            .prev-slide, .next-slide { font-size: 16px; padding: 12px; }
+            .product-image { height: 160px; } 
+        }
+
+        @media (max-width: 480px) {
+            .logo { font-size: 1.5em; }
+            .search-bar-container input[type="search"] { font-size: 0.9em; }
+            .product-card h3 { font-size: 0.9em; min-height: 36px; } 
+            .product-card .price { font-size: 1em; }
+            .btn-order { padding: 8px 15px; font-size: 0.9em; }
+            .main-nav a.nav-link { font-size: 0.8em; padding: 6px 12px; }
+            .order-product-image-placeholder { height: 120px; }
+            .slide-caption { font-size: 0.9em; padding: 6px 10px;}
+            .product-image { height: 140px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <h1 class="logo">Digital Depot BD</h1>
+            </div>
+            <div class="search-bar-container">
+                <input type="search" placeholder="পণ্য, ব্র্যান্ড এবং আরও অনেক কিছু খুঁজুন...">
+            </div>
+        </div>
+        <nav class="main-nav">
+            <div class="container">
+                <ul>
+                    <li><a href="#home" class="nav-link active" data-target="main-content-wrapper">Home</a></li>
+                    <li><a href="#latest" class="nav-link" data-target="main-content-wrapper" data-scrolltarget="latest-products-section">Latest Product</a></li>
+                    <li><a href="#shop" class="nav-link" data-target="main-content-wrapper" data-scrolltarget="shop-section">Shop</a></li>
+                    <li><a href="#about" class="nav-link" data-target="page-about">About Us</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Advertisement Slider -->
+    <section class="advertisement-slider-section">
+        <div class="container">
+            <div class="slider-container">
+                <div class="slide active-slide">
+                    <img src="https://i.postimg.cc/nV5xr1rt/IMG-20250529-WA0015.jpg" alt="Advertisement Smart Watch"> 
+                    <div class="slide-caption">স্মার্ট বেরি স্মার্টওয়াচ - এখনই কিনুন!</div>
+                </div>
+                <div class="slide">
+                    <img src="https://i.postimg.cc/65N4VrM2/IMG-20250529-WA0016.jpg" alt="Advertisement Gadget"> 
+                    <div class="slide-caption">অবিশ্বাস্য গ্যাজেট কালেকশন!</div>
+                </div>
+                <div class="slide">
+                    <img src="https://i.postimg.cc/bJTW6HQy/IMG-20250529-WA0011.jpg" alt="Advertisement RC Car"> 
+                    <div class="slide-caption">মিনি আরসি ড্রিফট কার - সেরা বিনোদন!</div>
+                </div>
+                <div class="slide">
+                    <img src="https://i.postimg.cc/MKKskkq6/IMG-20250529-WA0010.jpg" alt="Advertisement Headphones"> 
+                    <div class="slide-caption">লেটেস্ট টেক, সেরা ডিল!</div>
+                </div>
+                <a class="prev-slide">&#10094;</a>
+                <a class="next-slide">&#10095;</a>
+            </div>
+        </div>
+    </section>
+
+
+    <main>
+        <!-- Wrapper for main content (product listings) -->
+        <div id="main-content-wrapper">
+            <section id="latest-products-section">
+                <div class="container">
+                    <h2 class="section-title">নতুন পণ্যসমূহ</h2>
+                    <div class="product-grid">
+                        <div class="product-card">
+                            <img src="https://i.postimg.cc/76m1H6nK/IMG-20250529-WA0002.jpg" alt="ডিজিটাল এলইডি ডিসপ্লে ফ্যান" class="product-image">
+                            <h3>ডিজিটাল এলইডি ডিসপ্লে ফ্যান</h3>
+                            <p class="price">৳৪৯৯ <del>৳৭৯৯</del></p>
+                            <button class="btn btn-order"
+                                    data-product-id="digital-led-fan">Order Now</button>
+                        </div>
+                        <div class="product-card">
+                            <img src="https://i.postimg.cc/j5pfd7JQ/IMG-20250529-WA0005.jpg" alt="সিগনেচার ওয়াচ" class="product-image">
+                            <h3>সিগনেচার ওয়াচ</h3>
+                            <p class="price">৳৪৯৯ <del>৳৭৯৯</del></p>
+                            <button class="btn btn-order"
+                                    data-product-id="signature-watch">Order Now</button>
+                        </div>
+                        <div class="product-card">
+                            <img src="https://i.postimg.cc/DZPh8VSj/IMG-20250529-WA0007.jpg" alt="৩ডি ক্রিস্টাল বল" class="product-image">
+                            <h3>৩ডি ক্রিস্টাল বল</h3>
+                            <p class="price">৳৭৯৯ <del>৳১০০০</del></p>
+                            <button class="btn btn-order"
+                                    data-product-id="3d-crystal-ball">Order Now</button>
+                        </div>
+                        <div class="product-card">
+                            <img src="https://i.postimg.cc/zfnZcmFz/IMG-20250529-WA0011.jpg" alt="মিনি আরসি ড্রিফট কার" class="product-image">
+                            <h3>মিনি আরসি ড্রিফট কার</h3>
+                            <p class="price">৳২৪০০ <del>৳২৯৯৯</del></p>
+                            <button class="btn btn-order"
+                                    data-product-id="mini-rc-drift-car">Order Now</button>
+                        </div>
+                        <div class="product-card">
+                             <img src="https://i.postimg.cc/nV5xr1rt/IMG-20250529-WA0015.jpg" alt="স্মার্ট বেরি স্মার্ট ওয়াচ" class="product-image">
+                            <h3>স্মার্ট বেরি স্মার্ট ওয়াচ</h3>
+                            <p class="price">৳১৯৯৯</p>
+                            <button class="btn btn-order"
+                                    data-product-id="smart-berry-watch">Order Now</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="shop-section">
+                <div class="container">
+                    <h2 class="section-title">জনপ্রিয় পণ্যসমূহ</h2>
+                    <div class="product-grid">
+                         <div class="product-card">
+                            <img src="https://i.postimg.cc/zfnZcmFz/IMG-20250529-WA0011.jpg" alt="মিনি আরসি ড্রিফট কার" class="product-image">
+                            <h3>মিনি আরসি ড্রিফট কার</h3>
+                            <p class="price">৳২৪০০ <del>৳২৯৯৯</del></p>
+                            <button class="btn btn-order"
+                                    data-product-id="mini-rc-drift-car">Order Now</button>
+                        </div>
+                        <div class="product-card">
+                             <img src="https://i.postimg.cc/nV5xr1rt/IMG-20250529-WA0015.jpg" alt="স্মার্ট বেরি স্মার্ট ওয়াচ" class="product-image">
+                            <h3>স্মার্ট বেরি স্মার্ট ওয়াচ</h3>
+                            <p class="price">৳১৯৯৯</p>
+                            <button class="btn btn-order"
+                                    data-product-id="smart-berry-watch">Order Now</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div> <!-- End #main-content-wrapper -->
+
+        <!-- Order Page Section (Hidden by default) -->
+        <section id="page-order" class="page-section">
+            <div class="container">
+                <h1>Confirm Your Order</h1>
+                <div class="product-display">
+                    <div class="order-product-image-container">
+                        <div id="orderProductImage1" class="order-product-image-placeholder">পণ্যের ছবি ১</div>
+                        <div id="orderProductImage2" class="order-product-image-placeholder">পণ্যের ছবি ২</div>
+                    </div>
+                    <h2 id="orderProductName" class="product-name-order">পণ্যের নাম</h2>
+                    <p id="orderProductPrice" class="product-price-order">৳০.০০</p>
+                </div>
+                <!-- Formspree URL updated here -->
+                <form id="orderForm" action="https://formspree.io/f/meogoojk" method="POST">
+                    <input type="hidden" id="formProductName" name="product_ordered" value="">
+                    <input type="hidden" id="formProductPrice" name="product_price" value="">
+                    <div class="form-group">
+                        <label for="name">পুরো নাম:</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">ইমেইল ঠিকানা:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">ফোন নম্বর:</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">শিপিং ঠিকানা:</label>
+                        <textarea id="address" name="address" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="quantity">পরিমাণ:</label>
+                        <input type="number" id="quantity" name="quantity" min="1" value="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="notes">অতিরিক্ত মন্তব্য (ঐচ্ছিক):</label>
+                        <textarea id="notes" name="notes" rows="2"></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">Place Order</button>
+                </form>
+                <a href="#home" class="back-link nav-link" data-target="main-content-wrapper">&laquo; Back to Shop</a>
+            </div>
+        </section>
+
+        <!-- Privacy Policy Page Section (Hidden by default) -->
+        <section id="page-privacy" class="page-section">
+            <div class="container">
+                <h1>গোপনীয়তা নীতি</h1>
+                <p><strong>সর্বশেষ আপডেট: ২৬ অক্টোবর, ২০২৩</strong></p>
+                <p>Digital Depot BD ("আমরা", "আমাদের") এই ওয়েবসাইটটি ("পরিষেবা") পরিচালনা করে। এই পৃষ্ঠাটি আপনাকে আমাদের পরিষেবা ব্যবহার করার সময় ব্যক্তিগত তথ্য সংগ্রহ, ব্যবহার এবং প্রকাশ সংক্রান্ত নীতি এবং সেই ডেটার সাথে আপনার পছন্দগুলি সম্পর্কে অবহিত করে।</p>
+                <h2>তথ্য সংগ্রহ এবং ব্যবহার</h2>
+                <p>আপনাকে আমাদের পরিষেবা সরবরাহ এবং উন্নত করার জন্য আমরা বিভিন্ন উদ্দেশ্যে বিভিন্ন ধরণের তথ্য সংগ্রহ করি।</p>
+                <h3>সংগৃহীত তথ্যের প্রকারভেদ</h3>
+                <h4>ব্যক্তিগত তথ্য</h4>
+                <p>আমাদের পরিষেবা ব্যবহার করার সময়, বিশেষত কোনও অর্ডার দেওয়ার সময়, আমরা আপনাকে কিছু ব্যক্তিগতভাবে শনাক্তযোগ্য তথ্য সরবরাহ করতে বলতে পারি যা আপনার সাথে যোগাযোগ করতে বা সনাক্ত করতে ব্যবহৃত হতে পারে ("ব্যক্তিগত তথ্য"). ব্যক্তিগতভাবে শনাক্তযোগ্য তথ্য অন্তর্ভুক্ত থাকতে পারে, তবে সীমাবদ্ধ নয়:</p>
+                <ul>
+                    <li>ইমেইল ঠিকানা</li>
+                    <li>নাম এবং পদবি</li>
+                    <li>ফোন নম্বর</li>
+                    <li>ঠিকানা, রাজ্য, প্রদেশ, জিপ/পোস্টাল কোড, শহর</li>
+                </ul>
+                <h2> তথ্যের ব্যবহার</h2>
+                <p>Digital Depot BD সংগৃহীত তথ্য বিভিন্ন উদ্দেশ্যে ব্যবহার করে, প্রধানত:</p>
+                <ul>
+                    <li>আপনার অর্ডার প্রক্রিয়া করতে এবং আপনার অ্যাকাউন্ট পরিচালনা করতে।</li>
+                    <li>আমাদের পরিষেবা সরবরাহ এবং বজায় রাখতে</li>
+                    <li>আপনার অর্ডার বা অনুসন্ধান সম্পর্কে আপনার সাথে যোগাযোগ করতে।</li>
+                    <li>আমাদের পরিষেবা উন্নত করতে</li>
+                </ul>
+                <h2>ফর্মস্প্রি (Formspree)</h2>
+                <p>আমরা আমাদের অর্ডার ফর্মের জন্য ফর্মস্প্রি ব্যবহার করি। আপনি যখন কোনও অর্ডার জমা দেন, তখন আপনার দেওয়া তথ্য ফর্মস্প্রির মাধ্যমে আমাদের নির্ধারিত ইমেইল ঠিকানায় পাঠানো হয়। ফর্মস্প্রি তাদের গোপনীয়তা নীতি অনুসারে আপনার আইপি ঠিকানা এবং অন্যান্য তথ্য সংগ্রহ করতে পারে। আমরা আপনাকে ফর্মস্প্রির গোপনীয়তা নীতি পর্যালোচনা করার জন্য উৎসাহিত করি।</p>
+                <h2>এই গোপনীয়তা নীতিতে পরিবর্তন</h2>
+                <p>আমরা সময়ে সময়ে আমাদের গোপনীয়তা নীতি আপডেট করতে পারি। আমরা এই পৃষ্ঠায় নতুন গোপনীয়তা নীতি পোস্ট করে কোনও পরিবর্তন সম্পর্কে আপনাকে অবহিত করব। কোনও পরিবর্তনের জন্য আপনাকে পর্যায়ক্রমে এই গোপনীয়তা নীতি পর্যালোচনা করার পরামর্শ দেওয়া হচ্ছে।</p>
+                <h2>যোগাযোগ করুন</h2>
+                <p>এই গোপনীয়তা নীতি সম্পর্কে আপনার যদি কোনও প্রশ্ন থাকে, দয়া করে আমাদের ওয়েবসাইটে উপলব্ধ পদ্ধতির মাধ্যমে আমাদের সাথে যোগাযোগ করুন।</p>
+                <a href="#home" class="back-link nav-link" data-target="main-content-wrapper">&laquo; Back to Home</a>
+            </div>
+        </section>
+
+        <!-- About Us Page Section (Hidden by default) -->
+        <section id="page-about" class="page-section">
+            <div class="container">
+                <h1>আমাদের সম্পর্কে</h1>
+                <p>ডিজিটাল ডিপো বিডিতে আপনাকে স্বাগতম! আমরা আপনার সর্বশেষ এবং সেরা ডিজিটাল পণ্যগুলির জন্য একটি ওয়ান-স্টপ শপ।</p>
+                <p>আমাদের লক্ষ্য হ'ল প্রতিযোগিতামূলক মূল্যে উচ্চ-মানের গ্যাজেট, ইলেকট্রনিক্স এবং আনুষাঙ্গিক সরবরাহ করা, সাথে দুর্দান্ত গ্রাহক পরিষেবা।</p>
+                <p>আমরা প্রযুক্তি সম্পর্কে উত্সাহী এবং আপনার ডিজিটাল জীবনযাত্রাকে উন্নত করে এমন পণ্যগুলির একটি নির্বাচিত সংগ্রহ আপনার কাছে আনতে সচেষ্ট।</p>
+                <p>ডিজিটাল ডিপো বিডি বেছে নেওয়ার জন্য আপনাকে ধন্যবাদ।</p>
+                <a href="#home" class="back-link nav-link" data-target="main-content-wrapper">&laquo; Back to Home</a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-column">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#about" class="nav-link" data-target="page-about">About Us</a></li>
+                    <li><a href="#faq" class="nav-link" data-target="page-faq">FAQ (Coming Soon)</a></li>
+                    <li><a href="#shipping" class="nav-link" data-target="page-shipping">Shipping Policy (Coming Soon)</a></li>
+                    <li><a href="#terms" class="nav-link" data-target="page-terms">Terms & Conditions (Coming Soon)</a></li>
+                    <li><a href="#privacy" class="nav-link" data-target="page-privacy">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Follow Us</h4>
+                <div class="social-links">
+                    <a href="#" target="_blank">Facebook</a> |
+                    <a href="#" target="_blank">Twitter</a> |
+                    <a href="#" target="_blank">Instagram</a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Newsletter</h4>
+                <!-- Newsletter form also needs a Formspree endpoint if you want to use it -->
+                <form class="newsletter-form" action="YOUR_FORMSPREE_NEWSLETTER_ENDPOINT_HERE" method="POST">
+                    <input type="email" name="email" placeholder="Enter your email" required>
+                    <button type="submit" class="btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="container">
+            <div class="copyright">
+                <p>&copy; 2024 Digital Depot BD. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/YOUR_BANGLADESHI_PHONE_NUMBER_HERE" class="whatsapp-float" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+        <span>WhatsApp Us</span>
+    </a>
+
+    <script>
+        // Product data with identifiers (slugs)
+        const allProducts = {
+            "digital-led-fan": {
+                id: "digital-led-fan",
+                name: "ডিজিটাল এলইডি ডিসপ্লে ফ্যান",
+                price: "৳৪৯৯",
+                originalPrice: "৳৭৯৯",
+                image: "https://i.postimg.cc/76m1H6nK/IMG-20250529-WA0002.jpg",
+                orderImage1: "https://i.postimg.cc/76m1H6nK/IMG-20250529-WA0002.jpg",
+                orderImage2: "https://i.postimg.cc/d1p2kfgC/IMG-20250529-WA0003.jpg"
+            },
+            "signature-watch": {
+                id: "signature-watch",
+                name: "সিগনেচার ওয়াচ",
+                price: "৳৪৯৯",
+                originalPrice: "৳৭৯৯",
+                image: "https://i.postimg.cc/j5pfd7JQ/IMG-20250529-WA0005.jpg",
+                orderImage1: "https://i.postimg.cc/j5pfd7JQ/IMG-20250529-WA0005.jpg",
+                orderImage2: "https://i.postimg.cc/kM6Dx3Tj/IMG-20250529-WA0008.jpg"
+            },
+            "3d-crystal-ball": {
+                id: "3d-crystal-ball",
+                name: "৩ডি ক্রিস্টাল বল",
+                price: "৳৭৯৯",
+                originalPrice: "৳১০০০",
+                image: "https://i.postimg.cc/DZPh8VSj/IMG-20250529-WA0007.jpg",
+                orderImage1: "https://i.postimg.cc/DZPh8VSj/IMG-20250529-WA0007.jpg",
+                orderImage2: "https://i.postimg.cc/DZPh8VSj/IMG-20250529-WA0007.jpg"
+            },
+            "mini-rc-drift-car": {
+                id: "mini-rc-drift-car",
+                name: "মিনি আরসি ড্রিফট কার",
+                price: "৳২৪০০",
+                originalPrice: "৳২৯৯৯",
+                image: "https://i.postimg.cc/zfnZcmFz/IMG-20250529-WA0011.jpg",
+                orderImage1: "https://i.postimg.cc/zfnZcmFz/IMG-20250529-WA0011.jpg",
+                orderImage2: "https://i.postimg.cc/zfnZcmFz/IMG-20250529-WA0011.jpg"
+            },
+            "smart-berry-watch": {
+                id: "smart-berry-watch",
+                name: "স্মার্ট বেরি স্মার্ট ওয়াচ",
+                price: "৳১৯৯৯",
+                originalPrice: "", // কোনো মূল দাম না থাকলে খালি রাখুন
+                image: "https://i.postimg.cc/nV5xr1rt/IMG-20250529-WA0015.jpg",
+                orderImage1: "https://i.postimg.cc/nV5xr1rt/IMG-20250529-WA0015.jpg",
+                orderImage2: "https://i.postimg.cc/nV5xr1rt/IMG-20250529-WA0015.jpg"
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const mainContentWrapper = document.getElementById('main-content-wrapper');
+            const pageSections = document.querySelectorAll('.page-section');
+            const navLinks = document.querySelectorAll('a.nav-link'); 
+            const orderButtons = document.querySelectorAll('.btn-order');
+            const headerHeight = document.querySelector('header').offsetHeight;
+
+            // Slider functionality
+            const slides = document.querySelectorAll('.advertisement-slider-section .slide');
+            const prevButton = document.querySelector('.advertisement-slider-section .prev-slide');
+            const nextButton = document.querySelector('.advertisement-slider-section .next-slide');
+            let currentSlide = 0;
+            let slideInterval;
+
+            function showSlide(index) {
+                slides.forEach((slide, i) => {
+                    slide.classList.remove('active-slide');
+                    if (i === index) {
+                        slide.classList.add('active-slide');
+                    }
+                });
+            }
+
+            function nextSlideFunc() { 
+                currentSlide = (currentSlide + 1) % slides.length;
+                showSlide(currentSlide);
+            }
+
+            function prevSlideFunc() { 
+                currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+                showSlide(currentSlide);
+            }
+            
+            function startSlideShow() {
+                if (slides.length > 1) { 
+                    slideInterval = setInterval(nextSlideFunc, 5000); 
+                }
+            }
+
+            function stopSlideShow() {
+                clearInterval(slideInterval);
+            }
+            
+            if (slides.length > 0) { 
+                showSlide(currentSlide); 
+                if (prevButton && nextButton) {
+                    prevButton.addEventListener('click', () => {
+                        prevSlideFunc();
+                        stopSlideShow(); 
+                        startSlideShow(); 
+                    });
+                    nextButton.addEventListener('click', () => {
+                        nextSlideFunc();
+                        stopSlideShow(); 
+                        startSlideShow(); 
+                    });
+                }
+                startSlideShow(); 
+            }
+
+            // Function to populate order page with product data
+            function populateOrderPage(productData) {
+                if (!productData) return;
+
+                document.getElementById('orderProductName').textContent = productData.name;
+                // Display price with original price if available
+                let priceHTML = productData.price;
+                if (productData.originalPrice && productData.originalPrice !== "") {
+                    priceHTML += ` <del>${productData.originalPrice}</del>`;
+                }
+                document.getElementById('orderProductPrice').innerHTML = priceHTML;
+
+
+                const orderImgContainer1 = document.getElementById('orderProductImage1');
+                const orderImgContainer2 = document.getElementById('orderProductImage2');
+                orderImgContainer1.innerHTML = `<img src="${productData.orderImage1}" alt="${productData.name} - ছবি ১">`;
+                orderImgContainer2.innerHTML = `<img src="${productData.orderImage2}" alt="${productData.name} - ছবি ২">`;
+
+                document.getElementById('formProductName').value = productData.name;
+                document.getElementById('formProductPrice').value = productData.price + (productData.originalPrice ? ` (Original: ${productData.originalPrice})` : '');
+                document.getElementById('quantity').value = 1; 
+                // Reset other form fields if needed
+                const orderForm = document.getElementById('orderForm');
+                if(orderForm) orderForm.reset(); // Reset the form, but hidden fields will be repopulated
+                document.getElementById('formProductName').value = productData.name; // Repopulate after reset
+                document.getElementById('formProductPrice').value = productData.price + (productData.originalPrice ? ` (Original: ${productData.originalPrice})` : ''); // Repopulate after reset
+            }
+
+            // Page navigation functionality
+            function showPage(targetId, scrollTargetId = null) {
+                mainContentWrapper.classList.add('hidden');
+                pageSections.forEach(section => section.classList.remove('active'));
+                
+                document.querySelectorAll('.main-nav a.nav-link, .footer-column a.nav-link, .back-link.nav-link').forEach(link => link.classList.remove('active'));
+
+                let activeNavLinkSelector = '';
+
+                if (targetId === 'main-content-wrapper') {
+                    mainContentWrapper.classList.remove('hidden');
+                    activeNavLinkSelector = '.main-nav a.nav-link[href="#home"]'; 
+                    if (scrollTargetId) {
+                        const elementToScrollTo = document.getElementById(scrollTargetId);
+                        if (elementToScrollTo) {
+                            const offsetTop = elementToScrollTo.getBoundingClientRect().top + window.pageYOffset - headerHeight - 20; 
+                            window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                            activeNavLinkSelector = `.main-nav a.nav-link[data-scrolltarget="${scrollTargetId}"]`;
+                        }
+                    } else {
+                         window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                } else {
+                    const targetPageElement = document.getElementById(targetId);
+                    if (targetPageElement) {
+                        targetPageElement.classList.add('active');
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                        activeNavLinkSelector = `.nav-link[data-target="${targetId}"], .nav-link[href="#${targetId.replace('page-','')}"]`;
+                    } else { 
+                        mainContentWrapper.classList.remove('hidden');
+                        activeNavLinkSelector = '.main-nav a.nav-link[href="#home"]';
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                        console.warn(`Target page "${targetId}" not found. Showing main content.`);
+                    }
+                }
+
+                if (activeNavLinkSelector) {
+                    document.querySelectorAll(activeNavLinkSelector).forEach(link => link.classList.add('active'));
+                }
+            }
+
+
+            orderButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const productId = button.dataset.productId; 
+                    window.location.hash = `#order?product=${productId}`;
+                });
+            });
+            
+            function handleHashChange() {
+                const hash = window.location.hash.substring(1); 
+                let targetPageId = '';
+                let scrollTargetId = null;
+                let productIdFromUrl = null;
+
+                if (hash.startsWith('order?product=')) {
+                    targetPageId = 'page-order';
+                    try {
+                        const paramsString = hash.substring(hash.indexOf('?')); 
+                        const params = new URLSearchParams(paramsString);
+                        productIdFromUrl = params.get('product');
+                    } catch (e) {
+                        console.error("Error parsing product ID from URL:", e);
+                        productIdFromUrl = null;
+                    }
+                } else if (!hash || hash === 'home') {
+                    targetPageId = 'main-content-wrapper';
+                } else if (hash === 'latest') {
+                    targetPageId = 'main-content-wrapper';
+                    scrollTargetId = 'latest-products-section';
+                } else if (hash === 'shop') {
+                    targetPageId = 'main-content-wrapper';
+                    scrollTargetId = 'shop-section';
+                } else if (hash === 'about' || hash === 'privacy') { 
+                    targetPageId = `page-${hash}`;
+                }
+                // Add more conditions for other pages if needed
+
+                if (targetPageId === 'page-order' && productIdFromUrl) {
+                    const productData = allProducts[productIdFromUrl]; 
+                    if (productData) {
+                        populateOrderPage(productData);
+                        showPage('page-order'); 
+                    } else {
+                        console.warn(`Product with ID "${productIdFromUrl}" not found. Redirecting to home.`);
+                        window.location.hash = '#home'; 
+                    }
+                } else if (targetPageId) { 
+                     showPage(targetPageId, scrollTargetId);
+                } else {
+                    showPage('main-content-wrapper');
+                }
+            }
+
+            window.addEventListener('hashchange', handleHashChange);
+            
+            if (window.location.hash) {
+                handleHashChange();
+            } else {
+                showPage('main-content-wrapper'); 
+            }
+
+            const orderForm = document.getElementById('orderForm');
+            if (orderForm) {
+                orderForm.addEventListener('submit', function(e) {
+                    // Formspree handles submission.
+                    // You can add a "Thank you" message logic here if you prevent default submission and use AJAX
+                    // For now, standard Formspree submission will redirect to their "thank you" page or your specified redirect.
+                    // Example: setTimeout(() => { orderForm.reset(); alert("Thank you for your order!"); window.location.hash = "#home"; }, 500);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
