@@ -6,7 +6,7 @@
     <title>TonX Hub - Watch & Earn</title>
     <script src="https://telegram.org/js/telegram-web-app.js?56"></script>
 
-    <!-- REMOVED ALL AD SCRIPTS AS REQUESTED (Adexium, Monetag, Giga, Adextra) -->
+    <!-- REMOVED ALL AD SCRIPTS AS REQUESTED -->
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,22 +14,24 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
-        /* UPDATED THEME: Light Mode & Lighting Blue */
+        /* --- UPDATED THEME: BLACK & RED --- */
         :root {
-            --primary-accent-color: #00eaff; /* Lighting Blue */
-            --primary-accent-hover-color: #00d5ea; 
-            --light-bg: #f4f6f8; /* Light Background */
-            --card-bg: #ffffff; /* White Card */
-            --header-bg: #ffffff; /* White Header */
-            --text-dark: #1a1a1a; /* Dark Text for readability */
-            --text-muted: #6e7c87; /* Muted Grey */
-            --border-color: #e0e0e0; /* Light Border */
-            --success-color: #00c853;
-            --disabled-color: #e0e0e0;
-            --disabled-text-color: #a0a0a0;
-            --input-bg: #f9f9f9;
-            --shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.05); /* Soft Shadow */
-            --shadow-glow: 0 0 15px rgba(0, 234, 255, 0.4); /* Blue Glow */
+            --primary-accent-color: #ff2a2a; /* Neon Red */
+            --primary-accent-hover-color: #d40000; 
+            --light-bg: #050505; /* Deep Black Background */
+            --card-bg: #1a1a1a; /* Dark Grey Card */
+            --header-bg: #121212; /* Dark Header */
+            --text-dark: #ffffff; /* White Text for Dark Mode */
+            --text-muted: #a0a0a0; /* Light Grey Muted */
+            --border-color: #333333; /* Dark Border */
+            --success-color: #00ff62; /* Bright Green for contrast */
+            --disabled-color: #333333;
+            --disabled-text-color: #666666;
+            --input-bg: #222222;
+            --shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.5); 
+            /* RED GLOW SHADOWS */
+            --shadow-glow: 0 0 15px rgba(255, 42, 42, 0.5); 
+            --frame-glow: inset 0 0 20px rgba(255, 42, 42, 0.3), 0 0 10px rgba(255, 42, 42, 0.5);
         }
 
         body {
@@ -38,29 +40,36 @@
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 70px 0 90px;
+            min-height: 100vh;
+            box-sizing: border-box;
+            
+            /* --- RED LIGHTING FRAME EFFECT --- */
+            border: 1px solid var(--primary-accent-color);
+            box-shadow: var(--frame-glow);
         }
+        
         .container { max-width: 1200px; margin: 0 auto; padding: 0 15px; }
 
         /* Header Styles */
         .main-header {
             background-color: var(--header-bg);
             padding: 10px 15px;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--primary-accent-color); /* Red Border line */
             position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
             display: flex; justify-content: space-between; align-items: center;
             height: 50px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 15px rgba(255, 42, 42, 0.2);
         }
         .header-left { display: flex; align-items: center; gap: 10px; }
         .site-branding { display: flex; flex-direction: column; align-items: flex-start; }
-        .site-title { font-size: 1.4em; color: var(--primary-accent-color); font-weight: 800; margin: 0; line-height: 1; text-shadow: 0 0 10px rgba(0, 234, 255, 0.2); }
+        .site-title { font-size: 1.4em; color: var(--primary-accent-color); font-weight: 800; margin: 0; line-height: 1; text-shadow: 0 0 10px rgba(255, 42, 42, 0.4); }
         .user-id-display { font-size: 0.65em; color: var(--text-muted); font-family: 'Roboto Mono', monospace; cursor: pointer; display: flex; align-items: center; gap: 4px; padding: 2px 4px; border-radius: 4px; transition: background-color .2s;}
-        .user-id-display:hover { background-color: rgba(0,0,0,0.05); }
+        .user-id-display:hover { background-color: rgba(255,255,255,0.1); }
         .user-id-display .copy-icon { width: 12px; height: 12px; fill: var(--text-muted); }
 
         .header-right { display: flex; align-items: center; gap: 10px; }
-        .balance-display { background-color: rgba(0, 234, 255, 0.1); color: var(--text-dark); padding: 6px 12px; border-radius: 20px; font-weight: 600; font-size: 0.9em; text-align: right; border: 1px solid rgba(0, 234, 255, 0.3); }
-        .balance-display .ton-label { color: #00b3cc; font-weight: 700; }
+        .balance-display { background-color: rgba(255, 42, 42, 0.1); color: var(--text-dark); padding: 6px 12px; border-radius: 20px; font-weight: 600; font-size: 0.9em; text-align: right; border: 1px solid rgba(255, 42, 42, 0.4); }
+        .balance-display .ton-label { color: #ff6b6b; font-weight: 700; }
         .balance-display .point-balance { font-size: 0.8em; color: var(--text-muted); display: block; }
 
         .header-icon-btn { position: relative; cursor: pointer; background: none; border: none; color: var(--text-dark); padding: 5px; }
@@ -73,12 +82,12 @@
             left: 0;
             background-color: var(--card-bg);
             border-radius: 12px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.15);
+            box-shadow: 0 5px 25px rgba(0,0,0,0.5);
             padding: 15px;
             width: 300px;
             max-width: 90vw;
             z-index: 1001;
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--primary-accent-color);
             display: none;
             flex-direction: column;
             gap: 12px;
@@ -91,18 +100,18 @@
         .profile-popover-item span, .profile-popover-item input { font-family: 'Roboto Mono', monospace; color: var(--text-muted); }
         .popover-ref-link { display: flex; gap: 8px; }
         .popover-ref-link input { flex-grow: 1; border: 1px solid var(--border-color); border-radius: 6px; padding: 6px 8px; font-size: 0.9em; background-color: var(--input-bg); color: var(--text-dark); }
-        .popover-ref-link button { padding: 6px 10px; border: none; border-radius: 6px; background-color: var(--primary-accent-color); color: #000; font-weight: 600; cursor: pointer; font-size: 0.8em; box-shadow: var(--shadow-glow); }
+        .popover-ref-link button { padding: 6px 10px; border: none; border-radius: 6px; background-color: var(--primary-accent-color); color: #fff; font-weight: 600; cursor: pointer; font-size: 0.8em; box-shadow: var(--shadow-glow); }
 
         /* Bottom Nav */
         .bottom-nav {
             position: fixed; bottom: 0; left: 0; right: 0;
             background-color: var(--header-bg);
-            border-top: 1px solid var(--border-color);
+            border-top: 1px solid var(--primary-accent-color);
             display: flex;
             justify-content: space-around;
             padding: 8px 0;
             z-index: 1000;
-            box-shadow: 0 -2px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 -2px 15px rgba(255, 42, 42, 0.15);
         }
         .bottom-nav-item {
             display: flex; flex-direction: column; align-items: center;
@@ -113,16 +122,16 @@
         }
         .bottom-nav-item svg { width: 24px; height: 24px; fill: currentColor; }
         .bottom-nav-item:hover { color: var(--primary-accent-color); }
-        .bottom-nav-item.active { color: var(--primary-accent-color); filter: drop-shadow(0 0 5px rgba(0, 234, 255, 0.4)); }
+        .bottom-nav-item.active { color: var(--primary-accent-color); filter: drop-shadow(0 0 5px rgba(255, 42, 42, 0.6)); }
 
         .content-section { display: none; padding-top: 25px; }
         .content-section.active { display: block; animation: fadeIn 0.3s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .section-title { font-size: 1.6em; margin-bottom: 25px; padding-bottom: 10px; color: var(--text-dark); border-bottom: 2px solid var(--border-color); font-weight: 600; }
+        .section-title { font-size: 1.6em; margin-bottom: 25px; padding-bottom: 10px; color: var(--text-dark); border-bottom: 2px solid var(--primary-accent-color); font-weight: 600; text-shadow: 0 0 10px rgba(255,42,42,0.3); }
         .sub-section-title { font-size: 1.2em; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; margin-top: 40px; margin-bottom: 20px; font-weight: 500; color: var(--text-dark); }
 
-        /* Cards - WHITE BACKGROUND */
+        /* Cards - DARK BACKGROUND */
         .ad-task-card, .task-card, .ad-package-card, .user-ad-item, .withdraw-package-card, .home-referral-card { 
             background-color: var(--card-bg); 
             border-radius: 12px; 
@@ -140,11 +149,11 @@
         .ad-task-card p { margin: 8px 0 15px; color: var(--text-muted); font-weight: bold; }
         .task-reward-points { color: var(--success-color); font-weight: bold; }
         
-        /* Buttons - LIGHTING BLUE */
-        .ad-task-button { width: 100%; padding: 12px; border: none; border-radius: 0 0 10px 10px; font-weight: bold; cursor: pointer; background-color: var(--primary-accent-color); color: #000; transition: background-color .2s; margin-top: auto; font-size: 1em; box-shadow: var(--shadow-glow); }
-        .task-button, .daily-task-button, .form-button { width: auto; flex-shrink: 0; padding: 10px 20px; font-size: 0.9em; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; background-color: var(--primary-accent-color); color: #000; transition: background-color .2s; margin-top: 0; box-shadow: var(--shadow-glow); }
+        /* Buttons - RED THEME */
+        .ad-task-button { width: 100%; padding: 12px; border: none; border-radius: 0 0 10px 10px; font-weight: bold; cursor: pointer; background-color: var(--primary-accent-color); color: #fff; transition: background-color .2s; margin-top: auto; font-size: 1em; box-shadow: var(--shadow-glow); }
+        .task-button, .daily-task-button, .form-button { width: auto; flex-shrink: 0; padding: 10px 20px; font-size: 0.9em; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; background-color: var(--primary-accent-color); color: #fff; transition: background-color .2s; margin-top: 0; box-shadow: var(--shadow-glow); }
         
-        .task-button:hover, .ad-task-button:hover, .daily-task-button:hover, .form-button:hover:not(:disabled) { background-color: var(--primary-accent-hover-color); box-shadow: 0 0 20px rgba(0, 234, 255, 0.6); }
+        .task-button:hover, .ad-task-button:hover, .daily-task-button:hover, .form-button:hover:not(:disabled) { background-color: var(--primary-accent-hover-color); box-shadow: 0 0 20px rgba(255, 42, 42, 0.8); }
         .task-button:disabled, .ad-task-button:disabled, .daily-task-button:disabled, .form-button:disabled { background-color: var(--disabled-color); color: var(--disabled-text-color); cursor: not-allowed; box-shadow: none; }
 
         .card { max-width: 500px; margin: 20px auto; background-color: var(--card-bg); padding: 30px; border-radius: 12px; border: 1px solid var(--border-color); text-align: center; box-shadow: var(--shadow-soft); }
@@ -155,25 +164,25 @@
         .form-group { margin-bottom: 20px; text-align: left; }
         .form-group label { display: block; margin-bottom: 8px; font-weight: 500; color: var(--text-muted); }
         .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px; box-sizing: border-box; border-radius: 8px; border: 1px solid var(--border-color); background-color: var(--input-bg); color: var(--text-dark); font-size: 1em; outline: none; transition: border-color 0.2s;}
-        .form-group input:focus { border-color: var(--primary-accent-color); background-color: #fff; }
+        .form-group input:focus { border-color: var(--primary-accent-color); background-color: #333; box-shadow: 0 0 8px rgba(255, 42, 42, 0.3); }
         .form-button { width: 100%; }
 
-        .loader { border: 4px solid var(--border-color); border-top: 4px solid var(--primary-accent-color); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 50px auto; }
+        .loader { border: 4px solid var(--border-color); border-top: 4px solid var(--primary-accent-color); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 50px auto; box-shadow: 0 0 10px rgba(255, 42, 42, 0.4); }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         /* Modals */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
         .modal-overlay.show { display: flex; }
-        .modal-content { background-color: var(--card-bg); color: var(--text-dark); padding: 30px 40px; border-radius: 15px; text-align: center; transform: scale(0.9); opacity: 0; animation: modal-pop-in 0.3s forwards; max-width: 90%; width: 450px; border: 1px solid var(--border-color); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15); }
+        .modal-content { background-color: var(--card-bg); color: var(--text-dark); padding: 30px 40px; border-radius: 15px; text-align: center; transform: scale(0.9); opacity: 0; animation: modal-pop-in 0.3s forwards; max-width: 90%; width: 450px; border: 1px solid var(--primary-accent-color); box-shadow: 0 0 30px rgba(255, 42, 42, 0.3); }
         @keyframes modal-pop-in { to { transform: scale(1); opacity: 1; } }
-        .success-modal-icon { width: 70px; height: 70px; border-radius: 50%; background-color: var(--success-color); display: flex; justify-content: center; align-items: center; font-size: 40px; font-weight: bold; color: #fff; margin: 0 auto 20px; animation: icon-pop-in 0.5s 0.2s backwards; box-shadow: 0 0 20px rgba(0, 200, 83, 0.4); }
+        .success-modal-icon { width: 70px; height: 70px; border-radius: 50%; background-color: var(--success-color); display: flex; justify-content: center; align-items: center; font-size: 40px; font-weight: bold; color: #000; margin: 0 auto 20px; animation: icon-pop-in 0.5s 0.2s backwards; box-shadow: 0 0 20px rgba(0, 200, 83, 0.4); }
         @keyframes icon-pop-in { 0% { transform: scale(0); } 70% { transform: scale(1.1); } 100% { transform: scale(1); } }
         .modal-content h3 { margin: 0 0 10px; font-size: 1.6em; color: var(--text-dark); }
         .modal-content p { margin: 0; color: var(--text-muted); font-size: 1em; white-space: pre-wrap;}
         
-        .history-modal, .task-modal, .task-confirm-modal, .activation-modal, .convert-modal { background-color: var(--card-bg); color: var(--text-dark); padding: 20px; border-radius: 15px; text-align: left; width: 90%; max-height: 90vh; display: flex; flex-direction: column; border: 1px solid var(--border-color); box-shadow: 0 10px 40px rgba(0,0,0,0.15); }
+        .history-modal, .task-modal, .task-confirm-modal, .activation-modal, .convert-modal { background-color: var(--card-bg); color: var(--text-dark); padding: 20px; border-radius: 15px; text-align: left; width: 90%; max-height: 90vh; display: flex; flex-direction: column; border: 1px solid var(--primary-accent-color); box-shadow: 0 0 30px rgba(255, 42, 42, 0.2); }
         .history-modal, .task-modal, .task-confirm-modal, .activation-modal, .convert-modal { max-width: 500px; }
-        .history-modal h3, .task-modal h3, .task-confirm-modal h3, .activation-modal h3, .convert-modal h3 { text-align: center; margin-top: 0; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; color: var(--primary-accent-color); }
+        .history-modal h3, .task-modal h3, .task-confirm-modal h3, .activation-modal h3, .convert-modal h3 { text-align: center; margin-top: 0; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; color: var(--primary-accent-color); text-shadow: 0 0 5px rgba(255,42,42,0.5);}
         #combined-history-list, .task-modal .modal-body, .task-confirm-modal .modal-body, .activation-modal .modal-body, .convert-modal .modal-body { overflow-y: auto; flex-grow: 1; margin-bottom: 15px; }
         .task-confirm-modal .modal-body, .activation-modal .modal-body, .convert-modal .modal-body { text-align: center; }
         .task-confirm-modal-buttons { display: flex; gap: 10px; margin-top: 20px; }
@@ -183,30 +192,29 @@
 
         /* Task Lists */
         .task-card { background-color: var(--card-bg); border-radius: 8px; display: flex; flex-direction: row; justify-content: space-between; align-items: center; padding: 15px; transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; border: 1px solid var(--border-color); }
-        .task-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-soft); border-color: var(--primary-accent-color); }
+        .task-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-glow); border-color: var(--primary-accent-color); }
         #ad-task-list.item-grid, #task-list.item-grid, #my-ads-list.item-grid, #video-list-container.item-grid { grid-template-columns: 1fr; gap: 15px; display: grid;}
         .task-card-info { padding: 0; flex-grow: 1; text-align: left; }
         .task-card-info h4 { margin: 0 0 5px; font-size: 1em;}
         .task-card-info p { margin: 5px 0 0; font-size: 0.9em; }
 
         .history-list-container { display: flex; flex-direction: column; gap: 0; }
-        .history-date-header { padding: 15px 5px 5px; color: var(--primary-accent-color); font-weight: 600; font-size: 0.9em; }
+        .history-date-header { padding: 15px 5px 5px; color: var(--primary-accent-color); font-weight: 600; font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px; }
         .history-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 5px; border-bottom: 1px solid var(--border-color); }
         .history-list-container .history-item:last-child { border-bottom: none; }
         
-        /* --- UPDATED HISTORY ITEM STYLES FOR LIGHT MODE --- */
-        .history-item-left strong { font-size: 1em; font-weight: 500; /* color controlled by class */ }
+        .history-item-left strong { font-size: 1em; font-weight: 500; }
         .history-item-left small { font-size: 0.85em; color: var(--text-muted); display: block; margin-top: 4px; }
         .history-item-right { text-align: right; }
-        .history-item-right strong { font-size: 1em; font-weight: bold; /* color controlled by class */ }
+        .history-item-right strong { font-size: 1em; font-weight: bold; }
         .history-item-right small { font-size: 0.85em; display: block; margin-top: 4px; text-transform: capitalize; }
         
         .text-red { color: #ff4d4d !important; }
-        .text-green { color: #00c853 !important; }
-        .text-dark-theme { color: #1a1a1a !important; } /* Replaces text-white */
+        .text-green { color: #00ff62 !important; }
+        .text-dark-theme { color: #ffffff !important; } 
 
-        .ad-package-card { padding: 15px; text-align: center; border: 2px solid var(--border-color); transition: all 0.2s ease-in-out; cursor: pointer;}
-        .ad-package-card.selected { border-color: var(--primary-accent-color); background-color: rgba(0, 234, 255, 0.05); }
+        .ad-package-card { padding: 15px; text-align: center; border: 2px solid var(--border-color); transition: all 0.2s ease-in-out; cursor: pointer; background: var(--input-bg); }
+        .ad-package-card.selected { border-color: var(--primary-accent-color); background-color: rgba(255, 42, 42, 0.1); box-shadow: 0 0 15px rgba(255, 42, 42, 0.2); }
         .ad-package-card h4 { font-size: 1.1em; margin-bottom: 5px; }
         .ad-package-card p { margin: 0; font-weight: 600; color: var(--primary-accent-color); }
         
@@ -219,17 +227,17 @@
         @media (max-width: 600px) { #ad-package-grid { grid-template-columns: repeat(2, 1fr); } }
 
         #withdraw-content .card { max-width: 600px; }
-        .withdraw-summary { margin-top: 20px; padding: 15px; background-color: var(--input-bg); border-radius: 8px; text-align: left; font-size: 0.9em; }
+        .withdraw-summary { margin-top: 20px; padding: 15px; background-color: var(--input-bg); border-radius: 8px; text-align: left; font-size: 0.9em; border: 1px solid var(--border-color); }
         .withdraw-summary p { margin: 8px 0; display: flex; justify-content: space-between; }
         .withdraw-summary strong { color: var(--text-dark); }
         .conversion-rate-display { font-size: 0.9em; color: var(--text-muted); text-align: center; margin-bottom: 20px; }
 
-        .home-referral-card { background-color: var(--card-bg); padding: 20px; border-radius: 12px; margin-bottom: 25px; box-shadow: var(--shadow-soft); }
+        .home-referral-card { background-color: var(--card-bg); padding: 20px; border-radius: 12px; margin-bottom: 25px; box-shadow: var(--shadow-soft); border: 1px solid var(--border-color); }
         .home-referral-card h4 { margin-top: 0; margin-bottom: 15px; font-size: 1.2em; text-align: left;}
         .referral-link-wrapper { display: flex; gap: 10px; margin-bottom: 15px; }
         .referral-link-wrapper input { flex-grow: 1; text-align: center; }
         .referral-link-wrapper button { width: auto; flex-shrink: 0; padding: 0 15px; }
-        .stat-item { text-align: left; font-size: 1em; }
+        .stat-item { text-align: left; font-size: 1em; color: var(--text-muted); }
         .stat-item strong { color: var(--primary-accent-color); font-size: 1.2em; }
         
         /* Activation Box */
@@ -239,26 +247,26 @@
         /* BLOCKING OVERLAY FOR ADS */
         .blocking-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255,255,255,0.95); z-index: 3000;
+            background: #000; z-index: 3000;
             display: none; flex-direction: column; justify-content: center; align-items: center;
-            color: #1a1a1a; text-align: center;
+            color: #fff; text-align: center;
         }
-        .blocking-overlay h2 { color: var(--primary-accent-color); margin-bottom: 20px; font-size: 2em; }
-        .blocking-overlay p { font-size: 1.2em; color: #555; }
-        .blocking-overlay .timer-count { font-size: 4em; font-weight: bold; color: var(--success-color); margin: 20px 0; display: block; }
+        .blocking-overlay h2 { color: var(--primary-accent-color); margin-bottom: 20px; font-size: 2em; text-shadow: 0 0 10px var(--primary-accent-color);}
+        .blocking-overlay p { font-size: 1.2em; color: #aaa; }
+        .blocking-overlay .timer-count { font-size: 4em; font-weight: bold; color: var(--primary-accent-color); margin: 20px 0; display: block; text-shadow: 0 0 20px red; }
 
         /* --- VIDEO SECTION STYLES --- */
         .mining-card {
             background-color: var(--card-bg);
             border-radius: 12px;
             padding: 15px;
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--primary-accent-color);
             margin-bottom: 20px;
             box-shadow: var(--shadow-glow);
             text-align: center;
         }
         .loot-box {
-            background-color: rgba(0, 234, 255, 0.05);
+            background-color: rgba(255, 42, 42, 0.05);
             border-radius: 8px;
             padding: 15px;
             margin: 15px 0;
@@ -273,6 +281,7 @@
         .loot-box b {
             color: var(--primary-accent-color);
             font-size: 1.4em;
+            text-shadow: 0 0 5px rgba(255,42,42,0.5);
         }
         
         /* Updated Video Player & List Styles */
@@ -285,7 +294,7 @@
             border-radius: 12px;
             overflow: hidden;
             border: 1px solid var(--primary-accent-color);
-            box-shadow: 0 0 20px rgba(0, 234, 255, 0.2);
+            box-shadow: 0 0 20px rgba(255, 42, 42, 0.4);
             width: 100%;
             padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
             height: 0;
@@ -321,7 +330,7 @@
             transform: translate(-50%, -50%);
             font-size: 30px;
             color: white;
-            text-shadow: 0 0 10px black;
+            text-shadow: 0 0 10px red;
             opacity: 0.9;
         }
         .video-info {
@@ -337,6 +346,7 @@
             cursor: pointer;
             width: 100%;
             box-shadow: var(--shadow-glow);
+            color: #fff;
         }
 
         /* Promo History */
@@ -562,9 +572,9 @@
             <h3>Buy Traffic / Create Task</h3>
             <div class="modal-body">
                 <!-- UPDATED ADMIN CONTACT -->
-                <div style="text-align: center; margin-bottom: 20px; background: rgba(0,234,255,0.05); padding: 10px; border-radius: 8px;">
+                <div style="text-align: center; margin-bottom: 20px; background: rgba(255, 42, 42, 0.05); padding: 10px; border-radius: 8px;">
                      <p style="margin:0 0 5px; font-size:0.85em; color: var(--text-muted);">Need TON Balance? Contact Admin:</p>
-                     <a href="https://t.me/skboss15" target="_blank" class="form-button" style="display: block; text-decoration: none; line-height: 20px; color: #000;">
+                     <a href="https://t.me/skboss15" target="_blank" class="form-button" style="display: block; text-decoration: none; line-height: 20px; color: #fff;">
                         <i class="fab fa-telegram"></i> Deposit TON
                     </a>
                 </div>
@@ -607,7 +617,7 @@
             </div>
             
             <button id="confirmCreateTaskBtn" class="form-button">Confirm Task</button>
-            <button id="closeTaskModalBtn" class="form-button" style="margin-top: 10px; background-color: var(--disabled-color); color: var(--text-muted);">Close</button>
+            <button id="closeTaskModalBtn" class="form-button" style="margin-top: 10px; background-color: var(--disabled-color); color: var(--disabled-text-color);">Close</button>
         </div>
     </div>
 
@@ -640,7 +650,7 @@
                 <p>Have you completed the task correctly? If not, please go back and complete it now.</p>
                 <p class="info-text">Note: Your submission may be reviewed. Failure to complete tasks honestly can result in account suspension.</p>
                 <div class="task-confirm-modal-buttons">
-                    <button id="taskConfirmGoBackBtn" class="form-button" style="background-color: var(--disabled-color);">Go Back to Task</button>
+                    <button id="taskConfirmGoBackBtn" class="form-button" style="background-color: var(--disabled-color); color: #888;">Go Back to Task</button>
                     <button id="taskConfirmSubmitBtn" class="form-button">Yes, I Completed It</button>
                 </div>
             </div>
@@ -654,7 +664,7 @@
                 <p id="withdrawConfirmText">Are you sure you want to withdraw X Points?</p>
                 <p class="info-text">The amount will be sent to the account details you provided. This action cannot be undone.</p>
                 <div class="task-confirm-modal-buttons">
-                    <button id="withdrawConfirmCancelBtn" class="form-button" style="background-color: var(--disabled-color);">Cancel</button>
+                    <button id="withdrawConfirmCancelBtn" class="form-button" style="background-color: var(--disabled-color); color:#888;">Cancel</button>
                     <button id="withdrawConfirmSubmitBtn" class="form-button">Confirm & Withdraw</button>
                 </div>
             </div>
@@ -722,7 +732,7 @@
         const MINING_CLAIM_THRESHOLD = 5;
         const POINTS_PER_SECOND = 1 / 3600; 
 
-        function showBanScreen() { document.body.innerHTML = `<div style="display: flex; justify-content: center; align-items: center; height: 100vh; padding: 20px; text-align: center; background-color: #f4f6f8;"><div class="card"><h3>Account Banned</h3><p style="color: #ff4d4d;">Your account has been banned due to a violation of our terms of service.</p></div></div>`; }
+        function showBanScreen() { document.body.innerHTML = `<div style="display: flex; justify-content: center; align-items: center; height: 100vh; padding: 20px; text-align: center; background-color: #050505; color: #fff;"><div class="card"><h3>Account Banned</h3><p style="color: #ff4d4d;">Your account has been banned due to a violation of our terms of service.</p></div></div>`; }
 
         async function cleanupAndGetUser(userId) {
             const userRef = doc(db, 'users', userId);
@@ -988,7 +998,7 @@
                 });
 
                 if (tasksRendered === 0) {
-                    taskListContainer.innerHTML = '<p style="text-align:center; grid-column: 1 / -1;">No new tasks available for you right now.</p>';
+                    taskListContainer.innerHTML = '<p style="text-align:center; grid-column: 1 / -1; color: #777;">No new tasks available for you right now.</p>';
                 }
 
             } catch (error) {
@@ -1172,7 +1182,7 @@
             try {
                 const q = query(collection(db, 'tasks'), where("creatorId", "==", currentUser.id), orderBy("createdAt", "desc"));
                 const snapshot = await getDocs(q);
-                if (snapshot.empty) { container.innerHTML = '<p style="text-align:center;">You have not created any task advertisements yet.</p>'; return; }
+                if (snapshot.empty) { container.innerHTML = '<p style="text-align:center; color: #777;">You have not created any task advertisements yet.</p>'; return; }
                 container.innerHTML = snapshot.docs.map(docSnap => {
                     const ad = docSnap.data();
                     const isCompleted = (ad.completionCount || 0) >= (ad.limit || 0);
@@ -1721,7 +1731,7 @@
             try {
                 if (!tg.initDataUnsafe?.user) { document.body.innerHTML = `<div class="card"><h3>Error</h3><p>This app can only be launched from Telegram.</p></div>`; return; }
                 tg.ready(); tg.expand();
-                tg.setHeaderColor('#ffffff'); // White Header for light theme
+                tg.setHeaderColor('#121212'); // DARK HEADER FOR BLACK THEME
 
                 const initStatus = await initializeUser(tg.initDataUnsafe.user, tg.initDataUnsafe.start_param);
                 if (!initStatus) return;
