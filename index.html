@@ -514,17 +514,15 @@
     <!-- Youtube API -->
     <script src="https://www.youtube.com/iframe_api"></script>
 
-    <!-- KEEPING YOUR EXISTING JAVASCRIPT LOGIC INTACT BELOW -->
+    <!-- FIREBASE AND APP LOGIC -->
     <script type="module">
-        // Paste the exact same JavaScript content from your previous file here.
-        // The classes and IDs have been preserved in the HTML to ensure JS works correctly.
-        // Just copy everything inside the <script type="module"> tag from the original file.
-        
-        // --- START OF ORIGINAL JS ---
+        // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-analytics.js";
+        // Also importing Firestore because the application logic relies on it
         import { getFirestore, collection, getDocs, query, where, orderBy, limit, addDoc, serverTimestamp, doc, getDoc, setDoc, updateDoc, runTransaction, increment, arrayUnion, Timestamp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
-        
+
+        // Your web app's Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCA3gRGf8TYjoYSWQW9HzrdRzru_1wj1RI",
             authDomain: "tonx-hub.firebaseapp.com",
@@ -535,10 +533,13 @@
             appId: "1:783165728258:web:0eb156c1e74c5c3728291b",
             measurementId: "G-J2X7ZFMEMH"
         };
-        
+
+        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app); 
+        const analytics = getAnalytics(app);
         const db = getFirestore(app);
+
+        // --- APPLICATION LOGIC ---
         const tg = window.Telegram.WebApp;
 
         let currentUser = null;
