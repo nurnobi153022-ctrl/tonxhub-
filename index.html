@@ -20,8 +20,10 @@
     <script type="text/javascript" src="https://cdn.tgads.space/assets/js/adexium-widget.min.js"></script>
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', () => {
-            const adexiumWidget = new AdexiumWidget({wid: '7cd8d14b-4ad0-4b96-934e-9249f301ca8c', adFormat: 'interstitial'});
-            adexiumWidget.autoMode();
+            try {
+                const adexiumWidget = new AdexiumWidget({wid: '7cd8d14b-4ad0-4b96-934e-9249f301ca8c', adFormat: 'interstitial'});
+                adexiumWidget.autoMode();
+            } catch(e) { console.log("Adexium error:", e); }
         });
     </script>
 
