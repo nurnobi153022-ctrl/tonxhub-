@@ -14,6 +14,25 @@
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
+    <!-- --- AD INTEGRATIONS START --- -->
+
+    <!-- 1. Adexium Ads (Head Section) -->
+    <script type="text/javascript" src="https://cdn.tgads.space/assets/js/adexium-widget.min.js"></script>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', () => {
+            const adexiumWidget = new AdexiumWidget({wid: '7cd8d14b-4ad0-4b96-934e-9249f301ca8c', adFormat: 'interstitial'});
+            adexiumWidget.autoMode();
+        });
+    </script>
+
+    <!-- 2. Giga Pub Script -->
+    <script src="https://ad.gigapub.tech/script?id=4942"></script>
+
+    <!-- 3. Monetag Script -->
+    <script src='//libtl.com/sdk.js' data-zone='10353766' data-sdk='show_10353766'></script>
+
+    <!-- --- AD INTEGRATIONS END --- -->
+
     <style>
         /* --- PREMIUM THEME: DEEP BLACK & TON BLUE --- */
         :root {
@@ -243,11 +262,11 @@
 </head>
 <body>
 
-    <!-- BLOCKING OVERLAY FOR ADS -->
+    <!-- BLOCKING OVERLAY FOR ADS (Kept for fallback if needed, but primary logic uses real Ads) -->
     <div id="adBlockingOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#000; z-index:3000; flex-direction:column; justify-content:center; align-items:center; color:#fff;">
         <i class="fas fa-spinner fa-spin" style="font-size: 3rem; color: var(--primary-color); margin-bottom: 20px;"></i>
-        <h2 style="font-weight: 600;">Watching Ad...</h2>
-        <p style="color: var(--text-body);">Please wait <span id="adOverlayTimer" style="color: var(--primary-color); font-weight: bold;">5</span> seconds</p>
+        <h2 style="font-weight: 600;">Loading Ad...</h2>
+        <p style="color: var(--text-body);">Please wait...</p>
     </div>
 
     <!-- HEADER -->
@@ -564,10 +583,11 @@
             { id: 6, tasks: 5000, price: 3.0 }
         ];
 
+        // --- AD CONFIGURATION ---
         const AD_TASKS_CONFIG = {
-            'ad1': { title: 'Watch Ads 1', reward: 2, limit: 5, provider: 'placeholder' }, 
-            'ad2': { title: 'Watch Ads 2', reward: 2, limit: 5, provider: 'placeholder' }, 
-            'ad3': { title: 'Watch Ads 3', reward: 2, limit: 10, provider: 'placeholder' }, 
+            'ad1': { title: 'Watch Ads 1 (Giga)', reward: 2, limit: 5, provider: 'gigapub' }, 
+            'ad2': { title: 'Watch Ads 2 (Monetag)', reward: 2, limit: 5, provider: 'monetag' }, 
+            'ad3': { title: 'Watch Ads 3 (Random)', reward: 2, limit: 10, provider: 'random' }, 
         };
 
         let player;
@@ -734,6 +754,7 @@
             });
         }
 
+        // Dummy helper for fallback - but now we use real ads
         async function showRandomAd() {
             return new Promise(resolve => {
                 setTimeout(() => {
@@ -742,74 +763,110 @@
             });
         }
 
+        // --- MODIFIED AD CLICK LISTENER ---
         document.getElementById('ad-task-list').addEventListener('click', async (e) => {
             const button = e.target.closest('.ad-task-button');
             if (!button || button.disabled) return;
 
             const taskId = button.dataset.taskId;
             const taskConfig = AD_TASKS_CONFIG[taskId];
-            const blockingOverlay = document.getElementById('adBlockingOverlay');
-            const timerDisplay = document.getElementById('adOverlayTimer');
+            
+            // Function to handle reward logic after ad is watched
+            const processAdReward = async () => {
+                button.textContent = 'Claiming...';
+                button.disabled = true;
 
-            blockingOverlay.style.display = 'flex';
-            let countdown = 5;
-            timerDisplay.textContent = countdown;
-
-            await showRandomAd();
-
-            const blockingTimer = setInterval(async () => {
-                countdown--;
-                timerDisplay.textContent = countdown;
-
-                if (countdown <= 0) {
-                    clearInterval(blockingTimer);
-                    blockingOverlay.style.display = 'none'; 
-
-                    button.textContent = 'Claiming...';
-                    button.disabled = true;
-
-                    try {
-                        const updateField = `dailyAdViews_${taskId}`;
-                        await grantReward({ points: taskConfig.reward }, { type: 'Ad Reward', details: `Watched Ad from ${taskConfig.title}`});
-                        
-                        const userRef = doc(db, 'users', currentUser.id);
-                        await updateDoc(userRef, { 
-                            [updateField]: increment(1),
-                            lifetimeAdsWatched: increment(1) 
+                try {
+                    const updateField = `dailyAdViews_${taskId}`;
+                    await grantReward({ points: taskConfig.reward }, { type: 'Ad Reward', details: `Watched Ad from ${taskConfig.title}`});
+                    
+                    const userRef = doc(db, 'users', currentUser.id);
+                    await updateDoc(userRef, { 
+                        [updateField]: increment(1),
+                        lifetimeAdsWatched: increment(1) 
+                    });
+                    
+                    const currentAds = (currentUser.lifetimeAdsWatched || 0) + 1;
+                    if (currentAds === 10 && currentUser.referredBy) {
+                        const referrerRef = doc(db, 'users', currentUser.referredBy);
+                        await runTransaction(db, async (t) => {
+                            const rDoc = await t.get(referrerRef);
+                            if(rDoc.exists()) {
+                                t.update(referrerRef, { 
+                                    pointBalance: increment(REFERRAL_REWARD_POINTS),
+                                    referralCount: increment(1)
+                                });
+                                t.set(doc(collection(db, 'transactions')), {
+                                    userId: currentUser.referredBy,
+                                    type: 'Referral Reward',
+                                    details: `User ${currentUser.id} watched 10 ads`,
+                                    pointAmount: REFERRAL_REWARD_POINTS,
+                                    status: 'Completed',
+                                    createdAt: serverTimestamp()
+                                });
+                            }
                         });
-                        
-                        const currentAds = (currentUser.lifetimeAdsWatched || 0) + 1;
-                        if (currentAds === 10 && currentUser.referredBy) {
-                            const referrerRef = doc(db, 'users', currentUser.referredBy);
-                            await runTransaction(db, async (t) => {
-                                const rDoc = await t.get(referrerRef);
-                                if(rDoc.exists()) {
-                                    t.update(referrerRef, { 
-                                        pointBalance: increment(REFERRAL_REWARD_POINTS),
-                                        referralCount: increment(1)
-                                    });
-                                    t.set(doc(collection(db, 'transactions')), {
-                                        userId: currentUser.referredBy,
-                                        type: 'Referral Reward',
-                                        details: `User ${currentUser.id} watched 10 ads`,
-                                        pointAmount: REFERRAL_REWARD_POINTS,
-                                        status: 'Completed',
-                                        createdAt: serverTimestamp()
-                                    });
-                                }
+                    }
+
+                    await fetchAndUpdateCurrentUser();
+                    showSuccessModal("Reward Earned", "You received points for watching.");
+                    setupAdsToEarn();
+                } catch (error) {
+                    console.error("Error updating ad views:", error);
+                    alert("Failed to update progress.");
+                    setupAdsToEarn();
+                }
+            };
+
+            // Route to correct ad network based on taskId
+            if (taskId === 'ad1') {
+                // Button 1: Giga Pub
+                if (window.showGiga) {
+                    window.showGiga().then(() => {
+                        processAdReward();
+                    }).catch(e => {
+                        console.error(e);
+                        alert("Ad failed to load. Please try again later.");
+                    });
+                } else {
+                    alert("Ad provider not ready.");
+                }
+            } else if (taskId === 'ad2') {
+                // Button 2: Monetag
+                if (typeof show_10353766 === 'function') {
+                    show_10353766().then(() => {
+                        processAdReward();
+                    }).catch(e => {
+                        console.error("Monetag error:", e);
+                    });
+                } else {
+                    alert("Ad provider not ready.");
+                }
+            } else if (taskId === 'ad3') {
+                // Button 3: Random (Giga Pub or Monetag)
+                const useGiga = Math.random() < 0.5;
+                if (useGiga && window.showGiga) {
+                    window.showGiga().then(() => {
+                        processAdReward();
+                    }).catch(() => {
+                        // Fallback to Monetag if Giga fails
+                        if (typeof show_10353766 === 'function') {
+                            show_10353766().then(() => {
+                                processAdReward();
                             });
                         }
-
-                        await fetchAndUpdateCurrentUser();
-                        showSuccessModal("Reward Earned", "You received points for watching.");
-                        setupAdsToEarn();
-                    } catch (error) {
-                        console.error("Error updating ad views:", error);
-                        alert("Failed to update progress.");
-                        setupAdsToEarn();
-                    }
+                    });
+                } else if (typeof show_10353766 === 'function') {
+                     show_10353766().then(() => {
+                        processAdReward();
+                     }).catch(() => {
+                         // Fallback to Giga if Monetag fails
+                         if(window.showGiga) window.showGiga().then(() => processAdReward());
+                     });
+                } else {
+                    alert("Ad providers not ready.");
                 }
-            }, 1000);
+            }
         });
 
         async function fetchAndRenderTasks(containerId, count) {
