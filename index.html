@@ -44,6 +44,7 @@
             
             --primary-color: #0098EA;  /* TON Blue (Action Buttons) */
             --primary-hover: #007acc;
+            --gradient-primary: linear-gradient(135deg, #0098EA 0%, #007acc 100%);
             
             --text-title: #FFFFFF;     /* White for Headings */
             --text-body: #B0B8C1;      /* Muted Blue-Grey for Text */
@@ -122,7 +123,7 @@
         .header-icon-btn i { font-size: 1.1rem; }
 
         /* --- CARDS --- */
-        .ad-task-card, .task-card, .ad-package-card, .user-ad-item, .home-referral-card, .card, .mining-card, .video-list-item { 
+        .ad-task-card, .task-card, .ad-package-card, .user-ad-item, .home-referral-card, .card, .mining-card, .video-list-item, .stat-box, .action-card { 
             background-color: var(--card-bg); 
             border-radius: var(--radius-card); 
             padding: 20px; 
@@ -163,6 +164,71 @@
             cursor: not-allowed; 
         }
 
+        /* --- NEW HOME UI STYLES --- */
+        
+        /* 1. Dashboard Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+        .stat-box {
+            background: var(--input-bg);
+            padding: 15px;
+            margin-bottom: 0;
+            display: flex; flex-direction: column;
+            align-items: flex-start;
+        }
+        .stat-box .label { font-size: 0.75rem; color: var(--text-body); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
+        .stat-box .value { font-size: 1.1rem; font-weight: 700; color: var(--text-title); }
+        .stat-box i { font-size: 1.2rem; margin-bottom: 10px; opacity: 0.8; }
+
+        /* 2. Quick Actions Grid */
+        .quick-actions-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+        .action-card {
+            margin-bottom: 0;
+            padding: 20px 10px;
+            text-align: center;
+            cursor: pointer;
+            border: 1px solid var(--border-subtle);
+            background: linear-gradient(145deg, var(--card-bg), var(--input-bg));
+        }
+        .action-card:hover { transform: translateY(-3px); border-color: var(--primary-color); }
+        .action-card .icon-circle {
+            width: 50px; height: 50px; border-radius: 50%;
+            background: rgba(0, 152, 234, 0.1);
+            color: var(--primary-color);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; margin: 0 auto 12px;
+        }
+        .action-card h4 { margin: 0; font-size: 0.95rem; color: var(--text-title); }
+        
+        /* 3. Premium Referral Card */
+        .referral-highlight-card {
+            background: var(--gradient-primary);
+            color: #fff;
+            text-align: center;
+            padding: 25px 20px;
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+        .referral-highlight-card::before {
+            content: ''; position: absolute; top: -50px; left: -50px; width: 100px; height: 100px;
+            background: rgba(255,255,255,0.1); border-radius: 50%;
+        }
+        .referral-highlight-card h3 { font-size: 1.5rem; margin: 0 0 10px; font-weight: 800; }
+        .referral-benefits { display: flex; justify-content: space-around; margin: 20px 0; text-align: left; }
+        .benefit-item { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 500; }
+        .referral-highlight-card .input-group input { background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.3); color: #fff; }
+        .referral-highlight-card .form-button { background: #fff; color: var(--primary-color); }
+
         /* --- FORMS & INPUTS --- */
         .form-group { margin-bottom: 20px; text-align: left; }
         .form-group label { display: block; margin-bottom: 8px; font-weight: 500; color: var(--text-body); font-size: 0.9rem; }
@@ -181,7 +247,6 @@
         input:read-only { background-color: rgba(255,255,255,0.02); color: var(--text-body); border-color: transparent; }
 
         /* --- REFERRAL & PROMO --- */
-        .home-referral-card h4 { margin: 0 0 12px; font-size: 1.2rem; color: var(--text-title); }
         .referral-copy { font-size: 0.9rem; margin-bottom: 20px; line-height: 1.6; }
         .referral-copy b { color: var(--primary-color); }
 
@@ -314,39 +379,81 @@
     <main class="container">
         <!-- HOME SECTION -->
         <section id="home-content" class="content-section active">
-             <!-- Referral Card -->
-             <div class="home-referral-card">
-                 <div style="text-align: center; margin-bottom: 15px;">
-                     <i class="fas fa-gift" style="font-size: 2.5rem; color: var(--primary-color); margin-bottom: 10px;"></i>
-                     <h4>Invite Friends & Earn</h4>
+             <!-- Update 1: Detailed Dashboard Stats -->
+             <div class="stats-grid">
+                 <div class="stat-box">
+                     <i class="fas fa-wallet" style="color: var(--primary-color);"></i>
+                     <div class="label">Total Balance</div>
+                     <div class="value" id="homeDisplayTon">0.0000 TON</div>
                  </div>
-                 <p class="referral-copy" style="text-align: center; color: var(--text-body);">
-                     Invite your friends to TonX Hub! <br>
-                     Get <b>30 Points</b> instantly + <b>10% Commission</b> from their earnings.
-                 </p>
+                 <div class="stat-box">
+                     <i class="fas fa-star" style="color: #F1C40F;"></i>
+                     <div class="label">Points Balance</div>
+                     <div class="value" id="homeDisplayPoints">0</div>
+                 </div>
+                 <div class="stat-box">
+                     <i class="fas fa-chart-line" style="color: var(--success-color);"></i>
+                     <div class="label">Today Earnings</div>
+                     <div class="value" id="homeDisplayToday">+0</div>
+                 </div>
+                 <div class="stat-box">
+                     <i class="fas fa-trophy" style="color: #9B59B6;"></i>
+                     <div class="label">Lifetime Earned</div>
+                     <div class="value" id="homeDisplayLifetime">0</div>
+                 </div>
+             </div>
+
+             <!-- Update 2: Quick Action Buttons -->
+             <div class="quick-actions-grid">
+                 <div class="action-card" onclick="document.querySelector('[data-tab-target=\'#task-content\']').click()">
+                     <div class="icon-circle"><i class="fas fa-hammer"></i></div>
+                     <h4>Start Earning</h4>
+                 </div>
+                 <div class="action-card" onclick="document.querySelector('[data-tab-target=\'#ads-content\']').click()">
+                     <div class="icon-circle"><i class="fas fa-play"></i></div>
+                     <h4>Watch Ads</h4>
+                 </div>
+                 <div class="action-card" onclick="document.querySelector('[data-tab-target=\'#task-content\']').click()">
+                     <div class="icon-circle"><i class="fas fa-calendar-check"></i></div>
+                     <h4>Daily Tasks</h4>
+                 </div>
+                 <div class="action-card" onclick="document.getElementById('invite-section-scroll').scrollIntoView({behavior: 'smooth'})">
+                     <div class="icon-circle"><i class="fas fa-user-plus"></i></div>
+                     <h4>Invite & Earn</h4>
+                 </div>
+             </div>
+
+             <!-- Update 3: Revamped Referral Card -->
+             <div id="invite-section-scroll" class="referral-highlight-card">
+                 <i class="fas fa-gift" style="font-size: 3rem; margin-bottom: 15px; opacity: 0.9;"></i>
+                 <h3>Invite Friends & Earn</h3>
+                 <p style="margin-bottom: 20px; font-size: 0.95rem; opacity: 0.9;">Build your team and earn passive income forever!</p>
+                 
+                 <div class="referral-benefits">
+                     <div class="benefit-item"><i class="fas fa-check-circle"></i> 30 Pts Instantly</div>
+                     <div class="benefit-item"><i class="fas fa-check-circle"></i> 10% Commission</div>
+                 </div>
+                 <div class="benefit-item" style="justify-content: center; margin-bottom: 20px;"><i class="fas fa-users"></i> Unlimited Referrals</div>
+
                  <div class="input-group">
                     <input type="text" id="homeReferralLinkInput" readonly value="Loading...">
                     <button id="homeCopyReferralLinkBtn" class="form-button">
                         <i class="fas fa-copy"></i> Copy
                     </button>
                  </div>
-                 <div class="stat-row">
-                    <span>Total Referrals</span>
-                    <strong id="homeTotalReferrals">0</strong>
+                 <div style="font-size: 0.85rem; opacity: 0.8; margin-top: 10px;">
+                    Total Referrals: <strong id="homeTotalReferrals">0</strong>
                  </div>
              </div>
 
-             <!-- Promo Code Section -->
-             <div class="card">
+             <!-- Promo Code Section (Secondary) -->
+             <div class="card" style="margin-top: 30px;">
                 <h4 style="margin: 0 0 15px; color: var(--text-title);"><i class="fas fa-ticket-alt" style="color: var(--primary-color);"></i> Promo Code</h4>
                 <div class="form-group" style="margin-bottom: 12px;">
                     <input type="text" id="promoCodeInput" placeholder="Enter Code Here (e.g. WELCOME)">
                 </div>
                 <button id="claimPromoBtn" class="form-button">Claim Reward</button>
-                
-                <div id="promo-history-list" style="margin-top: 20px;">
-                    <!-- Promo history injected here -->
-                </div>
+                <div id="promo-history-list" style="margin-top: 20px;"></div>
              </div>
         </section>
         
@@ -474,7 +581,6 @@
         <div class="task-modal" style="text-align: left;">
             <h3 style="text-align: center; margin-top: 0;">Create Campaign</h3>
             
-            <!-- UPDATE 3: Manual Deposit Alert -->
             <div class="deposit-alert">
                 <p style="margin: 0 0 10px; font-size: 0.9rem; color: var(--text-title); text-align: center;">
                     <b>Need Balance?</b><br>
@@ -611,10 +717,10 @@
         let watchTimeSeconds = 0; 
         const MINING_CLAIM_THRESHOLD = 5;
         
-        // UPDATE 1: 2 Points per Hour
+        // 2 Points per Hour
         const POINTS_PER_HOUR = 2;
         const POINTS_PER_SECOND = POINTS_PER_HOUR / 3600; 
-        // UPDATE 1: Trigger Ad every 2m 3s (123 seconds)
+        // Trigger Ad every 2m 3s (123 seconds)
         const VIDEO_AD_TRIGGER_SECONDS = 123; 
 
         function showBanScreen() { document.body.innerHTML = `<div style="display: flex; justify-content: center; align-items: center; height: 100vh; padding: 20px; text-align: center; background-color: #050505; color: #fff;"><div class="card"><h3>Account Banned</h3><p style="color: #ff4d4d;">Your account has been banned due to a violation of our terms of service.</p></div></div>`; }
@@ -633,6 +739,7 @@
                 if (updatedUser) {
                     currentUser = updatedUser;
                     updateBalanceUI(currentUser.tonBalance, currentUser.pointBalance);
+                    renderHomeUI(); // Refresh home stats
                 }
             } catch (error) { console.error("Error fetching/cleaning current user:", error); }
         }
@@ -650,7 +757,8 @@
                     'claimedDailyRewards': [],
                     'dailyAdViews_ad1': 0,
                     'dailyAdViews_ad2': 0,
-                    'dailyAdViews_ad3': 0
+                    'dailyAdViews_ad3': 0,
+                    'todayPoints': 0 // Reset today's earnings
                 };
                 try {
                     const userRef = doc(db, 'users', currentUser.id);
@@ -670,6 +778,7 @@
                 isNewUser = true;
                 const defaultUserData = {
                     tonBalance: 0, pointBalance: 0, lifetimePointsEarned: 0, referralCount: 0,
+                    todayPoints: 0, // New field for Today Earnings
                     completedTasks: [],
                     lastDailyReset: serverTimestamp(),
                     createdAt: serverTimestamp(), telegramUsername: tgUser.username || 'N/A',
@@ -693,6 +802,7 @@
             if (userData.tonBalance === undefined) updates.tonBalance = 0;
             if (userData.pointBalance === undefined) updates.pointBalance = 0;
             if (userData.isActivated === undefined) updates.isActivated = false;
+            if (userData.todayPoints === undefined) updates.todayPoints = 0; // Ensure field exists
             if (userData.lifetimeAdsWatched === undefined) updates.lifetimeAdsWatched = 0;
             if (userData.dailyAdViews_ad1 === undefined) {
                  updates.dailyAdViews_ad1 = 0;
@@ -733,6 +843,7 @@
              if (rewards.points && rewards.points > 0) {
                  updates.pointBalance = increment(rewards.points);
                  updates.lifetimePointsEarned = increment(rewards.points);
+                 updates.todayPoints = increment(rewards.points); // Update today's earnings
              }
 
              if (Object.keys(updates).length > 0) {
@@ -825,6 +936,7 @@
                             if(rDoc.exists()) {
                                 t.update(referrerRef, { 
                                     pointBalance: increment(REFERRAL_REWARD_POINTS),
+                                    todayPoints: increment(REFERRAL_REWARD_POINTS), // Bonus for referrer
                                     referralCount: increment(1)
                                 });
                                 t.set(doc(collection(db, 'transactions')), {
@@ -863,8 +975,6 @@
             }
         });
 
-        // UPDATE 2: Fix for Admin Tasks not showing
-        // Modified query to just order by date, filtering isApproved in client-side to avoid composite index errors
         async function fetchAndRenderTasks(containerId, count) {
             const taskListContainer = document.getElementById(containerId);
             taskListContainer.innerHTML = '<div class="loader"></div>';
@@ -1004,7 +1114,6 @@
              if(!selectedPackage) { alert("Select a package."); return; }
              if(!title || !url) { alert("Fill all fields."); return; }
              
-             // UPDATE 3: Manual Deposit Check
              if(currentUser.tonBalance < selectedPackage.price) {
                  alert("Insufficient TON. Please deposit manually by contacting Admin @Play35GN.");
                  tg.openTelegramLink("https://t.me/Play35GN");
@@ -1141,7 +1250,10 @@
                     if (promoData.rewardType === 'ton') {
                         t.update(userRef, { tonBalance: increment(promoData.rewardAmount) });
                     } else {
-                        t.update(userRef, { pointBalance: increment(promoData.rewardAmount) });
+                        t.update(userRef, { 
+                            pointBalance: increment(promoData.rewardAmount),
+                            todayPoints: increment(promoData.rewardAmount)
+                        });
                     }
 
                     t.update(promoRef, { 
@@ -1464,7 +1576,7 @@
                 updateMiningUI();
 
                 watchTimeSeconds++;
-                // UPDATE 1: Check if 2min 3sec (123 seconds) passed
+                // Check if 2min 3sec (123 seconds) passed
                 if (watchTimeSeconds > 0 && watchTimeSeconds % VIDEO_AD_TRIGGER_SECONDS === 0) {
                     if(player && player.pauseVideo) player.pauseVideo();
                     showRandomAd().then(() => {
@@ -1533,6 +1645,14 @@
 
         function renderHomeUI() {
             if (!currentUser) return;
+            
+            // Populate New Dashboard Stats
+            document.getElementById('homeDisplayTon').textContent = `${parseFloat(currentUser.tonBalance || 0).toFixed(4)} TON`;
+            document.getElementById('homeDisplayPoints').textContent = Math.floor(currentUser.pointBalance || 0);
+            document.getElementById('homeDisplayToday').textContent = `+${Math.floor(currentUser.todayPoints || 0)}`;
+            document.getElementById('homeDisplayLifetime').textContent = Math.floor(currentUser.lifetimePointsEarned || 0);
+
+            // Populate Referral Count
             document.getElementById('homeTotalReferrals').textContent = currentUser.referralCount || 0;
         }
 
