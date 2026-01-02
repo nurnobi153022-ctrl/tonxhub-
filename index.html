@@ -260,16 +260,17 @@
         .ad-package-card { text-align: center; cursor: pointer; border: 2px solid transparent; background: var(--input-bg); }
         .ad-package-card.selected { border-color: var(--primary-color); background: rgba(0, 152, 234, 0.05); }
 
+        .deposit-alert {
+            background: rgba(46, 204, 113, 0.1);
+            border: 1px solid var(--success-color);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
     </style>
 </head>
 <body>
-
-    <!-- BLOCKING OVERLAY FOR ADS (Kept for fallback if needed, but primary logic uses real Ads) -->
-    <div id="adBlockingOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#000; z-index:3000; flex-direction:column; justify-content:center; align-items:center; color:#fff;">
-        <i class="fas fa-spinner fa-spin" style="font-size: 3rem; color: var(--primary-color); margin-bottom: 20px;"></i>
-        <h2 style="font-weight: 600;">Loading Ad...</h2>
-        <p style="color: var(--text-body);">Please wait...</p>
-    </div>
 
     <!-- HEADER -->
     <header class="main-header">
@@ -357,7 +358,7 @@
                  <div style="margin-bottom: 15px;">
                     <i class="fas fa-hammer" style="font-size: 2rem; color: var(--primary-color); margin-bottom: 10px;"></i>
                     <h2 style="margin: 0; color: var(--text-title);"><span id="minedPointsDisplay">0.0000</span> Pts</h2>
-                    <p style="margin: 5px 0 0; color: var(--text-body); font-size: 0.9rem;">Mining Rate: 1 Point / Hour</p>
+                    <p style="margin: 5px 0 0; color: var(--text-body); font-size: 0.9rem;">Mining Rate: 2 Points / Hour</p>
                  </div>
                  <button id="claimMinedPointsBtn" class="form-button" disabled>Claim (Min 5 Points)</button>
              </div>
@@ -472,7 +473,19 @@
     <div id="createTaskModalOverlay" class="modal-overlay">
         <div class="task-modal" style="text-align: left;">
             <h3 style="text-align: center; margin-top: 0;">Create Campaign</h3>
-            <div style="max-height: 60vh; overflow-y: auto; padding-right: 5px;">
+            
+            <!-- UPDATE 3: Manual Deposit Alert -->
+            <div class="deposit-alert">
+                <p style="margin: 0 0 10px; font-size: 0.9rem; color: var(--text-title); text-align: center;">
+                    <b>Need Balance?</b><br>
+                    To deposit TON for tasks, contact Admin manually.
+                </p>
+                <a href="https://t.me/Play35GN" target="_blank" class="form-button" style="background-color: var(--success-color); text-decoration: none; color: #fff; display: flex; justify-content: center;">
+                    <i class="fab fa-telegram-plane"></i> Deposit @Play35GN
+                </a>
+            </div>
+
+            <div style="max-height: 50vh; overflow-y: auto; padding-right: 5px;">
                 <div class="form-group">
                     <label>Select Package</label>
                     <div id="ad-package-grid" class="item-grid"></div>
@@ -597,7 +610,12 @@
         let minedBalance = parseFloat(localStorage.getItem('minedBalance') || '0');
         let watchTimeSeconds = 0; 
         const MINING_CLAIM_THRESHOLD = 5;
-        const POINTS_PER_SECOND = 1 / 3600; 
+        
+        // UPDATE 1: 2 Points per Hour
+        const POINTS_PER_HOUR = 2;
+        const POINTS_PER_SECOND = POINTS_PER_HOUR / 3600; 
+        // UPDATE 1: Trigger Ad every 2m 3s (123 seconds)
+        const VIDEO_AD_TRIGGER_SECONDS = 123; 
 
         function showBanScreen() { document.body.innerHTML = `<div style="display: flex; justify-content: center; align-items: center; height: 100vh; padding: 20px; text-align: center; background-color: #050505; color: #fff;"><div class="card"><h3>Account Banned</h3><p style="color: #ff4d4d;">Your account has been banned due to a violation of our terms of service.</p></div></div>`; }
 
@@ -756,16 +774,28 @@
             });
         }
 
-        // Dummy helper for fallback - but now we use real ads
+        // Helper to show random ad (Giga or Monetag)
         async function showRandomAd() {
-            return new Promise(resolve => {
-                setTimeout(() => {
-                    resolve(true); 
-                }, 1000); 
+            const useGiga = Math.random() < 0.5;
+            return new Promise((resolve) => {
+                const fallback = () => {
+                     // Try Monetag if Giga fails or wasn't chosen
+                     if (typeof show_10353766 === 'function') {
+                        show_10353766().then(() => resolve(true)).catch(() => resolve(false));
+                     } else {
+                         resolve(false);
+                     }
+                };
+
+                if (useGiga && window.showGiga) {
+                    window.showGiga().then(() => resolve(true)).catch(fallback);
+                } else {
+                    fallback();
+                }
             });
         }
 
-        // --- MODIFIED AD CLICK LISTENER ---
+        // --- AD CLICK LISTENER ---
         document.getElementById('ad-task-list').addEventListener('click', async (e) => {
             const button = e.target.closest('.ad-task-button');
             if (!button || button.disabled) return;
@@ -773,7 +803,6 @@
             const taskId = button.dataset.taskId;
             const taskConfig = AD_TASKS_CONFIG[taskId];
             
-            // Function to handle reward logic after ad is watched
             const processAdReward = async () => {
                 button.textContent = 'Claiming...';
                 button.disabled = true;
@@ -822,68 +851,40 @@
 
             // Route to correct ad network based on taskId
             if (taskId === 'ad1') {
-                // Button 1: Giga Pub
                 if (window.showGiga) {
-                    window.showGiga().then(() => {
-                        processAdReward();
-                    }).catch(e => {
-                        console.error(e);
-                        alert("Ad failed to load. Please try again later.");
-                    });
-                } else {
-                    alert("Ad provider not ready.");
-                }
+                    window.showGiga().then(() => processAdReward()).catch(e => { alert("Ad failed to load."); });
+                } else { alert("Ad provider not ready."); }
             } else if (taskId === 'ad2') {
-                // Button 2: Monetag
                 if (typeof show_10353766 === 'function') {
-                    show_10353766().then(() => {
-                        processAdReward();
-                    }).catch(e => {
-                        console.error("Monetag error:", e);
-                    });
-                } else {
-                    alert("Ad provider not ready.");
-                }
+                    show_10353766().then(() => processAdReward()).catch(e => { console.error("Monetag error:", e); });
+                } else { alert("Ad provider not ready."); }
             } else if (taskId === 'ad3') {
-                // Button 3: Random (Giga Pub or Monetag)
-                const useGiga = Math.random() < 0.5;
-                if (useGiga && window.showGiga) {
-                    window.showGiga().then(() => {
-                        processAdReward();
-                    }).catch(() => {
-                        // Fallback to Monetag if Giga fails
-                        if (typeof show_10353766 === 'function') {
-                            show_10353766().then(() => {
-                                processAdReward();
-                            });
-                        }
-                    });
-                } else if (typeof show_10353766 === 'function') {
-                     show_10353766().then(() => {
-                        processAdReward();
-                     }).catch(() => {
-                         // Fallback to Giga if Monetag fails
-                         if(window.showGiga) window.showGiga().then(() => processAdReward());
-                     });
-                } else {
-                    alert("Ad providers not ready.");
-                }
+                await showRandomAd().then(() => processAdReward());
             }
         });
 
+        // UPDATE 2: Fix for Admin Tasks not showing
+        // Modified query to just order by date, filtering isApproved in client-side to avoid composite index errors
         async function fetchAndRenderTasks(containerId, count) {
             const taskListContainer = document.getElementById(containerId);
             taskListContainer.innerHTML = '<div class="loader"></div>';
             if (!currentUser) return;
             try {
-                const q = query(collection(db, 'tasks'), where("isApproved", "==", true), orderBy("createdAt", "desc"), limit(count));
+                // Simplified query to avoid index issues with 'where' + 'orderBy'
+                const q = query(collection(db, 'tasks'), orderBy("createdAt", "desc"), limit(count));
                 const snapshot = await getDocs(q);
                 taskListContainer.innerHTML = '';
 
                 let tasksRendered = 0;
                 snapshot.forEach(docSnap => {
                     const task = docSnap.data();
+                    
+                    // Client-side filtering for approval to ensure admin tasks appear
+                    if (task.isApproved !== true) return;
+
+                    // Don't show my own tasks, or tasks I've already done
                     if (task.creatorId === currentUser.id || currentUser.completedTasks?.includes(docSnap.id)) return;
+                    
                     const isLimitReached = (task.limit || 0) > 0 && (task.completionCount || 0) >= task.limit;
                     if (isLimitReached) return;
 
@@ -900,7 +901,7 @@
 
             } catch (error) {
                 console.error("Error fetching tasks:", error);
-                taskListContainer.innerHTML = '<p style="color:var(--danger-color); text-align:center; grid-column: 1 / -1;">Error loading tasks.</p>';
+                taskListContainer.innerHTML = '<p style="color:var(--danger-color); text-align:center; grid-column: 1 / -1;">Error loading tasks. Try refreshing.</p>';
             }
         }
 
@@ -1003,8 +1004,10 @@
              if(!selectedPackage) { alert("Select a package."); return; }
              if(!title || !url) { alert("Fill all fields."); return; }
              
+             // UPDATE 3: Manual Deposit Check
              if(currentUser.tonBalance < selectedPackage.price) {
-                 alert("Insufficient TON. Contact admin to deposit.");
+                 alert("Insufficient TON. Please deposit manually by contacting Admin @Play35GN.");
+                 tg.openTelegramLink("https://t.me/Play35GN");
                  return;
              }
              
@@ -1432,6 +1435,7 @@
         }
 
         function loadVideoPlayer(videoId) {
+            watchTimeSeconds = 0; // Reset timer on new video
             if (!player) {
                 player = new YT.Player('yt-player', {
                     height: '100%',
@@ -1460,9 +1464,12 @@
                 updateMiningUI();
 
                 watchTimeSeconds++;
-                if (watchTimeSeconds > 0 && watchTimeSeconds % 600 === 0) {
+                // UPDATE 1: Check if 2min 3sec (123 seconds) passed
+                if (watchTimeSeconds > 0 && watchTimeSeconds % VIDEO_AD_TRIGGER_SECONDS === 0) {
                     if(player && player.pauseVideo) player.pauseVideo();
-                    showRandomAd();
+                    showRandomAd().then(() => {
+                        // Optional: Auto resume or let user resume
+                    });
                 }
             }
         }, 1000);
@@ -1571,12 +1578,10 @@
         async function main() {
             try {
                 if (!tg.initDataUnsafe?.user) { 
-                    // DEBUG MODE FOR BROWSER TESTING (REMOVE IN PRODUCTION)
-                    // console.warn("No TG User found, simulating...");
+                    // DEBUG MODE
                     // await initializeUser({ id: '123456', username: 'test_user' });
                     // setupUserIdDisplay('123456');
                     // renderHomeUI();
-                    
                     document.body.innerHTML = `<div style="padding:20px; color:white; text-align:center;"><h3>Open in Telegram</h3></div>`; 
                     return; 
                 }
