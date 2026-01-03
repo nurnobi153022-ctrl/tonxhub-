@@ -1567,88 +1567,139 @@
             const claimBtn = document.getElementById('claimMinedPointsBtn');
             if (minedBalance >= MINING_CLAIM_THRESHOLD) {
                 claimBtn.disabled = false;
-                claimBtn.textContent = `Open Loot Box (+${minedBalance.toFixed(2)})`;
-                claimBtn.style.opacity = '1';
-                claimBtn.style.background = 'var(--accent-green)';
-                claimBtn.style.color = '#000';
+                claimBtn.textContent = `Claim ${minedBalance.toFixed(2)}`;
             } else {
                 claimBtn.disabled = true;
-                claimBtn.textContent = `Locked (${minedBalance.toFixed(1)}/5.0)`;
-                claimBtn.style.opacity = '0.5';
-                claimBtn.style.background = 'var(--disabled-bg)';
-                claimBtn.style.color = 'var(--disabled-text)';
+                claimBtn.textContent = `Claim (Min ${MINING_CLAIM_THRESHOLD})`;
+            }
+        }
+
+        function extractVideoID(url) {
+            var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+            var match = url.match(regExp);
+            return (match && match[7].length == 11) ? match[7] : false;
+        }
+
+        async function initializeVideoSection() {
+            updateMiningUI();
+            const videoListContainer = document.getElementById('video-list-container');
+            videoListContainer.innerHTML = '<div class="loader"></div>';
+
+            try {
+                const q = query(collection(db, 'watch_videos'), orderBy('createdAt', 'desc'), limit(25));
+                const snap = await getDocs(q);
+
+                videoListContainer.innerHTML = '';
+                if (snap.empty) {
+                    videoListContainer.innerHTML = '<p style="text-align:center; color:var(--text-body); width:100%;">No videos.</p>';
+                    return;
+                }
+
+                snap.forEach(docSnap => {
+                    const vid = docSnap.data();
+                    const videoId = extractVideoID(vid.videoUrl);
+                    if(!videoId) return;
+
+                    const div = document.createElement('div');
+                    // New Premium Card Structure
+                    div.className = 'video-card-modern';
+                    div.innerHTML = `
+                        <div class="video-thumb">
+                            <img src="${vid.thumbnailUrl}" alt="Thumb">
+                            <div class="play-overlay">
+                                <div class="play-icon-circle"><i class="fas fa-play"></i></div>
+                            </div>
+                            <div class="info-badges">
+                                <div class="badge reward"><i class="fas fa-coins"></i> Earn Pts</div>
+                            </div>
+                        </div>
+                        <div class="video-details">
+                            <div class="video-text">
+                                <h4>${vid.title || 'Watch & Earn'}</h4>
+                                <p>Duration: Short</p>
+                            </div>
+                            <button class="btn-watch-sm">Watch Now</button>
+                        </div>
+                    `;
+                    div.addEventListener('click', () => {
+                        loadVideoPlayer(videoId);
+                        document.getElementById('active-video-player-wrapper').style.display = 'block';
+                        document.getElementById('active-video-player-wrapper').scrollIntoView({ behavior: 'smooth' });
+                    });
+                    videoListContainer.appendChild(div);
+                });
+
+            } catch (e) {
+                console.error("Error loading video list:", e);
+                videoListContainer.innerHTML = '<p style="color:var(--danger-color); text-align:center;">Error loading videos.</p>';
             }
         }
 
         function loadVideoPlayer(videoId) {
-            watchTimeSeconds = 0; 
+            watchTimeSeconds = 0; // Reset timer on new video
             if (!player) {
                 player = new YT.Player('yt-player', {
-                    height: '100%', width: '100%', videoId: videoId,
+                    height: '100%',
+                    width: '100%',
+                    videoId: videoId,
                     playerVars: { 'playsinline': 1, 'autoplay': 1 },
                     events: { 'onStateChange': onPlayerStateChange }
                 });
-            } else { player.loadVideoById(videoId); }
+            } else {
+                player.loadVideoById(videoId);
+            }
         }
 
         function onPlayerStateChange(event) {
-            if (event.data == YT.PlayerState.PLAYING) { isVideoPlaying = true; } 
-            else { isVideoPlaying = false; }
+            if (event.data == YT.PlayerState.PLAYING) {
+                isVideoPlaying = true;
+            } else {
+                isVideoPlaying = false;
+            }
         }
 
-        // --- CLIENT-SIDE MINING LOOP (Write Optimization) ---
         setInterval(() => {
             if (isVideoPlaying) {
-                // Update Local Variable
                 minedBalance += POINTS_PER_SECOND;
-                
-                // Persist to Local Storage (No Firebase Write)
-                localStorage.setItem('lootBoxBalance', minedBalance);
-                
+                localStorage.setItem('minedBalance', minedBalance);
                 updateMiningUI();
 
                 watchTimeSeconds++;
+                // Check if 2min 3sec (123 seconds) passed
                 if (watchTimeSeconds > 0 && watchTimeSeconds % VIDEO_AD_TRIGGER_SECONDS === 0) {
                     if(player && player.pauseVideo) player.pauseVideo();
-                    showRandomAd().then(() => { /* Resume logic if needed */ });
+                    showRandomAd().then(() => {
+                        // Optional: Auto resume or let user resume
+                    });
                 }
             }
         }, 1000);
 
-        // --- CLAIM LOOT BOX (The Only Write Operation) ---
         document.getElementById('claimMinedPointsBtn').addEventListener('click', async () => {
             if (minedBalance < MINING_CLAIM_THRESHOLD) return;
-            
             const btn = document.getElementById('claimMinedPointsBtn');
             btn.disabled = true;
-            btn.textContent = "Opening...";
-
             try {
-                // WRITE OPTIMIZATION: Single Write for Claim
                 const pointsToClaim = Math.floor(minedBalance);
                 const remaining = minedBalance - pointsToClaim;
-                
-                await grantReward({ points: pointsToClaim }, { type: 'Loot Box Opened', details: 'Video Mining' });
-                
-                // Reset Local State
+                await grantReward({ points: pointsToClaim }, { type: 'Video Mining', details: 'Loot Box' });
                 minedBalance = remaining;
-                localStorage.setItem('lootBoxBalance', minedBalance);
-                
+                localStorage.setItem('minedBalance', minedBalance);
                 updateMiningUI();
-                showSuccessModal("Loot Box Opened!", `You claimed <b>${pointsToClaim} Points</b>!`);
-            } catch (e) { 
-                console.error(e);
-                alert("Claim failed. Try again.");
-            }
+                showSuccessModal("Claimed!", `+${pointsToClaim} Points.`);
+            } catch (e) { console.error(e); }
             btn.disabled = false;
         });
 
-        // --- GENERAL UI LOGIC ---
+        // --- INIT ---
+
         function setupUserIdDisplay(userId) {
             const userIdContainer = document.getElementById('header-user-id');
             userIdContainer.querySelector('span').textContent = `ID: ${userId}`;
             userIdContainer.addEventListener('click', () => {
-                navigator.clipboard.writeText(userId).then(() => { if (tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success'); });
+                navigator.clipboard.writeText(userId).then(() => {
+                    if (tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+                });
             });
         }
 
@@ -1661,18 +1712,36 @@
 
         const profileBtn = document.getElementById('profile-info-btn');
         const popover = document.getElementById('profile-popover');
-        profileBtn.addEventListener('click', (e) => { e.stopPropagation(); updateProfilePopover(); popover.classList.toggle('show'); });
-        document.addEventListener('click', (e) => { if (!popover.contains(e.target) && !profileBtn.contains(e.target)) { popover.classList.remove('show'); } });
+        profileBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            updateProfilePopover();
+            popover.classList.toggle('show');
+        });
+        document.addEventListener('click', (e) => {
+            if (!popover.contains(e.target) && !profileBtn.contains(e.target)) {
+                popover.classList.remove('show');
+            }
+        });
         document.getElementById('popoverCopyRefLinkBtn').addEventListener('click', (e) => {
-            e.stopPropagation(); navigator.clipboard.writeText(e.target.previousElementSibling.value);
+            e.stopPropagation();
+            const copyButton = e.target;
+            navigator.clipboard.writeText(copyButton.previousElementSibling.value).then(() => {
+                const icon = copyButton.querySelector('i');
+                icon.className = 'fas fa-check';
+                setTimeout(() => { icon.className = 'fas fa-copy'; }, 2000);
+            });
         });
 
         function renderHomeUI() {
             if (!currentUser) return;
+            
+            // Populate New Dashboard Stats
             document.getElementById('homeDisplayTon').textContent = `${parseFloat(currentUser.tonBalance || 0).toFixed(4)} TON`;
             document.getElementById('homeDisplayPoints').textContent = Math.floor(currentUser.pointBalance || 0);
             document.getElementById('homeDisplayToday').textContent = `+${Math.floor(currentUser.todayPoints || 0)}`;
             document.getElementById('homeDisplayLifetime').textContent = Math.floor(currentUser.lifetimePointsEarned || 0);
+
+            // Populate Referral Count
             document.getElementById('homeTotalReferrals').textContent = currentUser.referralCount || 0;
         }
 
@@ -1681,6 +1750,7 @@
             navigator.clipboard.writeText(copyButton.previousElementSibling.value).then(() => {
                 const originalHtml = copyButton.innerHTML;
                 copyButton.innerHTML = '<i class="fas fa-check"></i> Copied';
+                if (tg && tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
                 setTimeout(() => { copyButton.innerHTML = originalHtml; }, 2000);
             });
         });
@@ -1693,7 +1763,9 @@
 
         async function handleUserActivation() {
             const activateBtn = document.getElementById('activateAccountBtn');
-            activateBtn.disabled = true; activateBtn.textContent = 'Checking...';
+            activateBtn.disabled = true;
+            activateBtn.textContent = 'Checking...';
+
             try {
                 const userRef = doc(db, 'users', currentUser.id);
                 await updateDoc(userRef, { isActivated: true });
@@ -1704,43 +1776,43 @@
                 showSuccessModal("Verified", "Account active.");
                 await checkAndResetDailies();
                 renderHomeUI();
-            } catch (error) { activateBtn.disabled = false; activateBtn.textContent = 'Verify & Enter'; }
+            } catch (error) {
+                console.error("Activation failed:", error);
+                activateBtn.disabled = false;
+                activateBtn.textContent = 'Verify & Enter';
+            }
         }
         document.getElementById('activateAccountBtn').addEventListener('click', handleUserActivation);
-
-        // --- TABS & NAVIGATION ---
-        document.querySelectorAll('.bottom-nav-item').forEach(link => {
-            link.addEventListener('click', async (e) => {
-                e.preventDefault();
-                const targetId = link.dataset.tabTarget;
-                if (!currentUser || document.querySelector(targetId)?.classList.contains('active')) return;
-
-                document.querySelectorAll('.bottom-nav-item.active, .content-section.active').forEach(el => el.classList.remove('active'));
-                link.classList.add('active');
-                document.querySelector(targetId).classList.add('active');
-
-                switch(targetId) {
-                    case '#home-content': renderHomeUI(); fetchPromoHistory(); break;
-                    case '#video-content': initializeVideoSection(); break;
-                    case '#ads-content': setupAdsToEarn(); break;
-                    case '#task-content': renderTaskPackages(); await renderMyAds(); await fetchAndRenderTasks('task-list', 50); break;
-                    case '#withdraw-content': setupWithdrawalUI(); break;
-                }
-            });
-        });
 
         async function main() {
             try {
                 if (!tg.initDataUnsafe?.user) { 
+                    // DEBUG MODE
+                    // await initializeUser({ id: '123456', username: 'test_user' });
+                    // setupUserIdDisplay('123456');
+                    // renderHomeUI();
                     document.body.innerHTML = `<div style="padding:20px; color:white; text-align:center;"><h3>Open in Telegram</h3></div>`; 
                     return; 
                 }
-                tg.ready(); tg.expand(); tg.setHeaderColor('#151A23'); 
+                
+                tg.ready(); tg.expand();
+                tg.setHeaderColor('#151A23'); 
+
                 const initStatus = await initializeUser(tg.initDataUnsafe.user, tg.initDataUnsafe.start_param);
                 if (!initStatus) return;
+
                 setupUserIdDisplay(currentUser.id);
-                if (!initStatus.isActivated) { showActivationModal(); } else { renderHomeUI(); fetchPromoHistory(); }
-            } catch (error) { console.error("Init failed:", error); }
+
+                if (!initStatus.isActivated) {
+                    showActivationModal();
+                } else {
+                    renderHomeUI();
+                    fetchPromoHistory();
+                }
+
+            } catch (error) {
+                console.error("Init failed:", error);
+            }
         }
         main();
     </script>
