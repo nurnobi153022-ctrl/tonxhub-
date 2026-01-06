@@ -32,36 +32,24 @@
     <style>
         /* --- THEME: X-MARKET CRYPTO STYLE --- */
         :root {
-            /* Layers */
-            --bg-color: #090A0C;        /* Deepest Black */
-            --card-bg: #13161B;         /* Floating Surface */
-            --input-bg: #0F1115;        /* Inset Background */
-            
-            /* Accents */
-            --accent-green: #00E396;    /* ACTION & SUCCESS */
+            --bg-color: #090A0C;
+            --card-bg: #13161B;
+            --input-bg: #0F1115;
+            --accent-green: #00E396;
             --accent-green-dim: rgba(0, 227, 150, 0.15);
-            
-            --accent-blue: #2E93fA;     /* INFO & INFO */
+            --accent-blue: #2E93fA;
             --accent-blue-dim: rgba(46, 147, 250, 0.15);
-            
-            /* Text */
             --text-title: #FFFFFF;
-            --text-body: #A0AABF;       /* Cool Grey */
+            --text-body: #A0AABF;
             --text-muted: #656E85;
-            
-            /* Gradients */
             --grad-action: linear-gradient(135deg, #00E396 0%, #00B377 100%);
             --grad-info: linear-gradient(135deg, #2E93fA 0%, #2072C4 100%);
             --grad-banner: linear-gradient(135deg, #13161B 0%, #0f241d 100%); 
             --grad-gold: linear-gradient(135deg, #F39C12 0%, #D35400 100%);
-            
-            /* UI Elements */
             --border-subtle: rgba(255, 255, 255, 0.06);
             --border-glow: rgba(0, 227, 150, 0.3);
-            
             --shadow-soft: 0 8px 24px -6px rgba(0, 0, 0, 0.6);
             --shadow-glow: 0 4px 20px rgba(0, 227, 150, 0.15);
-            
             --radius-card: 20px;
             --radius-btn: 14px;
         }
@@ -86,7 +74,6 @@
         .main-header {
             background: rgba(19, 22, 27, 0.9);
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
             padding: 0 16px;
             border-bottom: 1px solid var(--border-subtle);
             position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
@@ -781,11 +768,13 @@
         const REFERRAL_REWARD_POINTS = 30; 
         const USER_CREATED_TASK_REWARD_POINTS = 3; 
         const POINTS_TO_TON_RATE = 0.0001; 
-
+        
+        // NEW WITHDRAWAL CONFIGURATION
         const WITHDRAWAL_CONFIG = {
-            'Tonkeeper': { min: 200 },
-            'Bkash': { min: 1000 },
+            'Tonkeeper': { min: 200, label: 'Wallet Address', placeholder: 'UQ...', rateDisplay: 'TON' },
+            'Bkash': { min: 1000, label: 'Bkash Number', placeholder: '017xxxxxxxx', rateDisplay: 'BDT' },
         };
+        const BDT_RATE = 0.15; // Example Rate: 1 Point = 0.15 BDT (Adjust as needed)
 
         const adPackages = [
             { id: 1, tasks: 150, price: 0.1 }, 
@@ -1486,33 +1475,73 @@
             }
         });
         
+        // --- NEW WITHDRAWAL LOGIC (REDESIGNED) ---
         function setupWithdrawalUI() {
             if (!currentUser) return;
             const balance = currentUser.pointBalance || 0;
-            document.getElementById('withdrawPointBalance').textContent = `${Math.floor(balance)} Points`;
-            const methodSelect = document.getElementById('withdrawalMethod');
+            document.getElementById('withdrawPointBalance').textContent = `${Math.floor(balance)} Pts`;
+            
+            const methodCards = document.querySelectorAll('.method-card');
+            const accountInput = document.getElementById('accountDetails');
+            const accountLabel = document.getElementById('accountLabel');
             const amountInput = document.getElementById('withdrawalAmount');
+            const summaryBox = document.getElementById('withdraw-summary');
+            const summaryText = document.getElementById('summary-receive');
+            const minWithdrawDisplay = document.getElementById('minWithdrawDisplay');
+
+            // Handle Method Selection
+            methodCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    methodCards.forEach(c => c.classList.remove('selected'));
+                    card.classList.add('selected');
+                    
+                    const method = card.dataset.method;
+                    const config = WITHDRAWAL_CONFIG[method];
+                    
+                    document.getElementById('withdrawalMethod').value = method;
+                    accountLabel.textContent = config.label;
+                    accountInput.placeholder = config.placeholder;
+                    minWithdrawDisplay.textContent = `${config.min} Pts`;
+                    
+                    updateSummary(); // Recalculate
+                });
+            });
 
             const updateSummary = () => {
-                const method = methodSelect.value;
+                const method = document.getElementById('withdrawalMethod').value;
                 const amount = parseFloat(amountInput.value);
                 const config = WITHDRAWAL_CONFIG[method];
-                const summaryBox = document.getElementById('withdraw-summary');
-
-                if (!config) { summaryBox.style.display = 'none'; return; }
 
                 if (!isNaN(amount) && amount > 0) {
-                    const receiveAmount = amount * POINTS_TO_TON_RATE;
-                    document.getElementById('summary-receive').textContent = `${receiveAmount.toFixed(4)} TON`;
                     summaryBox.style.display = 'block';
+                    let receiveAmount = 0;
+                    let currency = '';
+
+                    if(method === 'Bkash') {
+                        // Example: 1 Point = 0.15 BDT (Defined in config const)
+                        receiveAmount = (amount * BDT_RATE).toFixed(2);
+                        currency = 'BDT';
+                    } else {
+                        // 10000 Pts = 1 TON
+                        receiveAmount = (amount * POINTS_TO_TON_RATE).toFixed(4);
+                        currency = 'TON';
+                    }
+                    
+                    summaryText.textContent = `${receiveAmount} ${currency}`;
+                    
+                    if(amount < config.min) {
+                         summaryText.textContent = `Min: ${config.min} Pts`;
+                         summaryText.style.color = 'var(--danger-color)';
+                    } else {
+                         summaryText.style.color = 'var(--accent-green)';
+                    }
+
                 } else {
                     summaryBox.style.display = 'none';
                 }
             };
 
-            methodSelect.addEventListener('change', updateSummary);
             amountInput.addEventListener('input', updateSummary);
-            updateSummary();
         }
 
         document.getElementById('submitWithdrawalBtn').addEventListener('click', (e) => {
@@ -1548,29 +1577,53 @@
 
         async function processWithdrawal(amount, method, details) {
             isSubmittingWithdrawal = true;
+            const btn = document.getElementById('submitWithdrawalBtn');
+            btn.disabled = true;
+            btn.textContent = "Processing...";
+
             try {
-                const tonAmount = amount * POINTS_TO_TON_RATE;
+                // Calculate amount based on method
+                let finalAmount = 0;
+                let currency = '';
+                
+                if(method === 'Bkash') {
+                    finalAmount = amount * BDT_RATE;
+                    currency = 'BDT';
+                } else {
+                    finalAmount = amount * POINTS_TO_TON_RATE;
+                    currency = 'TON';
+                }
+
                 await runTransaction(db, async (t) => {
                     const userRef = doc(db, 'users', currentUser.id);
                     const userDoc = await t.get(userRef);
                     if ((userDoc.data().pointBalance || 0) < amount) throw new Error(`Insufficient balance.`);
 
                     const requestData = {
-                        userId: currentUser.id, telegramUsername: currentUser.telegramUsername,
-                        method, details, status: 'pending', createdAt: serverTimestamp(),
-                        pointAmount: amount, tonAmount: tonAmount
+                        userId: currentUser.id, 
+                        telegramUsername: currentUser.telegramUsername,
+                        method, 
+                        details, 
+                        status: 'pending', 
+                        createdAt: serverTimestamp(),
+                        pointAmount: amount, 
+                        receiveAmount: finalAmount,
+                        currency: currency
                     };
                     t.set(doc(collection(db, 'withdrawals')), requestData);
                     t.update(userRef, { pointBalance: increment(-amount) });
                 });
+                
                 await fetchAndUpdateCurrentUser();
                 document.getElementById('withdrawalForm').reset();
-                showSuccessModal("Sent!", `Withdrawal request pending.`);
+                showSuccessModal("Request Sent!", `Your withdrawal of ${amount} Points is pending approval.`);
             } catch (error) {
                 alert(`Error: ${error.message}`);
             } finally {
                 isSubmittingWithdrawal = false;
-                setupWithdrawalUI();
+                btn.disabled = false;
+                btn.textContent = "Request Withdraw";
+                setupWithdrawalUI(); // Reset UI state
             }
         }
 
@@ -1615,15 +1668,17 @@
                     if (data.isWithdrawalDoc || data.type === 'Withdrawal') {
                         const status = (data.status || '').toLowerCase();
                         if (status === 'pending') {
-                            leftTitle = "Withdraw Pending";
-                            rightStyleClass = "text-red";
-                        } else if (status === 'completed' || status === 'paid') {
-                            leftTitle = "Withdraw Sent";
+                            leftTitle = `Withdraw (${data.method})`;
+                            rightStyleClass = "text-red"; // Or Yellow for pending
+                            rightAmount = "Pending";
+                        } else if (status === 'completed' || status === 'paid' || status === 'approved') {
+                            leftTitle = `Withdraw Sent (${data.method})`;
                             rightStyleClass = "text-green";
+                            rightAmount = `-${data.pointAmount}`;
                         } else {
                             leftTitle = "Withdraw Failed";
+                            rightAmount = "Failed";
                         }
-                        rightAmount = `${data.pointAmount} Pts`;
                     } else {
                         leftTitle = data.type || "Earned";
                         rightAmount = `+ ${data.pointAmount}`;
@@ -1669,11 +1724,7 @@
                         break;
                     case '#video-content': initializeVideoSection(); break;
                     case '#ads-content': setupAdsToEarn(); break;
-                    case '#task-content':
-                        renderTaskPackages();
-                        await renderMyAds();
-                        await fetchAndRenderTasks('task-list', 50);
-                        break;
+                    case '#task-content': renderTaskPackages(); await renderMyAds(); await fetchAndRenderTasks('task-list', 50); break;
                     case '#withdraw-content': setupWithdrawalUI(); break;
                 }
             });
@@ -1681,14 +1732,28 @@
 
         // --- VIDEO SECTION LOGIC ---
         function updateMiningUI() {
-            document.getElementById('minedPointsDisplay').textContent = minedBalance.toFixed(4);
+            document.getElementById('minedPointsDisplay').textContent = minedBalanceLocal.toFixed(4);
+            
+            // Update Progress Bar
+            const progressBar = document.getElementById('miningProgressBar');
+            if (progressBar) {
+                const percentage = Math.min((minedBalanceLocal / MINING_CLAIM_THRESHOLD) * 100, 100);
+                progressBar.style.width = `${percentage}%`;
+            }
+
             const claimBtn = document.getElementById('claimMinedPointsBtn');
-            if (minedBalance >= MINING_CLAIM_THRESHOLD) {
+            if (minedBalanceLocal >= MINING_CLAIM_THRESHOLD) {
                 claimBtn.disabled = false;
-                claimBtn.textContent = `Claim ${minedBalance.toFixed(2)}`;
+                claimBtn.textContent = `Open Loot Box (+${minedBalanceLocal.toFixed(2)})`;
+                claimBtn.style.opacity = '1';
+                claimBtn.style.background = 'var(--accent-green)';
+                claimBtn.style.color = '#000';
             } else {
                 claimBtn.disabled = true;
-                claimBtn.textContent = `Claim (Min ${MINING_CLAIM_THRESHOLD})`;
+                claimBtn.textContent = `Locked (${minedBalanceLocal.toFixed(1)}/5.0)`;
+                claimBtn.style.opacity = '0.5';
+                claimBtn.style.background = 'var(--disabled-bg)';
+                claimBtn.style.color = 'var(--disabled-text)';
             }
         }
 
@@ -1703,39 +1768,22 @@
             const videoListContainer = document.getElementById('video-list-container');
             videoListContainer.innerHTML = '<div class="loader"></div>';
 
+            // READ OPTIMIZATION: Use Cache if available and recent
+            if (videoCache && (Date.now() - lastVideoCacheTime < VIDEO_CACHE_DURATION)) {
+                renderVideoList(videoCache);
+                return;
+            }
+
             try {
                 const q = query(collection(db, 'watch_videos'), orderBy('createdAt', 'desc'), limit(25));
                 const snap = await getDocs(q);
+                
+                // Update Cache
+                videoCache = [];
+                snap.forEach(doc => videoCache.push(doc.data()));
+                lastVideoCacheTime = Date.now();
 
-                videoListContainer.innerHTML = '';
-                if (snap.empty) {
-                    videoListContainer.innerHTML = '<p style="text-align:center; color:var(--text-body); width:100%;">No videos.</p>';
-                    return;
-                }
-
-                snap.forEach(docSnap => {
-                    const vid = docSnap.data();
-                    const videoId = extractVideoID(vid.videoUrl);
-                    if(!videoId) return;
-
-                    const div = document.createElement('div');
-                    div.className = 'video-list-item';
-                    div.innerHTML = `
-                        <div class="video-thumb">
-                            <img src="${vid.thumbnailUrl}" alt="Thumb" style="width:100%; height:100%; object-fit:cover;">
-                            <i class="fas fa-play video-play-icon"></i>
-                        </div>
-                        <div class="video-info">
-                            <button class="form-button" style="padding:10px;">Watch Now</button>
-                        </div>
-                    `;
-                    div.addEventListener('click', () => {
-                        loadVideoPlayer(videoId);
-                        document.getElementById('active-video-player-wrapper').style.display = 'block';
-                        document.getElementById('active-video-player-wrapper').scrollIntoView({ behavior: 'smooth' });
-                    });
-                    videoListContainer.appendChild(div);
-                });
+                renderVideoList(videoCache);
 
             } catch (e) {
                 console.error("Error loading video list:", e);
@@ -1743,71 +1791,117 @@
             }
         }
 
+        function renderVideoList(videos) {
+            const videoListContainer = document.getElementById('video-list-container');
+            videoListContainer.innerHTML = '';
+            
+            if (!videos || videos.length === 0) {
+                videoListContainer.innerHTML = '<p style="text-align:center; color:var(--text-body); width:100%;">No videos.</p>';
+                return;
+            }
+
+            videos.forEach(vid => {
+                const videoId = extractVideoID(vid.videoUrl);
+                if(!videoId) return;
+
+                const div = document.createElement('div');
+                div.className = 'video-card-modern';
+                div.innerHTML = `
+                    <div class="video-thumb">
+                        <img src="${vid.thumbnailUrl}" alt="Thumb">
+                        <div class="play-overlay">
+                            <div class="play-icon-circle"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="info-badges">
+                            <div class="badge reward"><i class="fas fa-coins"></i> Earn Pts</div>
+                        </div>
+                    </div>
+                    <div class="video-details">
+                        <div class="video-text">
+                            <h4>${vid.title || 'Watch & Earn'}</h4>
+                            <p>Duration: Short</p>
+                        </div>
+                        <button class="btn-watch-sm">Watch Now</button>
+                    </div>
+                `;
+                div.addEventListener('click', () => {
+                    loadVideoPlayer(videoId);
+                    document.getElementById('active-video-player-wrapper').style.display = 'block';
+                    document.getElementById('active-video-player-wrapper').scrollIntoView({ behavior: 'smooth' });
+                });
+                videoListContainer.appendChild(div);
+            });
+        }
+
         function loadVideoPlayer(videoId) {
-            watchTimeSeconds = 0; // Reset timer on new video
+            watchTimeSeconds = 0; 
             if (!player) {
                 player = new YT.Player('yt-player', {
-                    height: '100%',
-                    width: '100%',
-                    videoId: videoId,
+                    height: '100%', width: '100%', videoId: videoId,
                     playerVars: { 'playsinline': 1, 'autoplay': 1 },
                     events: { 'onStateChange': onPlayerStateChange }
                 });
-            } else {
-                player.loadVideoById(videoId);
-            }
+            } else { player.loadVideoById(videoId); }
         }
 
         function onPlayerStateChange(event) {
-            if (event.data == YT.PlayerState.PLAYING) {
-                isVideoPlaying = true;
-            } else {
-                isVideoPlaying = false;
-            }
+            if (event.data == YT.PlayerState.PLAYING) { isVideoPlaying = true; } 
+            else { isVideoPlaying = false; }
         }
 
+        // --- CLIENT-SIDE MINING LOOP (Write Optimization) ---
         setInterval(() => {
             if (isVideoPlaying) {
-                minedBalance += POINTS_PER_SECOND;
-                localStorage.setItem('minedBalance', minedBalance);
+                // Update Local Variable
+                minedBalanceLocal += POINTS_PER_SECOND;
+                
+                // Persist to Local Storage (No Firebase Write)
+                localStorage.setItem('lootBoxBalance', minedBalanceLocal);
+                
                 updateMiningUI();
 
                 watchTimeSeconds++;
-                // Check if 2min 3sec (123 seconds) passed
                 if (watchTimeSeconds > 0 && watchTimeSeconds % VIDEO_AD_TRIGGER_SECONDS === 0) {
                     if(player && player.pauseVideo) player.pauseVideo();
-                    showRandomAd().then(() => {
-                        // Optional: Auto resume or let user resume
-                    });
+                    showRandomAd().then(() => { /* Resume logic if needed */ });
                 }
             }
         }, 1000);
 
+        // --- CLAIM LOOT BOX (The Only Write Operation) ---
         document.getElementById('claimMinedPointsBtn').addEventListener('click', async () => {
-            if (minedBalance < MINING_CLAIM_THRESHOLD) return;
+            if (minedBalanceLocal < MINING_CLAIM_THRESHOLD) return;
+            
             const btn = document.getElementById('claimMinedPointsBtn');
             btn.disabled = true;
+            btn.textContent = "Opening...";
+
             try {
-                const pointsToClaim = Math.floor(minedBalance);
-                const remaining = minedBalance - pointsToClaim;
-                await grantReward({ points: pointsToClaim }, { type: 'Video Mining', details: 'Loot Box' });
-                minedBalance = remaining;
-                localStorage.setItem('minedBalance', minedBalance);
+                // WRITE OPTIMIZATION: Single Write for Claim
+                const pointsToClaim = Math.floor(minedBalanceLocal);
+                const remaining = minedBalanceLocal - pointsToClaim;
+                
+                await grantReward({ points: pointsToClaim }, { type: 'Loot Box Opened', details: 'Video Mining' });
+                
+                // Reset Local State
+                minedBalanceLocal = remaining;
+                localStorage.setItem('lootBoxBalance', minedBalanceLocal);
+                
                 updateMiningUI();
-                showSuccessModal("Claimed!", `+${pointsToClaim} Points.`);
-            } catch (e) { console.error(e); }
+                showSuccessModal("Loot Box Opened!", `You claimed <b>${pointsToClaim} Points</b>!`);
+            } catch (e) { 
+                console.error(e);
+                alert("Claim failed. Try again.");
+            }
             btn.disabled = false;
         });
 
-        // --- INIT ---
-
+        // --- GENERAL UI LOGIC ---
         function setupUserIdDisplay(userId) {
             const userIdContainer = document.getElementById('header-user-id');
             userIdContainer.querySelector('span').textContent = `ID: ${userId}`;
             userIdContainer.addEventListener('click', () => {
-                navigator.clipboard.writeText(userId).then(() => {
-                    if (tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
-                });
+                navigator.clipboard.writeText(userId).then(() => { if (tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success'); });
             });
         }
 
@@ -1820,36 +1914,18 @@
 
         const profileBtn = document.getElementById('profile-info-btn');
         const popover = document.getElementById('profile-popover');
-        profileBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            updateProfilePopover();
-            popover.classList.toggle('show');
-        });
-        document.addEventListener('click', (e) => {
-            if (!popover.contains(e.target) && !profileBtn.contains(e.target)) {
-                popover.classList.remove('show');
-            }
-        });
+        profileBtn.addEventListener('click', (e) => { e.stopPropagation(); updateProfilePopover(); popover.classList.toggle('show'); });
+        document.addEventListener('click', (e) => { if (!popover.contains(e.target) && !profileBtn.contains(e.target)) { popover.classList.remove('show'); } });
         document.getElementById('popoverCopyRefLinkBtn').addEventListener('click', (e) => {
-            e.stopPropagation();
-            const copyButton = e.target;
-            navigator.clipboard.writeText(copyButton.previousElementSibling.value).then(() => {
-                const icon = copyButton.querySelector('i');
-                icon.className = 'fas fa-check';
-                setTimeout(() => { icon.className = 'fas fa-copy'; }, 2000);
-            });
+            e.stopPropagation(); navigator.clipboard.writeText(e.target.previousElementSibling.value);
         });
 
         function renderHomeUI() {
             if (!currentUser) return;
-            
-            // Populate New Dashboard Stats
             document.getElementById('homeDisplayTon').textContent = `${parseFloat(currentUser.tonBalance || 0).toFixed(4)} TON`;
             document.getElementById('homeDisplayPoints').textContent = Math.floor(currentUser.pointBalance || 0);
             document.getElementById('homeDisplayToday').textContent = `+${Math.floor(currentUser.todayPoints || 0)}`;
             document.getElementById('homeDisplayLifetime').textContent = Math.floor(currentUser.lifetimePointsEarned || 0);
-
-            // Populate Referral Count
             document.getElementById('homeTotalReferrals').textContent = currentUser.referralCount || 0;
         }
 
@@ -1858,7 +1934,6 @@
             navigator.clipboard.writeText(copyButton.previousElementSibling.value).then(() => {
                 const originalHtml = copyButton.innerHTML;
                 copyButton.innerHTML = '<i class="fas fa-check"></i> Copied';
-                if (tg && tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
                 setTimeout(() => { copyButton.innerHTML = originalHtml; }, 2000);
             });
         });
@@ -1871,9 +1946,7 @@
 
         async function handleUserActivation() {
             const activateBtn = document.getElementById('activateAccountBtn');
-            activateBtn.disabled = true;
-            activateBtn.textContent = 'Checking...';
-
+            activateBtn.disabled = true; activateBtn.textContent = 'Checking...';
             try {
                 const userRef = doc(db, 'users', currentUser.id);
                 await updateDoc(userRef, { isActivated: true });
@@ -1884,45 +1957,46 @@
                 showSuccessModal("Verified", "Account active.");
                 await checkAndResetDailies();
                 renderHomeUI();
-            } catch (error) {
-                console.error("Activation failed:", error);
-                activateBtn.disabled = false;
-                activateBtn.textContent = 'Verify & Enter';
-            }
+            } catch (error) { activateBtn.disabled = false; activateBtn.textContent = 'Verify & Enter'; }
         }
         document.getElementById('activateAccountBtn').addEventListener('click', handleUserActivation);
+
+        // --- TABS & NAVIGATION ---
+        document.querySelectorAll('.bottom-nav-item').forEach(link => {
+            link.addEventListener('click', async (e) => {
+                e.preventDefault();
+                const targetId = link.dataset.tabTarget;
+                if (!currentUser || document.querySelector(targetId)?.classList.contains('active')) return;
+
+                document.querySelectorAll('.bottom-nav-item.active, .content-section.active').forEach(el => el.classList.remove('active'));
+                link.classList.add('active');
+                document.querySelector(targetId).classList.add('active');
+
+                switch(targetId) {
+                    case '#home-content': renderHomeUI(); fetchPromoHistory(); break;
+                    case '#video-content': initializeVideoSection(); break;
+                    case '#ads-content': setupAdsToEarn(); break;
+                    case '#task-content': renderTaskPackages(); await renderMyAds(); await fetchAndRenderTasks('task-list', 50); break;
+                    case '#withdraw-content': setupWithdrawalUI(); break;
+                }
+            });
+        });
 
         async function main() {
             try {
                 if (!tg.initDataUnsafe?.user) { 
-                    // DEBUG MODE
-                    // await initializeUser({ id: '123456', username: 'test_user' });
-                    // setupUserIdDisplay('123456');
-                    // renderHomeUI();
                     document.body.innerHTML = `<div style="padding:20px; color:white; text-align:center;"><h3>Open in Telegram</h3></div>`; 
                     return; 
                 }
-                
-                tg.ready(); tg.expand();
-                tg.setHeaderColor('#151A23'); 
-
+                tg.ready(); tg.expand(); tg.setHeaderColor('#151A23'); 
                 const initStatus = await initializeUser(tg.initDataUnsafe.user, tg.initDataUnsafe.start_param);
                 if (!initStatus) return;
-
                 setupUserIdDisplay(currentUser.id);
-
-                if (!initStatus.isActivated) {
-                    showActivationModal();
-                } else {
-                    renderHomeUI();
-                    fetchPromoHistory();
-                }
-
-            } catch (error) {
-                console.error("Init failed:", error);
-            }
+                if (!initStatus.isActivated) { showActivationModal(); } else { renderHomeUI(); fetchPromoHistory(); }
+            } catch (error) { console.error("Init failed:", error); }
         }
         main();
     </script>
 </body>
 </html>
+```
