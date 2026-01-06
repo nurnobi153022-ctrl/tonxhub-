@@ -32,24 +32,36 @@
     <style>
         /* --- THEME: X-MARKET CRYPTO STYLE --- */
         :root {
-            --bg-color: #090A0C;
-            --card-bg: #13161B;
-            --input-bg: #0F1115;
-            --accent-green: #00E396;
+            /* Layers */
+            --bg-color: #090A0C;        /* Deepest Black */
+            --card-bg: #13161B;         /* Floating Surface */
+            --input-bg: #0F1115;        /* Inset Background */
+            
+            /* Accents */
+            --accent-green: #00E396;    /* ACTION & SUCCESS */
             --accent-green-dim: rgba(0, 227, 150, 0.15);
-            --accent-blue: #2E93fA;
+            
+            --accent-blue: #2E93fA;     /* INFO & INFO */
             --accent-blue-dim: rgba(46, 147, 250, 0.15);
+            
+            /* Text */
             --text-title: #FFFFFF;
-            --text-body: #A0AABF;
+            --text-body: #A0AABF;       /* Cool Grey */
             --text-muted: #656E85;
+            
+            /* Gradients */
             --grad-action: linear-gradient(135deg, #00E396 0%, #00B377 100%);
             --grad-info: linear-gradient(135deg, #2E93fA 0%, #2072C4 100%);
             --grad-banner: linear-gradient(135deg, #13161B 0%, #0f241d 100%); 
             --grad-gold: linear-gradient(135deg, #F39C12 0%, #D35400 100%);
+            
+            /* UI Elements */
             --border-subtle: rgba(255, 255, 255, 0.06);
             --border-glow: rgba(0, 227, 150, 0.3);
+            
             --shadow-soft: 0 8px 24px -6px rgba(0, 0, 0, 0.6);
             --shadow-glow: 0 4px 20px rgba(0, 227, 150, 0.15);
+            
             --radius-card: 20px;
             --radius-btn: 14px;
         }
@@ -1475,7 +1487,6 @@
             }
         });
         
-        // --- NEW WITHDRAWAL LOGIC (REDESIGNED) ---
         function setupWithdrawalUI() {
             if (!currentUser) return;
             const balance = currentUser.pointBalance || 0;
@@ -1553,7 +1564,27 @@
             const details = document.getElementById('accountDetails').value.trim();
             const config = WITHDRAWAL_CONFIG[method];
 
+            // Validation Logic
             if (!details) { alert('Enter account details.'); return; }
+            
+            // TON Address Validation
+            if (method === 'Tonkeeper') {
+                const tonRegex = /^[a-zA-Z0-9_-]{48}$/;
+                // Check length and basic characters (base64url)
+                if (details.length < 48 || !/^[a-zA-Z0-9_\-]+$/.test(details)) {
+                     alert('Invalid TON Wallet Address. Please use a valid V4R2 or standard address.');
+                     return;
+                }
+            }
+
+            // Bkash Validation
+            if (method === 'Bkash') {
+                if (!/^\d{11}$/.test(details)) {
+                    alert('Invalid Bkash Number. Must be 11 digits.');
+                    return;
+                }
+            }
+
             if (isNaN(amount) || amount <= 0) { alert('Enter valid amount.'); return; }
             if (amount < config.min) { alert(`Minimum for ${method} is ${config.min} Points.`); return; }
             if ((currentUser.pointBalance || 0) < amount) { alert('Insufficient balance.'); return; }
@@ -1961,39 +1992,35 @@
         }
         document.getElementById('activateAccountBtn').addEventListener('click', handleUserActivation);
 
-        // --- TABS & NAVIGATION ---
-        document.querySelectorAll('.bottom-nav-item').forEach(link => {
-            link.addEventListener('click', async (e) => {
-                e.preventDefault();
-                const targetId = link.dataset.tabTarget;
-                if (!currentUser || document.querySelector(targetId)?.classList.contains('active')) return;
-
-                document.querySelectorAll('.bottom-nav-item.active, .content-section.active').forEach(el => el.classList.remove('active'));
-                link.classList.add('active');
-                document.querySelector(targetId).classList.add('active');
-
-                switch(targetId) {
-                    case '#home-content': renderHomeUI(); fetchPromoHistory(); break;
-                    case '#video-content': initializeVideoSection(); break;
-                    case '#ads-content': setupAdsToEarn(); break;
-                    case '#task-content': renderTaskPackages(); await renderMyAds(); await fetchAndRenderTasks('task-list', 50); break;
-                    case '#withdraw-content': setupWithdrawalUI(); break;
-                }
-            });
-        });
-
         async function main() {
             try {
                 if (!tg.initDataUnsafe?.user) { 
+                    // DEBUG MODE
+                    // await initializeUser({ id: '123456', username: 'test_user' });
+                    // setupUserIdDisplay('123456');
+                    // renderHomeUI();
                     document.body.innerHTML = `<div style="padding:20px; color:white; text-align:center;"><h3>Open in Telegram</h3></div>`; 
                     return; 
                 }
-                tg.ready(); tg.expand(); tg.setHeaderColor('#151A23'); 
+                
+                tg.ready(); tg.expand();
+                tg.setHeaderColor('#151A23'); 
+
                 const initStatus = await initializeUser(tg.initDataUnsafe.user, tg.initDataUnsafe.start_param);
                 if (!initStatus) return;
+
                 setupUserIdDisplay(currentUser.id);
-                if (!initStatus.isActivated) { showActivationModal(); } else { renderHomeUI(); fetchPromoHistory(); }
-            } catch (error) { console.error("Init failed:", error); }
+
+                if (!initStatus.isActivated) {
+                    showActivationModal();
+                } else {
+                    renderHomeUI();
+                    fetchPromoHistory();
+                }
+
+            } catch (error) {
+                console.error("Init failed:", error);
+            }
         }
         main();
     </script>
