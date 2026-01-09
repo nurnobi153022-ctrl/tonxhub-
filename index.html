@@ -44,6 +44,8 @@
             --accent-blue: #2E93fA;     /* INFO & INFO */
             --accent-blue-dim: rgba(46, 147, 250, 0.15);
             
+            --danger-color: #ff4d4d;
+
             /* Text */
             --text-title: #FFFFFF;
             --text-body: #A0AABF;       /* Cool Grey */
@@ -577,13 +579,14 @@
             <div id="my-ads-list" class="item-grid hidden"></div>
         </section>
 
-        <!-- WITHDRAW SECTION (NEW REDESIGN) -->
+        <!-- WITHDRAW SECTION (UPDATED) -->
         <section id="withdraw-content" class="content-section">
              <div class="card" style="text-align: center;">
                 <h3 class="section-title" style="justify-content:center;">Withdraw Funds</h3>
                 
                 <h2 style="margin: 0 0 5px; color: var(--text-title); font-size: 2.5rem;" id="withdrawPointBalance">0 Pts</h2>
-                <p class="conversion-rate-display">Rate: 10,000 Pts = 1.00 TON</p>
+                <!-- UPDATE: Rate Text -->
+                <p class="conversion-rate-display">Rate: 1000 Pts = 1.00 TON</p>
 
                 <!-- Method Selection Grid -->
                 <div class="method-grid">
@@ -602,8 +605,8 @@
                     <div class="notice-title"><i class="fas fa-info-circle"></i> Important Notice</div>
                     <div class="notice-text">
                         Minimum withdraw: <span id="minWithdrawDisplay">1000 Pts</span><br>
-                        Processing time: 24 - 48 Hours.<br>
-                        Wrong details cannot be refunded.
+                        <strong>Requirement:</strong> 5 Valid Referrals.<br>
+                        (Referral must watch 15+ Ads to be valid).
                     </div>
                 </div>
 
@@ -779,14 +782,20 @@
         // --- CONSTANTS ---
         const REFERRAL_REWARD_POINTS = 30; 
         const USER_CREATED_TASK_REWARD_POINTS = 3; 
-        const POINTS_TO_TON_RATE = 0.0001; 
         
-        // NEW WITHDRAWAL CONFIGURATION
+        // UPDATE 1: New Exchange Rate (1000 Pts = 1 TON)
+        const POINTS_TO_TON_RATE = 0.001; 
+        
+        // UPDATE 2: New Config for Withdrawal
         const WITHDRAWAL_CONFIG = {
-            'Tonkeeper': { min: 200, label: 'Wallet Address', placeholder: 'UQ...', rateDisplay: 'TON' },
+            'Tonkeeper': { min: 1000, label: 'Wallet Address', placeholder: 'UQ...', rateDisplay: 'TON' }, // Updated Min to 1000
             'Bkash': { min: 1000, label: 'Bkash Number', placeholder: '017xxxxxxxx', rateDisplay: 'BDT' },
         };
-        const BDT_RATE = 0.15; // Example Rate: 1 Point = 0.15 BDT (Adjust as needed)
+        const BDT_RATE = 0.15; 
+        
+        // UPDATE 3: Referral Requirements
+        const MIN_WITHDRAW_REFERRALS = 5;
+        const VALID_REFERRAL_AD_THRESHOLD = 15;
 
         const adPackages = [
             { id: 1, tasks: 150, price: 0.1 }, 
@@ -1487,6 +1496,31 @@
             }
         });
         
+        // --- NEW FUNCTION: Check for Valid Referrals ---
+        async function getValidReferralCount() {
+            if (!currentUser) return 0;
+            try {
+                // Fetch users referred by current user
+                // Note: For large datasets, this requires a composite index on Firestore.
+                // Or simply fetch by 'referredBy' and filter in memory (safer without index setup).
+                const q = query(collection(db, 'users'), where('referredBy', '==', currentUser.id));
+                const snap = await getDocs(q);
+                
+                let validCount = 0;
+                snap.forEach(doc => {
+                    const data = doc.data();
+                    // Check if referral has watched enough ads
+                    if ((data.lifetimeAdsWatched || 0) >= VALID_REFERRAL_AD_THRESHOLD) {
+                        validCount++;
+                    }
+                });
+                return validCount;
+            } catch (e) {
+                console.error("Error checking referrals:", e);
+                return 0;
+            }
+        }
+
         function setupWithdrawalUI() {
             if (!currentUser) return;
             const balance = currentUser.pointBalance || 0;
@@ -1533,7 +1567,7 @@
                         receiveAmount = (amount * BDT_RATE).toFixed(2);
                         currency = 'BDT';
                     } else {
-                        // 10000 Pts = 1 TON
+                        // 1000 Pts = 1 TON (New Rate)
                         receiveAmount = (amount * POINTS_TO_TON_RATE).toFixed(4);
                         currency = 'TON';
                     }
@@ -1555,7 +1589,7 @@
             amountInput.addEventListener('input', updateSummary);
         }
 
-        document.getElementById('submitWithdrawalBtn').addEventListener('click', (e) => {
+        document.getElementById('submitWithdrawalBtn').addEventListener('click', async (e) => {
             e.preventDefault(); 
             if(isSubmittingWithdrawal) return;
 
@@ -1563,6 +1597,7 @@
             const amount = parseFloat(document.getElementById('withdrawalAmount').value);
             const details = document.getElementById('accountDetails').value.trim();
             const config = WITHDRAWAL_CONFIG[method];
+            const btn = document.getElementById('submitWithdrawalBtn');
 
             // Validation Logic
             if (!details) { alert('Enter account details.'); return; }
@@ -1589,13 +1624,31 @@
             if (amount < config.min) { alert(`Minimum for ${method} is ${config.min} Points.`); return; }
             if ((currentUser.pointBalance || 0) < amount) { alert('Insufficient balance.'); return; }
 
+            // UPDATE 3: Check Referral Requirements
+            btn.disabled = true; btn.textContent = "Checking Referrals...";
+            const validReferrals = await getValidReferralCount();
+            btn.disabled = false; btn.textContent = "Request Withdraw";
+
+            if (validReferrals < MIN_WITHDRAW_REFERRALS) {
+                alert(`Withdrawal Requirement Not Met!\n\nYou need ${MIN_WITHDRAW_REFERRALS} valid referrals.\nA "Valid Referral" must watch at least ${VALID_REFERRAL_AD_THRESHOLD} ads.\n\nYou currently have: ${validReferrals} valid referrals.`);
+                return;
+            }
+
             showWithdrawalConfirmationModal(amount, method, details);
         });
 
         function showWithdrawalConfirmationModal(amount, method, details) {
             const modal = document.getElementById('withdrawConfirmModalOverlay');
             const tonAmount = (amount * POINTS_TO_TON_RATE).toFixed(4);
-            document.getElementById('withdrawConfirmText').textContent = `Withdraw ${amount} Points (${tonAmount} TON) to ${method}?`;
+            // Dynamic text based on method
+            let confirmText = "";
+            if (method === 'Bkash') {
+                 confirmText = `Withdraw ${amount} Points (${(amount * BDT_RATE).toFixed(2)} BDT) to ${method}?`;
+            } else {
+                 confirmText = `Withdraw ${amount} Points (${tonAmount} TON) to ${method}?`;
+            }
+            
+            document.getElementById('withdrawConfirmText').textContent = confirmText;
 
             const cancelBtn = document.getElementById('withdrawConfirmCancelBtn');
             const confirmBtn = document.getElementById('withdrawConfirmSubmitBtn');
