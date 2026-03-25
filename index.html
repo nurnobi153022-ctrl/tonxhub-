@@ -8,7 +8,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- AD INTEGRATIONS -->
@@ -29,6 +29,9 @@
            TONX HUB — ADVANCED PROFESSIONAL REDESIGN
            Aesthetic: Dark Luxury / Premium Crypto
         ═══════════════════════════════════════════ */
+
+        /* Font synthesis prevention - stops browser from faking bold/italic */
+        * { font-synthesis: none; }
 
         :root {
             /* Core palette */
@@ -72,6 +75,9 @@
             --font-body:   'DM Sans', sans-serif;
             --font-mono:   'JetBrains Mono', monospace;
 
+            /* Font rendering fix */
+            font-feature-settings: "kern" 1, "liga" 1;
+
             /* Radii */
             --r-xs:  6px;
             --r-sm:  10px;
@@ -102,6 +108,8 @@
             min-height: 100vh;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            font-synthesis: none;
+            text-rendering: optimizeLegibility;
             overflow-x: hidden;
         }
 
@@ -145,13 +153,13 @@
         }
         .logo-mark::after {
             content: 'T';
-            font-family: var(--font-head); font-weight: 800; font-size: 1rem;
+            font-family: var(--font-head); font-weight: 700; font-size: 1rem;
             color: #060810; position: relative; z-index: 1;
         }
 
         .site-branding { display: flex; flex-direction: column; gap: 1px; }
         .site-name {
-            font-family: var(--font-head); font-size: 1rem; font-weight: 800;
+            font-family: var(--font-head); font-size: 1rem; font-weight: 700;
             color: var(--t1); letter-spacing: 0px; line-height: 1; font-style: normal;
         }
         .site-name span { color: var(--green); }
@@ -311,7 +319,7 @@
             text-transform: uppercase; font-weight: 600; margin-bottom: 8px;
         }
         .hero-ton {
-            font-family: var(--font-head); font-size: 2.4rem; font-weight: 800;
+            font-family: var(--font-head); font-size: 2.4rem; font-weight: 700;
             color: var(--t1); letter-spacing: -0.5px; line-height: 1;
             margin-bottom: 6px; font-style: normal;
         }
@@ -398,7 +406,7 @@
             font-size: 1.4rem; color: var(--blue);
         }
         .referral-card h3 {
-            font-family: var(--font-head); font-size: 1.15rem; font-weight: 800;
+            font-family: var(--font-head); font-size: 1.15rem; font-weight: 700;
             color: var(--t1); margin-bottom: 6px; letter-spacing: -0.3px;
         }
         .referral-card p { font-size: 0.8rem; color: var(--t2); margin-bottom: 16px; }
@@ -529,7 +537,7 @@
             font-size: 0.7rem; color: var(--gold); font-weight: 600;
         }
         .loot-amount {
-            font-family: var(--font-head); font-size: 2.6rem; font-weight: 800;
+            font-family: var(--font-head); font-size: 2.6rem; font-weight: 700;
             color: var(--t1); text-align: center; letter-spacing: -0.5px;
             margin-bottom: 4px; line-height: 1; font-style: normal;
         }
@@ -749,7 +757,7 @@
             text-align: center; margin-bottom: 14px;
         }
         .withdraw-lbl { font-size: 0.68rem; color: var(--t3); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; margin-bottom: 8px; }
-        .withdraw-pts { font-family: var(--font-head); font-size: 2.2rem; font-weight: 800; color: var(--t1); letter-spacing: -1px; margin-bottom: 4px; }
+        .withdraw-pts { font-family: var(--font-head); font-size: 2.2rem; font-weight: 700; color: var(--t1); letter-spacing: -0.3px; margin-bottom: 4px; }
         .rate-tag { font-size: 0.72rem; color: var(--t3); margin-top: 4px; }
         .rate-tag span { color: var(--blue); }
 
@@ -806,7 +814,7 @@
             background: linear-gradient(90deg, transparent, var(--b3), transparent);
             border-radius: var(--r-xl) var(--r-xl) 0 0;
         }
-        .modal-title { font-family: var(--font-head); font-size: 1.1rem; font-weight: 800; color: var(--t1); margin-bottom: 8px; }
+        .modal-title { font-family: var(--font-head); font-size: 1.1rem; font-weight: 700; color: var(--t1); margin-bottom: 8px; }
         .modal-text { font-size: 0.82rem; color: var(--t2); line-height: 1.6; margin-bottom: 20px; }
         .modal-icon { font-size: 2.8rem; margin-bottom: 14px; }
         .modal-btn-row { display: flex; gap: 8px; }
