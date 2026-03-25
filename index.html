@@ -750,37 +750,103 @@
         /* ─────────────────────────────
            WITHDRAW SECTION
         ───────────────────────────── */
+
+        /* ── Top balance hero ── */
         .withdraw-balance-card {
-            background: linear-gradient(135deg, #0A1520 0%, #060E18 100%);
-            border: 1px solid rgba(77,168,255,0.15);
-            border-radius: var(--r-xl); padding: 24px 20px;
-            text-align: center; margin-bottom: 14px;
+            background: linear-gradient(160deg, #0e1a2a 0%, #081018 100%);
+            border: 1px solid rgba(77,168,255,0.18);
+            border-radius: var(--r-xl); padding: 28px 20px 22px;
+            text-align: center; margin-bottom: 16px; position: relative; overflow: hidden;
         }
-        .withdraw-lbl { font-size: 0.68rem; color: var(--t3); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; margin-bottom: 8px; }
-        .withdraw-pts { font-family: var(--font-head); font-size: 2.2rem; font-weight: 700; color: var(--t1); letter-spacing: -0.3px; margin-bottom: 4px; }
-        .rate-tag { font-size: 0.72rem; color: var(--t3); margin-top: 4px; }
-        .rate-tag span { color: var(--blue); }
-
-        .method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
-        .method-card {
-            background: var(--surface2); border: 1.5px solid var(--b1);
-            border-radius: var(--r-md); padding: 14px;
-            text-align: center; cursor: pointer; transition: all 0.2s;
+        .withdraw-balance-card::before {
+            content:''; position:absolute; top:-40px; right:-40px;
+            width:140px; height:140px;
+            background: radial-gradient(circle, rgba(77,168,255,0.12) 0%, transparent 70%);
+            pointer-events:none;
         }
-        .method-card:hover { border-color: var(--b2); }
-        .method-card.selected { border-color: var(--green); background: var(--green-dim); }
-        .method-card .m-icon { font-size: 1.4rem; margin-bottom: 7px; color: var(--t2); }
-        .method-card.selected .m-icon { color: var(--green); }
-        .method-card .m-name { font-size: 0.8rem; font-weight: 600; color: var(--t1); }
+        .wd-icon-wrap {
+            width: 42px; height: 42px; border-radius: 12px;
+            background: rgba(77,168,255,0.15); border: 1px solid rgba(77,168,255,0.3);
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 12px; color: var(--blue); font-size: 1.1rem;
+        }
+        .wd-title { font-family: var(--font-head); font-size: 1rem; font-weight: 700; color: var(--t1); margin-bottom: 14px; }
+        .wd-ton-amount {
+            font-family: var(--font-head); font-size: 2.8rem; font-weight: 700;
+            color: var(--t1); letter-spacing: -1px; line-height: 1; margin-bottom: 6px;
+        }
+        .wd-ton-amount span { font-size: 1.4rem; color: var(--t1); }
+        .wd-rate { font-size: 0.72rem; color: var(--t3); margin-top: 4px; }
+        .wd-rate span { color: var(--t2); }
 
+        /* ── Referral Requirements Table ── */
+        .ref-req-box {
+            background: #0d1520; border: 1px solid rgba(255,255,255,0.07);
+            border-radius: var(--r-lg); padding: 16px; margin-bottom: 16px;
+        }
+        .ref-req-title {
+            display: flex; align-items: center; gap: 8px;
+            font-size: 0.7rem; font-weight: 700; color: var(--t2);
+            text-transform: uppercase; letter-spacing: 1.2px;
+            margin-bottom: 14px;
+        }
+        .ref-req-title i { color: var(--t3); font-size: 0.85rem; }
+        .ref-req-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .ref-req-row:last-child { border-bottom: none; padding-bottom: 0; }
+        .ref-req-pts { font-size: 0.82rem; color: var(--t2); }
+        .ref-req-val { font-size: 0.82rem; font-weight: 700; color: #FFB347; }
+
+        /* ── Dynamic referral hint pill ── */
+        .ref-hint-pill {
+            background: rgba(77,168,255,0.08); border: 1px solid rgba(77,168,255,0.2);
+            border-radius: var(--r-md); padding: 12px 16px;
+            text-align: center; font-size: 0.8rem; color: var(--t2);
+            margin-bottom: 16px; transition: all 0.2s;
+        }
+        .ref-hint-pill.active { background: rgba(0,245,160,0.07); border-color: rgba(0,245,160,0.2); color: var(--green); }
+
+        /* ── Notice box ── */
         .notice-box {
-            background: rgba(255,140,0,0.05);
-            border-left: 2px solid rgba(255,140,0,0.6);
-            border-radius: 0 var(--r-sm) var(--r-sm) 0;
-            padding: 12px 14px; margin-bottom: 14px;
+            background: rgba(255,180,0,0.06); border: 1px solid rgba(255,180,0,0.2);
+            border-radius: var(--r-md); padding: 12px 14px; margin-bottom: 16px;
+            display: flex; gap: 10px; align-items: flex-start;
         }
-        .notice-title-row { display: flex; align-items: center; gap: 6px; color: #FF8C00; font-weight: 700; font-size: 0.78rem; margin-bottom: 5px; }
-        .notice-body { font-size: 0.73rem; color: var(--t2); line-height: 1.65; }
+        .notice-box i { color: #FFB347; font-size: 0.95rem; margin-top: 2px; flex-shrink: 0; }
+        .notice-body { font-size: 0.76rem; color: var(--t2); line-height: 1.7; }
+        .notice-body strong { color: var(--t1); }
+
+        /* ── Form ── */
+        .wd-form-label { font-size: 0.75rem; color: var(--t2); margin-bottom: 6px; display: block; }
+        #withdrawalAmount, #accountDetails {
+            background: #0d1520 !important; border: 1px solid rgba(77,168,255,0.25) !important;
+            border-radius: var(--r-md) !important; color: var(--t1) !important;
+        }
+        #withdrawalAmount:focus, #accountDetails:focus { border-color: var(--blue) !important; }
+        #withdrawalAmount::placeholder, #accountDetails::placeholder { color: var(--t4); }
+
+        /* ── Action buttons ── */
+        .wd-btn-row { display: flex; gap: 10px; margin-top: 8px; }
+        .btn-wd-cancel {
+            flex: 1; padding: 14px; border-radius: var(--r-md);
+            background: transparent; border: 1px solid var(--b2);
+            color: var(--blue); font-size: 0.9rem; font-weight: 600;
+            cursor: pointer; font-family: var(--font-body); transition: all 0.2s;
+        }
+        .btn-wd-cancel:hover { background: rgba(77,168,255,0.08); }
+        .btn-wd-submit {
+            flex: 1; padding: 14px; border-radius: var(--r-md);
+            background: var(--blue); border: none;
+            color: #fff; font-size: 0.9rem; font-weight: 600;
+            cursor: pointer; font-family: var(--font-body);
+            box-shadow: 0 4px 18px rgba(77,168,255,0.3); transition: all 0.2s;
+        }
+        .btn-wd-submit:hover:not(:disabled) { background: var(--blue2); box-shadow: 0 6px 24px rgba(77,168,255,0.4); }
+        .btn-wd-submit:disabled { background: var(--surface3); color: var(--t3); box-shadow: none; cursor: not-allowed; }
+
+        .method-grid { display: none; }
 
         .summary-row {
             display: flex; justify-content: space-between; align-items: center;
@@ -1485,54 +1551,80 @@
 
         <!-- ── WITHDRAW ── -->
         <section id="withdraw-content" class="content-section">
-            <div class="sec-title"><div class="sec-title-dot"></div>Withdraw Funds</div>
+            <div class="container" style="padding-top:8px;">
 
-            <div class="withdraw-balance-card">
-                <div class="withdraw-lbl">Available Balance</div>
-                <div class="withdraw-pts" id="withdrawPointBalance">0 Pts</div>
-                <div class="rate-tag">Rate: <span>50,000 Pts = 1.00 TON</span> &nbsp;|&nbsp; <span>50,000 Pts = 120 BDT</span></div>
-            </div>
-
-            <!-- Method selection -->
-            <div class="method-grid">
-                <div class="method-card selected" data-method="Tonkeeper">
-                    <div class="m-icon"><i class="fas fa-wallet"></i></div>
-                    <div class="m-name">TON Wallet</div>
+                <!-- Balance Hero Card -->
+                <div class="withdraw-balance-card">
+                    <div class="wd-icon-wrap"><i class="fas fa-wallet"></i></div>
+                    <div class="wd-title">Withdraw Funds</div>
+                    <div class="wd-ton-amount"><span id="withdrawTonDisplay">0.0000</span> <span>TON</span></div>
+                    <div class="wd-rate">Rate: <span>50,000 Pts = 1.00 TON</span></div>
                 </div>
-            </div>
 
-            <div class="notice-box">
-                <div class="notice-title-row"><i class="fas fa-circle-info"></i> Important Notice</div>
-                <div class="notice-body">
-                    Minimum withdraw: <strong><span id="minWithdrawDisplay">1,500 Pts</span></strong><br>
-                    <strong>Tonkeeper address only.</strong> No other wallets accepted.<br><br>
-                    <strong>Referral Requirements:</strong><br>
-                    • 1–1,500 Pts → 1 Valid Ref<br>
-                    • 1,501–3,000 Pts → 2 Valid Refs<br>
-                    • 3,001–4,500 Pts → 3 Valid Refs<br>
-                    • 4,501–6,000 Pts → 4 Valid Refs<br>
-                    • 6,001+ Pts → 5 Valid Refs<br><br>
-                    ⚠️ Referrals are deducted after approval.
+                <!-- Referral Requirements Table -->
+                <div class="ref-req-box">
+                    <div class="ref-req-title">
+                        <i class="fas fa-layer-group"></i> Referral Requirements
+                    </div>
+                    <div class="ref-req-row">
+                        <span class="ref-req-pts">1 – 1,500 Pts</span>
+                        <span class="ref-req-val">1 Valid Ref</span>
+                    </div>
+                    <div class="ref-req-row">
+                        <span class="ref-req-pts">1,501 – 3,000 Pts</span>
+                        <span class="ref-req-val">2 Valid Refs</span>
+                    </div>
+                    <div class="ref-req-row">
+                        <span class="ref-req-pts">3,001 – 4,500 Pts</span>
+                        <span class="ref-req-val">3 Valid Refs</span>
+                    </div>
+                    <div class="ref-req-row">
+                        <span class="ref-req-pts">4,501 – 6,000 Pts</span>
+                        <span class="ref-req-val">4 Valid Refs</span>
+                    </div>
+                    <div class="ref-req-row">
+                        <span class="ref-req-pts">6,001+ Pts</span>
+                        <span class="ref-req-val">5 Valid Refs</span>
+                    </div>
                 </div>
-            </div>
 
-            <input type="hidden" id="withdrawalMethod" value="Tonkeeper">
+                <!-- Dynamic Hint Pill -->
+                <div class="ref-hint-pill" id="refHintPill">Enter amount to see required referrals</div>
 
-            <div class="form-group">
-                <label class="form-label">Amount (Points)</label>
-                <input type="number" id="withdrawalAmount" placeholder="e.g. 50000">
-            </div>
-            <div class="form-group">
-                <label class="form-label" id="accountLabel">Tonkeeper Wallet Address</label>
-                <input type="text" id="accountDetails" placeholder="UQ...">
-            </div>
+                <!-- Notice -->
+                <div class="notice-box">
+                    <i class="fas fa-triangle-exclamation"></i>
+                    <div class="notice-body">
+                        <strong>Notice:</strong> Min 1,500 Pts. Tonkeeper address only. Referrals are deducted after approval.
+                    </div>
+                </div>
 
-            <div id="withdraw-summary" style="display:none;" class="summary-row">
-                <span>You Receive:</span>
-                <strong id="summary-receive">0 BDT</strong>
-            </div>
+                <input type="hidden" id="withdrawalMethod" value="Tonkeeper">
 
-            <button id="submitWithdrawalBtn" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Request Withdraw</button>
+                <!-- Amount Input -->
+                <div class="form-group">
+                    <label class="wd-form-label">Amount (Points)</label>
+                    <input type="number" id="withdrawalAmount" placeholder="Min: 1500" min="1500">
+                </div>
+
+                <!-- Address Input -->
+                <div class="form-group">
+                    <label class="wd-form-label" id="accountLabel">Tonkeeper Address</label>
+                    <input type="text" id="accountDetails" placeholder="Enter your address">
+                </div>
+
+                <div id="withdraw-summary" style="display:none;" class="summary-row">
+                    <span>You Receive:</span>
+                    <strong id="summary-receive">0 TON</strong>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="wd-btn-row">
+                    <button class="btn-wd-cancel" id="wdCancelBtn">Cancel</button>
+                    <button class="btn-wd-submit" id="submitWithdrawalBtn"><i class="fas fa-paper-plane"></i> Submit</button>
+                </div>
+
+            </div>
         </section>
     </main>
 
@@ -2288,35 +2380,41 @@
 
         function setupWithdrawalUI() {
             if (!currentUser) return;
-            document.getElementById('withdrawPointBalance').textContent = `${Math.floor(currentUser.pointBalance || 0)} Pts`;
-            const methodCards = document.querySelectorAll('.method-card');
+            const pts = Math.floor(currentUser.pointBalance || 0);
+            // Update TON display in hero card
+            const tonDisplay = document.getElementById('withdrawTonDisplay');
+            if (tonDisplay) tonDisplay.textContent = (pts * POINTS_TO_TON_RATE).toFixed(4);
+
             const amountInput = document.getElementById('withdrawalAmount');
             const summaryBox = document.getElementById('withdraw-summary');
             const summaryText = document.getElementById('summary-receive');
-            const minWithdrawDisplay = document.getElementById('minWithdrawDisplay');
+            const hintPill = document.getElementById('refHintPill');
 
-            methodCards.forEach(card => {
-                card.addEventListener('click', () => {
-                    methodCards.forEach(c => c.classList.remove('selected'));
-                    card.classList.add('selected');
-                    const method = card.dataset.method;
-                    const config = WITHDRAWAL_CONFIG[method];
-                    document.getElementById('withdrawalMethod').value = method;
-                    document.getElementById('accountLabel').textContent = config.label;
-                    document.getElementById('accountDetails').placeholder = config.placeholder;
-                    minWithdrawDisplay.textContent = `${config.min} Pts`;
-                    updateSummary();
-                });
-            });
+            // Cancel button clears form
+            const cancelBtn = document.getElementById('wdCancelBtn');
+            if (cancelBtn) {
+                cancelBtn.onclick = () => {
+                    amountInput.value = '';
+                    summaryBox.style.display = 'none';
+                    if (hintPill) { hintPill.textContent = 'Enter amount to see required referrals'; hintPill.classList.remove('active'); }
+                };
+            }
 
             const updateSummary = () => {
-                const method = document.getElementById('withdrawalMethod').value;
                 const amount = parseFloat(amountInput.value);
-                const config = WITHDRAWAL_CONFIG[method];
                 if (!isNaN(amount) && amount > 0) {
                     summaryBox.style.display = 'flex';
                     summaryText.textContent = `${(amount * POINTS_TO_TON_RATE).toFixed(6)} TON`;
-                } else { summaryBox.style.display = 'none'; }
+                    // Update hint pill
+                    if (hintPill) {
+                        const req = getRequiredReferrals(amount);
+                        hintPill.textContent = `You need ${req} valid referral${req > 1 ? 's' : ''} for this withdrawal`;
+                        hintPill.classList.add('active');
+                    }
+                } else {
+                    summaryBox.style.display = 'none';
+                    if (hintPill) { hintPill.textContent = 'Enter amount to see required referrals'; hintPill.classList.remove('active'); }
+                }
             };
             amountInput.addEventListener('input', updateSummary);
         }
