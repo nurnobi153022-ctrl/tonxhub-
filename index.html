@@ -8,7 +8,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- AD INTEGRATIONS -->
@@ -1352,12 +1352,21 @@
             <!-- Referral Card -->
             <div id="invite-scroll" class="referral-card">
                 <div class="referral-icon"><i class="fas fa-gift"></i></div>
-                <h3>Invite & Earn Together</h3>
+                <h3>Invite &amp; Earn Together</h3>
                 <p>Build your team and earn passive income forever</p>
                 <div class="ref-benefits">
                     <div class="ref-pill"><i class="fas fa-bolt" style="font-size:0.65rem;"></i> 30 Pts Instantly</div>
                     <div class="ref-pill"><i class="fas fa-percent" style="font-size:0.65rem;"></i> 10% Commission</div>
                     <div class="ref-pill"><i class="fas fa-infinity" style="font-size:0.65rem;"></i> Unlimited</div>
+                </div>
+                <!-- Referral Count Info Box -->
+                <div style="background:rgba(0,245,160,0.06);border:1px solid rgba(0,245,160,0.18);border-radius:10px;padding:11px 13px;margin-bottom:12px;text-align:left;">
+                    <div style="font-size:0.7rem;font-weight:700;color:var(--green);margin-bottom:6px;letter-spacing:0.5px;">HOW REFERRALS ARE COUNTED</div>
+                    <div style="font-size:0.72rem;color:var(--t2);line-height:1.7;">
+                        <span style="color:var(--t1);">Friend registers</span> → <span style="color:var(--blue);">+1 Normal Invite</span><br>
+                        <span style="color:var(--t1);">Friend watches 20 ads</span> → <span style="color:var(--green);font-weight:600;">+1 Valid Ref &amp; 400 Pts!</span><br>
+                        <span style="color:#FFB347;font-size:0.68rem;">Valid Refs unlock withdrawals (tiered)</span>
+                    </div>
                 </div>
                 <div class="input-row">
                     <input type="text" id="homeReferralLinkInput" readonly value="Loading...">
@@ -1377,7 +1386,7 @@
                         <div class="ms-icon"><i class="fas fa-users"></i></div>
                         <div class="ms-label">
                             <div class="ms-people">Invite 3 Friends</div>
-                            <div class="ms-reward">+150 Bonus Points</div>
+                            <div class="ms-reward">+50 Bonus Points</div>
                         </div>
                         <div class="ms-check">🔒</div>
                     </div>
@@ -1385,7 +1394,7 @@
                         <div class="ms-icon"><i class="fas fa-star"></i></div>
                         <div class="ms-label">
                             <div class="ms-people">Invite 5 Friends</div>
-                            <div class="ms-reward">+500 Bonus Points</div>
+                            <div class="ms-reward">+100 Bonus Points</div>
                         </div>
                         <div class="ms-check">🔒</div>
                     </div>
@@ -1393,7 +1402,7 @@
                         <div class="ms-icon"><i class="fas fa-crown"></i></div>
                         <div class="ms-label">
                             <div class="ms-people">Invite 10 Friends</div>
-                            <div class="ms-reward">+1500 Points + Silver Badge</div>
+                            <div class="ms-reward">+300 Points + Silver Badge</div>
                         </div>
                         <div class="ms-check">🔒</div>
                     </div>
@@ -1401,7 +1410,7 @@
                         <div class="ms-icon"><i class="fas fa-gem"></i></div>
                         <div class="ms-label">
                             <div class="ms-people">Invite 25 Friends</div>
-                            <div class="ms-reward">+1 TON + Diamond Badge</div>
+                            <div class="ms-reward">+1000 Points + Diamond Badge</div>
                         </div>
                         <div class="ms-check">🔒</div>
                     </div>
@@ -1788,7 +1797,7 @@
         let currentUser = null;
         let isSubmittingWithdrawal = false;
 
-        const REFERRAL_REWARD_POINTS = 30;
+        const REFERRAL_REWARD_POINTS = 400; // Valid Ref reward (friend watches 20 ads)
         const USER_CREATED_TASK_REWARD_POINTS = 3;
         const POINTS_TO_TON_RATE = 1 / 50000; // 50,000 Pts = 1.00 TON
         const WITHDRAWAL_CONFIG = {
@@ -1804,7 +1813,7 @@
             return 5;
         }
         const MIN_WITHDRAW_REFERRALS = 1; // legacy fallback (tiered logic used instead)
-        const VALID_REFERRAL_AD_THRESHOLD = 15;
+        const VALID_REFERRAL_AD_THRESHOLD = 20;
 
         const adPackages = [
             { id: 1, tasks: 150, price: 0.1 },
@@ -2030,7 +2039,7 @@
                         lifetimeAdsWatched: increment(1)
                     });
                     const currentAds = (currentUser.lifetimeAdsWatched || 0) + 1;
-                    if (currentAds === 10 && currentUser.referredBy) {
+                    if (currentAds === 20 && currentUser.referredBy) {
                         const referrerRef = doc(db, 'users', currentUser.referredBy);
                         await runTransaction(db, async (t) => {
                             const rDoc = await t.get(referrerRef);
@@ -2043,7 +2052,7 @@
                                 t.set(doc(collection(db, 'transactions')), {
                                     userId: currentUser.referredBy,
                                     type: 'Referral Reward',
-                                    details: `User ${currentUser.id} watched 10 ads`,
+                                    details: `User ${currentUser.id} watched 20 ads`,
                                     pointAmount: REFERRAL_REWARD_POINTS,
                                     status: 'Completed',
                                     createdAt: serverTimestamp()
