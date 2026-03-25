@@ -378,50 +378,7 @@
         .success-icon { font-size: 2.8rem; margin-bottom: 10px; animation: iconBounce 0.5s cubic-bezier(0.175,0.885,0.32,1.275); }
         @keyframes iconBounce { from{transform:scale(0)} to{transform:scale(1)} }
 
-        /* ── POPUP JOIN NOTICE ── */
-        #joinNoticeOverlay {
-            position: fixed; inset: 0; z-index: 3000;
-            background: rgba(0,0,0,0.95); display: flex; align-items: center; justify-content: center;
-            padding: 16px; backdrop-filter: blur(12px);
-        }
-        #joinNoticeOverlay.hidden { display: none; }
-        .join-notice-box {
-            background: var(--card2); border: 1px solid rgba(0,212,255,0.2);
-            border-radius: 26px; padding: 28px 22px; width: 100%; max-width: 340px; text-align: center;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.8), 0 0 0 1px rgba(0,212,255,0.1);
-            animation: modalPop 0.4s cubic-bezier(0.175,0.885,0.32,1.275) forwards;
-            position: relative; overflow: hidden;
-        }
-        .join-notice-box::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-            background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary));
-            background-size: 200% 100%; animation: shimmer 3s ease-in-out infinite;
-        }
-        .join-notice-icon {
-            width: 64px; height: 64px; border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary-dim), var(--accent-dim));
-            border: 2px solid rgba(0,212,255,0.3);
-            display: flex; align-items: center; justify-content: center; margin: 10px auto 18px;
-            font-size: 1.9rem; color: var(--primary);
-            box-shadow: 0 0 28px rgba(0,212,255,0.3);
-        }
-        .join-notice-title { font-size: 1.2rem; font-weight: 800; color: var(--text); margin: 0 0 8px; }
-        .join-notice-sub { font-size: 0.82rem; color: var(--text2); margin: 0 0 22px; line-height: 1.6; }
-        .join-channel-btn {
-            display: flex; align-items: center; gap: 12px;
-            background: rgba(0,212,255,0.08); border: 1px solid rgba(0,212,255,0.25);
-            color: var(--text); padding: 14px 16px; border-radius: 14px;
-            text-decoration: none; font-weight: 600; font-size: 0.88rem;
-            transition: all 0.22s; margin-bottom: 10px;
-        }
-        .join-channel-btn:hover { border-color: var(--primary); background: rgba(0,212,255,0.13); transform: translateY(-1px); }
-        .join-channel-btn .jcb-icon { width: 36px; height: 36px; border-radius: 10px; background: linear-gradient(135deg, var(--primary), #0080FF); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1rem; flex-shrink: 0; }
-        .join-channel-btn .jcb-text { flex: 1; text-align: left; }
-        .join-channel-btn .jcb-label { font-size: 0.7rem; color: var(--text2); font-weight: 400; display: block; }
-        .join-group-btn { background: rgba(124,58,237,0.08); border: 1px solid rgba(124,58,237,0.25); }
-        .join-group-btn:hover { border-color: var(--accent); background: rgba(124,58,237,0.13); transform: translateY(-1px); }
-        .join-group-btn .jcb-icon { background: linear-gradient(135deg, #5B21B6, var(--accent)); }
-        .join-verify-btn { margin-top: 6px; }
+
 
         /* ── REFERRAL PAGE ── */
         .referral-card {
@@ -449,37 +406,6 @@
     <div class="bg-canvas"></div>
     <div class="bg-grid"></div>
     <div class="particles" id="particles"></div>
-
-    <!-- ══ POPUP JOIN NOTICE (shown on login) ══ -->
-    <div id="joinNoticeOverlay">
-        <div class="join-notice-box">
-            <div class="join-notice-icon"><i class="fab fa-telegram-plane"></i></div>
-            <div class="join-notice-title">Join to Activate</div>
-            <div class="join-notice-sub">Join our Official Channel & Community Group to unlock all earning features on TON XHub.</div>
-
-            <a href="https://t.me/tonXhub_Earn" target="_blank" class="join-channel-btn">
-                <div class="jcb-icon"><i class="fab fa-telegram-plane"></i></div>
-                <div class="jcb-text">
-                    <span class="jcb-label">Official Channel</span>
-                    @tonXhub_Earn
-                </div>
-                <i class="fas fa-arrow-right" style="color:var(--text2);font-size:0.8rem;"></i>
-            </a>
-
-            <a href="https://t.me/tonX_hub_chat" target="_blank" class="join-channel-btn join-group-btn">
-                <div class="jcb-icon"><i class="fas fa-users"></i></div>
-                <div class="jcb-text">
-                    <span class="jcb-label">Community Group</span>
-                    @tonX_hub_chat
-                </div>
-                <i class="fas fa-arrow-right" style="color:var(--text2);font-size:0.8rem;"></i>
-            </a>
-
-            <button id="joinVerifyBtn" class="btn join-verify-btn" style="width:100%;padding:13px;margin-top:4px;">
-                <i class="fas fa-shield-halved"></i> Verify & Continue
-            </button>
-        </div>
-    </div>
 
     <!-- HEADER -->
     <header class="main-header">
@@ -1448,38 +1374,6 @@
             }
         }
 
-        // ══ JOIN POPUP & VERIFICATION ══
-        async function checkMembershipAndShowPopup() {
-            try {
-                const res  = await fetch(`https://new-ton-p2rd.vercel.app/api/checkJoin?userId=${currentUser.id}`);
-                const data = await res.json();
-                if (!data.channel || !data.group) {
-                    document.getElementById('joinNoticeOverlay').classList.remove('hidden');
-                } else {
-                    document.getElementById('joinNoticeOverlay').classList.add('hidden');
-                }
-            } catch (e) {
-                document.getElementById('joinNoticeOverlay').classList.remove('hidden');
-            }
-        }
-
-        document.getElementById('joinVerifyBtn').addEventListener('click', async () => {
-            const btn = document.getElementById('joinVerifyBtn');
-            btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying...';
-            try {
-                const res  = await fetch(`https://new-ton-p2rd.vercel.app/api/checkJoin?userId=${currentUser.id}`);
-                const data = await res.json();
-                if (data.channel && data.group) {
-                    document.getElementById('joinNoticeOverlay').classList.add('hidden');
-                } else {
-                    alert("Please join BOTH the channel and group to continue!");
-                }
-            } catch (e) {
-                alert("Verification failed. Please try again.");
-            }
-            btn.disabled = false; btn.innerHTML = '<i class="fas fa-shield-halved"></i> Verify & Continue';
-        });
-
         // Main
         async function main() {
             try {
@@ -1487,7 +1381,6 @@
                 tg.ready(); tg.expand(); tg.setHeaderColor('#05080F');
                 await initializeUser(tg.initDataUnsafe.user, tg.initDataUnsafe.start_param);
                 document.getElementById('profile-id-display').querySelector('span').textContent = currentUser.id;
-                await checkMembershipAndShowPopup();
             } catch (e) {}
         }
         main();
