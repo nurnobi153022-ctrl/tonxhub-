@@ -252,15 +252,29 @@ a{color:inherit;text-decoration:none}
 .prize-lbl{font-size:.68rem;color:var(--text2);margin-top:2px}
 
 /* LEADERBOARD */
-.leader-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:11px 13px;display:flex;align-items:center;gap:10px;margin-bottom:8px;transition:border-color var(--t);}
+.ldr-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.ldr-tabs{display:flex;gap:6px;margin-bottom:12px;}
+.ldr-tab{padding:5px 14px;border-radius:99px;font-size:.72rem;font-weight:700;border:1.5px solid var(--border);color:var(--text2);transition:all var(--t);cursor:pointer;}
+.ldr-tab.active{background:var(--grad);color:#fff;border-color:transparent;}
+.leader-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:11px 13px;display:flex;align-items:center;gap:10px;margin-bottom:8px;transition:border-color var(--t),transform var(--t);}
+.leader-card:active{transform:scale(.99)}
 .leader-card.is-me{border-color:var(--a1);background:linear-gradient(135deg,rgba(124,106,255,.06),rgba(0,212,255,.04));}
-.ldr-rank{font-size:1.35rem;width:30px;text-align:center;flex-shrink:0}
-.ldr-av{width:38px;height:38px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-weight:900;font-size:1rem;color:#fff;flex-shrink:0;}
+.leader-card.rank-1{border-color:#ffd166;background:linear-gradient(135deg,rgba(255,209,102,.08),rgba(255,107,157,.05));}
+.leader-card.rank-2{border-color:#c0c0c0;background:linear-gradient(135deg,rgba(192,192,192,.07),transparent);}
+.leader-card.rank-3{border-color:#cd7f32;background:linear-gradient(135deg,rgba(205,127,50,.07),transparent);}
+.ldr-rank{font-size:1.35rem;width:34px;text-align:center;flex-shrink:0}
+.ldr-av{width:38px;height:38px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-weight:900;font-size:1rem;color:#fff;flex-shrink:0;position:relative;}
+.ldr-tier-badge{position:absolute;bottom:-3px;right:-3px;font-size:.6rem;background:var(--surface);border-radius:99px;padding:1px 3px;border:1px solid var(--border);}
 .ldr-info{flex:1;min-width:0}
 .ldr-name{font-weight:600;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ldr-pts{font-size:.72rem;color:var(--text2);margin-top:1px}
 .you-tag{display:inline-block;background:var(--grad);color:#fff;font-size:.6rem;font-weight:700;padding:1px 6px;border-radius:99px;vertical-align:middle;margin-left:4px;}
-.ldr-right{font-size:.78rem;color:var(--text2);flex-shrink:0}
+.ldr-right{display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0}
+.ldr-ton{font-family:'Outfit',sans-serif;font-size:.78rem;font-weight:700;color:var(--gold);}
+.ldr-refs{font-size:.68rem;color:var(--text2);}
+.ldr-my-rank{background:var(--surface2);border:1px solid var(--a1);border-radius:var(--r2);padding:10px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.ldr-my-rank-lbl{font-size:.75rem;color:var(--text2);}
+.ldr-my-rank-val{font-family:'Outfit',sans-serif;font-size:.95rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 
 /* BOTTOM NAV */
 .nav{position:fixed;bottom:0;left:0;right:0;height:var(--nav-h);background:rgba(13,13,26,.92);border-top:1px solid var(--border);display:flex;justify-content:space-around;align-items:stretch;z-index:300;max-width:480px;margin:0 auto;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);transition:background var(--t);}
@@ -375,8 +389,8 @@ a{color:inherit;text-decoration:none}
     </div>
     <div class="notice-body">
       <p class="notice-desc">
-        TonXHub হলো একটি Telegram Mini App যেখানে আপনি <strong>Points</strong> আয় করে সেটা <strong>TON</strong> ক্রিপ্টোতে পরিণত করতে পারবেন।
-        Ads দেখুন, Tasks করুন, Spin করুন এবং প্রতিদিন বোনাস নিন!
+        TonXHub is a Telegram Mini App where you can earn <strong>Points</strong> and convert them into real <strong>TON</strong> crypto.
+        Watch Ads, complete Tasks, Spin the wheel and claim your Daily Bonus every day!
       </p>
 
       <!-- Join Buttons -->
@@ -404,12 +418,12 @@ a{color:inherit;text-decoration:none}
         <div class="notice-rules-title">📋 Bot Rules &amp; Rewards</div>
         <div class="rule-row"><span class="rule-ico">💰</span><span><span class="rule-val">50,000</span> Points = 1 TON</span></div>
         <div class="rule-row"><span class="rule-ico">💸</span><span>Minimum Withdraw: <span class="rule-val">1,500</span> pts</span></div>
-        <div class="rule-row"><span class="rule-ico">👛</span><span>Only <span class="rule-val">Tonkeeper</span> address দিয়ে Withdraw</span></div>
+        <div class="rule-row"><span class="rule-ico">👛</span><span>Only <span class="rule-val">Tonkeeper</span> address accepted for Withdraw</span></div>
         <div class="rule-row"><span class="rule-ico">📣</span><span>Ads visit: <span class="rule-val">+12 pts</span> per visit</span></div>
         <div class="rule-row"><span class="rule-ico">✅</span><span>Task complete: <span class="rule-val">+15 pts</span> each</span></div>
         <div class="rule-row"><span class="rule-ico">🎰</span><span>Spin Wheel: <span class="rule-val">5–25 pts</span> per spin</span></div>
         <div class="rule-row"><span class="rule-ico">🎁</span><span>Daily Bonus: <span class="rule-val">5→20 pts</span> (7 days streak)</span></div>
-        <div class="rule-row"><span class="rule-ico">👥</span><span>Refer করুন — <span class="rule-val">20 ads</span> দেখলে valid refer</span></div>
+        <div class="rule-row"><span class="rule-ico">👥</span><span>Refer friends — valid after referred user watches <span class="rule-val">20 ads</span></span></div>
       </div>
 
       <button class="notice-start-btn" onclick="closeNotice()">🚀 Start Earning!</button>
@@ -539,9 +553,9 @@ a{color:inherit;text-decoration:none}
         <div class="card">
           <div class="card-title">⚡ How it works</div>
           <div class="step-list">
-            <div class="step"><div class="step-n">1</div>Ads দেখুন (+12 pts), Tasks করুন (+15 pts)</div>
-            <div class="step"><div class="step-n">2</div>Spin করুন (5–25 pts) ও Daily Bonus নিন</div>
-            <div class="step"><div class="step-n">3</div>50,000 pts = 1 TON — Tonkeeper-এ Withdraw করুন</div>
+            <div class="step"><div class="step-n">1</div>Watch Ads (+12 pts), complete Tasks (+15 pts)</div>
+            <div class="step"><div class="step-n">2</div>Spin the wheel (5–25 pts) &amp; claim your Daily Bonus</div>
+            <div class="step"><div class="step-n">3</div>50,000 pts = 1 TON — Withdraw to your Tonkeeper wallet</div>
           </div>
         </div>
 
@@ -589,7 +603,17 @@ a{color:inherit;text-decoration:none}
 
       <!-- ════ LEADERBOARD ════ -->
       <div class="section" id="leaderSection">
-        <div class="s-head">🏆 Top Earners</div>
+        <div class="s-head">🏆 Top Earners<span class="s-head-sub" id="ldrRefresh" style="cursor:pointer;color:var(--a2)">↻ Refresh</span></div>
+        <div id="myRankBar" class="ldr-my-rank" style="display:none">
+          <div>
+            <div class="ldr-my-rank-lbl">Your Rank</div>
+            <div class="ldr-my-rank-val" id="myRankVal">—</div>
+          </div>
+          <div style="text-align:right">
+            <div class="ldr-my-rank-lbl">Your Points</div>
+            <div class="ldr-my-rank-val" id="myRankPts">—</div>
+          </div>
+        </div>
         <div id="leaderList">
           <div class="skel skel-row"></div>
           <div class="skel skel-row"></div>
@@ -677,7 +701,7 @@ if (!tg || !tg.initData || tg.initData === "") {
         This app only works inside Telegram.<br/>
         Please open it via the bot link.
       </p>
-      <a href="http://t.me/tonXhubEarn_bot/TonXHub" style="padding:14px 28px;border-radius:99px;
+      <a href="https://t.me/tonXhubEarn_bot/TonXHub" style="padding:14px 28px;border-radius:99px;
         background:linear-gradient(135deg,#7c6aff,#00d4ff);color:#fff;
         font-family:'Outfit',sans-serif;font-weight:700;font-size:.95rem;">
         Open in Telegram →
@@ -688,12 +712,12 @@ if (!tg || !tg.initData || tg.initData === "") {
 
 /* ─── FIREBASE IMPORTS ─── */
 import { initializeApp }
-  from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+  from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
 import { getAnalytics }
-  from "https://www.gstatic.com/firebasejs/12.11.0/firebase-analytics.js";
+  from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js";
 import {
   getDatabase, ref, get, set, update, onValue, increment
-} from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
+} from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
 
 /* ─── NEW FIREBASE CONFIG (ton-xhub) ─── */
 const firebaseConfig = {
@@ -720,7 +744,7 @@ const REF_ID  = tg?.initDataUnsafe?.start_param
               || null;
 
 /* ─── CONSTANTS ─── */
-const BOT_LINK    = "http://t.me/tonXhubEarn_bot/TonXHub";
+const BOT_LINK    = "https://t.me/tonXhubEarn_bot/TonXHub";
 const PTS_PER_TON = 50000;
 const MIN_WITHDRAW_PTS = 1500;
 
@@ -792,12 +816,18 @@ async function addPoints(pts) {
   const snap = await get(uRef);
   const d    = snap.val();
   const total  = (d.points || 0) + pts;
-  const newTon = Math.floor(total / PTS_PER_TON);
-  const newPts = total % PTS_PER_TON;
-  await update(uRef, {
-    points: newPts,
-    ton: (d.ton || 0) + newTon
-  });
+  const earnedTon = Math.floor(total / PTS_PER_TON);
+  const remainPts = total % PTS_PER_TON;
+  if (earnedTon > 0) {
+    // Only convert to TON when a full 50,000 pts threshold is crossed
+    await update(uRef, {
+      points: remainPts,
+      ton: (d.ton || 0) + earnedTon
+    });
+  } else {
+    // Just update points, no TON conversion yet
+    await update(uRef, { points: total });
+  }
 }
 
 async function completeTask(taskId, pts, cooldownMs, isAd) {
@@ -887,14 +917,19 @@ async function loadLeaderboard() {
   const list = [];
   snap.forEach(c => {
     const d = c.val();
+    const pts  = d.points || 0;
+    const ton  = d.ton || 0;
+    const totalPts = pts + ton * PTS_PER_TON;
     list.push({
-      id:   c.key,
-      name: d.firstName || d.username || "Anonymous",
-      pts:  (d.points || 0) + (d.ton || 0) * PTS_PER_TON,
-      refs: d.validRefs || 0,
+      id:       c.key,
+      name:     d.firstName || d.username || "Anonymous",
+      pts,
+      ton,
+      totalPts,
+      refs:     d.validRefs || 0,
     });
   });
-  return list.sort((a,b) => b.pts - a.pts).slice(0,10);
+  return list.sort((a,b) => b.totalPts - a.totalPts).slice(0,50);
 }
 
 /* ─────────────────────────────────────────────────────
@@ -1237,6 +1272,17 @@ setInterval(updateSpinBtn, 1000);
 /* ─────────────────────────────────────────────────────
    LEADERBOARD
 ───────────────────────────────────────────────────── */
+
+// Rank tier based on total points (points + ton*50000)
+function getTier(totalPts) {
+  if (totalPts >= 500000) return { label: "💎 Diamond", color: "#00d4ff" };
+  if (totalPts >= 200000) return { label: "🏅 Platinum", color: "#a78bfa" };
+  if (totalPts >= 100000) return { label: "🥇 Gold",     color: "#ffd166" };
+  if (totalPts >= 50000)  return { label: "🥈 Silver",   color: "#c0c0c0" };
+  if (totalPts >= 10000)  return { label: "🥉 Bronze",   color: "#cd7f32" };
+  return { label: "🌱 Starter", color: "#00e5a0" };
+}
+
 async function renderLeaderboard() {
   const container = document.getElementById("leaderList");
   if (!container) return;
@@ -1244,19 +1290,43 @@ async function renderLeaderboard() {
   try {
     const list = await loadLeaderboard();
     container.innerHTML = "";
+
+    // My rank bar
+    const myIdx = list.findIndex(u => u.id === USER_ID);
+    const myRankBar = document.getElementById("myRankBar");
+    const myRankVal = document.getElementById("myRankVal");
+    const myRankPts = document.getElementById("myRankPts");
+    if (myRankBar && myIdx >= 0) {
+      myRankBar.style.display = "flex";
+      myRankVal.textContent = `#${myIdx + 1} of ${list.length}`;
+      myRankPts.textContent = `${list[myIdx].totalPts.toLocaleString()} pts`;
+    } else if (myRankBar) {
+      myRankBar.style.display = "none";
+    }
+
     list.forEach((u, i) => {
       const medal = ["🥇","🥈","🥉"][i] || `#${i+1}`;
       const isMe  = u.id === USER_ID;
+      const tier  = getTier(u.totalPts);
+      const tonDisplay = u.ton > 0 ? u.ton.toFixed(4) : "0.0000";
+      const rankClass = i === 0 ? " rank-1" : i === 1 ? " rank-2" : i === 2 ? " rank-3" : "";
       const d = document.createElement("div");
-      d.className = "leader-card" + (isMe ? " is-me" : "");
+      d.className = "leader-card" + rankClass + (isMe ? " is-me" : "");
       d.innerHTML = `
         <div class="ldr-rank">${medal}</div>
-        <div class="ldr-av">${(u.name[0]||"?").toUpperCase()}</div>
+        <div class="ldr-av" style="background:${i<3?`linear-gradient(135deg,${tier.color},${i===0?'#ff6b9d':'#7c6aff'})`:'var(--grad)'}">
+          ${(u.name[0]||"?").toUpperCase()}
+          <div class="ldr-tier-badge" title="${tier.label}">${tier.label.split(" ")[0]}</div>
+        </div>
         <div class="ldr-info">
           <div class="ldr-name">${u.name}${isMe?"<span class='you-tag'>You</span>":""}</div>
+          <div class="ldr-pts" style="color:${tier.color}">${tier.label}</div>
           <div class="ldr-pts">${u.pts.toLocaleString()} pts</div>
         </div>
-        <div class="ldr-right">👥 ${u.refs}</div>`;
+        <div class="ldr-right">
+          <div class="ldr-ton">💎 ${tonDisplay} TON</div>
+          <div class="ldr-refs">👥 ${u.refs} refs</div>
+        </div>`;
       container.appendChild(d);
     });
     if (!list.length) container.innerHTML = `<div class="empty">No data yet. Be the first!</div>`;
@@ -1264,6 +1334,9 @@ async function renderLeaderboard() {
     container.innerHTML = `<div class="empty">⚠️ Failed to load</div>`;
   }
 }
+
+// Refresh button
+document.getElementById("ldrRefresh")?.addEventListener("click", renderLeaderboard);
 
 /* ─────────────────────────────────────────────────────
    WITHDRAW
