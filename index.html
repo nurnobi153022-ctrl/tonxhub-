@@ -1025,6 +1025,124 @@
             100% { background: rgba(0,245,160,0.0); }
         }
         .task-card.claimed { animation: rewardFlash 0.6s ease; }
+
+        /* ── LEADERBOARD ── */
+        .leaderboard-card {
+            background: linear-gradient(145deg, #0A1020 0%, #060810 100%);
+            border: 1px solid rgba(255,209,102,0.15);
+            border-radius: var(--r-xl); padding: 20px 18px;
+            margin-bottom: 14px; position: relative; overflow: hidden;
+        }
+        .leaderboard-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,209,102,0.4), transparent);
+        }
+        .lb-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .lb-title { font-family: var(--font-head); font-size: 0.95rem; font-weight: 700; color: var(--t1); display: flex; align-items: center; gap: 8px; }
+        .lb-week { font-size: 0.65rem; color: var(--t3); background: var(--surface2); border: 1px solid var(--b1); border-radius: 20px; padding: 3px 9px; }
+        .lb-row {
+            display: flex; align-items: center; gap: 10px;
+            padding: 9px 0; border-bottom: 1px solid var(--b1);
+        }
+        .lb-row:last-child { border-bottom: none; }
+        .lb-rank {
+            width: 24px; height: 24px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.7rem; font-weight: 700; flex-shrink: 0;
+        }
+        .lb-rank.gold { background: rgba(255,209,102,0.18); color: var(--gold); border: 1px solid rgba(255,209,102,0.3); }
+        .lb-rank.silver { background: rgba(180,178,169,0.15); color: #B4B2A9; border: 1px solid rgba(180,178,169,0.25); }
+        .lb-rank.bronze { background: rgba(205,127,50,0.15); color: #CD7F32; border: 1px solid rgba(205,127,50,0.25); }
+        .lb-rank.normal { background: var(--surface3); color: var(--t3); }
+        .lb-avatar {
+            width: 30px; height: 30px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--surface3), var(--surface2));
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.65rem; font-weight: 700; color: var(--t2); flex-shrink: 0;
+        }
+        .lb-name { font-size: 0.82rem; font-weight: 500; color: var(--t1); flex: 1; }
+        .lb-you { font-size: 0.6rem; color: var(--blue); margin-left: 4px; }
+        .lb-pts { font-family: var(--font-head); font-size: 0.88rem; font-weight: 700; color: var(--green); }
+        .lb-me-row { background: rgba(77,168,255,0.06); border-radius: var(--r-sm); margin: 10px -4px 0; padding: 8px 4px; border: 1px solid rgba(77,168,255,0.15); }
+
+        /* ── REFERRAL MILESTONE ── */
+        .milestone-card {
+            background: linear-gradient(145deg, #0A0D1A 0%, #060810 100%);
+            border: 1px solid rgba(77,168,255,0.15);
+            border-radius: var(--r-xl); padding: 20px 18px;
+            margin-bottom: 14px; position: relative; overflow: hidden;
+        }
+        .milestone-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(77,168,255,0.4), transparent);
+        }
+        .ms-title { font-family: var(--font-head); font-size: 0.9rem; font-weight: 700; color: var(--t1); margin-bottom: 4px; }
+        .ms-sub { font-size: 0.72rem; color: var(--t3); margin-bottom: 16px; }
+        .ms-steps { display: flex; flex-direction: column; gap: 10px; }
+        .ms-step {
+            display: flex; align-items: center; gap: 12px;
+            padding: 10px 12px; border-radius: var(--r-sm);
+            background: var(--surface2); border: 1px solid var(--b1);
+            transition: border-color 0.2s;
+        }
+        .ms-step.achieved { border-color: rgba(0,245,160,0.3); background: rgba(0,245,160,0.05); }
+        .ms-step.next { border-color: rgba(77,168,255,0.25); background: rgba(77,168,255,0.04); }
+        .ms-icon {
+            width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center; font-size: 0.9rem;
+        }
+        .ms-step.achieved .ms-icon { background: rgba(0,245,160,0.12); color: var(--green); }
+        .ms-step.next .ms-icon { background: rgba(77,168,255,0.1); color: var(--blue); }
+        .ms-step.locked .ms-icon { background: var(--surface3); color: var(--t4); }
+        .ms-label { flex: 1; }
+        .ms-people { font-size: 0.8rem; font-weight: 600; color: var(--t1); }
+        .ms-reward { font-size: 0.68rem; color: var(--t3); margin-top: 2px; }
+        .ms-step.achieved .ms-reward { color: var(--green); }
+        .ms-step.next .ms-reward { color: var(--blue); }
+        .ms-check { font-size: 0.85rem; }
+        .ms-progress-bar { height: 3px; background: var(--surface3); border-radius: 2px; margin-top: 12px; overflow: hidden; }
+        .ms-progress-fill { height: 100%; background: linear-gradient(90deg, var(--green2), var(--blue2)); border-radius: 2px; transition: width 0.5s ease; }
+
+        /* ── LOOT BOX ANIMATION ── */
+        .lootbox-overlay {
+            position: fixed; inset: 0; z-index: 3000;
+            background: rgba(0,0,0,0.92);
+            display: none; align-items: center; justify-content: center;
+            flex-direction: column;
+        }
+        .lootbox-overlay.show { display: flex; animation: modalIn 0.25s ease; }
+        .loot-anim-box {
+            text-align: center; padding: 32px 24px;
+            position: relative;
+        }
+        .loot-chest {
+            font-size: 5rem; display: block; margin-bottom: 8px;
+            animation: chestPop 0.5s cubic-bezier(0.34,1.56,0.64,1);
+        }
+        @keyframes chestPop {
+            0%  { transform: scale(0.3) rotate(-15deg); opacity: 0; }
+            60% { transform: scale(1.15) rotate(5deg); }
+            100%{ transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+        .loot-reward-text {
+            font-family: var(--font-head); font-size: 2.2rem; font-weight: 700;
+            color: var(--gold); font-style: normal;
+            animation: rewardCount 0.6s 0.3s cubic-bezier(0.34,1.56,0.64,1) both;
+        }
+        @keyframes rewardCount {
+            0%  { transform: scale(0); opacity: 0; }
+            100%{ transform: scale(1); opacity: 1; }
+        }
+        .loot-sub-text { font-size: 0.85rem; color: var(--t2); margin-top: 6px; margin-bottom: 24px; }
+        .confetti-piece {
+            position: fixed; width: 8px; height: 8px; border-radius: 2px;
+            animation: confettiFall linear forwards;
+            pointer-events: none; z-index: 3001;
+        }
+        @keyframes confettiFall {
+            0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
     </style>
 </head>
 <body>
@@ -1134,6 +1252,17 @@
                 </div>
             </div>
 
+            <!-- Leaderboard -->
+            <div class="leaderboard-card">
+                <div class="lb-header">
+                    <div class="lb-title">🏆 Weekly Top Earners</div>
+                    <div class="lb-week" id="lbWeekLabel">This Week</div>
+                </div>
+                <div id="leaderboardList">
+                    <div class="loader"></div>
+                </div>
+            </div>
+
             <!-- Quick Actions -->
             <div class="actions-grid">
                 <div class="action-tile" onclick="document.querySelector('[data-tab-target=\'#video-content\']').click()">
@@ -1169,6 +1298,54 @@
                     <button id="homeCopyReferralLinkBtn" class="btn-copy">
                         <i class="fas fa-copy"></i> Copy
                     </button>
+                </div>
+            </div>
+
+
+            <!-- Referral Milestone -->
+            <div class="milestone-card">
+                <div class="ms-title">🎯 Referral Milestones</div>
+                <div class="ms-sub">Invite friends and unlock massive bonuses!</div>
+                <div class="ms-steps" id="milestoneSteps">
+                    <div class="ms-step" data-target="3">
+                        <div class="ms-icon"><i class="fas fa-users"></i></div>
+                        <div class="ms-label">
+                            <div class="ms-people">Invite 3 Friends</div>
+                            <div class="ms-reward">+150 Bonus Points</div>
+                        </div>
+                        <div class="ms-check">🔒</div>
+                    </div>
+                    <div class="ms-step" data-target="5">
+                        <div class="ms-icon"><i class="fas fa-star"></i></div>
+                        <div class="ms-label">
+                            <div class="ms-people">Invite 5 Friends</div>
+                            <div class="ms-reward">+500 Bonus Points</div>
+                        </div>
+                        <div class="ms-check">🔒</div>
+                    </div>
+                    <div class="ms-step" data-target="10">
+                        <div class="ms-icon"><i class="fas fa-crown"></i></div>
+                        <div class="ms-label">
+                            <div class="ms-people">Invite 10 Friends</div>
+                            <div class="ms-reward">+1500 Points + Silver Badge</div>
+                        </div>
+                        <div class="ms-check">🔒</div>
+                    </div>
+                    <div class="ms-step" data-target="25">
+                        <div class="ms-icon"><i class="fas fa-gem"></i></div>
+                        <div class="ms-label">
+                            <div class="ms-people">Invite 25 Friends</div>
+                            <div class="ms-reward">+1 TON + Diamond Badge</div>
+                        </div>
+                        <div class="ms-check">🔒</div>
+                    </div>
+                </div>
+                <div class="ms-progress-bar" style="margin-top:14px;">
+                    <div class="ms-progress-fill" id="msProgressFill" style="width:0%"></div>
+                </div>
+                <div style="display:flex;justify-content:space-between;margin-top:5px;">
+                    <span style="font-size:0.65rem;color:var(--t3);">Your referrals: <span id="msCurrentCount" style="color:var(--green);font-weight:700;">0</span></span>
+                    <span style="font-size:0.65rem;color:var(--t3);">Next goal: <span id="msNextGoal" style="color:var(--blue);">3</span></span>
                 </div>
             </div>
 
@@ -1377,6 +1554,20 @@
     </nav>
 
     <!-- ══════════════════ MODALS ══════════════════ -->
+
+
+    <!-- Loot Box Animation -->
+    <div id="lootboxAnimOverlay" class="lootbox-overlay">
+        <div class="loot-anim-box">
+            <span class="loot-chest" id="lootChestEmoji">📦</span>
+            <div class="loot-reward-text" id="lootRewardText">+0 pts</div>
+            <div class="loot-sub-text">Added to your balance!</div>
+            <button onclick="document.getElementById('lootboxAnimOverlay').classList.remove('show')" 
+                style="background:var(--green);color:#060810;border:none;border-radius:var(--r-md);padding:12px 32px;font-family:var(--font-head);font-weight:700;font-size:0.9rem;cursor:pointer;">
+                Awesome! 🎉
+            </button>
+        </div>
+    </div>
 
     <!-- Success Modal -->
     <div id="successModalOverlay" class="modal-overlay">
@@ -2391,6 +2582,8 @@
 
         function renderHomeUI() {
             if (!currentUser) return;
+            renderLeaderboard();
+            updateMilestones();
             document.getElementById('homeDisplayTon').textContent = parseFloat(currentUser.tonBalance || 0).toFixed(4);
             document.getElementById('homeDisplayPoints').textContent = Math.floor(currentUser.pointBalance || 0);
             document.getElementById('homeDisplayToday').textContent = `+${Math.floor(currentUser.todayPoints || 0)}`;
@@ -2565,6 +2758,134 @@
             setTimeout(updateAdGoalCount, 100);
         }
         window.setupAdsToEarn = setupAdsToEarnPatched;
+
+
+        // ══════════════════════════════════════════
+        // FEATURE: LEADERBOARD
+        // ══════════════════════════════════════════
+        async function renderLeaderboard() {
+            const container = document.getElementById('leaderboardList');
+            if (!container) return;
+            try {
+                const q = query(
+                    collection(db, 'users'),
+                    orderBy('lifetimePointsEarned', 'desc'),
+                    limit(5)
+                );
+                const snap = await getDocs(q);
+                const rankClasses = ['gold','silver','bronze','normal','normal'];
+                const rankSymbols = ['🥇','🥈','🥉','4','5'];
+                let html = '';
+                let myRank = -1;
+                let i = 0;
+                snap.forEach(d => {
+                    const u = d.data();
+                    const isMe = currentUser && d.id === currentUser.id;
+                    if (isMe) myRank = i + 1;
+                    const initials = (u.firstName || u.username || 'U').slice(0,2).toUpperCase();
+                    const pts = Math.floor(u.lifetimePointsEarned || 0);
+                    const rClass = rankClasses[i] || 'normal';
+                    html += `
+                    <div class="lb-row${isMe ? ' lb-me-row' : ''}">
+                        <div class="lb-rank ${rClass}">${rankSymbols[i]}</div>
+                        <div class="lb-avatar">${initials}</div>
+                        <div class="lb-name">${u.firstName || u.username || 'User'}${isMe ? '<span class="lb-you">YOU</span>' : ''}</div>
+                        <div class="lb-pts">${pts.toLocaleString()} pts</div>
+                    </div>`;
+                    i++;
+                });
+                if (myRank === -1 && currentUser) {
+                    const myPts = Math.floor(currentUser.lifetimePointsEarned || 0);
+                    const myInit = (currentUser.firstName || 'U').slice(0,2).toUpperCase();
+                    html += `<div class="lb-row lb-me-row">
+                        <div class="lb-rank normal">—</div>
+                        <div class="lb-avatar">${myInit}</div>
+                        <div class="lb-name">${currentUser.firstName || 'You'}<span class="lb-you">YOU</span></div>
+                        <div class="lb-pts">${myPts.toLocaleString()} pts</div>
+                    </div>`;
+                }
+                container.innerHTML = html || '<div class="empty-state">No data yet.</div>';
+            } catch(e) {
+                console.error(e);
+                container.innerHTML = '<div class="empty-state">Leaderboard loading...</div>';
+            }
+        }
+
+        // ══════════════════════════════════════════
+        // FEATURE: REFERRAL MILESTONE
+        // ══════════════════════════════════════════
+        function updateMilestones() {
+            if (!currentUser) return;
+            const count = currentUser.referralCount || 0;
+            const milestones = [3, 5, 10, 25];
+            const steps = document.querySelectorAll('#milestoneSteps .ms-step');
+            document.getElementById('msCurrentCount').textContent = count;
+
+            let nextGoal = milestones.find(m => m > count) || 25;
+            document.getElementById('msNextGoal').textContent = nextGoal;
+
+            const pct = Math.min((count / nextGoal) * 100, 100);
+            document.getElementById('msProgressFill').style.width = pct + '%';
+
+            steps.forEach((step, idx) => {
+                const target = milestones[idx];
+                step.classList.remove('achieved','next','locked');
+                const icon = step.querySelector('.ms-icon i');
+                const check = step.querySelector('.ms-check');
+                if (count >= target) {
+                    step.classList.add('achieved');
+                    check.textContent = '✅';
+                } else if (count >= (milestones[idx-1] || 0)) {
+                    step.classList.add('next');
+                    check.textContent = '→';
+                } else {
+                    step.classList.add('locked');
+                    check.textContent = '🔒';
+                }
+            });
+        }
+
+        // ══════════════════════════════════════════
+        // FEATURE: LOOT BOX ANIMATION
+        // ══════════════════════════════════════════
+        function spawnConfetti() {
+            const colors = ['#00F5A0','#FFD166','#4DA8FF','#A78BFA','#FF6B6B'];
+            for (let i = 0; i < 60; i++) {
+                const el = document.createElement('div');
+                el.className = 'confetti-piece';
+                el.style.left = Math.random() * 100 + 'vw';
+                el.style.background = colors[Math.floor(Math.random() * colors.length)];
+                el.style.width = (Math.random() * 8 + 4) + 'px';
+                el.style.height = (Math.random() * 8 + 4) + 'px';
+                el.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
+                el.style.animationDelay = (Math.random() * 0.5) + 's';
+                document.body.appendChild(el);
+                setTimeout(() => el.remove(), 4000);
+            }
+        }
+
+        function showLootboxAnimation(points) {
+            const overlay = document.getElementById('lootboxAnimOverlay');
+            const rewardEl = document.getElementById('lootRewardText');
+            const chestEl = document.getElementById('lootChestEmoji');
+            if (!overlay) return;
+            rewardEl.textContent = '+' + Math.floor(points) + ' pts';
+            chestEl.textContent = '📦';
+            overlay.classList.add('show');
+            if (tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+            setTimeout(() => { chestEl.textContent = '🎁'; spawnConfetti(); }, 400);
+        }
+
+        // Patch the existing claim button to use animation
+        const _origClaimBtn = document.getElementById('claimMinedPointsBtn');
+        if (_origClaimBtn) {
+            _origClaimBtn.addEventListener('click', function patchedClaim() {
+                if (minedBalanceLocal >= MINING_CLAIM_THRESHOLD) {
+                    const pts = Math.floor(minedBalanceLocal);
+                    setTimeout(() => showLootboxAnimation(pts), 300);
+                }
+            }, true);
+        }
 
         // ─── MAIN ───
         async function main() {
