@@ -1490,16 +1490,12 @@
             <div class="withdraw-balance-card">
                 <div class="withdraw-lbl">Available Balance</div>
                 <div class="withdraw-pts" id="withdrawPointBalance">0 Pts</div>
-                <div class="rate-tag">Rate: <span>1000 Pts = 1.00 TON</span></div>
+                <div class="rate-tag">Rate: <span>50,000 Pts = 1.00 TON</span> &nbsp;|&nbsp; <span>50,000 Pts = 120 BDT</span></div>
             </div>
 
             <!-- Method selection -->
             <div class="method-grid">
-                <div class="method-card selected" data-method="Bkash">
-                    <div class="m-icon"><i class="fas fa-mobile-alt"></i></div>
-                    <div class="m-name">Bkash (BDT)</div>
-                </div>
-                <div class="method-card" data-method="Tonkeeper">
+                <div class="method-card selected" data-method="Tonkeeper">
                     <div class="m-icon"><i class="fas fa-wallet"></i></div>
                     <div class="m-name">TON Wallet</div>
                 </div>
@@ -1508,21 +1504,27 @@
             <div class="notice-box">
                 <div class="notice-title-row"><i class="fas fa-circle-info"></i> Important Notice</div>
                 <div class="notice-body">
-                    Minimum withdraw: <strong><span id="minWithdrawDisplay">1000 Pts</span></strong><br>
-                    <strong>Requirement:</strong> 5 Valid Referrals.<br>
-                    (Referral must watch 15+ Ads to be valid)
+                    Minimum withdraw: <strong><span id="minWithdrawDisplay">1,500 Pts</span></strong><br>
+                    <strong>Tonkeeper address only.</strong> No other wallets accepted.<br><br>
+                    <strong>Referral Requirements:</strong><br>
+                    • 1–1,500 Pts → 1 Valid Ref<br>
+                    • 1,501–3,000 Pts → 2 Valid Refs<br>
+                    • 3,001–4,500 Pts → 3 Valid Refs<br>
+                    • 4,501–6,000 Pts → 4 Valid Refs<br>
+                    • 6,001+ Pts → 5 Valid Refs<br><br>
+                    ⚠️ Referrals are deducted after approval.
                 </div>
             </div>
 
-            <input type="hidden" id="withdrawalMethod" value="Bkash">
+            <input type="hidden" id="withdrawalMethod" value="Tonkeeper">
 
             <div class="form-group">
                 <label class="form-label">Amount (Points)</label>
-                <input type="number" id="withdrawalAmount" placeholder="e.g. 5000">
+                <input type="number" id="withdrawalAmount" placeholder="e.g. 50000">
             </div>
             <div class="form-group">
-                <label class="form-label" id="accountLabel">Bkash Number</label>
-                <input type="text" id="accountDetails" placeholder="017xxxxxxxx">
+                <label class="form-label" id="accountLabel">Tonkeeper Wallet Address</label>
+                <input type="text" id="accountDetails" placeholder="UQ...">
             </div>
 
             <div id="withdraw-summary" style="display:none;" class="summary-row">
@@ -1696,13 +1698,20 @@
 
         const REFERRAL_REWARD_POINTS = 30;
         const USER_CREATED_TASK_REWARD_POINTS = 3;
-        const POINTS_TO_TON_RATE = 0.001;
+        const POINTS_TO_TON_RATE = 1 / 50000; // 50,000 Pts = 1.00 TON
         const WITHDRAWAL_CONFIG = {
-            'Tonkeeper': { min: 1000, label: 'Wallet Address', placeholder: 'UQ...', rateDisplay: 'TON' },
-            'Bkash': { min: 1000, label: 'Bkash Number', placeholder: '017xxxxxxxx', rateDisplay: 'BDT' },
+            'Tonkeeper': { min: 1500, label: 'Tonkeeper Wallet Address', placeholder: 'UQ...', rateDisplay: 'TON' },
         };
-        const BDT_RATE = 0.15;
-        const MIN_WITHDRAW_REFERRALS = 5;
+        const BDT_RATE = 120 / 50000; // 50,000 Pts = 120 BDT
+        // Tiered referral requirements based on points
+        function getRequiredReferrals(pointAmount) {
+            if (pointAmount <= 1500) return 1;
+            if (pointAmount <= 3000) return 2;
+            if (pointAmount <= 4500) return 3;
+            if (pointAmount <= 6000) return 4;
+            return 5;
+        }
+        const MIN_WITHDRAW_REFERRALS = 1; // legacy fallback (tiered logic used instead)
         const VALID_REFERRAL_AD_THRESHOLD = 15;
 
         const adPackages = [
@@ -2306,11 +2315,7 @@
                 const config = WITHDRAWAL_CONFIG[method];
                 if (!isNaN(amount) && amount > 0) {
                     summaryBox.style.display = 'flex';
-                    if (method === 'Bkash') {
-                        summaryText.textContent = `${(amount * BDT_RATE).toFixed(2)} BDT`;
-                    } else {
-                        summaryText.textContent = `${(amount * POINTS_TO_TON_RATE).toFixed(4)} TON`;
-                    }
+                    summaryText.textContent = `${(amount * POINTS_TO_TON_RATE).toFixed(6)} TON`;
                 } else { summaryBox.style.display = 'none'; }
             };
             amountInput.addEventListener('input', updateSummary);
@@ -2328,11 +2333,10 @@
             if ((currentUser.pointBalance || 0) < amount) { alert("Insufficient balance."); return; }
 
             const validRefs = await getValidReferralCount();
-            if (validRefs < MIN_WITHDRAW_REFERRALS) { alert(`You need ${MIN_WITHDRAW_REFERRALS} valid referrals. You have ${validRefs}.`); return; }
+            const requiredRefs = getRequiredReferrals(amount);
+            if (validRefs < requiredRefs) { alert(`For ${amount} Pts withdrawal you need ${requiredRefs} valid referral(s). You have ${validRefs}.`); return; }
 
-            const receiveText = method === 'Bkash'
-                ? `${(amount * BDT_RATE).toFixed(2)} BDT`
-                : `${(amount * POINTS_TO_TON_RATE).toFixed(4)} TON`;
+            const receiveText = `${(amount * POINTS_TO_TON_RATE).toFixed(6)} TON`;
 
             document.getElementById('withdrawConfirmText').innerHTML = `Withdraw <strong style="color:var(--t1)">${amount} Points</strong><br>You'll receive: <strong style="color:var(--green)">${receiveText}</strong><br>To: <span style="color:var(--t2);font-size:0.8em;">${accountDetails}</span>`;
             document.getElementById('withdrawConfirmModalOverlay').classList.add('show');
