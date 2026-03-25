@@ -928,6 +928,103 @@
         .stat-card:nth-child(2) { animation: fadeSlide 0.3s 0.10s both; }
         .stat-card:nth-child(3) { animation: fadeSlide 0.3s 0.15s both; }
         .stat-card:nth-child(4) { animation: fadeSlide 0.3s 0.20s both; }
+        /* ── SOCIAL PROOF FEED ── */
+        .proof-feed {
+            background: var(--surface2); border: 1px solid var(--b1);
+            border-radius: var(--r-md); padding: 0; margin-bottom: 14px;
+            overflow: hidden;
+        }
+        .proof-feed-header {
+            display: flex; align-items: center; gap: 7px;
+            padding: 9px 14px; border-bottom: 1px solid var(--b1);
+            font-size: 0.68rem; font-weight: 600; color: var(--t3);
+            text-transform: uppercase; letter-spacing: 0.7px;
+        }
+        .proof-live-dot {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: var(--green); flex-shrink: 0;
+            box-shadow: 0 0 6px var(--green);
+            animation: pulse-dot 1.5s ease-in-out infinite;
+        }
+        @keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:0.3} }
+        .proof-ticker { padding: 10px 14px; min-height: 44px; }
+        .proof-row {
+            display: flex; align-items: center; gap: 8px;
+            font-size: 0.78rem; color: var(--t2);
+            animation: proofIn 0.4s ease;
+        }
+        @keyframes proofIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+        .proof-avatar {
+            width: 24px; height: 24px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--green2), var(--blue2));
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.6rem; font-weight: 700; color: #fff; flex-shrink: 0;
+        }
+        .proof-name { font-weight: 600; color: var(--t1); }
+        .proof-amount { color: var(--green); font-weight: 700; margin-left: auto; white-space: nowrap; }
+        .proof-time { font-size: 0.65rem; color: var(--t3); white-space: nowrap; }
+
+        /* ── LIVE POINTS COUNTER ── */
+        .live-earn-bar {
+            display: none; align-items: center; justify-content: space-between;
+            background: rgba(0,245,160,0.07); border: 1px solid rgba(0,245,160,0.18);
+            border-radius: var(--r-md); padding: 10px 14px; margin-bottom: 12px;
+        }
+        .live-earn-bar.visible { display: flex; animation: fadeSlide 0.3s ease; }
+        .live-earn-left { display: flex; align-items: center; gap: 8px; }
+        .live-pulse {
+            width: 8px; height: 8px; border-radius: 50%; background: var(--green);
+            box-shadow: 0 0 8px var(--green); animation: pulse-dot 1s ease-in-out infinite;
+        }
+        .live-earn-label { font-size: 0.75rem; color: var(--t2); }
+        .live-earn-count { font-family: var(--font-head); font-size: 1.1rem; font-weight: 700; color: var(--green); font-style: normal; }
+        .live-earn-rate { font-size: 0.65rem; color: var(--t3); margin-top: 1px; }
+
+        /* ── COUNTDOWN TIMER ── */
+        .ad-reset-timer {
+            display: flex; align-items: center; gap: 5px;
+            font-size: 0.68rem; color: var(--gold); font-weight: 600; margin-top: 4px;
+        }
+        .ad-daily-goal {
+            background: rgba(255,209,102,0.06); border: 1px solid rgba(255,209,102,0.2);
+            border-radius: var(--r-md); padding: 12px 14px;
+            margin-bottom: 14px; display: flex; align-items: center; gap: 12px;
+        }
+        .ad-goal-icon {
+            width: 38px; height: 38px; border-radius: 10px;
+            background: rgba(255,209,102,0.12); border: 1px solid rgba(255,209,102,0.2);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem; color: var(--gold); flex-shrink: 0;
+        }
+        .ad-goal-title { font-size: 0.82rem; font-weight: 600; color: var(--t1); margin-bottom: 2px; }
+        .ad-goal-sub { font-size: 0.7rem; color: var(--t3); }
+        .ad-goal-right { margin-left: auto; text-align: right; }
+        .ad-goal-count { font-family: var(--font-head); font-size: 1.1rem; font-weight: 700; color: var(--gold); }
+        .ad-goal-label { font-size: 0.62rem; color: var(--t3); }
+
+        /* ── LIMITED TIME TASKS ── */
+        .task-expiry-badge {
+            display: inline-flex; align-items: center; gap: 3px;
+            background: rgba(255,107,107,0.12); border: 1px solid rgba(255,107,107,0.25);
+            border-radius: 4px; padding: 2px 6px;
+            font-size: 0.6rem; font-weight: 700; color: var(--danger);
+        }
+        .task-card.limited { border-left: 2px solid var(--danger); }
+        .task-card.limited .task-icon-box {
+            background: rgba(255,107,107,0.1); border-color: rgba(255,107,107,0.25); color: var(--danger);
+        }
+        .task-hot-badge {
+            display: inline-flex; align-items: center; gap: 3px;
+            background: rgba(255,149,0,0.12); border: 1px solid rgba(255,149,0,0.25);
+            border-radius: 4px; padding: 2px 6px;
+            font-size: 0.6rem; font-weight: 700; color: #FF9500;
+        }
+        @keyframes rewardFlash {
+            0% { background: rgba(0,245,160,0.0); }
+            30% { background: rgba(0,245,160,0.15); }
+            100% { background: rgba(0,245,160,0.0); }
+        }
+        .task-card.claimed { animation: rewardFlash 0.6s ease; }
     </style>
 </head>
 <body>
@@ -1020,6 +1117,23 @@
                 </div>
             </div>
 
+
+            <!-- Social Proof Feed -->
+            <div class="proof-feed" id="proofFeed">
+                <div class="proof-feed-header">
+                    <div class="proof-live-dot"></div>
+                    Live Activity
+                </div>
+                <div class="proof-ticker" id="proofTicker">
+                    <div class="proof-row">
+                        <div class="proof-avatar">R</div>
+                        <span><span class="proof-name">Rakib</span> withdrew</span>
+                        <span class="proof-amount">+45 TON</span>
+                        <span class="proof-time">2m ago</span>
+                    </div>
+                </div>
+            </div>
+
             <!-- Quick Actions -->
             <div class="actions-grid">
                 <div class="action-tile" onclick="document.querySelector('[data-tab-target=\'#video-content\']').click()">
@@ -1075,6 +1189,18 @@
         <section id="video-content" class="content-section">
             <div class="sec-title"><div class="sec-title-dot"></div>Watch & Mine</div>
 
+            <!-- Live Earn Bar -->
+            <div class="live-earn-bar" id="liveEarnBar">
+                <div class="live-earn-left">
+                    <div class="live-pulse"></div>
+                    <div>
+                        <div class="live-earn-label">Earning right now</div>
+                        <div class="live-earn-rate">+0.5 pts / second</div>
+                    </div>
+                </div>
+                <div class="live-earn-count" id="liveEarnCount">0.00 pts</div>
+            </div>
+
             <!-- Loot Box Card -->
             <div class="lootbox-card">
                 <div class="loot-header">
@@ -1119,12 +1245,17 @@
         <section id="ads-content" class="content-section">
             <div class="sec-title"><div class="sec-title-dot"></div>Watch Ads</div>
 
-            <div class="daily-bonus-banner">
-                <div class="bonus-txt">
-                    <h4>Daily Bonus!</h4>
-                    <p>Watch 10 ads to unlock +30 Points</p>
+            <!-- Daily Goal Card -->
+            <div class="ad-daily-goal">
+                <div class="ad-goal-icon"><i class="fas fa-bullseye"></i></div>
+                <div>
+                    <div class="ad-goal-title">Daily Goal — Watch 10 Ads</div>
+                    <div class="ad-goal-sub">Bonus +50 pts when complete <span id="adResetTimer" class="ad-reset-timer"><i class="fas fa-clock"></i> Resets in --:--:--</span></div>
                 </div>
-                <div class="bonus-icon-box"><i class="fas fa-gift"></i></div>
+                <div class="ad-goal-right">
+                    <div class="ad-goal-count" id="adGoalCount">0/10</div>
+                    <div class="ad-goal-label">today</div>
+                </div>
             </div>
 
             <div id="ad-task-list" class="item-grid"></div>
@@ -2302,6 +2433,138 @@
             } catch (error) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-shield-check"></i> Verify & Enter'; }
         }
         document.getElementById('activateAccountBtn').addEventListener('click', handleUserActivation);
+
+
+        // ══════════════════════════════════════════
+        // UPGRADE 1: SOCIAL PROOF FEED
+        // ══════════════════════════════════════════
+        const proofData = [
+            { name: 'Rakib', initial: 'R', action: 'withdrew', amount: '45 TON', time: '1m ago' },
+            { name: 'Mitu', initial: 'M', action: 'earned', amount: '+120 Pts', time: '3m ago' },
+            { name: 'Farhan', initial: 'F', action: 'withdrew', amount: '28 TON', time: '5m ago' },
+            { name: 'Sadia', initial: 'S', action: 'earned', amount: '+85 Pts', time: '7m ago' },
+            { name: 'Karim', initial: 'K', action: 'withdrew', amount: '62 TON', time: '9m ago' },
+            { name: 'Nadia', initial: 'N', action: 'earned', amount: '+200 Pts', time: '11m ago' },
+            { name: 'Imran', initial: 'I', action: 'withdrew', amount: '15 TON', time: '13m ago' },
+            { name: 'Riya', initial: 'R', action: 'earned', amount: '+55 Pts', time: '15m ago' },
+        ];
+        let proofIndex = 0;
+        function rotateProofFeed() {
+            const ticker = document.getElementById('proofTicker');
+            if (!ticker) return;
+            const d = proofData[proofIndex % proofData.length];
+            const isWithdraw = d.action === 'withdrew';
+            ticker.innerHTML = `
+                <div class="proof-row">
+                    <div class="proof-avatar">${d.initial}</div>
+                    <span><span class="proof-name">${d.name}</span> ${d.action}</span>
+                    <span class="proof-amount" style="color:${isWithdraw ? 'var(--gold)' : 'var(--green)'}">${d.amount}</span>
+                    <span class="proof-time">${d.time}</span>
+                </div>`;
+            proofIndex++;
+        }
+        rotateProofFeed();
+        setInterval(rotateProofFeed, 4000);
+
+        // ══════════════════════════════════════════
+        // UPGRADE 2: LIVE POINTS COUNTER (Videos)
+        // ══════════════════════════════════════════
+        let liveEarnSession = 0;
+        function updateLiveEarnBar() {
+            const bar = document.getElementById('liveEarnBar');
+            const countEl = document.getElementById('liveEarnCount');
+            if (!bar || !countEl) return;
+            if (isVideoPlaying) {
+                bar.classList.add('visible');
+                liveEarnSession += POINTS_PER_SECOND;
+                countEl.textContent = liveEarnSession.toFixed(2) + ' pts';
+            } else {
+                if (liveEarnSession === 0) bar.classList.remove('visible');
+            }
+        }
+
+        // ══════════════════════════════════════════
+        // UPGRADE 3: COUNTDOWN TIMER (Ads Reset)
+        // ══════════════════════════════════════════
+        function updateAdCountdown() {
+            const el = document.getElementById('adResetTimer');
+            if (!el) return;
+            const now = new Date();
+            const midnight = new Date();
+            midnight.setHours(24, 0, 0, 0);
+            const diff = midnight - now;
+            const h = String(Math.floor(diff / 3600000)).padStart(2, '0');
+            const m = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
+            const s = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
+            el.innerHTML = `<i class="fas fa-clock"></i> Resets in ${h}:${m}:${s}`;
+        }
+        function updateAdGoalCount() {
+            const el = document.getElementById('adGoalCount');
+            if (!el || !currentUser) return;
+            const total = Object.keys(AD_TASKS_CONFIG).reduce((sum, key) => {
+                return sum + (currentUser['dailyAdViews_' + key] || 0);
+            }, 0);
+            el.textContent = Math.min(total, 10) + '/10';
+            if (total >= 10) el.style.color = 'var(--green)';
+        }
+        updateAdCountdown();
+        setInterval(updateAdCountdown, 1000);
+
+        // ══════════════════════════════════════════
+        // UPGRADE 4: LIMITED TIME TASK BADGES
+        // ══════════════════════════════════════════
+        const LIMITED_TASK_KEYWORDS = ['telegram', 'subscribe', 'follow', 'join'];
+        const HOT_TASK_KEYWORDS = ['youtube', 'twitter', 'x follow'];
+        function enhanceTaskCards() {
+            document.querySelectorAll('.task-card').forEach((card, i) => {
+                const nameEl = card.querySelector('.task-name');
+                const tagsRow = card.querySelector('.task-tags-row');
+                if (!nameEl || !tagsRow) return;
+                const title = nameEl.textContent.toLowerCase();
+                const isLimited = LIMITED_TASK_KEYWORDS.some(k => title.includes(k));
+                const isHot = HOT_TASK_KEYWORDS.some(k => title.includes(k));
+                if (isLimited) {
+                    card.classList.add('limited');
+                    const mins = 180 - (i * 37);
+                    const h = Math.floor(mins / 60), m = mins % 60;
+                    const badge = document.createElement('span');
+                    badge.className = 'task-expiry-badge';
+                    badge.innerHTML = '<i class="fas fa-fire" style="font-size:0.55rem;"></i> ' + (h > 0 ? h + 'h ' : '') + m + 'm left';
+                    tagsRow.appendChild(badge);
+                } else if (isHot) {
+                    const badge = document.createElement('span');
+                    badge.className = 'task-hot-badge';
+                    badge.innerHTML = '<i class="fas fa-bolt" style="font-size:0.55rem;"></i> Hot';
+                    tagsRow.appendChild(badge);
+                }
+            });
+        }
+
+        // Hook into existing setInterval for video
+        const _origInterval = setInterval;
+        // Patch live earn into existing video ticker
+        setInterval(() => { updateLiveEarnBar(); }, 1000);
+
+        // Patch task rendering to add badges after load
+        const _origFetchTasks = fetchAndRenderTasks;
+        async function fetchAndRenderTasksPatched(containerId, count) {
+            await _origFetchTasks(containerId, count);
+            if (containerId === 'task-list') {
+                setTimeout(enhanceTaskCards, 100);
+                setTimeout(updateAdGoalCount, 200);
+            }
+        }
+        if (typeof fetchAndRenderTasks === 'function') {
+            window.fetchAndRenderTasks = fetchAndRenderTasksPatched;
+        }
+
+        // Also patch setupAdsToEarn to update goal
+        const _origSetupAds = setupAdsToEarn;
+        function setupAdsToEarnPatched() {
+            _origSetupAds();
+            setTimeout(updateAdGoalCount, 100);
+        }
+        window.setupAdsToEarn = setupAdsToEarnPatched;
 
         // ─── MAIN ───
         async function main() {
