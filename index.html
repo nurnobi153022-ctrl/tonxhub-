@@ -183,7 +183,21 @@ a{color:inherit;text-decoration:none}
 .h-tile-l{font-size:.62rem;color:rgba(255,255,255,.75);margin-top:1px}
 
 /* CARDS */
-.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:15px;margin-bottom:10px;box-shadow:var(--shadow);position:relative;overflow:hidden;}
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:16px;
+  margin-bottom:10px;
+  box-shadow:0 4px 0 rgba(0,0,0,.25), 0 6px 24px rgba(0,0,0,.2);
+  position:relative;overflow:hidden;
+  transition:box-shadow .2s, transform .2s;
+}
+.card::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.07),transparent);
+  pointer-events:none;
+}
 .card-title{font-family:'Outfit',sans-serif;font-size:.92rem;font-weight:700;margin-bottom:11px;display:flex;align-items:center;gap:7px;}
 .card-glow{padding-left:18px}
 .card-glow::before{content:"";position:absolute;left:0;top:16px;bottom:16px;width:3px;border-radius:0 99px 99px 0;background:var(--grad);}
@@ -198,21 +212,110 @@ a{color:inherit;text-decoration:none}
 .qa-label{font-size:.83rem;font-weight:600}
 .qa-sub{font-size:.68rem;color:var(--text2);margin-top:1px}
 
-/* ICON ONLY QUICK BUTTONS */
-.icon-action-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
-.icon-action-btn{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:12px 6px 10px;display:flex;flex-direction:column;align-items:center;gap:5px;transition:border-color var(--t),transform var(--t);box-shadow:var(--shadow);cursor:pointer;}
-.icon-action-btn:active{transform:scale(.95);border-color:var(--border2)}
-.ia-ico{font-size:1.5rem}
-.ia-lbl{font-size:.6rem;font-weight:600;color:var(--text2);text-align:center}
+/* icon-action styles moved to 3D section */
 
-/* UX TABLE (Home) */
-.ux-table{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+/* UX TABLE (Home) — 3D Smooth Category Buttons */
+.ux-table{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
 .ux-table-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px}
-.ux-tile{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:12px 10px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;transition:border-color var(--t),transform var(--t);box-shadow:var(--shadow);}
-.ux-tile:active{transform:scale(.96);border-color:var(--border2)}
-.ux-tile-ico{font-size:1.5rem}
-.ux-tile-lbl{font-size:.68rem;font-weight:600;color:var(--text2);text-align:center}
-.ux-tile-val{font-family:'Outfit',sans-serif;font-size:.75rem;font-weight:700;color:var(--a4)}
+.ux-tile{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:15px 10px 13px;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  cursor:pointer;
+  position:relative;overflow:hidden;
+  transition:transform .18s cubic-bezier(.34,1.56,.64,1), box-shadow .18s ease, border-color .18s ease;
+  box-shadow: 0 4px 0 rgba(0,0,0,.35), 0 6px 20px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.07);
+  transform: perspective(300px) translateZ(0);
+}
+.ux-tile::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(160deg,rgba(255,255,255,.07) 0%,transparent 50%);
+  border-radius:inherit;pointer-events:none;
+}
+.ux-tile::after{
+  content:"";position:absolute;bottom:0;left:0;right:0;height:3px;
+  background:var(--grad);opacity:0;border-radius:0 0 18px 18px;
+  transition:opacity .18s ease;
+}
+.ux-tile:hover{
+  transform:perspective(300px) translateY(-3px) translateZ(4px);
+  box-shadow:0 8px 0 rgba(0,0,0,.3), 0 12px 32px rgba(124,106,255,.2), inset 0 1px 0 rgba(255,255,255,.1);
+  border-color:var(--border2);
+}
+.ux-tile:hover::after{opacity:1}
+.ux-tile:active{
+  transform:perspective(300px) translateY(2px) translateZ(-2px);
+  box-shadow:0 2px 0 rgba(0,0,0,.4), 0 4px 10px rgba(0,0,0,.2), inset 0 1px 0 rgba(255,255,255,.05);
+}
+.ux-tile-ico{font-size:1.7rem;filter:drop-shadow(0 2px 4px rgba(0,0,0,.3))}
+.ux-tile-lbl{font-size:.7rem;font-weight:700;color:var(--text2);text-align:center;letter-spacing:.02em}
+.ux-tile-val{font-family:'Outfit',sans-serif;font-size:.78rem;font-weight:800;color:var(--a4);letter-spacing:.01em}
+
+/* ICON ACTION BUTTONS — 3D Style */
+.icon-action-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+.icon-action-btn{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:13px 6px 11px;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  cursor:pointer;position:relative;overflow:hidden;
+  transition:transform .18s cubic-bezier(.34,1.56,.64,1), box-shadow .18s ease;
+  box-shadow: 0 4px 0 rgba(0,0,0,.35), 0 6px 16px rgba(0,0,0,.2), inset 0 1px 0 rgba(255,255,255,.06);
+}
+.icon-action-btn::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(160deg,rgba(255,255,255,.06) 0%,transparent 55%);
+  border-radius:inherit;pointer-events:none;
+}
+.icon-action-btn:hover{
+  transform:translateY(-3px);
+  box-shadow:0 7px 0 rgba(0,0,0,.3), 0 10px 28px rgba(124,106,255,.18), inset 0 1px 0 rgba(255,255,255,.09);
+  border-color:var(--border2);
+}
+.icon-action-btn:active{
+  transform:translateY(2px);
+  box-shadow:0 2px 0 rgba(0,0,0,.4), 0 3px 8px rgba(0,0,0,.2);
+}
+.ia-ico{font-size:1.55rem;filter:drop-shadow(0 2px 3px rgba(0,0,0,.3))}
+.ia-lbl{font-size:.62rem;font-weight:700;color:var(--text2);text-align:center;letter-spacing:.02em}
+
+/* FEATURE POPUP OVERLAY — for button click notices */
+.feat-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:800;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px);}
+.feat-overlay.open{display:flex;animation:ovFade .25s ease}
+.feat-box{background:var(--surface);border:1px solid var(--border2);border-radius:24px;width:100%;max-width:400px;max-height:88vh;overflow-y:auto;animation:noticeIn .3s cubic-bezier(.34,1.56,.64,1);}
+.feat-top{padding:20px 18px 16px;border-radius:24px 24px 0 0;background:var(--grad);text-align:center;position:relative;}
+.feat-close-btn{position:absolute;top:12px;right:14px;width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff;cursor:pointer;border:none;transition:background .15s;}
+.feat-close-btn:active{background:rgba(0,0,0,.45)}
+.feat-ico-big{font-size:2.8rem;margin-bottom:8px;filter:drop-shadow(0 3px 8px rgba(0,0,0,.35))}
+.feat-title{font-family:'Outfit',sans-serif;font-size:1.2rem;font-weight:900;color:#fff;margin-bottom:3px}
+.feat-subtitle{font-size:.75rem;color:rgba(255,255,255,.8)}
+.feat-body{padding:16px 18px 20px}
+.feat-info-row{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);}
+.feat-info-row:last-child{border-bottom:none;padding-bottom:0}
+.feat-info-ico{font-size:1.3rem;width:26px;text-align:center;flex-shrink:0;margin-top:1px}
+.feat-info-text{font-size:.8rem;color:var(--text2);line-height:1.55}
+.feat-info-text strong{color:var(--text);display:block;font-size:.83rem;margin-bottom:2px}
+.feat-info-val{font-family:'Outfit',sans-serif;font-weight:800;color:var(--a4)}
+.feat-cta{width:100%;padding:14px;border-radius:99px;background:var(--grad);color:#fff;font-family:'Outfit',sans-serif;font-weight:900;font-size:.95rem;margin-top:14px;box-shadow:0 5px 20px rgba(124,106,255,.35);transition:transform .15s,opacity .15s;}
+.feat-cta:active{transform:scale(.97);opacity:.9}
+
+/* DAILY BONUS POPUP IFRAME */
+.daily-popup-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:850;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(10px);}
+.daily-popup-overlay.open{display:flex;animation:ovFade .25s ease}
+.daily-popup-box{background:var(--surface);border:1px solid var(--border2);border-radius:24px;width:100%;max-width:420px;overflow:hidden;animation:noticeIn .32s cubic-bezier(.34,1.56,.64,1);}
+.daily-popup-top{background:var(--grad-gold);padding:20px 18px 16px;text-align:center;position:relative;}
+.daily-popup-close{position:absolute;top:12px;right:14px;width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,.2);display:flex;align-items:center;justify-content:center;font-size:14px;color:#1a1a1a;cursor:pointer;border:none;font-weight:700;}
+.daily-popup-close:active{background:rgba(0,0,0,.35)}
+.daily-popup-title{font-family:'Outfit',sans-serif;font-size:1.2rem;font-weight:900;color:#1a1a1a;margin-bottom:3px}
+.daily-popup-sub{font-size:.75rem;color:rgba(0,0,0,.65)}
+.daily-popup-body{padding:16px 18px 20px}
+.daily-streak-row{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-bottom:14px}
+.daily-popup-btn{width:100%;padding:14px;border-radius:99px;background:var(--grad-gold);color:#1a1a1a;font-family:'Outfit',sans-serif;font-weight:900;font-size:.95rem;box-shadow:0 5px 20px rgba(255,209,102,.35);transition:transform .15s,opacity .15s;}
+.daily-popup-btn:active:not(:disabled){transform:scale(.97);opacity:.9}
+.daily-popup-btn:disabled{opacity:.55;cursor:not-allowed;box-shadow:none}
 
 /* PROMO CODE */
 .promo-input-row{display:flex;gap:7px;margin-top:8px}
@@ -354,7 +457,19 @@ a{color:inherit;text-decoration:none}
 .t-inf {background:var(--grad)}
 
 /* SECTION HEADINGS */
-.s-head{font-family:'Outfit',sans-serif;font-size:.93rem;font-weight:700;margin-bottom:11px;display:flex;align-items:center;gap:7px;}
+.s-head{
+  font-family:'Outfit',sans-serif;font-size:1rem;font-weight:800;
+  margin-bottom:12px;display:flex;align-items:center;gap:8px;
+  padding:10px 14px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px;
+  box-shadow:var(--shadow);
+}
+.s-head::before{
+  content:"";width:3px;height:18px;
+  background:var(--grad);border-radius:99px;flex-shrink:0;
+}
 .s-head-sub{font-size:.72rem;color:var(--text2);font-weight:400;margin-left:auto}
 .empty{text-align:center;padding:36px 20px;color:var(--text2);font-size:.85rem}
 .skeleton-list .skel{margin-bottom:8px}
@@ -536,7 +651,7 @@ a{color:inherit;text-decoration:none}
 
         <!-- Icon Action Row: Daily Login | Withdrawal | Refer | Weekly Gift -->
         <div class="icon-action-row">
-          <div class="icon-action-btn" onclick="document.getElementById('dailyBonusCard').scrollIntoView({behavior:'smooth'})">
+          <div class="icon-action-btn" onclick="openDailyPopup()">
             <span class="ia-ico">🎁</span>
             <span class="ia-lbl">Daily Bonus</span>
           </div>
@@ -544,11 +659,11 @@ a{color:inherit;text-decoration:none}
             <span class="ia-ico">💸</span>
             <span class="ia-lbl">Withdraw</span>
           </div>
-          <div class="icon-action-btn" onclick="navTo('referSection')">
+          <div class="icon-action-btn" onclick="showFeatPopup('refer')">
             <span class="ia-ico">👥</span>
             <span class="ia-lbl">Refer</span>
           </div>
-          <div class="icon-action-btn" onclick="openModal('weeklyGiftModal')">
+          <div class="icon-action-btn" onclick="showFeatPopup('weekly')">
             <span class="ia-ico">🎀</span>
             <span class="ia-lbl">Weekly Gift</span>
           </div>
@@ -556,22 +671,22 @@ a{color:inherit;text-decoration:none}
 
         <!-- UX Table -->
         <div class="ux-table">
-          <div class="ux-tile" onclick="navTo('taskSection')">
+          <div class="ux-tile" onclick="showFeatPopup('tasks')">
             <span class="ux-tile-ico">✅</span>
             <span class="ux-tile-lbl">Tasks</span>
             <span class="ux-tile-val">Earn pts</span>
           </div>
-          <div class="ux-tile" onclick="navTo('earnSection')">
+          <div class="ux-tile" onclick="showFeatPopup('ads')">
             <span class="ux-tile-ico">📣</span>
             <span class="ux-tile-lbl">Watch Ads</span>
             <span class="ux-tile-val">+10 pts</span>
           </div>
-          <div class="ux-tile" onclick="navTo('leaderSection')">
+          <div class="ux-tile" onclick="showFeatPopup('leaderboard')">
             <span class="ux-tile-ico">🏆</span>
             <span class="ux-tile-lbl">Leaderboard</span>
             <span class="ux-tile-val">Top earners</span>
           </div>
-          <div class="ux-tile" id="promoTile" onclick="togglePromo()">
+          <div class="ux-tile" id="promoTile" onclick="showFeatPopup('promo')">
             <span class="ux-tile-ico">🎟️</span>
             <span class="ux-tile-lbl">Promo Code</span>
             <span class="ux-tile-val" id="promoStatusLbl">Enter code</span>
@@ -590,7 +705,9 @@ a{color:inherit;text-decoration:none}
 
         <!-- Spin Wheel moved here -->
         <div class="card" id="homeSpinCard">
-          <div class="card-title">🎰 Spin Wheel <span style="font-size:.7rem;color:var(--text2);font-weight:400">1 free/hr</span></div>
+          <div class="card-title">🎰 Spin Wheel <span style="font-size:.7rem;color:var(--text2);font-weight:400">1 free/hr</span>
+            <button onclick="showFeatPopup('spin')" style="margin-left:auto;font-size:.7rem;padding:3px 9px;border-radius:99px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);font-weight:600">ℹ️ Info</button>
+          </div>
           <div class="spin-wrap">
             <canvas id="spinCanvas" width="270" height="270"></canvas>
             <button class="spin-main-btn" id="spinBtn">🎰 SPIN!</button>
@@ -765,6 +882,53 @@ a{color:inherit;text-decoration:none}
 
 </div><!-- /shell -->
 
+<!-- DAILY BONUS POPUP -->
+<div class="daily-popup-overlay" id="dailyBonusPopup">
+  <div class="daily-popup-box">
+    <div class="daily-popup-top">
+      <button class="daily-popup-close" onclick="closeDailyPopup()">✕</button>
+      <div style="font-size:2.5rem;margin-bottom:8px">🎁</div>
+      <div class="daily-popup-title">Daily Login Bonus</div>
+      <div class="daily-popup-sub">Login every day to earn streak rewards!</div>
+    </div>
+    <div class="daily-popup-body">
+      <div class="daily-streak-row" id="popupStreakGrid"></div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:12px 14px;margin-bottom:14px;">
+        <div class="feat-info-row" style="padding-top:0">
+          <span class="feat-info-ico">📅</span>
+          <div class="feat-info-text"><strong>7-Day Streak System</strong>Complete your streak for bigger rewards each day.</div>
+        </div>
+        <div class="feat-info-row">
+          <span class="feat-info-ico">💰</span>
+          <div class="feat-info-text"><strong>Rewards</strong><span class="feat-info-val">Day 1: 5pts → Day 7: 20pts</span></div>
+        </div>
+        <div class="feat-info-row">
+          <span class="feat-info-ico">⏰</span>
+          <div class="feat-info-text"><strong>Reset Time</strong>Resets every 24 hours. Don't miss a day!</div>
+        </div>
+        <div class="feat-info-row">
+          <span class="feat-info-ico">⚠️</span>
+          <div class="feat-info-text"><strong>Note</strong>Missing a day resets your streak back to Day 1.</div>
+        </div>
+      </div>
+      <button class="daily-popup-btn" id="dailyPopupBtn">⏳ Loading…</button>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURE POPUP (reusable for all buttons) -->
+<div class="feat-overlay" id="featOverlay">
+  <div class="feat-box">
+    <div class="feat-top" id="featTop">
+      <button class="feat-close-btn" onclick="closeFeatPopup()">✕</button>
+      <div class="feat-ico-big" id="featIco">⭐</div>
+      <div class="feat-title" id="featTitle">Feature</div>
+      <div class="feat-subtitle" id="featSubtitle"></div>
+    </div>
+    <div class="feat-body" id="featBody"></div>
+  </div>
+</div>
+
 <!-- MODALS -->
 
 <!-- Withdraw Modal -->
@@ -839,6 +1003,10 @@ import { getAnalytics }
 import {
   getDatabase, ref, get, set, update, onValue, increment, push
 } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
+import {
+  getFirestore, collection, doc, getDoc, setDoc, updateDoc,
+  query, where, orderBy, limit, getDocs, serverTimestamp, increment as fsIncrement
+} from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
 /* ─── FIREBASE CONFIG ─── */
 const firebaseConfig = {
@@ -855,6 +1023,23 @@ const firebaseConfig = {
 const fireApp   = initializeApp(firebaseConfig);
 const analytics = getAnalytics(fireApp);
 const db        = getDatabase(fireApp);
+const fsdb      = getFirestore(fireApp); // Firestore for secure collections
+
+/*
+ ╔══════════════════════════════════════════════════════════╗
+ ║  FIRESTORE COMPOSITE INDEX QUERIES NEEDED                ║
+ ║  Create these in Firebase Console → Firestore → Indexes  ║
+ ╠══════════════════════════════════════════════════════════╣
+ ║  Collection: withdrawals                                 ║
+ ║    Fields: userId ASC, createdAt DESC                    ║
+ ║  Collection: transactions                                ║
+ ║    Fields: userId ASC, createdAt DESC                    ║
+ ║  Collection: users                                       ║
+ ║    Fields: pointBalance DESC, joinedAt ASC               ║
+ ║  Collection: tasks                                       ║
+ ║    Fields: completionCount DESC                          ║
+ ╚══════════════════════════════════════════════════════════╝
+*/
 
 /* ─── TELEGRAM USER ─── */
 tg.ready(); tg.expand();
@@ -907,6 +1092,17 @@ async function initUser() {
       photoUrl:  TG_USER.photo_url  || "",
       joinedAt:  Date.now(),
     });
+    // Mirror to Firestore /users (rules: create if true)
+    try {
+      await setDoc(doc(fsdb, "users", USER_ID), {
+        pointBalance: 0, tonBalance: 0,
+        totalInvites: 0, referralCount: 0,
+        isBanned: false,
+        username:  TG_USER.username   || "user",
+        firstName: TG_USER.first_name || "User",
+        joinedAt:  serverTimestamp(),
+      }, { merge: true });
+    } catch(_) {}
   } else {
     // Patch missing fields for old users
     const d = snap.val();
@@ -935,6 +1131,8 @@ function subscribeUser() {
     renderTasks();
     updateDailyBtn();
     renderStreak();
+    renderPopupStreak();
+    updateDailyPopupBtn();
     renderGiftTiles();
     renderReferSection();
     document.getElementById("adsWatchedCount").textContent = S.adsWatched;
@@ -999,6 +1197,10 @@ async function registerReferral(refId) {
   if (!refSnap.exists()) return;
   await update(ref(db, `users/${USER_ID}`), { referredBy: refId, referValid: false, referAdsCount: 0 });
   await update(ref(db, `users/${refId}`), { refs: increment(1) });
+  // Firestore: increment totalInvites by 1 (rules allow max +1 at a time)
+  try {
+    await updateDoc(doc(fsdb, "users", refId), { totalInvites: fsIncrement(1) });
+  } catch(_) {}
 }
 
 async function checkReferralValidation() {
@@ -1012,6 +1214,10 @@ async function checkReferralValidation() {
       validRefs: increment(1),
       points: increment(REF_REWARD_PTS)
     });
+    // Firestore: increment referralCount by 1 (rules allow max +1)
+    try {
+      await updateDoc(doc(fsdb, "users", referredBy), { referralCount: fsIncrement(1) });
+    } catch(_) {}
     toast("🎉 Your referrer earned 400 pts from your activity!", "ok");
   }
 }
@@ -1023,26 +1229,44 @@ async function submitWithdraw(wallet, pointsAmt) {
   const d    = snap.val();
   if ((d.points || 0) < pointsAmt) throw new Error("Insufficient points");
   const tonAmt = pointsAmt / PTS_PER_TON;
-  const reqId  = `req_${Date.now()}`;
-  await set(ref(db, `users/${USER_ID}/withdrawals/${reqId}`), {
-    wallet, pointsAmt, tonAmt, status: "pending", at: Date.now()
+
+  // Write to Firestore /withdrawals — rules: status must be 'pending', pointAmount >= 1500
+  const wRef = doc(collection(fsdb, "withdrawals"));
+  await setDoc(wRef, {
+    userId: USER_ID,
+    wallet,
+    pointAmount: pointsAmt,
+    tonAmount: tonAmt,
+    status: "pending",
+    createdAt: serverTimestamp()
   });
+
+  // Deduct points from Realtime DB
   await update(ref(db, `users/${USER_ID}`), { points: (d.points || 0) - pointsAmt });
-  return reqId;
+  return wRef.id;
 }
 
 async function applyPromoCode(code) {
   if (!code) throw new Error("Enter a code first");
-  const codeRef = ref(db, `promoCodes/${code.toUpperCase()}`);
-  const snap = await get(codeRef);
-  if (!snap.exists()) throw new Error("Invalid promo code");
-  const c = snap.val();
+  const upperCode = code.toUpperCase();
+
+  // Read promo from Firestore /promo_codes
+  const codeRef  = doc(fsdb, "promo_codes", upperCode);
+  const codeSnap = await getDoc(codeRef);
+  if (!codeSnap.exists()) throw new Error("Invalid promo code");
+  const c = codeSnap.data();
   if (c.expiry && Date.now() > c.expiry) throw new Error("Promo code expired");
-  // Check if user already used this code
-  const usedRef = ref(db, `users/${USER_ID}/usedPromos/${code.toUpperCase()}`);
+  if (c.maxUses && (c.currentUses || 0) >= c.maxUses) throw new Error("Promo code limit reached");
+
+  // Check if user already used this code (via Realtime DB)
+  const usedRef  = ref(db, `users/${USER_ID}/usedPromos/${upperCode}`);
   const usedSnap = await get(usedRef);
   if (usedSnap.exists()) throw new Error("Already used this code");
-  // Apply
+
+  // Increment usage in Firestore — rules allow currentUses+1 only
+  await updateDoc(codeRef, { currentUses: fsIncrement(1) });
+
+  // Mark used for this user
   await set(usedRef, { usedAt: Date.now() });
   await addPoints(c.pts || 0);
   return c.pts || 0;
@@ -1354,6 +1578,12 @@ async function onTaskClick(e) {
       }
       await set(tRef, { lastTime: now, count: (snap.val()?.count || 0) + 1 });
       await addPoints(pts);
+      // Firestore task completionCount increment (rules: +1 only)
+      try {
+        const fsTaskRef = doc(fsdb, "tasks", id);
+        const ftsSnap = await getDoc(fsTaskRef);
+        if (ftsSnap.exists()) await updateDoc(fsTaskRef, { completionCount: fsIncrement(1) });
+      } catch(_) {}
       toast(`✅ Task complete! +${pts} pts`, "ok");
       haptic("medium");
       renderTasks();
@@ -1780,6 +2010,304 @@ window.closeModal = function(id) {
 };
 document.querySelectorAll(".overlay").forEach(ov => {
   ov.addEventListener("click", e => { if (e.target === ov) ov.classList.remove("open"); });
+});
+
+/* ─────────────────────────────────────────────────────
+   DAILY BONUS POPUP
+───────────────────────────────────────────────────── */
+window.openDailyPopup = function() {
+  const overlay = document.getElementById("dailyBonusPopup");
+  overlay.classList.add("open");
+  renderPopupStreak();
+  updateDailyPopupBtn();
+};
+window.closeDailyPopup = function() {
+  document.getElementById("dailyBonusPopup")?.classList.remove("open");
+};
+
+function renderPopupStreak() {
+  const grid = document.getElementById("popupStreakGrid");
+  if (!grid) return;
+  grid.innerHTML = "";
+  for (let i = 0; i < 7; i++) {
+    const claimed = S.dailyStreak > i;
+    const isToday = S.dailyStreak === i + 1;
+    const div = document.createElement("div");
+    div.className = "streak-day" + (claimed?" claimed":"") + (isToday?" today":"");
+    div.innerHTML = `<div class="sd-num">Day ${i+1}</div>
+      <div class="sd-icon">${claimed?"✅":"🎁"}</div>
+      <div class="sd-pts">+${DAILY_REWARDS[i]}</div>`;
+    grid.appendChild(div);
+  }
+}
+
+function updateDailyPopupBtn() {
+  const btn = document.getElementById("dailyPopupBtn");
+  if (!btn) return;
+  const now = Date.now();
+  const rem = DAILY_COOL - (now - S.lastDaily);
+  if (rem <= 0) {
+    const nextDay = Math.min(S.dailyStreak + 1, 7);
+    btn.disabled = false;
+    btn.textContent = `🎁 Claim Day ${nextDay} — +${DAILY_REWARDS[nextDay-1]} pts`;
+  } else {
+    btn.disabled = true;
+    const h = Math.floor(rem / 3600000);
+    const m = Math.floor((rem % 3600000) / 60000);
+    btn.textContent = `⏳ Come back in ${h}h ${m}m`;
+  }
+}
+
+document.getElementById("dailyPopupBtn").addEventListener("click", async () => {
+  const btn = document.getElementById("dailyPopupBtn");
+  btn.disabled = true;
+  btn.textContent = "Claiming…";
+  try {
+    const { reward, streak } = await claimDailyBonus();
+    toast(`🎁 Day ${streak} bonus! +${reward} pts`, "ok");
+    haptic("heavy");
+    renderPopupStreak();
+    updateDailyPopupBtn();
+    updateDailyBtn();
+  } catch(err) {
+    if (err.message.startsWith("WAIT:")) toast(`⏳ ${err.message.slice(5)} remaining`, "warn");
+    else toast("Error: " + err.message, "err");
+    updateDailyPopupBtn();
+  }
+});
+
+/* ─────────────────────────────────────────────────────
+   FEATURE POPUP SYSTEM
+───────────────────────────────────────────────────── */
+const FEAT_DATA = {
+  refer: {
+    ico: "👥",
+    title: "Refer & Earn",
+    subtitle: "Invite friends and earn real rewards!",
+    grad: "var(--grad2)",
+    body: `
+      <div class="feat-info-row" style="padding-top:0">
+        <span class="feat-info-ico">🔗</span>
+        <div class="feat-info-text"><strong>How it works</strong>Share your unique referral link with friends.</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">💰</span>
+        <div class="feat-info-text"><strong>Reward per Refer</strong><span class="feat-info-val">+400 Points</span> per valid referral</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">✅</span>
+        <div class="feat-info-text"><strong>Valid Refer Condition</strong>Your friend must watch <span class="feat-info-val">20 Ads</span> to make the referral valid.</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">📊</span>
+        <div class="feat-info-text"><strong>No Limit</strong>Refer unlimited friends — more refers = more rewards!</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">👛</span>
+        <div class="feat-info-text"><strong>Points → TON</strong>Every 50,000 pts = <span class="feat-info-val">1 TON</span> crypto</div>
+      </div>
+      <button class="feat-cta" onclick="closeFeatPopup();navTo('referSection')">👥 Go to Refer Section →</button>
+    `
+  },
+  tasks: {
+    ico: "✅",
+    title: "Complete Tasks",
+    subtitle: "Do simple tasks and earn big points!",
+    grad: "var(--grad3)",
+    body: `
+      <div class="feat-info-row" style="padding-top:0">
+        <span class="feat-info-ico">📋</span>
+        <div class="feat-info-text"><strong>What are Tasks?</strong>Simple actions like joining channels, visiting links etc.</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">💰</span>
+        <div class="feat-info-text"><strong>Reward</strong>Each task reward is <span class="feat-info-val">set by admin</span> — could be 10 to 500+ pts!</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">⏱️</span>
+        <div class="feat-info-text"><strong>Visit Requirement</strong>You must stay on the task page for at least <span class="feat-info-val">5 seconds</span>.</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">🔄</span>
+        <div class="feat-info-text"><strong>Cooldown</strong>Each task has a cooldown before you can redo it (usually 24h).</div>
+      </div>
+      <button class="feat-cta" onclick="closeFeatPopup();navTo('taskSection')">✅ Go to Tasks →</button>
+    `
+  },
+  ads: {
+    ico: "📣",
+    title: "Watch Ads & Earn",
+    subtitle: "Watch short ads for instant point rewards!",
+    grad: "linear-gradient(135deg,#ff6b9d 0%,#ffd166 100%)",
+    body: `
+      <div class="feat-info-row" style="padding-top:0">
+        <span class="feat-info-ico">📺</span>
+        <div class="feat-info-text"><strong>Monetag Ads</strong>Watch full ad (min 7 seconds) → <span class="feat-info-val">+10 pts</span></div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">🖱️</span>
+        <div class="feat-info-text"><strong>GigaPub Ads</strong>Click the ad to interact → <span class="feat-info-val">+10 pts</span> per click</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">♾️</span>
+        <div class="feat-info-text"><strong>No Daily Limit</strong>Watch as many ads as you want — unlimited rewards!</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">👥</span>
+        <div class="feat-info-text"><strong>Referral Boost</strong>Your ad views help validate your referrer's reward after <span class="feat-info-val">20 ads</span>.</div>
+      </div>
+      <button class="feat-cta" onclick="closeFeatPopup();navTo('earnSection')">📣 Go to Earn Ads →</button>
+    `
+  },
+  leaderboard: {
+    ico: "🏆",
+    title: "Leaderboard",
+    subtitle: "Compete with top earners worldwide!",
+    grad: "linear-gradient(135deg,#ffd166 0%,#ff6b9d 100%)",
+    body: `
+      <div class="feat-info-row" style="padding-top:0">
+        <span class="feat-info-ico">🥇</span>
+        <div class="feat-info-text"><strong>Top 50 Rankings</strong>See the top 50 highest earners on TonXHub.</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">⏰</span>
+        <div class="feat-info-text"><strong>Update Frequency</strong>Leaderboard refreshes every <span class="feat-info-val">24 hours</span>.</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">💎</span>
+        <div class="feat-info-text"><strong>Tiers</strong>🌱 Starter → 🥉 Bronze → 🥈 Silver → 🥇 Gold → 🏅 Platinum → 💎 Diamond</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">📈</span>
+        <div class="feat-info-text"><strong>Total Score</strong>Ranking is based on total lifetime points + TON earned.</div>
+      </div>
+      <button class="feat-cta" onclick="closeFeatPopup();navTo('leaderSection')">🏆 Go to Leaderboard →</button>
+    `
+  },
+  spin: {
+    ico: "🎰",
+    title: "Spin Wheel",
+    subtitle: "Spin once every hour for free prizes!",
+    grad: "var(--grad)",
+    body: `
+      <div class="feat-info-row" style="padding-top:0">
+        <span class="feat-info-ico">🎰</span>
+        <div class="feat-info-text"><strong>How to Play</strong>Tap SPIN and the wheel decides your prize instantly.</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">⏰</span>
+        <div class="feat-info-text"><strong>Cooldown</strong>1 free spin every <span class="feat-info-val">60 minutes</span>.</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">🎯</span>
+        <div class="feat-info-text"><strong>Prizes</strong>Win <span class="feat-info-val">5, 10, 15, 20 or 25 pts</span> — or miss with 😢 slots.</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">📲</span>
+        <div class="feat-info-text"><strong>Availability</strong>Spin wheel is right here on the Home screen — scroll down!</div>
+      </div>
+      <button class="feat-cta" onclick="closeFeatPopup()">🎰 Got it, let me spin!</button>
+    `
+  },
+  promo: {
+    ico: "🎟️",
+    title: "Promo Code",
+    subtitle: "Enter secret codes for bonus points!",
+    grad: "linear-gradient(135deg,#7c6aff 0%,#ff6b9d 100%)",
+    body: `
+      <div class="feat-info-row" style="padding-top:0">
+        <span class="feat-info-ico">🎟️</span>
+        <div class="feat-info-text"><strong>What is a Promo Code?</strong>Special codes shared by the admin that give bonus points.</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">📢</span>
+        <div class="feat-info-text"><strong>Where to get codes?</strong>Follow <span class="feat-info-val">@tonXhub_Earn</span> on Telegram for exclusive codes.</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">⚠️</span>
+        <div class="feat-info-text"><strong>One-time use</strong>Each code can only be used <span class="feat-info-val">once per user</span>.</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">⏳</span>
+        <div class="feat-info-text"><strong>Expiry</strong>Promo codes have an expiry date — use them quickly!</div>
+      </div>
+      <div style="margin-top:14px">
+        <div class="promo-input-row">
+          <input class="promo-input" id="featPromoInput" type="text" placeholder="Enter promo code…" autocomplete="off" autocapitalize="characters"/>
+          <button class="promo-submit" id="featPromoSubmit">Apply</button>
+        </div>
+      </div>
+    `
+  },
+  weekly: {
+    ico: "🎀",
+    title: "Weekly Gift Box",
+    subtitle: "Claim a bigger gift every 7 days!",
+    grad: "linear-gradient(135deg,#ff6b9d 0%,#ffd166 100%)",
+    body: `
+      <div class="feat-info-row" style="padding-top:0">
+        <span class="feat-info-ico">🎀</span>
+        <div class="feat-info-text"><strong>Weekly Reward</strong>Claim a gift once every <span class="feat-info-val">7 days</span>.</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">📈</span>
+        <div class="feat-info-text"><strong>Growing Rewards</strong>Streak week 1 gives <span class="feat-info-val">50 pts</span>, Week 8 gives <span class="feat-info-val">500 pts</span>!</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">🔄</span>
+        <div class="feat-info-text"><strong>Streak System</strong>The longer your weekly streak, the more you earn each week.</div>
+      </div>
+      <button class="feat-cta" onclick="closeFeatPopup();openModal('weeklyGiftModal')">🎀 Open Gift Box →</button>
+    `
+  }
+};
+
+window.showFeatPopup = function(type) {
+  const data = FEAT_DATA[type];
+  if (!data) return;
+  const overlay  = document.getElementById("featOverlay");
+  const top      = document.getElementById("featTop");
+  document.getElementById("featIco").textContent      = data.ico;
+  document.getElementById("featTitle").textContent    = data.title;
+  document.getElementById("featSubtitle").textContent = data.subtitle;
+  document.getElementById("featBody").innerHTML       = data.body;
+  top.style.background = data.grad;
+  overlay.classList.add("open");
+
+  // Wire promo submit inside popup if promo type
+  if (type === "promo") {
+    const fsBtn = document.getElementById("featPromoSubmit");
+    if (fsBtn) {
+      fsBtn.addEventListener("click", async () => {
+        const code = document.getElementById("featPromoInput").value.trim();
+        if (!code) { toast("Enter a promo code", "warn"); return; }
+        fsBtn.disabled = true; fsBtn.textContent = "…";
+        try {
+          const pts = await applyPromoCode(code);
+          toast(`🎟️ Promo applied! +${pts} pts`, "ok");
+          haptic("heavy");
+          document.getElementById("featPromoInput").value = "";
+          closeFeatPopup();
+        } catch(err) {
+          toast("❌ " + err.message, "err");
+        } finally {
+          fsBtn.disabled = false; fsBtn.textContent = "Apply";
+        }
+      });
+    }
+  }
+};
+
+window.closeFeatPopup = function() {
+  document.getElementById("featOverlay")?.classList.remove("open");
+};
+
+// Close feat overlay on background tap
+document.getElementById("featOverlay").addEventListener("click", e => {
+  if (e.target === document.getElementById("featOverlay")) closeFeatPopup();
+});
+document.getElementById("dailyBonusPopup").addEventListener("click", e => {
+  if (e.target === document.getElementById("dailyBonusPopup")) closeDailyPopup();
 });
 
 /* ─────────────────────────────────────────────────────
