@@ -549,14 +549,12 @@ a{color:inherit;text-decoration:none}
       <div class="notice-tagline">Earn real TON crypto — simple &amp; free</div>
     </div>
     <div class="notice-body">
-      <p class="notice-desc">
-        TonXHub is a Telegram Mini App where you can earn <strong>Points</strong> and convert them into real <strong>TON</strong> crypto.
-        Watch Ads, complete Tasks, claim your Daily Bonus &amp; Weekly Gift every day!
-      </p>
+      <!-- Join Channel & Group -->
+      <div style="font-family:'Outfit',sans-serif;font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:9px;display:flex;align-items:center;gap:6px">📣 Join Our Community First!</div>
       <div class="notice-join-btns">
         <a href="https://t.me/tonXhub_Earn" target="_blank" class="notice-join-btn">
           <span class="btn-ico">📢</span>
-          <div class="btn-txt">Official Channel<small>@tonXhub_Earn — Updates &amp; Announcements</small></div>
+          <div class="btn-txt">Official Channel<small>@tonXhub_Earn — Updates &amp; Promo Codes</small></div>
           <span style="margin-left:auto;font-size:.75rem;color:var(--a2)">Join →</span>
         </a>
         <a href="https://t.me/tonX_hub_chat" target="_blank" class="notice-join-btn">
@@ -565,17 +563,25 @@ a{color:inherit;text-decoration:none}
           <span style="margin-left:auto;font-size:.75rem;color:var(--a4)">Join →</span>
         </a>
       </div>
+
+      <!-- How it works -->
+      <div class="notice-rules" style="margin-bottom:14px">
+        <div class="notice-rules-title">🚀 How It Works</div>
+        <div class="rule-row"><span class="rule-ico">📣</span><span>Watch <strong style="color:var(--a2)">Ads</strong> → earn <span class="rule-val">+10 pts</span> per ad, no limit!</span></div>
+        <div class="rule-row"><span class="rule-ico">✅</span><span>Complete <strong style="color:var(--a2)">Tasks</strong> → earn bonus pts set by admin</span></div>
+        <div class="rule-row"><span class="rule-ico">🎁</span><span><strong style="color:var(--a2)">Daily Bonus</strong> → claim every 24h, streak grows rewards!</span></div>
+        <div class="rule-row"><span class="rule-ico">🎰</span><span><strong style="color:var(--a2)">Spin Wheel</strong> → 1 free spin every 60 min</span></div>
+        <div class="rule-row"><span class="rule-ico">👥</span><span><strong style="color:var(--a2)">Refer Friends</strong> → friend watches 20 ads → you earn <span class="rule-val">400 pts</span></span></div>
+        <div class="rule-row"><span class="rule-ico">🎟️</span><span>Enter <strong style="color:var(--a2)">Promo Codes</strong> from channel for bonus pts!</span></div>
+        <div class="rule-row"><span class="rule-ico">💎</span><span>Convert: <span class="rule-val">50,000 pts</span> = <span class="rule-val">1 TON</span> crypto</span></div>
+      </div>
+      <!-- Withdraw Rules -->
       <div class="notice-rules">
-        <div class="notice-rules-title">📋 Bot Rules &amp; Rewards</div>
+        <div class="notice-rules-title">💸 Withdraw Rules</div>
         <div class="rule-row"><span class="rule-ico">💰</span><span><span class="rule-val">50,000</span> Points = 1 TON</span></div>
         <div class="rule-row"><span class="rule-ico">💸</span><span>Minimum Withdraw: <span class="rule-val">1,500</span> pts</span></div>
         <div class="rule-row"><span class="rule-ico">👛</span><span>Only <span class="rule-val">Tonkeeper</span> address accepted</span></div>
-        <div class="rule-row"><span class="rule-ico">📣</span><span>Monetag Ads: <span class="rule-val">+10 pts</span> (min 7s watch)</span></div>
-        <div class="rule-row"><span class="rule-ico">📣</span><span>GigaPub Ads: <span class="rule-val">+10 pts</span> per click</span></div>
-        <div class="rule-row"><span class="rule-ico">✅</span><span>Task complete reward set by admin</span></div>
-        <div class="rule-row"><span class="rule-ico">🎁</span><span>Daily Bonus: <span class="rule-val">5→20 pts</span> (7 day streak)</span></div>
-        <div class="rule-row"><span class="rule-ico">🎀</span><span>Weekly Gift: collect every week!</span></div>
-        <div class="rule-row"><span class="rule-ico">👥</span><span>Refer: valid after referred user watches <span class="rule-val">20 ads</span> — reward <span class="rule-val">400 pts</span></span></div>
+        <div class="rule-row"><span class="rule-ico">⏱️</span><span>Processed within <span class="rule-val">24–48 hours</span></span></div>
       </div>
       <button class="notice-start-btn" onclick="closeNotice()">🚀 Start Earning!</button>
       <span class="notice-skip" onclick="closeNotice()">Skip for now</span>
@@ -649,7 +655,7 @@ a{color:inherit;text-decoration:none}
           </div>
         </div>
 
-        <!-- Icon Action Row: Daily Login | Withdrawal | Refer | Weekly Gift -->
+        <!-- Icon Action Row 1: Daily Login | Withdrawal | Weekly Gift | Spin Wheel -->
         <div class="icon-action-row">
           <div class="icon-action-btn" onclick="openDailyPopup()">
             <span class="ia-ico">🎁</span>
@@ -659,13 +665,31 @@ a{color:inherit;text-decoration:none}
             <span class="ia-ico">💸</span>
             <span class="ia-lbl">Withdraw</span>
           </div>
-          <div class="icon-action-btn" onclick="showFeatPopup('refer')">
-            <span class="ia-ico">👥</span>
-            <span class="ia-lbl">Refer</span>
-          </div>
           <div class="icon-action-btn" onclick="showFeatPopup('weekly')">
             <span class="ia-ico">🎀</span>
             <span class="ia-lbl">Weekly Gift</span>
+          </div>
+          <div class="icon-action-btn" onclick="document.getElementById('homeSpinCard').scrollIntoView({behavior:'smooth'})">
+            <span class="ia-ico">🎰</span>
+            <span class="ia-lbl">Spin Wheel</span>
+          </div>
+        </div>
+
+        <!-- Icon Action Row 2: Promo Code | Normal Refer | Valid Refer -->
+        <div class="icon-action-row" style="grid-template-columns:1fr 1fr 1fr;margin-bottom:10px">
+          <div class="icon-action-btn" onclick="showFeatPopup('promo')">
+            <span class="ia-ico">🎟️</span>
+            <span class="ia-lbl">Promo Code</span>
+          </div>
+          <div class="icon-action-btn" id="normalReferBtn" onclick="showNormalReferPopup()">
+            <span class="ia-ico">🔗</span>
+            <span class="ia-lbl">Normal Refer</span>
+            <span class="ia-badge" id="normalReferCount" style="font-family:'Outfit',sans-serif;font-size:.6rem;font-weight:800;color:var(--a2);margin-top:1px">0</span>
+          </div>
+          <div class="icon-action-btn" id="validReferBtn" onclick="showValidReferPopup()">
+            <span class="ia-ico">✅</span>
+            <span class="ia-lbl">Valid Refer</span>
+            <span class="ia-badge" id="validReferCount" style="font-family:'Outfit',sans-serif;font-size:.6rem;font-weight:800;color:var(--a4);margin-top:1px">0</span>
           </div>
         </div>
 
@@ -686,10 +710,10 @@ a{color:inherit;text-decoration:none}
             <span class="ux-tile-lbl">Leaderboard</span>
             <span class="ux-tile-val">Top earners</span>
           </div>
-          <div class="ux-tile" id="promoTile" onclick="showFeatPopup('promo')">
-            <span class="ux-tile-ico">🎟️</span>
-            <span class="ux-tile-lbl">Promo Code</span>
-            <span class="ux-tile-val" id="promoStatusLbl">Enter code</span>
+          <div class="ux-tile" onclick="showFeatPopup('refer')">
+            <span class="ux-tile-ico">👥</span>
+            <span class="ux-tile-lbl">Refer Info</span>
+            <span class="ux-tile-val">+400 pts</span>
           </div>
         </div>
 
@@ -1136,6 +1160,7 @@ function subscribeUser() {
     renderGiftTiles();
     renderReferSection();
     document.getElementById("adsWatchedCount").textContent = S.adsWatched;
+    updateHomeReferCounters();
   });
 }
 
@@ -2321,6 +2346,81 @@ function showNotice() {
     setTimeout(() => document.getElementById("noticeOverlay")?.classList.add("open"), 800);
     localStorage.setItem("tonxNoticeSeen", "1");
   }
+}
+
+/* ─────────────────────────────────────────────────────
+   NORMAL REFER & VALID REFER POPUPS
+───────────────────────────────────────────────────── */
+window.showNormalReferPopup = function() {
+  const total = S.refs || 0;
+  FEAT_DATA["normalRefer"] = {
+    ico: "🔗",
+    title: "Normal Refers",
+    subtitle: `You have referred ${total} friend${total !== 1 ? 's' : ''} so far`,
+    grad: "linear-gradient(135deg,#00d4ff 0%,#7c6aff 100%)",
+    body: `
+      <div class="feat-info-row" style="padding-top:0">
+        <span class="feat-info-ico">🔗</span>
+        <div class="feat-info-text"><strong>Total Refers</strong>You have invited <span class="feat-info-val">${total}</span> friend${total !== 1 ? 's' : ''} to TonXHub.</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">ℹ️</span>
+        <div class="feat-info-text"><strong>What is Normal Refer?</strong>Any user who joined using your referral link — even if they haven't watched ads yet.</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">⚡</span>
+        <div class="feat-info-text"><strong>Next Step</strong>Ask them to watch <span class="feat-info-val">20 Ads</span> to make your refer valid and earn <span class="feat-info-val">400 pts</span>.</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">📤</span>
+        <div class="feat-info-text"><strong>Share Your Link</strong>Keep inviting more friends to grow your earnings!</div>
+      </div>
+      <button class="feat-cta" onclick="closeFeatPopup();navTo('referSection')">👥 Go to Refer Section →</button>
+    `
+  };
+  showFeatPopup("normalRefer");
+};
+
+window.showValidReferPopup = function() {
+  const valid = S.validRefs || 0;
+  const total = S.refs || 0;
+  const earned = valid * 400;
+  FEAT_DATA["validRefer"] = {
+    ico: "✅",
+    title: "Valid Refers",
+    subtitle: `${valid} of your ${total} refers are valid`,
+    grad: "linear-gradient(135deg,#00e5a0 0%,#00d4ff 100%)",
+    body: `
+      <div class="feat-info-row" style="padding-top:0">
+        <span class="feat-info-ico">✅</span>
+        <div class="feat-info-text"><strong>Valid Refers</strong><span class="feat-info-val">${valid}</span> out of ${total} total refers are valid.</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">💰</span>
+        <div class="feat-info-text"><strong>Points Earned from Refers</strong><span class="feat-info-val">+${earned} pts</span> earned so far (${valid} × 400 pts).</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">ℹ️</span>
+        <div class="feat-info-text"><strong>What makes a refer valid?</strong>Your referred friend must watch <span class="feat-info-val">20 Ads</span> after joining.</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">📊</span>
+        <div class="feat-info-text"><strong>Keep Going!</strong>${total - valid > 0 ? `<span class="feat-info-val">${total - valid}</span> refer${total - valid !== 1 ? 's' : ''} still pending — tell them to watch ads!` : 'All your refers are valid. Invite more friends!'}</div>
+      </div>
+      <button class="feat-cta" onclick="closeFeatPopup();navTo('referSection')">👥 View Refer Details →</button>
+    `
+  };
+  showFeatPopup("validRefer");
+};
+
+/* ─────────────────────────────────────────────────────
+   UPDATE HOME REFER COUNTERS
+───────────────────────────────────────────────────── */
+function updateHomeReferCounters() {
+  const nc = document.getElementById("normalReferCount");
+  const vc = document.getElementById("validReferCount");
+  if (nc) nc.textContent = S.refs || 0;
+  if (vc) vc.textContent = S.validRefs || 0;
 }
 
 /* ─────────────────────────────────────────────────────
