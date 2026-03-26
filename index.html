@@ -14,6 +14,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 
+<!-- Monetag SDK -->
+<script src='//libtl.com/sdk.js' data-zone='10353766' data-sdk='show_10353766'></script>
+<!-- GigaPub SDK -->
+<script src="https://ad.gigapub.tech/script?id=4942"></script>
+
 <style>
 /* ═══════════════════════════════════════════════════════
    CSS VARIABLES
@@ -183,14 +188,38 @@ a{color:inherit;text-decoration:none}
 .card-glow{padding-left:18px}
 .card-glow::before{content:"";position:absolute;left:0;top:16px;bottom:16px;width:3px;border-radius:0 99px 99px 0;background:var(--grad);}
 
-/* QUICK ACTIONS */
+/* QUICK ACTIONS — 3 columns for icon buttons */
 .qa-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:10px}
+.qa-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px}
 .qa-btn{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:13px 10px;display:flex;align-items:center;gap:9px;font-size:.85rem;font-weight:600;color:var(--text);transition:border-color var(--t),transform var(--t),box-shadow var(--t);box-shadow:var(--shadow);}
 .qa-btn:active{transform:scale(.96);box-shadow:none}
 .qa-btn:hover{border-color:var(--border2)}
 .qa-ico{font-size:1.25rem}
 .qa-label{font-size:.83rem;font-weight:600}
 .qa-sub{font-size:.68rem;color:var(--text2);margin-top:1px}
+
+/* ICON ONLY QUICK BUTTONS */
+.icon-action-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
+.icon-action-btn{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:12px 6px 10px;display:flex;flex-direction:column;align-items:center;gap:5px;transition:border-color var(--t),transform var(--t);box-shadow:var(--shadow);cursor:pointer;}
+.icon-action-btn:active{transform:scale(.95);border-color:var(--border2)}
+.ia-ico{font-size:1.5rem}
+.ia-lbl{font-size:.6rem;font-weight:600;color:var(--text2);text-align:center}
+
+/* UX TABLE (Home) */
+.ux-table{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.ux-table-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px}
+.ux-tile{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:12px 10px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;transition:border-color var(--t),transform var(--t);box-shadow:var(--shadow);}
+.ux-tile:active{transform:scale(.96);border-color:var(--border2)}
+.ux-tile-ico{font-size:1.5rem}
+.ux-tile-lbl{font-size:.68rem;font-weight:600;color:var(--text2);text-align:center}
+.ux-tile-val{font-family:'Outfit',sans-serif;font-size:.75rem;font-weight:700;color:var(--a4)}
+
+/* PROMO CODE */
+.promo-input-row{display:flex;gap:7px;margin-top:8px}
+.promo-input{flex:1;padding:10px 12px;border-radius:var(--r2);border:1px solid var(--border);background:var(--surface2);color:var(--text);font-size:.82rem;}
+.promo-input:focus{outline:none;border-color:var(--a1)}
+.promo-submit{padding:10px 16px;border-radius:var(--r2);background:var(--grad);color:#fff;font-family:'Outfit',sans-serif;font-weight:700;font-size:.82rem;white-space:nowrap;transition:opacity var(--t);}
+.promo-submit:active{opacity:.85}
 
 /* DAILY BONUS */
 .daily-btn{width:100%;padding:14px;border-radius:var(--r2);background:var(--grad-gold);color:#1a1a1a;font-family:'Outfit',sans-serif;font-weight:700;font-size:.93rem;letter-spacing:.02em;box-shadow:0 4px 18px rgba(255,209,102,.25);transition:opacity var(--t),transform var(--t);}
@@ -238,18 +267,22 @@ a{color:inherit;text-decoration:none}
 .pill{padding:4px 10px;border-radius:99px;font-size:.72rem;font-weight:600;display:flex;align-items:center;gap:4px;}
 .pill-green{background:rgba(0,229,160,.12);color:var(--a4);border:1px solid rgba(0,229,160,.25)}
 .pill-cyan{background:rgba(0,212,255,.12);color:var(--a2);border:1px solid rgba(0,212,255,.25)}
+.pill-gold{background:rgba(255,209,102,.12);color:var(--gold);border:1px solid rgba(255,209,102,.25)}
 
-/* SPIN WHEEL */
-.spin-wrap{display:flex;flex-direction:column;align-items:center;gap:14px;padding:6px 0 4px;}
-#spinCanvas{border-radius:50%;box-shadow:0 0 0 3px var(--border),0 8px 40px rgba(124,106,255,.35);max-width:265px;width:100%;aspect-ratio:1/1;display:block;}
-.spin-main-btn{width:100%;max-width:230px;padding:14px;border-radius:99px;background:var(--grad);color:#fff;font-family:'Outfit',sans-serif;font-weight:900;font-size:1rem;letter-spacing:.04em;box-shadow:0 6px 24px rgba(124,106,255,.40);transition:transform var(--t),opacity var(--t),box-shadow var(--t);}
-.spin-main-btn:active:not(:disabled){transform:scale(.96)}
-.spin-main-btn:disabled{opacity:.5;cursor:not-allowed;box-shadow:none}
-.spin-note{font-size:.72rem;color:var(--text2);text-align:center}
-.prize-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.prize-tile{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r2);padding:10px;text-align:center;}
-.prize-val{font-family:'Outfit',sans-serif;font-size:1.1rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.prize-lbl{font-size:.68rem;color:var(--text2);margin-top:2px}
+/* ADS CARD in Earn section */
+.ads-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:15px;margin-bottom:10px;box-shadow:var(--shadow);}
+.ads-card-title{font-family:'Outfit',sans-serif;font-size:.92rem;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:7px;}
+.ads-sub{font-size:.73rem;color:var(--text2);margin-bottom:12px}
+.ad-btn{width:100%;padding:14px;border-radius:var(--r2);display:flex;align-items:center;justify-content:center;gap:9px;font-family:'Outfit',sans-serif;font-weight:700;font-size:.9rem;transition:opacity var(--t),transform var(--t);margin-bottom:8px;position:relative;}
+.ad-btn:active:not(:disabled){transform:scale(.98);opacity:.88}
+.ad-btn:disabled{opacity:.5;cursor:not-allowed}
+.ad-btn-monetag{background:linear-gradient(135deg,#ff6b9d,#7c6aff);color:#fff;box-shadow:0 4px 18px rgba(255,107,157,.3);}
+.ad-btn-giga{background:linear-gradient(135deg,#00e5a0,#00d4ff);color:#1a1a35;box-shadow:0 4px 18px rgba(0,229,160,.3);}
+.ad-timer{position:absolute;right:14px;font-size:.72rem;opacity:.85}
+.ad-note{font-size:.68rem;color:var(--text3);text-align:center;margin-top:2px}
+.ads-total-badge{display:flex;align-items:center;gap:8px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r2);padding:10px 13px;margin-bottom:10px;}
+.atb-val{font-family:'Outfit',sans-serif;font-size:1rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.atb-lbl{font-size:.72rem;color:var(--text2)}
 
 /* LEADERBOARD */
 .ldr-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
@@ -275,6 +308,7 @@ a{color:inherit;text-decoration:none}
 .ldr-my-rank{background:var(--surface2);border:1px solid var(--a1);border-radius:var(--r2);padding:10px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
 .ldr-my-rank-lbl{font-size:.75rem;color:var(--text2);}
 .ldr-my-rank-val{font-family:'Outfit',sans-serif;font-size:.95rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.ldr-update-note{font-size:.68rem;color:var(--text3);text-align:center;margin-top:4px;margin-bottom:8px}
 
 /* BOTTOM NAV */
 .nav{position:fixed;bottom:0;left:0;right:0;height:var(--nav-h);background:rgba(13,13,26,.92);border-top:1px solid var(--border);display:flex;justify-content:space-around;align-items:stretch;z-index:300;max-width:480px;margin:0 auto;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);transition:background var(--t);}
@@ -325,11 +359,6 @@ a{color:inherit;text-decoration:none}
 .empty{text-align:center;padding:36px 20px;color:var(--text2);font-size:.85rem}
 .skeleton-list .skel{margin-bottom:8px}
 
-/* STEP LIST */
-.step-list{display:flex;flex-direction:column;gap:9px}
-.step{display:flex;align-items:center;gap:11px;font-size:.84rem}
-.step-n{width:26px;height:26px;border-radius:8px;background:var(--grad);color:#fff;font-family:'Outfit',sans-serif;font-weight:900;font-size:.82rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-
 /* WITHDRAW BALANCE */
 .wbal{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r2);padding:12px 14px;margin-bottom:14px;}
 .wbal-lbl{font-size:.72rem;color:var(--text2);margin-bottom:3px}
@@ -338,6 +367,14 @@ a{color:inherit;text-decoration:none}
 /* WITHDRAW INFO BOX */
 .withdraw-info{background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.2);border-radius:var(--r2);padding:11px 13px;margin-bottom:13px;font-size:.76rem;color:var(--text2);line-height:1.6;}
 .withdraw-info strong{color:var(--a2)}
+
+/* REFER SECTION */
+.ref-section-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px}
+.ref-stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:12px 8px;text-align:center;box-shadow:var(--shadow);}
+.ref-stat-card .rsv{font-family:'Outfit',sans-serif;font-size:1.2rem;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.ref-stat-card .rsl{font-size:.62rem;color:var(--text2);margin-top:2px}
+.ref-reward-note{background:rgba(0,229,160,.07);border:1px solid rgba(0,229,160,.2);border-radius:var(--r2);padding:11px 13px;margin-bottom:13px;font-size:.76rem;color:var(--text2);line-height:1.6;}
+.ref-reward-note strong{color:var(--a4)}
 
 /* NOTICE POPUP */
 .notice-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:900;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px);}
@@ -367,6 +404,15 @@ a{color:inherit;text-decoration:none}
 .notice-skip{display:block;text-align:center;font-size:.75rem;color:var(--text3);margin-top:11px;padding-bottom:4px;cursor:pointer;}
 .notice-skip:active{color:var(--text2)}
 
+/* WEEKLY GIFT MODAL */
+.gift-tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+.gift-tile{background:var(--surface2);border:1.5px solid var(--border);border-radius:12px;padding:10px 5px;text-align:center;cursor:pointer;transition:border-color var(--t),transform var(--t);}
+.gift-tile.collected{border-color:var(--a4);background:rgba(0,229,160,.08);cursor:default;}
+.gift-tile.today-gift{border-color:var(--gold);box-shadow:0 0 12px rgba(255,209,102,.3);}
+.gift-tile .gt-ico{font-size:1.4rem;margin-bottom:3px}
+.gift-tile .gt-day{font-size:.6rem;color:var(--text2)}
+.gift-tile .gt-val{font-family:'Outfit',sans-serif;font-size:.72rem;font-weight:700;color:var(--a4)}
+
 /* UTILITIES */
 .mt6{margin-top:6px}.mt10{margin-top:10px}.mt12{margin-top:12px}
 .flex-row{display:flex;gap:8px}
@@ -385,50 +431,54 @@ a{color:inherit;text-decoration:none}
     <div class="notice-top">
       <div class="notice-logo">💎</div>
       <div class="notice-title">Welcome to TonXHub!</div>
-      <div class="notice-tagline">Earn real TON crypto — simple & free</div>
+      <div class="notice-tagline">Earn real TON crypto — simple &amp; free</div>
     </div>
     <div class="notice-body">
       <p class="notice-desc">
         TonXHub is a Telegram Mini App where you can earn <strong>Points</strong> and convert them into real <strong>TON</strong> crypto.
-        Watch Ads, complete Tasks, Spin the wheel and claim your Daily Bonus every day!
+        Watch Ads, complete Tasks, claim your Daily Bonus &amp; Weekly Gift every day!
       </p>
-
-      <!-- Join Buttons -->
       <div class="notice-join-btns">
         <a href="https://t.me/tonXhub_Earn" target="_blank" class="notice-join-btn">
           <span class="btn-ico">📢</span>
-          <div class="btn-txt">
-            Official Channel
-            <small>@tonXhub_Earn — Updates &amp; Announcements</small>
-          </div>
+          <div class="btn-txt">Official Channel<small>@tonXhub_Earn — Updates &amp; Announcements</small></div>
           <span style="margin-left:auto;font-size:.75rem;color:var(--a2)">Join →</span>
         </a>
         <a href="https://t.me/tonX_hub_chat" target="_blank" class="notice-join-btn">
           <span class="btn-ico">💬</span>
-          <div class="btn-txt">
-            Community Group
-            <small>@tonX_hub_chat — Chat &amp; Support</small>
-          </div>
+          <div class="btn-txt">Community Group<small>@tonX_hub_chat — Chat &amp; Support</small></div>
           <span style="margin-left:auto;font-size:.75rem;color:var(--a4)">Join →</span>
         </a>
       </div>
-
-      <!-- Rules -->
       <div class="notice-rules">
         <div class="notice-rules-title">📋 Bot Rules &amp; Rewards</div>
         <div class="rule-row"><span class="rule-ico">💰</span><span><span class="rule-val">50,000</span> Points = 1 TON</span></div>
         <div class="rule-row"><span class="rule-ico">💸</span><span>Minimum Withdraw: <span class="rule-val">1,500</span> pts</span></div>
-        <div class="rule-row"><span class="rule-ico">👛</span><span>Only <span class="rule-val">Tonkeeper</span> address accepted for Withdraw</span></div>
-        <div class="rule-row"><span class="rule-ico">📣</span><span>Ads visit: <span class="rule-val">+12 pts</span> per visit</span></div>
-        <div class="rule-row"><span class="rule-ico">✅</span><span>Task complete: <span class="rule-val">+15 pts</span> each</span></div>
-        <div class="rule-row"><span class="rule-ico">🎰</span><span>Spin Wheel: <span class="rule-val">5–25 pts</span> per spin</span></div>
-        <div class="rule-row"><span class="rule-ico">🎁</span><span>Daily Bonus: <span class="rule-val">5→20 pts</span> (7 days streak)</span></div>
-        <div class="rule-row"><span class="rule-ico">👥</span><span>Refer friends — valid after referred user watches <span class="rule-val">20 ads</span></span></div>
+        <div class="rule-row"><span class="rule-ico">👛</span><span>Only <span class="rule-val">Tonkeeper</span> address accepted</span></div>
+        <div class="rule-row"><span class="rule-ico">📣</span><span>Monetag Ads: <span class="rule-val">+10 pts</span> (min 7s watch)</span></div>
+        <div class="rule-row"><span class="rule-ico">📣</span><span>GigaPub Ads: <span class="rule-val">+10 pts</span> per click</span></div>
+        <div class="rule-row"><span class="rule-ico">✅</span><span>Task complete reward set by admin</span></div>
+        <div class="rule-row"><span class="rule-ico">🎁</span><span>Daily Bonus: <span class="rule-val">5→20 pts</span> (7 day streak)</span></div>
+        <div class="rule-row"><span class="rule-ico">🎀</span><span>Weekly Gift: collect every week!</span></div>
+        <div class="rule-row"><span class="rule-ico">👥</span><span>Refer: valid after referred user watches <span class="rule-val">20 ads</span> — reward <span class="rule-val">400 pts</span></span></div>
       </div>
-
       <button class="notice-start-btn" onclick="closeNotice()">🚀 Start Earning!</button>
       <span class="notice-skip" onclick="closeNotice()">Skip for now</span>
     </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     WEEKLY GIFT MODAL
+═══════════════════════════════════════════════════ -->
+<div class="overlay" id="weeklyGiftModal">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">🎀 Weekly Gift Box</div>
+    <p style="font-size:.78rem;color:var(--text2);text-align:center;margin-bottom:14px">Collect your free gift every 7 days. Streak earns bigger rewards!</p>
+    <div class="gift-tiles" id="giftTiles"></div>
+    <button class="btn-grad" id="claimWeeklyGift">🎀 Claim Weekly Gift</button>
+    <button class="btn-ghost" onclick="closeModal('weeklyGiftModal')">Close</button>
   </div>
 </div>
 
@@ -461,10 +511,11 @@ a{color:inherit;text-decoration:none}
       <!-- ════ HOME ════ -->
       <div class="section active" id="homeSection">
 
+        <!-- Balance Hero -->
         <div class="hero">
-          <div class="hero-lbl">Your Points</div>
+          <div class="hero-lbl">Your Balance</div>
           <div class="hero-pts" id="dispPoints">0</div>
-          <div class="hero-sub">total points accumulated</div>
+          <div class="hero-sub" id="dispTonHero">≈ 0.0000 TON</div>
           <div class="prog-track"><div id="progressBar"></div></div>
           <div id="progressLabel">0 / 50,000 pts → 1 TON</div>
           <div class="hero-grid">
@@ -477,46 +528,78 @@ a{color:inherit;text-decoration:none}
               <div class="h-tile-l">Valid Refers</div>
             </div>
             <div class="h-tile">
-              <div class="h-tile-v">50K</div>
-              <div class="h-tile-l">pts/TON</div>
+              <div class="h-tile-v" id="dispTotalRefs2">0</div>
+              <div class="h-tile-l">Total Refers</div>
             </div>
           </div>
         </div>
 
-        <!-- Quick Actions -->
-        <div class="qa-grid">
-          <button class="qa-btn" onclick="navTo('taskSection')">
-            <span class="qa-ico">✅</span>
-            <div class="qa-info">
-              <div class="qa-label">Tasks</div>
-              <div class="qa-sub">+15 pts each</div>
-            </div>
-          </button>
-          <button class="qa-btn" onclick="navTo('earnSection')">
-            <span class="qa-ico">🎰</span>
-            <div class="qa-info">
-              <div class="qa-label">Spin Wheel</div>
-              <div class="qa-sub">5–25 pts/spin</div>
-            </div>
-          </button>
-          <button class="qa-btn" onclick="navTo('leaderSection')">
-            <span class="qa-ico">🏆</span>
-            <div class="qa-info">
-              <div class="qa-label">Leaderboard</div>
-              <div class="qa-sub">Top earners</div>
-            </div>
-          </button>
-          <button class="qa-btn" onclick="openModal('withdrawModal')">
-            <span class="qa-ico">💸</span>
-            <div class="qa-info">
-              <div class="qa-label">Withdraw</div>
-              <div class="qa-sub">Min 1,500 pts</div>
-            </div>
-          </button>
+        <!-- Icon Action Row: Daily Login | Withdrawal | Refer | Weekly Gift -->
+        <div class="icon-action-row">
+          <div class="icon-action-btn" onclick="document.getElementById('dailyBonusCard').scrollIntoView({behavior:'smooth'})">
+            <span class="ia-ico">🎁</span>
+            <span class="ia-lbl">Daily Bonus</span>
+          </div>
+          <div class="icon-action-btn" onclick="openModal('withdrawModal')">
+            <span class="ia-ico">💸</span>
+            <span class="ia-lbl">Withdraw</span>
+          </div>
+          <div class="icon-action-btn" onclick="navTo('referSection')">
+            <span class="ia-ico">👥</span>
+            <span class="ia-lbl">Refer</span>
+          </div>
+          <div class="icon-action-btn" onclick="openModal('weeklyGiftModal')">
+            <span class="ia-ico">🎀</span>
+            <span class="ia-lbl">Weekly Gift</span>
+          </div>
+        </div>
+
+        <!-- UX Table -->
+        <div class="ux-table">
+          <div class="ux-tile" onclick="navTo('taskSection')">
+            <span class="ux-tile-ico">✅</span>
+            <span class="ux-tile-lbl">Tasks</span>
+            <span class="ux-tile-val">Earn pts</span>
+          </div>
+          <div class="ux-tile" onclick="navTo('earnSection')">
+            <span class="ux-tile-ico">📣</span>
+            <span class="ux-tile-lbl">Watch Ads</span>
+            <span class="ux-tile-val">+10 pts</span>
+          </div>
+          <div class="ux-tile" onclick="navTo('leaderSection')">
+            <span class="ux-tile-ico">🏆</span>
+            <span class="ux-tile-lbl">Leaderboard</span>
+            <span class="ux-tile-val">Top earners</span>
+          </div>
+          <div class="ux-tile" id="promoTile" onclick="togglePromo()">
+            <span class="ux-tile-ico">🎟️</span>
+            <span class="ux-tile-lbl">Promo Code</span>
+            <span class="ux-tile-val" id="promoStatusLbl">Enter code</span>
+          </div>
+        </div>
+
+        <!-- Promo Code Input (hidden by default) -->
+        <div class="card" id="promoCard" style="display:none">
+          <div class="card-title">🎟️ Promo Code</div>
+          <p style="font-size:.78rem;color:var(--text2);margin-bottom:4px">Enter a valid promo code to earn bonus points!</p>
+          <div class="promo-input-row">
+            <input class="promo-input" id="promoInput" type="text" placeholder="Enter promo code…" autocomplete="off" autocapitalize="characters"/>
+            <button class="promo-submit" id="promoSubmit">Apply</button>
+          </div>
+        </div>
+
+        <!-- Spin Wheel moved here -->
+        <div class="card" id="homeSpinCard">
+          <div class="card-title">🎰 Spin Wheel <span style="font-size:.7rem;color:var(--text2);font-weight:400">1 free/hr</span></div>
+          <div class="spin-wrap">
+            <canvas id="spinCanvas" width="270" height="270"></canvas>
+            <button class="spin-main-btn" id="spinBtn">🎰 SPIN!</button>
+            <div class="spin-note" id="spinNote">Cooldown resets every 60 minutes</div>
+          </div>
         </div>
 
         <!-- Daily Bonus -->
-        <div class="card card-glow">
+        <div class="card card-glow" id="dailyBonusCard">
           <div class="card-title">🎁 Daily Login Bonus</div>
           <div class="streak-grid" id="streakGrid"></div>
           <div class="mt10">
@@ -524,12 +607,38 @@ a{color:inherit;text-decoration:none}
           </div>
         </div>
 
-        <!-- Referral -->
+      </div><!-- /homeSection -->
+
+      <!-- ════ REFER ════ -->
+      <div class="section" id="referSection">
+        <div class="s-head">👥 Refer &amp; Earn</div>
+
+        <!-- Stats -->
+        <div class="ref-section-stats">
+          <div class="ref-stat-card">
+            <div class="rsv" id="refTotalVal">0</div>
+            <div class="rsl">Total Refers</div>
+          </div>
+          <div class="ref-stat-card">
+            <div class="rsv" id="refValidVal">0</div>
+            <div class="rsl">Valid Refers</div>
+          </div>
+          <div class="ref-stat-card">
+            <div class="rsv" id="refEarnedVal">0</div>
+            <div class="rsl">Pts Earned</div>
+          </div>
+        </div>
+
+        <!-- Reward Note -->
+        <div class="ref-reward-note">
+          🎯 Per refer reward: <strong>400 points</strong><br/>
+          ✅ A refer becomes <strong>valid</strong> only when the referred person watches <strong>20 ads</strong>.<br/>
+          💡 Share your link and ask your friends to watch ads!
+        </div>
+
+        <!-- Link & Share -->
         <div class="card card-glow">
-          <div class="card-title">👥 Refer &amp; Earn</div>
-          <p style="font-size:.79rem;color:var(--text2);margin-bottom:9px;">
-            Share your code. Your refer counts as <strong style="color:var(--a4)">valid</strong> after referred user watches <strong style="color:var(--a4)">20 ads</strong>.
-          </p>
+          <div class="card-title">🔗 Your Referral Link</div>
           <div class="ref-row">
             <input class="ref-input" id="refLink" readonly value="Loading…"/>
           </div>
@@ -537,29 +646,16 @@ a{color:inherit;text-decoration:none}
             <button class="btn-outline-a" id="copyRef">📋 Copy Link</button>
             <button class="btn-solid-a"   id="shareRef">📤 Share</button>
           </div>
-          <div class="ref-stats">
-            <div class="ref-stat-box">
-              <div class="ref-stat-val" id="totalRefs">0</div>
-              <div class="ref-stat-lbl">Total Refers</div>
-            </div>
-            <div class="ref-stat-box">
-              <div class="ref-stat-val" id="validRefs">0</div>
-              <div class="ref-stat-lbl">Valid Refers</div>
-            </div>
-          </div>
         </div>
 
-        <!-- How it works -->
+        <!-- Referred List -->
         <div class="card">
-          <div class="card-title">⚡ How it works</div>
-          <div class="step-list">
-            <div class="step"><div class="step-n">1</div>Watch Ads (+12 pts), complete Tasks (+15 pts)</div>
-            <div class="step"><div class="step-n">2</div>Spin the wheel (5–25 pts) &amp; claim your Daily Bonus</div>
-            <div class="step"><div class="step-n">3</div>50,000 pts = 1 TON — Withdraw to your Tonkeeper wallet</div>
+          <div class="card-title">📋 Referred Users</div>
+          <div id="referredList">
+            <div class="empty">Loading…</div>
           </div>
         </div>
-
-      </div><!-- /homeSection -->
+      </div><!-- /referSection -->
 
       <!-- ════ TASKS ════ -->
       <div class="section" id="taskSection">
@@ -568,8 +664,8 @@ a{color:inherit;text-decoration:none}
           <div class="task-badge" id="taskDoneCount">0/0 done</div>
         </div>
         <div class="pill-row">
-          <div class="pill pill-green">✅ Task = +15 pts</div>
-          <div class="pill pill-cyan">📣 Ads Visit = +12 pts</div>
+          <div class="pill pill-green">✅ Reward set by admin</div>
+          <div class="pill pill-cyan">⏱️ 5s visit required</div>
         </div>
         <div id="taskList">
           <div class="skel skel-row"></div>
@@ -578,32 +674,51 @@ a{color:inherit;text-decoration:none}
         </div>
       </div><!-- /taskSection -->
 
-      <!-- ════ EARN (SPIN) ════ -->
+      <!-- ════ EARN (ADS) ════ -->
       <div class="section" id="earnSection">
-        <div class="s-head">🎰 Spin Wheel<span class="s-head-sub">1 free spin/hour</span></div>
-        <div class="card">
-          <div class="spin-wrap">
-            <canvas id="spinCanvas" width="270" height="270"></canvas>
-            <button class="spin-main-btn" id="spinBtn">🎰 SPIN!</button>
-            <div class="spin-note" id="spinNote">Cooldown resets every 60 minutes</div>
+        <div class="s-head">📣 Watch Ads &amp; Earn</div>
+
+        <!-- Total Ads Watched Badge -->
+        <div class="ads-total-badge">
+          <span style="font-size:1.5rem">📺</span>
+          <div>
+            <div class="atb-val" id="adsWatchedCount">0</div>
+            <div class="atb-lbl">Total Ads Watched</div>
+          </div>
+          <div style="margin-left:auto;text-align:right">
+            <div style="font-size:.7rem;color:var(--text2)">Each ad = <strong style="color:var(--a4)">10 pts</strong></div>
+            <div style="font-size:.68rem;color:var(--text3)">No limit</div>
           </div>
         </div>
-        <div class="card">
-          <div class="card-title">💎 Prize Table</div>
-          <div class="prize-grid">
-            <div class="prize-tile"><div class="prize-val">25</div><div class="prize-lbl">pts — jackpot</div></div>
-            <div class="prize-tile"><div class="prize-val">20</div><div class="prize-lbl">pts — big</div></div>
-            <div class="prize-tile"><div class="prize-val">15</div><div class="prize-lbl">pts — good</div></div>
-            <div class="prize-tile"><div class="prize-val">10</div><div class="prize-lbl">pts — nice</div></div>
-            <div class="prize-tile"><div class="prize-val">5</div><div class="prize-lbl">pts — common</div></div>
-            <div class="prize-tile"><div class="prize-val">😢</div><div class="prize-lbl">no prize</div></div>
-          </div>
+
+        <!-- Monetag Ads -->
+        <div class="ads-card">
+          <div class="ads-card-title">🌐 Monetag Ads</div>
+          <div class="ads-sub">Watch full ad (minimum 7 seconds) to earn +10 pts. Leaving before 7s = no reward.</div>
+          <button class="ad-btn ad-btn-monetag" id="monetagBtn">
+            <span>▶️ Watch Monetag Ad</span>
+            <span class="ad-timer" id="monetagTimer"></span>
+          </button>
+          <div class="ad-note">⚠️ Must watch at least 7 seconds for reward</div>
         </div>
+
+        <!-- GigaPub Ads -->
+        <div class="ads-card">
+          <div class="ads-card-title">🚀 GigaPub Ads</div>
+          <div class="ads-sub">Click the ad to earn +10 pts. Reward credited after ad interaction.</div>
+          <button class="ad-btn ad-btn-giga" id="gigapubBtn">
+            <span>🖱️ Watch GigaPub Ad</span>
+            <span class="ad-timer" id="gigapubTimer"></span>
+          </button>
+          <div class="ad-note">ℹ️ Click the ad content to receive your reward</div>
+        </div>
+
       </div><!-- /earnSection -->
 
       <!-- ════ LEADERBOARD ════ -->
       <div class="section" id="leaderSection">
         <div class="s-head">🏆 Top Earners<span class="s-head-sub" id="ldrRefresh" style="cursor:pointer;color:var(--a2)">↻ Refresh</span></div>
+        <div class="ldr-update-note">📌 Rankings update every 24 hours</div>
         <div id="myRankBar" class="ldr-my-rank" style="display:none">
           <div>
             <div class="ldr-my-rank-lbl">Your Rank</div>
@@ -630,12 +745,16 @@ a{color:inherit;text-decoration:none}
       <span class="nav-ico">🏠</span>
       <span class="nav-lbl">Home</span>
     </div>
+    <div class="nav-item" data-sec="referSection">
+      <span class="nav-ico">👥</span>
+      <span class="nav-lbl">Refer</span>
+    </div>
     <div class="nav-item" data-sec="taskSection">
       <span class="nav-ico">✅</span>
       <span class="nav-lbl">Tasks</span>
     </div>
     <div class="nav-item" data-sec="earnSection">
-      <span class="nav-ico">🎰</span>
+      <span class="nav-ico">📣</span>
       <span class="nav-lbl">Earn</span>
     </div>
     <div class="nav-item" data-sec="leaderSection">
@@ -661,6 +780,10 @@ a{color:inherit;text-decoration:none}
       <div class="wbal-lbl">Points Balance</div>
       <div style="font-family:'Outfit',sans-serif;font-size:1.1rem;font-weight:800;color:var(--a4)"><span id="wbalPts">0</span> pts</div>
     </div>
+    <!-- Live TON preview -->
+    <div style="text-align:center;padding:8px 0;font-size:.78rem;color:var(--text2)">
+      Entering <strong id="wPtsPreview" style="color:var(--a4)">0</strong> pts = <strong id="wTonPreview" style="color:var(--gold)">0.0000</strong> TON
+    </div>
     <div class="withdraw-info mt10">
       ⚠️ Minimum withdraw: <strong>1,500 points</strong><br/>
       👛 Only <strong>Tonkeeper Wallet</strong> address accepted<br/>
@@ -681,14 +804,13 @@ a{color:inherit;text-decoration:none}
 </div>
 
 <!-- ═══════════════════════════════════════════════════════
-     FIREBASE SDK (New: ton-xhub project)
+     FIREBASE SDK
 ═══════════════════════════════════════════════════════ -->
 <script type="module">
 
-/* ─── TELEGRAM GUARD: Only open inside Telegram ─── */
+/* ─── TELEGRAM GUARD ─── */
 const tg = window.Telegram?.WebApp || null;
 if (!tg || !tg.initData || tg.initData === "") {
-  // Not inside Telegram — show friendly block
   document.body.innerHTML = `
     <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;
       min-height:100vh;background:#0d0d1a;color:#e8e8ff;font-family:'Plus Jakarta Sans',sans-serif;
@@ -698,8 +820,7 @@ if (!tg || !tg.initData || tg.initData === "") {
         background:linear-gradient(135deg,#7c6aff,#00d4ff);-webkit-background-clip:text;
         -webkit-text-fill-color:transparent;">TonXHub</div>
       <p style="color:#7878a8;font-size:.9rem;line-height:1.6">
-        This app only works inside Telegram.<br/>
-        Please open it via the bot link.
+        This app only works inside Telegram.<br/>Please open it via the bot link.
       </p>
       <a href="https://t.me/tonXhubEarn_bot/TonXHub" style="padding:14px 28px;border-radius:99px;
         background:linear-gradient(135deg,#7c6aff,#00d4ff);color:#fff;
@@ -716,10 +837,10 @@ import { initializeApp }
 import { getAnalytics }
   from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js";
 import {
-  getDatabase, ref, get, set, update, onValue, increment
+  getDatabase, ref, get, set, update, onValue, increment, push
 } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
 
-/* ─── NEW FIREBASE CONFIG (ton-xhub) ─── */
+/* ─── FIREBASE CONFIG ─── */
 const firebaseConfig = {
   apiKey:            "AIzaSyAtq-jAYRwKSKw5QP1V4JJY0h-MTtehyGU",
   authDomain:        "ton-xhub.firebaseapp.com",
@@ -731,7 +852,7 @@ const firebaseConfig = {
   measurementId:     "G-H4BNY46JVQ"
 };
 
-const fireApp  = initializeApp(firebaseConfig);
+const fireApp   = initializeApp(firebaseConfig);
 const analytics = getAnalytics(fireApp);
 const db        = getDatabase(fireApp);
 
@@ -744,33 +865,29 @@ const REF_ID  = tg?.initDataUnsafe?.start_param
               || null;
 
 /* ─── CONSTANTS ─── */
-const BOT_LINK    = "https://t.me/tonXhubEarn_bot/TonXHub";
-const PTS_PER_TON = 50000;
+const BOT_LINK         = "https://t.me/tonXhubEarn_bot/TonXHub";
+const PTS_PER_TON      = 50000;
 const MIN_WITHDRAW_PTS = 1500;
-
-const SPIN_PRIZES = [25, 5, 15, 0, 10, 20, 5, 0];
-const SPIN_LABELS = ["25🎯","5","15","😢","10","20⭐","5","😢"];
-const SPIN_COLORS = ["#7c6aff","#00d4ff","#ff6b9d","#20203f","#ffd166","#00e5a0","#7c6aff","#20203f"];
-const SPIN_COOL   = 3600000; // 1 hour
-
-const DAILY_COOL  = 86400000;
-const DAILY_REWARDS = [5, 10, 10, 15, 15, 20, 20]; // 7-day streak
-
-// Ads per visit = 12 pts, Task = 15 pts
-const TASKS = [
-  {id:"tg_ch",  type:"task_visit", icon:"📢", name:"Join Official Channel",    desc:"t.me/tonXhub_Earn",          pts:15, cooldown:86400000, url:"https://t.me/tonXhub_Earn"},
-  {id:"tg_gr",  type:"task_visit", icon:"💬", name:"Join Community Group",      desc:"t.me/tonX_hub_chat",         pts:15, cooldown:86400000, url:"https://t.me/tonX_hub_chat"},
-  {id:"ad1",    type:"ads_visit",  icon:"📣", name:"Sponsor Ad #1",             desc:"Visit & earn points",        pts:12, cooldown:60000,    url:"https://t.me/tonXhub_Earn"},
-  {id:"ad2",    type:"ads_visit",  icon:"📣", name:"Sponsor Ad #2",             desc:"Support us — visit sponsor", pts:12, cooldown:60000,    url:"https://t.me/tonX_hub_chat"},
-  {id:"ad3",    type:"ads_visit",  icon:"📣", name:"Sponsor Ad #3",             desc:"Visit & earn +12 pts",       pts:12, cooldown:60000,    url:"https://t.me/tonXhub_Earn"},
-];
+const SPIN_PRIZES      = [25, 5, 15, 0, 10, 20, 5, 0];
+const SPIN_LABELS      = ["25🎯","5","15","😢","10","20⭐","5","😢"];
+const SPIN_COLORS      = ["#7c6aff","#00d4ff","#ff6b9d","#20203f","#ffd166","#00e5a0","#7c6aff","#20203f"];
+const SPIN_COOL        = 3600000;
+const DAILY_COOL       = 86400000;
+const DAILY_REWARDS    = [5, 10, 10, 15, 15, 20, 20];
+const WEEKLY_GIFT_COOL = 7 * 24 * 3600000; // 7 days
+const WEEKLY_GIFTS     = [50, 75, 100, 150, 200, 250, 300, 500]; // 8 weeks progression
+const REF_REWARD_PTS   = 400;
+const ADS_PER_VALID_REF= 20;
+const ADS_REWARD_PTS   = 10;
+const MONETAG_MIN_SEC  = 7;
 
 /* ─── APP STATE ─── */
 const S = {
-  points:0, ton:0, refs:0, validRefs:0,
-  completedTasks:{}, lastDaily:0, dailyStreak:0,
+  points: 0, ton: 0, refs: 0, validRefs: 0,
+  completedTasks: {}, lastDaily: 0, dailyStreak: 0,
+  adsWatched: 0, lastWeeklyGift: 0, weeklyGiftStreak: 0,
   dark: localStorage.getItem("tonxDark") !== "false",
-  spinLast: parseInt(localStorage.getItem("tonxSpinLast")||"0"),
+  spinLast: parseInt(localStorage.getItem("tonxSpinLast") || "0"),
 };
 
 /* ─────────────────────────────────────────────────────
@@ -781,15 +898,22 @@ async function initUser() {
   const snap = await get(uRef);
   if (!snap.exists()) {
     await set(uRef, {
-      points:0, ton:0, completedTasks:{},
-      lastDaily:0, dailyStreak:0,
-      refs:0, validRefs:0, referrals:{},
+      points: 0, ton: 0, completedTasks: {},
+      lastDaily: 0, dailyStreak: 0,
+      refs: 0, validRefs: 0, referrals: {},
+      adsWatched: 0, lastWeeklyGift: 0, weeklyGiftStreak: 0,
       username:  TG_USER.username   || "user",
       firstName: TG_USER.first_name || "User",
       photoUrl:  TG_USER.photo_url  || "",
       joinedAt:  Date.now(),
-      adsWatched: 0
     });
+  } else {
+    // Patch missing fields for old users
+    const d = snap.val();
+    const patch = {};
+    if (d.lastWeeklyGift === undefined) patch.lastWeeklyGift = 0;
+    if (d.weeklyGiftStreak === undefined) patch.weeklyGiftStreak = 0;
+    if (Object.keys(patch).length) await update(uRef, patch);
   }
 }
 
@@ -797,17 +921,23 @@ function subscribeUser() {
   onValue(ref(db, `users/${USER_ID}`), snap => {
     if (!snap.exists()) return;
     const d = snap.val();
-    S.points      = d.points      || 0;
-    S.ton         = d.ton         || 0;
-    S.refs        = d.refs        || 0;
-    S.validRefs   = d.validRefs   || 0;
-    S.completedTasks = d.completedTasks || {};
-    S.lastDaily   = d.lastDaily   || 0;
-    S.dailyStreak = d.dailyStreak || 0;
+    S.points          = d.points          || 0;
+    S.ton             = d.ton             || 0;
+    S.refs            = d.refs            || 0;
+    S.validRefs       = d.validRefs       || 0;
+    S.completedTasks  = d.completedTasks  || {};
+    S.lastDaily       = d.lastDaily       || 0;
+    S.dailyStreak     = d.dailyStreak     || 0;
+    S.adsWatched      = d.adsWatched      || 0;
+    S.lastWeeklyGift  = d.lastWeeklyGift  || 0;
+    S.weeklyGiftStreak= d.weeklyGiftStreak|| 0;
     renderDash();
     renderTasks();
     updateDailyBtn();
     renderStreak();
+    renderGiftTiles();
+    renderReferSection();
+    document.getElementById("adsWatchedCount").textContent = S.adsWatched;
   });
 }
 
@@ -815,52 +945,13 @@ async function addPoints(pts) {
   const uRef = ref(db, `users/${USER_ID}`);
   const snap = await get(uRef);
   const d    = snap.val();
-  const total  = (d.points || 0) + pts;
+  const total     = (d.points || 0) + pts;
   const earnedTon = Math.floor(total / PTS_PER_TON);
   const remainPts = total % PTS_PER_TON;
   if (earnedTon > 0) {
-    // Only convert to TON when a full 50,000 pts threshold is crossed
-    await update(uRef, {
-      points: remainPts,
-      ton: (d.ton || 0) + earnedTon
-    });
+    await update(uRef, { points: remainPts, ton: (d.ton || 0) + earnedTon });
   } else {
-    // Just update points, no TON conversion yet
     await update(uRef, { points: total });
-  }
-}
-
-async function completeTask(taskId, pts, cooldownMs, isAd) {
-  const tRef = ref(db, `users/${USER_ID}/completedTasks/${taskId}`);
-  const snap = await get(tRef);
-  const now  = Date.now();
-  if (snap.exists()) {
-    const last = snap.val().lastTime || 0;
-    if (now - last < cooldownMs) {
-      const rem = Math.ceil((cooldownMs - (now - last)) / 1000);
-      throw new Error(`COOLDOWN:${rem}`);
-    }
-  }
-  await set(tRef, { lastTime: now, count: (snap.val()?.count || 0) + 1 });
-  await addPoints(pts);
-  // Track ads watched for valid referral counting
-  if (isAd) {
-    await update(ref(db, `users/${USER_ID}`), { adsWatched: increment(1) });
-    await checkReferralValidation();
-  }
-}
-
-// Check if referred user has now watched 20 ads → mark referrer's refer as valid
-async function checkReferralValidation() {
-  const snap = await get(ref(db, `users/${USER_ID}`));
-  const d    = snap.val();
-  const adsWatched = d.adsWatched || 0;
-  const referredBy = d.referredBy || null;
-  if (referredBy && !d.referValid && adsWatched >= 20) {
-    await update(ref(db, `users/${USER_ID}`), { referValid: true });
-    // Award referrer: mark valid
-    await update(ref(db, `users/${referredBy}`), { validRefs: increment(1) });
-    toast("🎉 Your referrer just got a valid refer bonus!", "ok");
   }
 }
 
@@ -871,14 +962,30 @@ async function claimDailyBonus() {
   const lastD= d.lastDaily || 0;
   if (now - lastD < DAILY_COOL) {
     const rem = DAILY_COOL - (now - lastD);
-    const h   = Math.floor(rem / 3600000);
-    const m   = Math.floor((rem % 3600000) / 60000);
-    throw new Error(`WAIT:${h}h ${m}m`);
+    throw new Error(`WAIT:${Math.floor(rem/3600000)}h ${Math.floor((rem%3600000)/60000)}m`);
   }
-  // Streak logic
   const streak = (now - lastD < DAILY_COOL * 2) ? Math.min((d.dailyStreak||0)+1, 7) : 1;
   const reward = DAILY_REWARDS[streak - 1] || 5;
   await update(ref(db, `users/${USER_ID}`), { lastDaily: now, dailyStreak: streak });
+  await addPoints(reward);
+  return { reward, streak };
+}
+
+async function claimWeeklyGift() {
+  const snap = await get(ref(db, `users/${USER_ID}`));
+  const d    = snap.val();
+  const now  = Date.now();
+  const lastG= d.lastWeeklyGift || 0;
+  if (now - lastG < WEEKLY_GIFT_COOL) {
+    const rem = WEEKLY_GIFT_COOL - (now - lastG);
+    const days= Math.floor(rem / 86400000);
+    const hrs = Math.floor((rem % 86400000) / 3600000);
+    throw new Error(`WAIT:${days}d ${hrs}h`);
+  }
+  const streak = ((d.weeklyGiftStreak || 0) + 1);
+  const idx    = Math.min(streak - 1, WEEKLY_GIFTS.length - 1);
+  const reward = WEEKLY_GIFTS[idx];
+  await update(ref(db, `users/${USER_ID}`), { lastWeeklyGift: now, weeklyGiftStreak: streak });
   await addPoints(reward);
   return { reward, streak };
 }
@@ -887,13 +994,26 @@ async function registerReferral(refId) {
   if (!refId || refId === USER_ID) return;
   const snap = await get(ref(db, `users/${USER_ID}`));
   const d    = snap?.val() || {};
-  if (d.referredBy) return; // already has a referrer
+  if (d.referredBy) return;
   const refSnap = await get(ref(db, `users/${refId}`));
   if (!refSnap.exists()) return;
-  // Mark this user as referred by refId
-  await update(ref(db, `users/${USER_ID}`), { referredBy: refId, referValid: false });
-  // Increment referrer's total refs count
+  await update(ref(db, `users/${USER_ID}`), { referredBy: refId, referValid: false, referAdsCount: 0 });
   await update(ref(db, `users/${refId}`), { refs: increment(1) });
+}
+
+async function checkReferralValidation() {
+  const snap = await get(ref(db, `users/${USER_ID}`));
+  const d    = snap.val();
+  const adsWatched = d.adsWatched || 0;
+  const referredBy = d.referredBy || null;
+  if (referredBy && !d.referValid && adsWatched >= ADS_PER_VALID_REF) {
+    await update(ref(db, `users/${USER_ID}`), { referValid: true });
+    await update(ref(db, `users/${referredBy}`), {
+      validRefs: increment(1),
+      points: increment(REF_REWARD_PTS)
+    });
+    toast("🎉 Your referrer earned 400 pts from your activity!", "ok");
+  }
 }
 
 async function submitWithdraw(wallet, pointsAmt) {
@@ -905,31 +1025,79 @@ async function submitWithdraw(wallet, pointsAmt) {
   const tonAmt = pointsAmt / PTS_PER_TON;
   const reqId  = `req_${Date.now()}`;
   await set(ref(db, `users/${USER_ID}/withdrawals/${reqId}`), {
-    wallet, pointsAmt, tonAmt, status:"pending", at: Date.now()
+    wallet, pointsAmt, tonAmt, status: "pending", at: Date.now()
   });
-  await update(ref(db, `users/${USER_ID}`), { points: (d.points||0) - pointsAmt });
+  await update(ref(db, `users/${USER_ID}`), { points: (d.points || 0) - pointsAmt });
   return reqId;
 }
 
+async function applyPromoCode(code) {
+  if (!code) throw new Error("Enter a code first");
+  const codeRef = ref(db, `promoCodes/${code.toUpperCase()}`);
+  const snap = await get(codeRef);
+  if (!snap.exists()) throw new Error("Invalid promo code");
+  const c = snap.val();
+  if (c.expiry && Date.now() > c.expiry) throw new Error("Promo code expired");
+  // Check if user already used this code
+  const usedRef = ref(db, `users/${USER_ID}/usedPromos/${code.toUpperCase()}`);
+  const usedSnap = await get(usedRef);
+  if (usedSnap.exists()) throw new Error("Already used this code");
+  // Apply
+  await set(usedRef, { usedAt: Date.now() });
+  await addPoints(c.pts || 0);
+  return c.pts || 0;
+}
+
 async function loadLeaderboard() {
-  const snap = await get(ref(db, "users"));
-  if (!snap.exists()) return [];
-  const list = [];
-  snap.forEach(c => {
-    const d = c.val();
-    const pts  = d.points || 0;
-    const ton  = d.ton || 0;
-    const totalPts = pts + ton * PTS_PER_TON;
-    list.push({
-      id:       c.key,
-      name:     d.firstName || d.username || "Anonymous",
-      pts,
-      ton,
-      totalPts,
-      refs:     d.validRefs || 0,
+  // Leaderboard uses cached snapshot (updated every 24h)
+  const cacheSnap = await get(ref(db, "leaderboardCache"));
+  let list = [];
+  if (cacheSnap.exists()) {
+    const cache = cacheSnap.val();
+    list = Object.values(cache).sort((a,b) => b.totalPts - a.totalPts).slice(0,50);
+  } else {
+    // Fallback: read live if no cache
+    const snap = await get(ref(db, "users"));
+    if (!snap.exists()) return [];
+    snap.forEach(c => {
+      const d = c.val();
+      const pts = d.points || 0;
+      const ton = d.ton || 0;
+      const totalPts = pts + ton * PTS_PER_TON;
+      list.push({ id: c.key, name: d.firstName || d.username || "Anonymous", pts, ton, totalPts, refs: d.validRefs || 0 });
     });
+    list = list.sort((a,b) => b.totalPts - a.totalPts).slice(0,50);
+  }
+  return list;
+}
+
+/* ─────────────────────────────────────────────────────
+   LEADERBOARD CACHE UPDATE (24hr)
+   Cloud Functions would be ideal; this client-side
+   fallback runs once daily per user session
+───────────────────────────────────────────────────── */
+async function maybeUpdateLeaderboardCache() {
+  const metaRef  = ref(db, "leaderboardMeta/lastUpdated");
+  const metaSnap = await get(metaRef);
+  const lastUp   = metaSnap.exists() ? metaSnap.val() : 0;
+  if (Date.now() - lastUp < 86400000) return; // Not yet 24hr
+  // Only one user should update — use USER_ID as a simple lock
+  const lockRef  = ref(db, "leaderboardMeta/lockUser");
+  const lockSnap = await get(lockRef);
+  if (lockSnap.exists() && lockSnap.val() !== USER_ID) return;
+  await update(ref(db, "leaderboardMeta"), { lockUser: USER_ID, lastUpdated: Date.now() });
+  // Read all users and write cache
+  const usersSnap = await get(ref(db, "users"));
+  if (!usersSnap.exists()) return;
+  const cache = {};
+  usersSnap.forEach(c => {
+    const d = c.val();
+    const pts = d.points || 0;
+    const ton = d.ton || 0;
+    const totalPts = pts + ton * PTS_PER_TON;
+    cache[c.key] = { id: c.key, name: d.firstName || d.username || "Anonymous", pts, ton, totalPts, refs: d.validRefs || 0 };
   });
-  return list.sort((a,b) => b.totalPts - a.totalPts).slice(0,50);
+  await set(ref(db, "leaderboardCache"), cache);
 }
 
 /* ─────────────────────────────────────────────────────
@@ -959,19 +1127,38 @@ function renderDash() {
   animCount("dispPoints", S.points);
   animCount("dispTon",    S.ton, 4);
   animCount("dispRefs",   S.validRefs);
+
+  // Show TON equivalent under points
+  const tonEquiv = (S.points / PTS_PER_TON).toFixed(4);
+  const heroSub  = document.getElementById("dispTonHero");
+  if (heroSub) heroSub.textContent = `≈ ${tonEquiv} TON`;
+
   const pct = Math.min((S.points / PTS_PER_TON) * 100, 100);
   document.getElementById("progressBar").style.width = pct + "%";
   document.getElementById("progressLabel").textContent =
     `${S.points.toLocaleString()} / 50,000 pts → 1 TON`;
+
   const rl = document.getElementById("refLink");
   if (rl) rl.value = `${BOT_LINK}?startapp=${USER_ID}`;
-  const tr = document.getElementById("totalRefs");
-  if (tr) tr.textContent = S.refs;
-  const vr = document.getElementById("validRefs");
-  if (vr) vr.textContent = S.validRefs;
-  // Withdraw modal pts
+
+  // Home total refs
+  const tr2 = document.getElementById("dispTotalRefs2");
+  if (tr2) tr2.textContent = S.refs;
+
+  // Withdraw modal
+  const wv = document.getElementById("wbalVal");
+  if (wv) wv.textContent = S.ton.toFixed(4);
   const wp = document.getElementById("wbalPts");
   if (wp) wp.textContent = S.points.toLocaleString();
+}
+
+function renderReferSection() {
+  const tv = document.getElementById("refTotalVal");
+  const vv = document.getElementById("refValidVal");
+  const ev = document.getElementById("refEarnedVal");
+  if (tv) tv.textContent = S.refs;
+  if (vv) vv.textContent = S.validRefs;
+  if (ev) ev.textContent = (S.validRefs * REF_REWARD_PTS).toLocaleString();
 }
 
 /* ─────────────────────────────────────────────────────
@@ -982,12 +1169,11 @@ function renderStreak() {
   if (!grid) return;
   grid.innerHTML = "";
   for (let i = 0; i < 7; i++) {
-    const dayNum = i + 1;
     const claimed = S.dailyStreak > i;
     const isToday = S.dailyStreak === i + 1;
     const div = document.createElement("div");
     div.className = "streak-day" + (claimed?" claimed":"") + (isToday?" today":"");
-    div.innerHTML = `<div class="sd-num">Day ${dayNum}</div>
+    div.innerHTML = `<div class="sd-num">Day ${i+1}</div>
       <div class="sd-icon">${claimed?"✅":"🎁"}</div>
       <div class="sd-pts">+${DAILY_REWARDS[i]}</div>`;
     grid.appendChild(div);
@@ -995,22 +1181,81 @@ function renderStreak() {
 }
 
 /* ─────────────────────────────────────────────────────
-   RENDER: TASKS
+   RENDER: WEEKLY GIFT TILES
+───────────────────────────────────────────────────── */
+function renderGiftTiles() {
+  const container = document.getElementById("giftTiles");
+  if (!container) return;
+  container.innerHTML = "";
+  const canClaim = Date.now() - S.lastWeeklyGift >= WEEKLY_GIFT_COOL;
+  const currentWeek = S.weeklyGiftStreak;
+  for (let i = 0; i < 8; i++) {
+    const collected = i < currentWeek;
+    const isNext    = i === currentWeek && canClaim;
+    const div = document.createElement("div");
+    div.className = "gift-tile" + (collected?" collected":"") + (isNext?" today-gift":"");
+    div.innerHTML = `<div class="gt-ico">${collected?"✅":"🎀"}</div>
+      <div class="gt-day">Week ${i+1}</div>
+      <div class="gt-val">+${WEEKLY_GIFTS[i]} pts</div>`;
+    container.appendChild(div);
+  }
+  const claimBtn = document.getElementById("claimWeeklyGift");
+  if (!canClaim) {
+    const rem  = WEEKLY_GIFT_COOL - (Date.now() - S.lastWeeklyGift);
+    const days = Math.floor(rem / 86400000);
+    const hrs  = Math.floor((rem % 86400000) / 3600000);
+    claimBtn.disabled = true;
+    claimBtn.textContent = `⏳ Come back in ${days}d ${hrs}h`;
+  } else {
+    claimBtn.disabled = false;
+    const idx = Math.min(S.weeklyGiftStreak, WEEKLY_GIFTS.length - 1);
+    claimBtn.textContent = `🎀 Claim +${WEEKLY_GIFTS[idx]} pts`;
+  }
+}
+
+/* ─────────────────────────────────────────────────────
+   RENDER: TASKS (from Firebase admin panel)
 ───────────────────────────────────────────────────── */
 let cdTicker = null;
+let TASKS_DATA = [];
+
+async function loadAdminTasks() {
+  const snap = await get(ref(db, "adminTasks"));
+  if (!snap.exists()) return [];
+  const tasks = [];
+  snap.forEach(c => {
+    const t = c.val();
+    tasks.push({
+      id:       c.key,
+      icon:     t.icon    || "📋",
+      name:     t.name    || "Task",
+      desc:     t.desc    || "",
+      pts:      t.pts     || 10,
+      url:      t.url     || "#",
+      cooldown: t.cooldown|| 86400000,
+    });
+  });
+  return tasks;
+}
+
 function renderTasks() {
   const container = document.getElementById("taskList");
   if (!container) return;
+  if (!TASKS_DATA.length) {
+    container.innerHTML = `<div class="empty">No tasks available yet. Check back soon!</div>`;
+    document.getElementById("taskDoneCount").textContent = "0/0 done";
+    return;
+  }
   container.innerHTML = "";
   let doneCount = 0;
 
-  TASKS.forEach(t => {
-    const td    = S.completedTasks?.[t.id] || {};
-    const last  = td.lastTime || 0;
-    const now   = Date.now();
-    const onCD  = now - last < t.cooldown;
+  TASKS_DATA.forEach(t => {
+    const td     = S.completedTasks?.[t.id] || {};
+    const last   = td.lastTime || 0;
+    const now    = Date.now();
+    const onCD   = now - last < t.cooldown;
     const remSec = onCD ? Math.ceil((t.cooldown - (now - last)) / 1000) : 0;
-    const pct   = onCD ? Math.min(((now - last) / t.cooldown) * 100, 100) : 100;
+    const pct    = onCD ? Math.min(((now - last) / t.cooldown) * 100, 100) : 100;
     if (td.count) doneCount++;
 
     const card = document.createElement("div");
@@ -1028,7 +1273,6 @@ function renderTasks() {
         <button class="t-btn${onCD?" dis":""}"
           data-id="${t.id}" data-pts="${t.pts}"
           data-cd="${t.cooldown}" data-url="${t.url}"
-          data-isad="${t.type === 'ads_visit' ? '1' : '0'}"
           ${onCD?"disabled":""}>
           ${onCD ? fmtTime(remSec) : "Go →"}
         </button>
@@ -1037,7 +1281,7 @@ function renderTasks() {
   });
 
   const dc = document.getElementById("taskDoneCount");
-  if (dc) dc.textContent = `${doneCount}/${TASKS.length} done`;
+  if (dc) dc.textContent = `${doneCount}/${TASKS_DATA.length} done`;
 
   container.querySelectorAll(".t-btn:not(.dis)").forEach(btn =>
     btn.addEventListener("click", onTaskClick));
@@ -1053,8 +1297,7 @@ function fmtTime(sec) {
 
 function startCDTicker() {
   if (cdTicker) clearInterval(cdTicker);
-  const hasCooldowns = document.querySelector(".t-btn.dis");
-  if (!hasCooldowns) return;
+  if (!document.querySelector(".t-btn.dis")) return;
   cdTicker = setInterval(() => {
     document.querySelectorAll(".t-btn.dis").forEach(btn => {
       const cd  = parseInt(btn.dataset.cd);
@@ -1067,26 +1310,62 @@ function startCDTicker() {
   }, 1000);
 }
 
+// Task click: open URL, wait 5 seconds, then allow claim
 async function onTaskClick(e) {
   const btn   = e.currentTarget;
   const id    = btn.dataset.id;
   const pts   = parseInt(btn.dataset.pts);
   const cd    = parseInt(btn.dataset.cd);
   const url   = btn.dataset.url;
-  const isAd  = btn.dataset.isad === "1";
+
+  btn.disabled = true;
+  btn.textContent = "Visit…";
+
+  // Open task URL
   window.open(url, "_blank");
-  await new Promise(r => setTimeout(r, 1500));
-  try {
-    await completeTask(id, pts, cd, isAd);
-    toast(`✅ +${pts} pts earned!`, "ok");
-    haptic("medium");
-  } catch(err) {
-    if (err.message.startsWith("COOLDOWN:")) {
-      toast(`⏳ Cooldown: ${err.message.slice(9)}`, "warn");
-    } else {
-      toast("Error: " + err.message, "err");
+
+  // Wait 5 seconds (task visit time)
+  let countdown = 5;
+  const ticker = setInterval(() => {
+    countdown--;
+    btn.textContent = `${countdown}s…`;
+    if (countdown <= 0) clearInterval(ticker);
+  }, 1000);
+
+  await new Promise(r => setTimeout(r, 5000));
+  clearInterval(ticker);
+  btn.textContent = "Claim!";
+  btn.disabled = false;
+
+  // Now let user claim
+  btn.onclick = async () => {
+    btn.disabled = true;
+    btn.textContent = "Saving…";
+    try {
+      const tRef = ref(db, `users/${USER_ID}/completedTasks/${id}`);
+      const snap = await get(tRef);
+      const now  = Date.now();
+      if (snap.exists()) {
+        const last = snap.val().lastTime || 0;
+        if (now - last < cd) {
+          const rem = Math.ceil((cd - (now - last)) / 1000);
+          throw new Error(`COOLDOWN:${fmtTime(rem)}`);
+        }
+      }
+      await set(tRef, { lastTime: now, count: (snap.val()?.count || 0) + 1 });
+      await addPoints(pts);
+      toast(`✅ Task complete! +${pts} pts`, "ok");
+      haptic("medium");
+      renderTasks();
+    } catch(err) {
+      if (err.message.startsWith("COOLDOWN:")) {
+        toast(`⏳ Cooldown: ${err.message.slice(9)}`, "warn");
+      } else {
+        toast("Error: " + err.message, "err");
+      }
+      renderTasks();
     }
-  }
+  };
 }
 
 /* ─────────────────────────────────────────────────────
@@ -1099,9 +1378,8 @@ function updateDailyBtn() {
   const rem = DAILY_COOL - (now - S.lastDaily);
   if (rem <= 0) {
     const nextDay = Math.min(S.dailyStreak + 1, 7);
-    const reward  = DAILY_REWARDS[nextDay - 1] || 5;
     btn.disabled = false;
-    btn.textContent = `🎁 Claim Day ${nextDay} — +${reward} pts`;
+    btn.textContent = `🎁 Claim Day ${nextDay} — +${DAILY_REWARDS[nextDay-1]} pts`;
   } else {
     btn.disabled = true;
     const h = Math.floor(rem / 3600000);
@@ -1119,19 +1397,46 @@ document.getElementById("dailyBtn").addEventListener("click", async () => {
     toast(`🎁 Day ${streak} bonus! +${reward} pts`, "ok");
     haptic("heavy");
   } catch(err) {
-    if (err.message.startsWith("WAIT:")) {
-      toast(`⏳ ${err.message.slice(5)} remaining`, "warn");
-    } else {
-      toast("Error: " + err.message, "err");
-    }
+    if (err.message.startsWith("WAIT:")) toast(`⏳ ${err.message.slice(5)} remaining`, "warn");
+    else toast("Error: " + err.message, "err");
   }
 });
 
 /* ─────────────────────────────────────────────────────
-   SPIN WHEEL
+   WEEKLY GIFT
+───────────────────────────────────────────────────── */
+document.getElementById("claimWeeklyGift").addEventListener("click", async () => {
+  const btn = document.getElementById("claimWeeklyGift");
+  btn.disabled = true;
+  btn.textContent = "Claiming…";
+  try {
+    const { reward, streak } = await claimWeeklyGift();
+    toast(`🎀 Week ${streak} gift! +${reward} pts`, "ok");
+    haptic("heavy");
+    closeModal("weeklyGiftModal");
+  } catch(err) {
+    if (err.message.startsWith("WAIT:")) toast(`⏳ ${err.message.slice(5)} remaining`, "warn");
+    else toast("Error: " + err.message, "err");
+  }
+});
+
+/* ─────────────────────────────────────────────────────
+   SPIN WHEEL (now in Home section)
 ───────────────────────────────────────────────────── */
 let spinRunning = false;
 let spinAngle   = 0;
+
+/* SPIN STYLES (inject into head since canvas is inline) */
+const spinStyles = document.createElement("style");
+spinStyles.textContent = `
+  .spin-wrap{display:flex;flex-direction:column;align-items:center;gap:14px;padding:6px 0 4px;}
+  #spinCanvas{border-radius:50%;box-shadow:0 0 0 3px var(--border),0 8px 40px rgba(124,106,255,.35);max-width:265px;width:100%;aspect-ratio:1/1;display:block;}
+  .spin-main-btn{width:100%;max-width:230px;padding:14px;border-radius:99px;background:var(--grad);color:#fff;font-family:'Outfit',sans-serif;font-weight:900;font-size:1rem;letter-spacing:.04em;box-shadow:0 6px 24px rgba(124,106,255,.40);transition:transform var(--t),opacity var(--t),box-shadow var(--t);}
+  .spin-main-btn:active:not(:disabled){transform:scale(.96)}
+  .spin-main-btn:disabled{opacity:.5;cursor:not-allowed;box-shadow:none}
+  .spin-note{font-size:.72rem;color:var(--text2);text-align:center}
+`;
+document.head.appendChild(spinStyles);
 
 function initSpin() {
   drawWheel(spinAngle);
@@ -1141,77 +1446,44 @@ function initSpin() {
 function drawWheel(currentAngle) {
   const canvas = document.getElementById("spinCanvas");
   if (!canvas) return;
-  const ctx    = canvas.getContext("2d");
+  const ctx = canvas.getContext("2d");
   const W = canvas.width, H = canvas.height;
   const cx = W/2, cy = H/2, R = cx - 6;
   const slices = SPIN_PRIZES.length;
   const arc    = (Math.PI * 2) / slices;
-
   ctx.clearRect(0, 0, W, H);
-
   for (let i = 0; i < slices; i++) {
     const start = currentAngle + i * arc;
     const end   = start + arc;
-    ctx.beginPath();
-    ctx.moveTo(cx, cy);
-    ctx.arc(cx, cy, R, start, end);
-    ctx.closePath();
-    ctx.fillStyle = SPIN_COLORS[i];
-    ctx.fill();
-    ctx.strokeStyle = "rgba(0,0,0,.25)";
-    ctx.lineWidth = 2;
-    ctx.stroke();
-
-    ctx.save();
-    ctx.translate(cx, cy);
-    ctx.rotate(start + arc/2);
-    ctx.textAlign = "right";
-    ctx.fillStyle = "#fff";
-    ctx.font = `bold 13px 'Outfit',sans-serif`;
-    ctx.shadowColor = "rgba(0,0,0,.4)";
-    ctx.shadowBlur = 4;
-    ctx.fillText(SPIN_LABELS[i], R - 10, 5);
-    ctx.restore();
+    ctx.beginPath(); ctx.moveTo(cx, cy); ctx.arc(cx, cy, R, start, end); ctx.closePath();
+    ctx.fillStyle = SPIN_COLORS[i]; ctx.fill();
+    ctx.strokeStyle = "rgba(0,0,0,.25)"; ctx.lineWidth = 2; ctx.stroke();
+    ctx.save(); ctx.translate(cx, cy); ctx.rotate(start + arc/2);
+    ctx.textAlign = "right"; ctx.fillStyle = "#fff"; ctx.font = `bold 13px 'Outfit',sans-serif`;
+    ctx.shadowColor = "rgba(0,0,0,.4)"; ctx.shadowBlur = 4;
+    ctx.fillText(SPIN_LABELS[i], R - 10, 5); ctx.restore();
   }
-
-  // Center circle
-  ctx.beginPath();
-  ctx.arc(cx, cy, 22, 0, Math.PI*2);
-  ctx.fillStyle = "#0d0d1a";
-  ctx.fill();
-  ctx.strokeStyle = "rgba(255,255,255,.15)";
-  ctx.lineWidth = 2;
-  ctx.stroke();
-  ctx.fillStyle = "#fff";
-  ctx.font = "bold 16px Arial";
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
+  ctx.beginPath(); ctx.arc(cx, cy, 22, 0, Math.PI*2);
+  ctx.fillStyle = "#0d0d1a"; ctx.fill();
+  ctx.strokeStyle = "rgba(255,255,255,.15)"; ctx.lineWidth = 2; ctx.stroke();
+  ctx.fillStyle = "#fff"; ctx.font = "bold 16px Arial";
+  ctx.textAlign = "center"; ctx.textBaseline = "middle";
   ctx.fillText("🎰", cx, cy);
-
-  // Pointer
-  ctx.beginPath();
-  ctx.moveTo(cx - 8, 4);
-  ctx.lineTo(cx + 8, 4);
-  ctx.lineTo(cx, 22);
-  ctx.closePath();
-  ctx.fillStyle = "#ffd166";
-  ctx.fill();
+  ctx.beginPath(); ctx.moveTo(cx-8, 4); ctx.lineTo(cx+8, 4); ctx.lineTo(cx, 22); ctx.closePath();
+  ctx.fillStyle = "#ffd166"; ctx.fill();
 }
 
 function updateSpinBtn() {
   const btn  = document.getElementById("spinBtn");
   const note = document.getElementById("spinNote");
   if (!btn) return;
-  const now  = Date.now();
-  const rem  = SPIN_COOL - (now - S.spinLast);
+  const rem = SPIN_COOL - (Date.now() - S.spinLast);
   if (rem <= 0) {
-    btn.disabled = false;
-    btn.textContent = "🎰 SPIN!";
+    btn.disabled = false; btn.textContent = "🎰 SPIN!";
     if (note) note.textContent = "Cooldown resets every 60 minutes";
   } else {
     btn.disabled = true;
-    const m = Math.floor(rem / 60000);
-    const s = Math.floor((rem % 60000) / 1000);
+    const m = Math.floor(rem / 60000), s = Math.floor((rem % 60000) / 1000);
     btn.textContent = `⏳ ${m}m ${s}s`;
     if (note) note.textContent = "Come back for your next free spin!";
   }
@@ -1219,8 +1491,7 @@ function updateSpinBtn() {
 
 document.getElementById("spinBtn").addEventListener("click", () => {
   const now = Date.now();
-  if (now - S.spinLast < SPIN_COOL) return;
-  if (spinRunning) return;
+  if (now - S.spinLast < SPIN_COOL || spinRunning) return;
   spinRunning = true;
   S.spinLast  = now;
   localStorage.setItem("tonxSpinLast", now);
@@ -1229,24 +1500,18 @@ document.getElementById("spinBtn").addEventListener("click", () => {
   const slices   = SPIN_PRIZES.length;
   const arc      = (Math.PI * 2) / slices;
   const prizeIdx = Math.floor(Math.random() * slices);
-  // Target: the prize lands under pointer (top center)
-  const target = (Math.PI * 2) - (prizeIdx * arc + arc/2) + Math.PI/2;
-  const extraSpins = 5 + Math.random() * 3;
-  const totalAngle = extraSpins * Math.PI * 2 + target;
-
+  const target   = (Math.PI * 2) - (prizeIdx * arc + arc/2) + Math.PI/2;
+  const totalAngle = (5 + Math.random() * 3) * Math.PI * 2 + target;
   let start = null;
   const duration = 4000;
   const startAngle = spinAngle;
 
   function easeOut(t) { return 1 - Math.pow(1 - t, 4); }
-
   function animate(ts) {
     if (!start) start = ts;
-    const elapsed = ts - start;
-    const progress= Math.min(elapsed / duration, 1);
+    const progress = Math.min((ts - start) / duration, 1);
     spinAngle = startAngle + totalAngle * easeOut(progress);
     drawWheel(spinAngle);
-
     if (progress < 1) {
       requestAnimationFrame(animate);
     } else {
@@ -1257,23 +1522,86 @@ document.getElementById("spinBtn").addEventListener("click", () => {
           .then(() => { toast(`🎰 You won ${prize} pts!`, "ok"); haptic("heavy"); })
           .catch(() => toast("Error saving prize", "err"));
       } else {
-        toast("😢 No prize this time!", "warn");
-        haptic("light");
+        toast("😢 No prize this time!", "warn"); haptic("light");
       }
       updateSpinBtn();
     }
   }
   requestAnimationFrame(animate);
 });
-
-// Spin cooldown live ticker
 setInterval(updateSpinBtn, 1000);
+
+/* ─────────────────────────────────────────────────────
+   ADS — MONETAG
+───────────────────────────────────────────────────── */
+let monetagBusy = false;
+document.getElementById("monetagBtn").addEventListener("click", async () => {
+  if (monetagBusy) return;
+  monetagBusy = true;
+  const btn = document.getElementById("monetagBtn");
+  const timer = document.getElementById("monetagTimer");
+  btn.disabled = true;
+
+  try {
+    let adWatchSec = 0;
+    const countUp = setInterval(() => {
+      adWatchSec++;
+      if (timer) timer.textContent = `${adWatchSec}s`;
+    }, 1000);
+
+    await window.show_10353766();
+    clearInterval(countUp);
+
+    if (adWatchSec >= MONETAG_MIN_SEC) {
+      await update(ref(db, `users/${USER_ID}`), { adsWatched: increment(1) });
+      await addPoints(ADS_REWARD_PTS);
+      await checkReferralValidation();
+      toast(`📣 +${ADS_REWARD_PTS} pts earned! (Monetag)`, "ok");
+      haptic("medium");
+    } else {
+      toast("⚠️ Watch at least 7 seconds for reward", "warn");
+    }
+  } catch(e) {
+    toast("Ad failed to load. Try again.", "err");
+  } finally {
+    if (timer) timer.textContent = "";
+    btn.disabled = false;
+    monetagBusy  = false;
+  }
+});
+
+/* ─────────────────────────────────────────────────────
+   ADS — GIGAPUB
+───────────────────────────────────────────────────── */
+let gigaBusy = false;
+document.getElementById("gigapubBtn").addEventListener("click", async () => {
+  if (gigaBusy) return;
+  gigaBusy = true;
+  const btn   = document.getElementById("gigapubBtn");
+  const timer = document.getElementById("gigapubTimer");
+  btn.disabled = true;
+  if (timer) timer.textContent = "Loading…";
+
+  try {
+    await window.showGiga();
+    // Reward after ad interaction
+    await update(ref(db, `users/${USER_ID}`), { adsWatched: increment(1) });
+    await addPoints(ADS_REWARD_PTS);
+    await checkReferralValidation();
+    toast(`🚀 +${ADS_REWARD_PTS} pts earned! (GigaPub)`, "ok");
+    haptic("medium");
+  } catch(e) {
+    toast("Ad failed or was skipped.", "warn");
+  } finally {
+    if (timer) timer.textContent = "";
+    btn.disabled = false;
+    gigaBusy     = false;
+  }
+});
 
 /* ─────────────────────────────────────────────────────
    LEADERBOARD
 ───────────────────────────────────────────────────── */
-
-// Rank tier based on total points (points + ton*50000)
 function getTier(totalPts) {
   if (totalPts >= 500000) return { label: "💎 Diamond", color: "#00d4ff" };
   if (totalPts >= 200000) return { label: "🏅 Platinum", color: "#a78bfa" };
@@ -1290,25 +1618,19 @@ async function renderLeaderboard() {
   try {
     const list = await loadLeaderboard();
     container.innerHTML = "";
-
-    // My rank bar
-    const myIdx = list.findIndex(u => u.id === USER_ID);
-    const myRankBar = document.getElementById("myRankBar");
-    const myRankVal = document.getElementById("myRankVal");
-    const myRankPts = document.getElementById("myRankPts");
+    const myIdx    = list.findIndex(u => u.id === USER_ID);
+    const myRankBar= document.getElementById("myRankBar");
     if (myRankBar && myIdx >= 0) {
       myRankBar.style.display = "flex";
-      myRankVal.textContent = `#${myIdx + 1} of ${list.length}`;
-      myRankPts.textContent = `${list[myIdx].totalPts.toLocaleString()} pts`;
+      document.getElementById("myRankVal").textContent = `#${myIdx + 1} of ${list.length}`;
+      document.getElementById("myRankPts").textContent = `${list[myIdx].totalPts.toLocaleString()} pts`;
     } else if (myRankBar) {
       myRankBar.style.display = "none";
     }
-
     list.forEach((u, i) => {
       const medal = ["🥇","🥈","🥉"][i] || `#${i+1}`;
       const isMe  = u.id === USER_ID;
       const tier  = getTier(u.totalPts);
-      const tonDisplay = u.ton > 0 ? u.ton.toFixed(4) : "0.0000";
       const rankClass = i === 0 ? " rank-1" : i === 1 ? " rank-2" : i === 2 ? " rank-3" : "";
       const d = document.createElement("div");
       d.className = "leader-card" + rankClass + (isMe ? " is-me" : "");
@@ -1321,10 +1643,10 @@ async function renderLeaderboard() {
         <div class="ldr-info">
           <div class="ldr-name">${u.name}${isMe?"<span class='you-tag'>You</span>":""}</div>
           <div class="ldr-pts" style="color:${tier.color}">${tier.label}</div>
-          <div class="ldr-pts">${u.pts.toLocaleString()} pts</div>
+          <div class="ldr-pts">${u.totalPts.toLocaleString()} pts</div>
         </div>
         <div class="ldr-right">
-          <div class="ldr-ton">💎 ${tonDisplay} TON</div>
+          <div class="ldr-ton">💎 ${u.ton.toFixed(4)} TON</div>
           <div class="ldr-refs">👥 ${u.refs} refs</div>
         </div>`;
       container.appendChild(d);
@@ -1335,12 +1657,19 @@ async function renderLeaderboard() {
   }
 }
 
-// Refresh button
 document.getElementById("ldrRefresh")?.addEventListener("click", renderLeaderboard);
 
 /* ─────────────────────────────────────────────────────
    WITHDRAW
 ───────────────────────────────────────────────────── */
+// Live TON preview as user types points
+document.getElementById("wPts")?.addEventListener("input", () => {
+  const pts = parseInt(document.getElementById("wPts").value) || 0;
+  const ton = (pts / PTS_PER_TON).toFixed(4);
+  document.getElementById("wPtsPreview").textContent = pts.toLocaleString();
+  document.getElementById("wTonPreview").textContent = ton;
+});
+
 document.getElementById("wSubmit").addEventListener("click", async () => {
   const wallet   = document.getElementById("wWallet").value.trim();
   const pointsIn = parseInt(document.getElementById("wPts").value);
@@ -1372,6 +1701,39 @@ document.getElementById("wSubmit").addEventListener("click", async () => {
 });
 
 /* ─────────────────────────────────────────────────────
+   PROMO CODE
+───────────────────────────────────────────────────── */
+window.togglePromo = function() {
+  const card = document.getElementById("promoCard");
+  const lbl  = document.getElementById("promoStatusLbl");
+  const vis  = card.style.display !== "none";
+  card.style.display = vis ? "none" : "block";
+  if (lbl) lbl.textContent = vis ? "Enter code" : "Tap to hide";
+  if (!vis) document.getElementById("promoInput")?.focus();
+};
+
+document.getElementById("promoSubmit").addEventListener("click", async () => {
+  const code = document.getElementById("promoInput").value.trim();
+  const btn  = document.getElementById("promoSubmit");
+  if (!code) { toast("Enter a promo code", "warn"); return; }
+  btn.disabled = true;
+  btn.textContent = "…";
+  try {
+    const pts = await applyPromoCode(code);
+    toast(`🎟️ Promo applied! +${pts} pts`, "ok");
+    haptic("heavy");
+    document.getElementById("promoInput").value = "";
+    document.getElementById("promoCard").style.display = "none";
+    document.getElementById("promoStatusLbl").textContent = "Enter code";
+  } catch(err) {
+    toast("❌ " + err.message, "err");
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Apply";
+  }
+});
+
+/* ─────────────────────────────────────────────────────
    NAVIGATION
 ───────────────────────────────────────────────────── */
 window.navTo = function(sec) {
@@ -1380,7 +1742,6 @@ window.navTo = function(sec) {
   document.getElementById(sec)?.classList.add("active");
   document.querySelector(`[data-sec="${sec}"]`)?.classList.add("active");
   if (sec === "leaderSection") renderLeaderboard();
-  if (sec === "earnSection")   initSpin();
 };
 
 document.querySelectorAll(".nav-item").forEach(item => {
@@ -1412,6 +1773,7 @@ window.openModal = function(id) {
     document.getElementById("wbalVal").textContent = S.ton.toFixed(4);
     document.getElementById("wbalPts").textContent = S.points.toLocaleString();
   }
+  if (id === "weeklyGiftModal") renderGiftTiles();
 };
 window.closeModal = function(id) {
   document.getElementById(id)?.classList.remove("open");
@@ -1426,13 +1788,9 @@ document.querySelectorAll(".overlay").forEach(ov => {
 window.closeNotice = function() {
   document.getElementById("noticeOverlay")?.classList.remove("open");
 };
-
 function showNotice() {
-  const seen = localStorage.getItem("tonxNoticeSeen");
-  if (!seen) {
-    setTimeout(() => {
-      document.getElementById("noticeOverlay")?.classList.add("open");
-    }, 800);
+  if (!localStorage.getItem("tonxNoticeSeen")) {
+    setTimeout(() => document.getElementById("noticeOverlay")?.classList.add("open"), 800);
     localStorage.setItem("tonxNoticeSeen", "1");
   }
 }
@@ -1441,12 +1799,10 @@ function showNotice() {
    REFERRAL BUTTONS
 ───────────────────────────────────────────────────── */
 document.getElementById("copyRef").addEventListener("click", () => {
-  const link = `${BOT_LINK}?startapp=${USER_ID}`;
-  navigator.clipboard.writeText(link)
+  navigator.clipboard.writeText(`${BOT_LINK}?startapp=${USER_ID}`)
     .then(() => toast("📋 Link copied!", "ok"))
     .catch(() => toast("Copy failed", "err"));
 });
-
 document.getElementById("shareRef").addEventListener("click", () => {
   const link = `${BOT_LINK}?startapp=${USER_ID}`;
   const text = `💎 Join TonXHub & earn real TON crypto!\n🔗 ${link}`;
@@ -1494,7 +1850,12 @@ async function boot() {
     if (REF_ID) await registerReferral(REF_ID).catch(()=>{});
     subscribeUser();
     initSpin();
-    showNotice(); // Show welcome notice on first visit
+    showNotice();
+    // Load admin tasks
+    TASKS_DATA = await loadAdminTasks();
+    renderTasks();
+    // Try update leaderboard cache (runs silently, once per 24h)
+    maybeUpdateLeaderboardCache().catch(()=>{});
   } catch(err) {
     toast("⚠️ " + (err.message || "Connection error"), "err");
     console.error(err);
@@ -1510,11 +1871,24 @@ boot();
 <!--
 ╔═══════════════════════════════════════════════════════════════╗
 ║   FIREBASE REALTIME DB SECURITY RULES                        ║
-║   Paste into: Firebase Console → Realtime DB → Rules         ║
-╠═══════════════════════════════════════════════════════════════╣
-║  { "rules": { ".read": true, ".write": true } }               ║
-║  (Change to per-user rules before production!)                ║
+║   { "rules": { ".read": true, ".write": true } }              ║
 ╚═══════════════════════════════════════════════════════════════╝
+
+ADMIN TASKS FORMAT (Firebase path: /adminTasks/{taskId}):
+{
+  "icon": "📢",
+  "name": "Join our Channel",
+  "desc": "Subscribe and earn pts",
+  "pts": 50,
+  "url": "https://t.me/tonXhub_Earn",
+  "cooldown": 86400000
+}
+
+PROMO CODES FORMAT (Firebase path: /promoCodes/{CODE}):
+{
+  "pts": 200,
+  "expiry": 1780000000000
+}
 -->
 
 </body>
