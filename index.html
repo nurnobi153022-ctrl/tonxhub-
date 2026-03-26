@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
-<meta name="theme-color" content="#0d0d1a"/>
+<meta name="theme-color" content="#080812"/>
 <title>TonXHub</title>
 
 <!-- Telegram WebApp SDK -->
@@ -12,7 +12,7 @@
 <!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
 
 <!-- Monetag SDK -->
 <script src='//libtl.com/sdk.js' data-zone='10353766' data-sdk='show_10353766'></script>
@@ -24,64 +24,58 @@
    CSS VARIABLES
 ═══════════════════════════════════════════════════════ */
 :root {
-  --bg:         #0d0d1a;
-  --bg2:        #12122a;
-  --surface:    #1a1a35;
-  --surface2:   #20203f;
-  --glass:      rgba(255,255,255,0.04);
-  --glass-b:    rgba(255,255,255,0.08);
-  --border:     rgba(255,255,255,0.08);
-  --border2:    rgba(255,255,255,0.14);
-  --text:       #e8e8ff;
-  --text2:      #7878a8;
-  --text3:      #4a4a72;
+  --bg:      #080812;
+  --bg2:     #0e0e20;
+  --surface: #13132b;
+  --surface2:#1a1a38;
+  --border:  rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.13);
+  --text:    #eeeeff;
+  --text2:   #6868a0;
+  --text3:   #3a3a68;
 
-  --a1: #7c6aff;
-  --a2: #00d4ff;
-  --a3: #ff6b9d;
-  --a4: #00e5a0;
-  --gold: #ffd166;
+  --a1: #6c5ce7;
+  --a2: #00cec9;
+  --a3: #fd79a8;
+  --a4: #00b894;
+  --gold: #fdcb6e;
 
-  --grad:       linear-gradient(135deg,#7c6aff 0%,#00d4ff 100%);
-  --grad2:      linear-gradient(135deg,#ff6b9d 0%,#7c6aff 100%);
-  --grad3:      linear-gradient(135deg,#00e5a0 0%,#00d4ff 100%);
-  --grad-gold:  linear-gradient(135deg,#ffd166 0%,#ff6b9d 100%);
+  --grad:      linear-gradient(135deg,#6c5ce7 0%,#00cec9 100%);
+  --grad2:     linear-gradient(135deg,#fd79a8 0%,#6c5ce7 100%);
+  --grad3:     linear-gradient(135deg,#00b894 0%,#00cec9 100%);
+  --grad-gold: linear-gradient(135deg,#fdcb6e 0%,#e17055 100%);
 
-  --r:   16px;
-  --r2:  12px;
-  --r3:  24px;
-  --nav-h: 64px;
-  --hdr-h: 58px;
-  --t: .22s cubic-bezier(.4,0,.2,1);
-  --shadow: 0 4px 24px rgba(0,0,0,.45);
-  --shadow2: 0 8px 40px rgba(124,106,255,.20);
+  --r:   14px;
+  --r2:  10px;
+  --r3:  22px;
+  --nav-h: 66px;
+  --hdr-h: 56px;
+  --t: .2s cubic-bezier(.4,0,.2,1);
+  --shadow: 0 4px 20px rgba(0,0,0,.5);
 }
 
 .light {
-  --bg:       #f0f1ff;
-  --bg2:      #e8eaff;
-  --surface:  #ffffff;
-  --surface2: #f4f5ff;
-  --glass:    rgba(255,255,255,0.6);
-  --glass-b:  rgba(255,255,255,0.9);
-  --border:   rgba(124,106,255,0.12);
-  --border2:  rgba(124,106,255,0.22);
-  --text:     #1a1a35;
-  --text2:    #6060a0;
-  --text3:    #a0a0c8;
-  --shadow:   0 4px 24px rgba(124,106,255,.12);
-  --shadow2:  0 8px 40px rgba(124,106,255,.18);
+  --bg:      #f0f1ff;
+  --bg2:     #e8eaff;
+  --surface: #ffffff;
+  --surface2:#f4f5ff;
+  --border:  rgba(108,92,231,0.10);
+  --border2: rgba(108,92,231,0.20);
+  --text:    #14142a;
+  --text2:   #5858a0;
+  --text3:   #a0a0c8;
+  --shadow:  0 4px 20px rgba(108,92,231,.10);
 }
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;
+html{font-family:'Space Grotesk',sans-serif;font-size:15px;
   -webkit-tap-highlight-color:transparent;scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);min-height:100vh;
   overflow-x:hidden;transition:background var(--t),color var(--t)}
 input,button,textarea{font-family:inherit}
 button{cursor:pointer;border:none;background:none;color:inherit}
 a{color:inherit;text-decoration:none}
-::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar{width:2px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:99px}
 
@@ -92,11 +86,13 @@ a{color:inherit;text-decoration:none}
   min-height:100vh;position:relative;
   background:var(--bg);
 }
+
+/* Subtle mesh bg */
 .shell::before{
-  content:"";position:fixed;inset:0;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events:none;z-index:0;opacity:.4;
-  max-width:480px;
+  content:"";position:fixed;inset:0;max-width:480px;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 60% 40% at 20% 10%, rgba(108,92,231,.12) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 35% at 80% 80%, rgba(0,206,201,.08) 0%, transparent 55%);
 }
 
 /* HEADER */
@@ -105,438 +101,555 @@ a{color:inherit;text-decoration:none}
   height:var(--hdr-h);
   display:flex;align-items:center;justify-content:space-between;
   padding:0 16px;
-  background:rgba(13,13,26,.85);
+  background:rgba(8,8,18,.82);
   border-bottom:1px solid var(--border);
-  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  transition:background var(--t);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
 }
 .light .hdr{background:rgba(240,241,255,.88)}
 .hdr-brand{
-  display:flex;align-items:center;gap:9px;
-  font-family:'Outfit',sans-serif;
-  font-size:1.18rem;font-weight:900;
+  display:flex;align-items:center;gap:8px;
+  font-family:'Syne',sans-serif;
+  font-size:1.15rem;font-weight:800;
   background:var(--grad);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   background-clip:text;
 }
 .brand-ico{
-  width:32px;height:32px;
-  border-radius:10px;
+  width:30px;height:30px;border-radius:9px;
   background:var(--grad);
   display:flex;align-items:center;justify-content:center;
-  font-size:16px;flex-shrink:0;
-  box-shadow:0 4px 12px rgba(124,106,255,.4);
+  font-size:15px;flex-shrink:0;
+  box-shadow:0 3px 10px rgba(108,92,231,.4);
 }
-.hdr-right{display:flex;gap:7px;align-items:center}
+.hdr-right{display:flex;gap:6px;align-items:center}
 .ico-btn{
-  width:36px;height:36px;
-  border-radius:10px;
-  background:var(--surface2);
-  border:1px solid var(--border);
+  width:34px;height:34px;border-radius:9px;
+  background:var(--surface2);border:1px solid var(--border);
   display:flex;align-items:center;justify-content:center;
-  font-size:17px;
+  font-size:16px;color:var(--text2);
   transition:background var(--t),transform var(--t);
-  color:var(--text2);
 }
-.ico-btn:active{transform:scale(.90);background:var(--glass-b)}
+.ico-btn:active{transform:scale(.88);background:var(--border2)}
 
 /* SKELETON */
-.skel-wrap{padding:16px}
+.skel-wrap{padding:14px}
 .skel{
   background:linear-gradient(90deg,var(--surface) 25%,var(--surface2) 50%,var(--surface) 75%);
-  background-size:200% 100%;
-  animation:shimmer 1.5s infinite;
+  background-size:200% 100%;animation:shimmer 1.5s infinite;
   border-radius:var(--r);
 }
 @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
-.skel-hero{height:195px;margin-bottom:12px}
-.skel-row{height:68px;margin-bottom:10px}
-.skel-sm{height:44px;margin-bottom:8px}
+.skel-hero{height:185px;margin-bottom:10px}
+.skel-row{height:64px;margin-bottom:9px}
+.skel-sm{height:42px;margin-bottom:7px}
 .hidden{display:none!important}
 
 /* CONTENT */
-.content{flex:1;overflow-y:auto;padding-bottom:calc(var(--nav-h)+16px)}
-.section{display:none;padding:14px;animation:fadeUp .26s ease}
+.content{flex:1;overflow-y:auto;padding-bottom:calc(var(--nav-h)+14px)}
+.section{display:none;padding:12px;animation:fadeUp .24s ease}
 .section.active{display:block}
-@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
-/* BALANCE HERO */
+/* ═══ BALANCE HERO — New Style ═══ */
 .hero{
   border-radius:var(--r3);
-  padding:22px 18px 18px;
-  margin-bottom:12px;
-  background:var(--grad);
+  padding:0;
+  margin-bottom:10px;
   position:relative;overflow:hidden;
-  box-shadow:var(--shadow2);
+  background:var(--surface);
+  border:1px solid var(--border);
+  box-shadow:0 8px 32px rgba(0,0,0,.4);
 }
-.hero::before{content:"";position:absolute;top:-60px;right:-60px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.08);pointer-events:none;}
-.hero::after{content:"";position:absolute;bottom:-80px;left:-40px;width:220px;height:220px;border-radius:50%;background:rgba(0,0,0,.10);pointer-events:none;}
-.hero-lbl{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;opacity:.8;color:#fff;margin-bottom:3px}
-.hero-pts{font-family:'Outfit',sans-serif;font-size:2.8rem;font-weight:900;color:#fff;line-height:1;margin-bottom:2px;position:relative;z-index:1;}
-.hero-sub{font-size:.75rem;color:rgba(255,255,255,.75);margin-bottom:14px}
-.prog-track{background:rgba(255,255,255,.25);border-radius:99px;height:7px;overflow:hidden;margin-bottom:5px}
-#progressBar{height:100%;background:#fff;border-radius:99px;width:0%;transition:width .7s ease}
-#progressLabel{font-size:.68rem;color:rgba(255,255,255,.75)}
-.hero-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:16px}
-.h-tile{background:rgba(255,255,255,.15);border-radius:12px;padding:9px 6px;text-align:center;backdrop-filter:blur(6px);}
-.h-tile-v{font-family:'Outfit',sans-serif;font-size:1rem;font-weight:700;color:#fff}
-.h-tile-l{font-size:.62rem;color:rgba(255,255,255,.75);margin-top:1px}
+.hero-top{
+  padding:20px 18px 16px;
+  background:linear-gradient(135deg,rgba(108,92,231,.22) 0%,rgba(0,206,201,.12) 100%);
+  border-bottom:1px solid var(--border);
+  position:relative;
+}
+/* Decorative corner accent instead of shape */
+.hero-top::before{
+  content:"";position:absolute;top:0;right:0;
+  width:100px;height:100px;
+  background:conic-gradient(from 180deg at 100% 0%, #6c5ce7 0deg, transparent 90deg);
+  opacity:.18;pointer-events:none;
+}
+.hero-top::after{
+  content:"";position:absolute;bottom:0;left:0;
+  width:80px;height:80px;
+  background:conic-gradient(from 0deg at 0% 100%, #00cec9 0deg, transparent 90deg);
+  opacity:.12;pointer-events:none;
+}
+.hero-lbl{
+  font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--text2);margin-bottom:4px;font-weight:600;
+}
+.hero-pts{
+  font-family:'Syne',sans-serif;font-size:3rem;font-weight:800;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;line-height:1;margin-bottom:3px;
+}
+.hero-sub{font-size:.73rem;color:var(--text2);margin-bottom:14px}
+.prog-track{background:var(--border2);border-radius:99px;height:6px;overflow:hidden;margin-bottom:5px}
+#progressBar{height:100%;background:var(--grad);border-radius:99px;width:0%;transition:width .7s ease}
+#progressLabel{font-size:.65rem;color:var(--text2)}
+
+/* Hero bottom stats strip */
+.hero-stats{
+  display:grid;grid-template-columns:1fr 1fr 1fr;
+  padding:0;
+}
+.h-stat{
+  padding:12px 8px;text-align:center;
+  border-right:1px solid var(--border);
+  cursor:pointer;
+  transition:background var(--t);
+}
+.h-stat:last-child{border-right:none}
+.h-stat:active{background:var(--surface2)}
+.h-stat-v{
+  font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.h-stat-l{font-size:.6rem;color:var(--text2);margin-top:1px;font-weight:500}
+
+/* ═══ QUICK ACTIONS ROW ═══ */
+.qa-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+.qa-btn{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:14px;padding:13px 8px;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  cursor:pointer;
+  transition:border-color var(--t),transform var(--t),box-shadow var(--t);
+  box-shadow:0 2px 0 rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.18);
+  position:relative;overflow:hidden;
+}
+.qa-btn::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(160deg,rgba(255,255,255,.05) 0%,transparent 50%);
+  pointer-events:none;
+}
+.qa-btn:active{transform:scale(.95);box-shadow:0 1px 0 rgba(0,0,0,.4)}
+.qa-ico{font-size:1.5rem}
+.qa-lbl{font-size:.65rem;font-weight:600;color:var(--text2);text-align:center;letter-spacing:.02em}
+
+/* ═══ REFER BANNER (Home) ═══ */
+.refer-banner{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:16px;padding:14px 16px;margin-bottom:10px;
+  position:relative;overflow:hidden;
+  box-shadow:0 2px 0 rgba(0,0,0,.3);
+}
+.refer-banner::before{
+  content:"";position:absolute;right:-20px;top:-20px;
+  width:100px;height:100px;border-radius:50%;
+  background:radial-gradient(circle,rgba(108,92,231,.18) 0%,transparent 70%);
+}
+.rb-top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.rb-ico{
+  width:44px;height:44px;border-radius:12px;flex-shrink:0;
+  background:linear-gradient(135deg,rgba(108,92,231,.25),rgba(0,206,201,.15));
+  border:1px solid rgba(108,92,231,.3);
+  display:flex;align-items:center;justify-content:center;font-size:1.4rem;
+}
+.rb-title{font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;margin-bottom:1px}
+.rb-sub{font-size:.68rem;color:var(--text2)}
+.rb-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px}
+.rbs{
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:10px;padding:9px 6px;text-align:center;
+}
+.rbs-v{
+  font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.rbs-l{font-size:.6rem;color:var(--text2);margin-top:1px}
+.rb-btns{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.rb-btn-copy{
+  padding:10px;border-radius:10px;
+  background:var(--surface2);border:1px solid var(--border);
+  color:var(--text);font-size:.78rem;font-weight:600;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  transition:border-color var(--t),transform var(--t);
+}
+.rb-btn-copy:active{transform:scale(.97);border-color:var(--a1)}
+.rb-btn-share{
+  padding:10px;border-radius:10px;
+  background:var(--grad);color:#fff;
+  font-size:.78rem;font-weight:600;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  box-shadow:0 3px 12px rgba(108,92,231,.35);
+  transition:opacity var(--t),transform var(--t);
+}
+.rb-btn-share:active{transform:scale(.97);opacity:.88}
+
+/* Feature grid tiles */
+.feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.feat-tile{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:14px;padding:14px 10px;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  cursor:pointer;position:relative;overflow:hidden;
+  transition:transform .17s cubic-bezier(.34,1.56,.64,1),border-color var(--t);
+  box-shadow:0 3px 0 rgba(0,0,0,.32),0 5px 18px rgba(0,0,0,.2);
+}
+.feat-tile::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(160deg,rgba(255,255,255,.05) 0%,transparent 55%);
+  pointer-events:none;
+}
+.feat-tile:hover{transform:translateY(-2px);border-color:var(--border2)}
+.feat-tile:active{transform:scale(.95)}
+.ft-ico{font-size:1.65rem}
+.ft-lbl{font-size:.68rem;font-weight:600;color:var(--text2);text-align:center;letter-spacing:.02em}
+.ft-val{font-family:'Syne',sans-serif;font-size:.72rem;font-weight:700;color:var(--a4)}
 
 /* CARDS */
 .card{
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:16px;
-  margin-bottom:10px;
-  box-shadow:0 4px 0 rgba(0,0,0,.25), 0 6px 24px rgba(0,0,0,.2);
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:16px;padding:14px;margin-bottom:9px;
+  box-shadow:0 3px 0 rgba(0,0,0,.28),0 5px 20px rgba(0,0,0,.18);
   position:relative;overflow:hidden;
-  transition:box-shadow .2s, transform .2s;
 }
 .card::before{
   content:"";position:absolute;top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,.07),transparent);
-  pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent);
 }
-.card-title{font-family:'Outfit',sans-serif;font-size:.92rem;font-weight:700;margin-bottom:11px;display:flex;align-items:center;gap:7px;}
-.card-glow{padding-left:18px}
-.card-glow::before{content:"";position:absolute;left:0;top:16px;bottom:16px;width:3px;border-radius:0 99px 99px 0;background:var(--grad);}
+.card-title{
+  font-family:'Syne',sans-serif;font-size:.88rem;font-weight:700;
+  margin-bottom:10px;display:flex;align-items:center;gap:7px;
+}
+.card-glow{padding-left:17px}
+.card-glow::before{
+  content:"";position:absolute;left:0;top:14px;bottom:14px;
+  width:3px;border-radius:0 99px 99px 0;background:var(--grad);
+}
 
-/* QUICK ACTIONS — 3 columns for icon buttons */
-.qa-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:10px}
-.qa-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px}
-.qa-btn{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:13px 10px;display:flex;align-items:center;gap:9px;font-size:.85rem;font-weight:600;color:var(--text);transition:border-color var(--t),transform var(--t),box-shadow var(--t);box-shadow:var(--shadow);}
-.qa-btn:active{transform:scale(.96);box-shadow:none}
-.qa-btn:hover{border-color:var(--border2)}
-.qa-ico{font-size:1.25rem}
-.qa-label{font-size:.83rem;font-weight:600}
-.qa-sub{font-size:.68rem;color:var(--text2);margin-top:1px}
+/* SECTION HEADING */
+.s-head{
+  font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;
+  margin-bottom:12px;display:flex;align-items:center;gap:8px;
+}
+.s-head-sub{font-size:.7rem;color:var(--text2);font-weight:400;margin-left:auto}
+.empty{text-align:center;padding:32px 20px;color:var(--text2);font-size:.83rem}
 
-/* icon-action styles moved to 3D section */
-
-/* UX TABLE (Home) — 3D Smooth Category Buttons */
-.ux-table{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
-.ux-table-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px}
-.ux-tile{
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:15px 10px 13px;
-  display:flex;flex-direction:column;align-items:center;gap:6px;
-  cursor:pointer;
-  position:relative;overflow:hidden;
-  transition:transform .18s cubic-bezier(.34,1.56,.64,1), box-shadow .18s ease, border-color .18s ease;
-  box-shadow: 0 4px 0 rgba(0,0,0,.35), 0 6px 20px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.07);
-  transform: perspective(300px) translateZ(0);
-}
-.ux-tile::before{
-  content:"";position:absolute;inset:0;
-  background:linear-gradient(160deg,rgba(255,255,255,.07) 0%,transparent 50%);
-  border-radius:inherit;pointer-events:none;
-}
-.ux-tile::after{
-  content:"";position:absolute;bottom:0;left:0;right:0;height:3px;
-  background:var(--grad);opacity:0;border-radius:0 0 18px 18px;
-  transition:opacity .18s ease;
-}
-.ux-tile:hover{
-  transform:perspective(300px) translateY(-3px) translateZ(4px);
-  box-shadow:0 8px 0 rgba(0,0,0,.3), 0 12px 32px rgba(124,106,255,.2), inset 0 1px 0 rgba(255,255,255,.1);
-  border-color:var(--border2);
-}
-.ux-tile:hover::after{opacity:1}
-.ux-tile:active{
-  transform:perspective(300px) translateY(2px) translateZ(-2px);
-  box-shadow:0 2px 0 rgba(0,0,0,.4), 0 4px 10px rgba(0,0,0,.2), inset 0 1px 0 rgba(255,255,255,.05);
-}
-.ux-tile-ico{font-size:1.7rem;filter:drop-shadow(0 2px 4px rgba(0,0,0,.3))}
-.ux-tile-lbl{font-size:.7rem;font-weight:700;color:var(--text2);text-align:center;letter-spacing:.02em}
-.ux-tile-val{font-family:'Outfit',sans-serif;font-size:.78rem;font-weight:800;color:var(--a4);letter-spacing:.01em}
-
-/* ICON ACTION BUTTONS — 3D Style */
-.icon-action-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
-.icon-action-btn{
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:16px;
-  padding:13px 6px 11px;
-  display:flex;flex-direction:column;align-items:center;gap:6px;
-  cursor:pointer;position:relative;overflow:hidden;
-  transition:transform .18s cubic-bezier(.34,1.56,.64,1), box-shadow .18s ease;
-  box-shadow: 0 4px 0 rgba(0,0,0,.35), 0 6px 16px rgba(0,0,0,.2), inset 0 1px 0 rgba(255,255,255,.06);
-}
-.icon-action-btn::before{
-  content:"";position:absolute;inset:0;
-  background:linear-gradient(160deg,rgba(255,255,255,.06) 0%,transparent 55%);
-  border-radius:inherit;pointer-events:none;
-}
-.icon-action-btn:hover{
-  transform:translateY(-3px);
-  box-shadow:0 7px 0 rgba(0,0,0,.3), 0 10px 28px rgba(124,106,255,.18), inset 0 1px 0 rgba(255,255,255,.09);
-  border-color:var(--border2);
-}
-.icon-action-btn:active{
-  transform:translateY(2px);
-  box-shadow:0 2px 0 rgba(0,0,0,.4), 0 3px 8px rgba(0,0,0,.2);
-}
-.ia-ico{font-size:1.55rem;filter:drop-shadow(0 2px 3px rgba(0,0,0,.3))}
-.ia-lbl{font-size:.62rem;font-weight:700;color:var(--text2);text-align:center;letter-spacing:.02em}
-
-/* FEATURE POPUP OVERLAY — for button click notices */
-.feat-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:800;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px);}
-.feat-overlay.open{display:flex;animation:ovFade .25s ease}
-.feat-box{background:var(--surface);border:1px solid var(--border2);border-radius:24px;width:100%;max-width:400px;max-height:88vh;overflow-y:auto;animation:noticeIn .3s cubic-bezier(.34,1.56,.64,1);}
-.feat-top{padding:20px 18px 16px;border-radius:24px 24px 0 0;background:var(--grad);text-align:center;position:relative;}
-.feat-close-btn{position:absolute;top:12px;right:14px;width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff;cursor:pointer;border:none;transition:background .15s;}
+/* FEATURE POPUP OVERLAY */
+.feat-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:800;
+  align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(10px);}
+.feat-overlay.open{display:flex;animation:ovFade .22s ease}
+.feat-box{background:var(--surface);border:1px solid var(--border2);border-radius:22px;
+  width:100%;max-width:400px;max-height:88vh;overflow-y:auto;
+  animation:noticeIn .28s cubic-bezier(.34,1.56,.64,1);}
+.feat-top{padding:18px 16px 14px;border-radius:22px 22px 0 0;
+  background:var(--grad);text-align:center;position:relative;}
+.feat-close-btn{position:absolute;top:11px;right:13px;width:28px;height:28px;border-radius:50%;
+  background:rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;
+  font-size:13px;color:#fff;cursor:pointer;transition:background .15s;}
 .feat-close-btn:active{background:rgba(0,0,0,.45)}
-.feat-ico-big{font-size:2.8rem;margin-bottom:8px;filter:drop-shadow(0 3px 8px rgba(0,0,0,.35))}
-.feat-title{font-family:'Outfit',sans-serif;font-size:1.2rem;font-weight:900;color:#fff;margin-bottom:3px}
-.feat-subtitle{font-size:.75rem;color:rgba(255,255,255,.8)}
-.feat-body{padding:16px 18px 20px}
-.feat-info-row{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);}
+.feat-ico-big{font-size:2.5rem;margin-bottom:7px}
+.feat-title{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;color:#fff;margin-bottom:2px}
+.feat-subtitle{font-size:.73rem;color:rgba(255,255,255,.8)}
+.feat-body{padding:14px 16px 18px}
+.feat-info-row{display:flex;align-items:flex-start;gap:9px;padding:9px 0;border-bottom:1px solid var(--border);}
 .feat-info-row:last-child{border-bottom:none;padding-bottom:0}
-.feat-info-ico{font-size:1.3rem;width:26px;text-align:center;flex-shrink:0;margin-top:1px}
-.feat-info-text{font-size:.8rem;color:var(--text2);line-height:1.55}
-.feat-info-text strong{color:var(--text);display:block;font-size:.83rem;margin-bottom:2px}
-.feat-info-val{font-family:'Outfit',sans-serif;font-weight:800;color:var(--a4)}
-.feat-cta{width:100%;padding:14px;border-radius:99px;background:var(--grad);color:#fff;font-family:'Outfit',sans-serif;font-weight:900;font-size:.95rem;margin-top:14px;box-shadow:0 5px 20px rgba(124,106,255,.35);transition:transform .15s,opacity .15s;}
+.feat-info-ico{font-size:1.2rem;width:24px;text-align:center;flex-shrink:0;margin-top:1px}
+.feat-info-text{font-size:.78rem;color:var(--text2);line-height:1.55}
+.feat-info-text strong{color:var(--text);display:block;font-size:.8rem;margin-bottom:1px}
+.feat-info-val{font-family:'Syne',sans-serif;font-weight:700;color:var(--a4)}
+.feat-cta{width:100%;padding:13px;border-radius:99px;background:var(--grad);color:#fff;
+  font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;margin-top:12px;
+  box-shadow:0 4px 18px rgba(108,92,231,.35);transition:transform .15s,opacity .15s;}
 .feat-cta:active{transform:scale(.97);opacity:.9}
-
-/* DAILY BONUS POPUP IFRAME */
-.daily-popup-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:850;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(10px);}
-.daily-popup-overlay.open{display:flex;animation:ovFade .25s ease}
-.daily-popup-box{background:var(--surface);border:1px solid var(--border2);border-radius:24px;width:100%;max-width:420px;overflow:hidden;animation:noticeIn .32s cubic-bezier(.34,1.56,.64,1);}
-.daily-popup-top{background:var(--grad-gold);padding:20px 18px 16px;text-align:center;position:relative;}
-.daily-popup-close{position:absolute;top:12px;right:14px;width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,.2);display:flex;align-items:center;justify-content:center;font-size:14px;color:#1a1a1a;cursor:pointer;border:none;font-weight:700;}
-.daily-popup-close:active{background:rgba(0,0,0,.35)}
-.daily-popup-title{font-family:'Outfit',sans-serif;font-size:1.2rem;font-weight:900;color:#1a1a1a;margin-bottom:3px}
-.daily-popup-sub{font-size:.75rem;color:rgba(0,0,0,.65)}
-.daily-popup-body{padding:16px 18px 20px}
-.daily-streak-row{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-bottom:14px}
-.daily-popup-btn{width:100%;padding:14px;border-radius:99px;background:var(--grad-gold);color:#1a1a1a;font-family:'Outfit',sans-serif;font-weight:900;font-size:.95rem;box-shadow:0 5px 20px rgba(255,209,102,.35);transition:transform .15s,opacity .15s;}
-.daily-popup-btn:active:not(:disabled){transform:scale(.97);opacity:.9}
-.daily-popup-btn:disabled{opacity:.55;cursor:not-allowed;box-shadow:none}
 
 /* PROMO CODE */
 .promo-input-row{display:flex;gap:7px;margin-top:8px}
-.promo-input{flex:1;padding:10px 12px;border-radius:var(--r2);border:1px solid var(--border);background:var(--surface2);color:var(--text);font-size:.82rem;}
+.promo-input{flex:1;padding:9px 11px;border-radius:var(--r2);border:1px solid var(--border);
+  background:var(--surface2);color:var(--text);font-size:.8rem;}
 .promo-input:focus{outline:none;border-color:var(--a1)}
-.promo-submit{padding:10px 16px;border-radius:var(--r2);background:var(--grad);color:#fff;font-family:'Outfit',sans-serif;font-weight:700;font-size:.82rem;white-space:nowrap;transition:opacity var(--t);}
+.promo-submit{padding:9px 14px;border-radius:var(--r2);background:var(--grad);color:#fff;
+  font-family:'Syne',sans-serif;font-weight:700;font-size:.8rem;white-space:nowrap;
+  transition:opacity var(--t);}
 .promo-submit:active{opacity:.85}
 
 /* DAILY BONUS */
-.daily-btn{width:100%;padding:14px;border-radius:var(--r2);background:var(--grad-gold);color:#1a1a1a;font-family:'Outfit',sans-serif;font-weight:700;font-size:.93rem;letter-spacing:.02em;box-shadow:0 4px 18px rgba(255,209,102,.25);transition:opacity var(--t),transform var(--t);}
+.daily-btn{width:100%;padding:13px;border-radius:var(--r2);background:var(--grad-gold);
+  color:#1a1a1a;font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;
+  box-shadow:0 3px 16px rgba(253,203,110,.25);transition:opacity var(--t),transform var(--t);}
 .daily-btn:active:not(:disabled){transform:scale(.98)}
-.daily-btn:disabled{opacity:.55;cursor:not-allowed;box-shadow:none}
+.daily-btn:disabled{opacity:.5;cursor:not-allowed;box-shadow:none}
 
 /* DAILY STREAK */
-.streak-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:11px}
-.streak-day{background:var(--surface2);border:1px solid var(--border);border-radius:9px;padding:7px 3px;text-align:center;}
-.streak-day.claimed{background:linear-gradient(135deg,rgba(124,106,255,.25),rgba(0,212,255,.15));border-color:var(--a1);}
-.streak-day.today{border-color:var(--gold);box-shadow:0 0 10px rgba(255,209,102,.3);}
-.sd-num{font-size:.6rem;color:var(--text2);margin-bottom:2px}
-.sd-pts{font-family:'Outfit',sans-serif;font-size:.75rem;font-weight:700;color:var(--a4)}
-.sd-icon{font-size:.9rem}
+.streak-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:10px}
+.streak-day{background:var(--surface2);border:1px solid var(--border);border-radius:8px;
+  padding:6px 2px;text-align:center;}
+.streak-day.claimed{background:linear-gradient(135deg,rgba(108,92,231,.22),rgba(0,206,201,.12));border-color:var(--a1);}
+.streak-day.today{border-color:var(--gold);box-shadow:0 0 8px rgba(253,203,110,.3);}
+.sd-num{font-size:.58rem;color:var(--text2);margin-bottom:1px}
+.sd-pts{font-family:'Syne',sans-serif;font-size:.72rem;font-weight:700;color:var(--a4)}
+.sd-icon{font-size:.85rem}
 
-/* REFERRAL */
-.ref-row{display:flex;gap:7px}
-.ref-input{flex:1;padding:10px 12px;border-radius:var(--r2);border:1px solid var(--border);background:var(--surface2);color:var(--text2);font-size:.78rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+/* DAILY BONUS POPUP */
+.daily-popup-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.80);z-index:850;
+  align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(12px);}
+.daily-popup-overlay.open{display:flex;animation:ovFade .22s ease}
+.daily-popup-box{background:var(--surface);border:1px solid var(--border2);border-radius:22px;
+  width:100%;max-width:420px;overflow:hidden;animation:noticeIn .3s cubic-bezier(.34,1.56,.64,1);}
+.daily-popup-top{background:var(--grad-gold);padding:18px 16px 14px;text-align:center;position:relative;}
+.daily-popup-close{position:absolute;top:11px;right:13px;width:28px;height:28px;border-radius:50%;
+  background:rgba(0,0,0,.18);display:flex;align-items:center;justify-content:center;
+  font-size:13px;color:#1a1a1a;cursor:pointer;font-weight:700;}
+.daily-popup-title{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;color:#1a1a1a;margin-bottom:2px}
+.daily-popup-sub{font-size:.73rem;color:rgba(0,0,0,.6)}
+.daily-popup-body{padding:14px 16px 18px}
+.daily-streak-row{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:12px}
+.daily-popup-btn{width:100%;padding:13px;border-radius:99px;background:var(--grad-gold);color:#1a1a1a;
+  font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;
+  box-shadow:0 4px 18px rgba(253,203,110,.3);transition:transform .15s,opacity .15s;}
+.daily-popup-btn:active:not(:disabled){transform:scale(.97);opacity:.9}
+.daily-popup-btn:disabled{opacity:.5;cursor:not-allowed;box-shadow:none}
+
+/* REFERRAL SECTION */
+.ref-section-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:11px}
+.ref-stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);
+  padding:11px 7px;text-align:center;box-shadow:var(--shadow);}
+.ref-stat-card .rsv{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.ref-stat-card .rsl{font-size:.6rem;color:var(--text2);margin-top:1px}
+.ref-reward-note{background:rgba(0,184,148,.07);border:1px solid rgba(0,184,148,.18);
+  border-radius:var(--r2);padding:10px 12px;margin-bottom:11px;
+  font-size:.74rem;color:var(--text2);line-height:1.6;}
+.ref-reward-note strong{color:var(--a4)}
+.ref-row{display:flex;gap:6px}
+.ref-input{flex:1;padding:9px 11px;border-radius:var(--r2);border:1px solid var(--border);
+  background:var(--surface2);color:var(--text2);font-size:.76rem;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .ref-input:focus{outline:none;border-color:var(--a1)}
-.ref-acts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
-.ref-stats{display:flex;gap:10px;margin-top:10px}
-.ref-stat-box{flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r2);padding:10px;text-align:center;}
-.ref-stat-val{font-family:'Outfit',sans-serif;font-size:1.1rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.ref-stat-lbl{font-size:.65rem;color:var(--text2);margin-top:2px}
+.ref-acts{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:7px}
 
 /* TASK CARDS */
-.task-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:13px 13px;display:flex;align-items:center;gap:11px;margin-bottom:8px;transition:border-color var(--t),transform var(--t);box-shadow:var(--shadow);}
+.task-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
+  padding:12px;display:flex;align-items:center;gap:10px;margin-bottom:7px;
+  transition:border-color var(--t),transform var(--t);box-shadow:var(--shadow);}
 .task-card:active{transform:scale(.99)}
-.task-card.on-cooldown{opacity:.65}
-.t-icon{width:42px;height:42px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+.task-card.on-cooldown{opacity:.6}
+.t-icon{width:40px;height:40px;border-radius:10px;background:var(--surface2);
+  border:1px solid var(--border);display:flex;align-items:center;justify-content:center;
+  font-size:1.15rem;flex-shrink:0;}
 .t-body{flex:1;min-width:0}
-.t-name{font-weight:600;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.t-desc{font-size:.72rem;color:var(--text2);margin-top:1px}
-.cooldown-track{height:3px;background:var(--border);border-radius:99px;margin-top:5px;overflow:hidden;}
+.t-name{font-weight:600;font-size:.86rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.t-desc{font-size:.7rem;color:var(--text2);margin-top:1px}
+.cooldown-track{height:3px;background:var(--border);border-radius:99px;margin-top:4px;overflow:hidden;}
 .cooldown-fill{height:100%;background:var(--grad);border-radius:99px;transition:width 1s linear}
-.t-right{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0}
-.t-pts{font-family:'Outfit',sans-serif;font-size:.8rem;font-weight:700;color:var(--a4)}
-.t-btn{padding:7px 13px;border-radius:var(--r2);background:var(--grad);color:#fff;font-family:'Outfit',sans-serif;font-weight:700;font-size:.78rem;white-space:nowrap;box-shadow:0 3px 12px rgba(124,106,255,.30);transition:opacity var(--t),transform var(--t);}
+.t-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0}
+.t-pts{font-family:'Syne',sans-serif;font-size:.78rem;font-weight:700;color:var(--a4)}
+.t-btn{padding:6px 12px;border-radius:var(--r2);background:var(--grad);color:#fff;
+  font-family:'Syne',sans-serif;font-weight:700;font-size:.76rem;white-space:nowrap;
+  box-shadow:0 2px 10px rgba(108,92,231,.28);transition:opacity var(--t),transform var(--t);}
 .t-btn:active{opacity:.85;transform:scale(.95)}
 .t-btn.dis{background:var(--surface2);color:var(--text3);box-shadow:none;cursor:not-allowed;}
-.task-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:11px;}
-.task-hdr-title{font-family:'Outfit',sans-serif;font-size:.95rem;font-weight:700}
-.task-badge{font-size:.68rem;font-weight:600;padding:3px 8px;border-radius:99px;background:var(--surface2);color:var(--text2);border:1px solid var(--border);}
-.pill-row{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:11px}
-.pill{padding:4px 10px;border-radius:99px;font-size:.72rem;font-weight:600;display:flex;align-items:center;gap:4px;}
-.pill-green{background:rgba(0,229,160,.12);color:var(--a4);border:1px solid rgba(0,229,160,.25)}
-.pill-cyan{background:rgba(0,212,255,.12);color:var(--a2);border:1px solid rgba(0,212,255,.25)}
-.pill-gold{background:rgba(255,209,102,.12);color:var(--gold);border:1px solid rgba(255,209,102,.25)}
+.task-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.task-hdr-title{font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700}
+.task-badge{font-size:.65rem;font-weight:600;padding:3px 8px;border-radius:99px;
+  background:var(--surface2);color:var(--text2);border:1px solid var(--border);}
+.pill-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.pill{padding:3px 9px;border-radius:99px;font-size:.68rem;font-weight:600;display:flex;align-items:center;gap:3px;}
+.pill-green{background:rgba(0,184,148,.10);color:var(--a4);border:1px solid rgba(0,184,148,.22)}
+.pill-cyan{background:rgba(0,206,201,.10);color:var(--a2);border:1px solid rgba(0,206,201,.22)}
 
-/* ADS CARD in Earn section */
-.ads-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:15px;margin-bottom:10px;box-shadow:var(--shadow);}
-.ads-card-title{font-family:'Outfit',sans-serif;font-size:.92rem;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:7px;}
-.ads-sub{font-size:.73rem;color:var(--text2);margin-bottom:12px}
-.ad-btn{width:100%;padding:14px;border-radius:var(--r2);display:flex;align-items:center;justify-content:center;gap:9px;font-family:'Outfit',sans-serif;font-weight:700;font-size:.9rem;transition:opacity var(--t),transform var(--t);margin-bottom:8px;position:relative;}
+/* ADS CARD */
+.ads-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
+  padding:14px;margin-bottom:9px;box-shadow:var(--shadow);}
+.ads-card-title{font-family:'Syne',sans-serif;font-size:.88rem;font-weight:700;
+  margin-bottom:3px;display:flex;align-items:center;gap:6px;}
+.ads-sub{font-size:.7rem;color:var(--text2);margin-bottom:11px}
+.ad-btn{width:100%;padding:13px;border-radius:var(--r2);display:flex;align-items:center;
+  justify-content:center;gap:8px;font-family:'Syne',sans-serif;font-weight:700;font-size:.87rem;
+  transition:opacity var(--t),transform var(--t);margin-bottom:7px;position:relative;}
 .ad-btn:active:not(:disabled){transform:scale(.98);opacity:.88}
 .ad-btn:disabled{opacity:.5;cursor:not-allowed}
-.ad-btn-monetag{background:linear-gradient(135deg,#ff6b9d,#7c6aff);color:#fff;box-shadow:0 4px 18px rgba(255,107,157,.3);}
-.ad-btn-giga{background:linear-gradient(135deg,#00e5a0,#00d4ff);color:#1a1a35;box-shadow:0 4px 18px rgba(0,229,160,.3);}
-.ad-timer{position:absolute;right:14px;font-size:.72rem;opacity:.85}
-.ad-note{font-size:.68rem;color:var(--text3);text-align:center;margin-top:2px}
-.ads-total-badge{display:flex;align-items:center;gap:8px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r2);padding:10px 13px;margin-bottom:10px;}
-.atb-val{font-family:'Outfit',sans-serif;font-size:1rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.atb-lbl{font-size:.72rem;color:var(--text2)}
+.ad-btn-monetag{background:linear-gradient(135deg,#fd79a8,#6c5ce7);color:#fff;
+  box-shadow:0 3px 16px rgba(253,121,168,.28);}
+.ad-btn-giga{background:linear-gradient(135deg,#00b894,#00cec9);color:#fff;
+  box-shadow:0 3px 16px rgba(0,184,148,.28);}
+.ad-timer{position:absolute;right:13px;font-size:.7rem;opacity:.85}
+.ad-note{font-size:.66rem;color:var(--text3);text-align:center;margin-top:1px}
+.ads-total-badge{display:flex;align-items:center;gap:7px;background:var(--surface2);
+  border:1px solid var(--border);border-radius:var(--r2);padding:9px 12px;margin-bottom:9px;}
+.atb-val{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.atb-lbl{font-size:.7rem;color:var(--text2)}
 
 /* LEADERBOARD */
-.ldr-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
-.ldr-tabs{display:flex;gap:6px;margin-bottom:12px;}
-.ldr-tab{padding:5px 14px;border-radius:99px;font-size:.72rem;font-weight:700;border:1.5px solid var(--border);color:var(--text2);transition:all var(--t);cursor:pointer;}
-.ldr-tab.active{background:var(--grad);color:#fff;border-color:transparent;}
-.leader-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:11px 13px;display:flex;align-items:center;gap:10px;margin-bottom:8px;transition:border-color var(--t),transform var(--t);}
+.leader-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
+  padding:10px 12px;display:flex;align-items:center;gap:9px;margin-bottom:7px;
+  transition:border-color var(--t),transform var(--t);}
 .leader-card:active{transform:scale(.99)}
-.leader-card.is-me{border-color:var(--a1);background:linear-gradient(135deg,rgba(124,106,255,.06),rgba(0,212,255,.04));}
-.leader-card.rank-1{border-color:#ffd166;background:linear-gradient(135deg,rgba(255,209,102,.08),rgba(255,107,157,.05));}
-.leader-card.rank-2{border-color:#c0c0c0;background:linear-gradient(135deg,rgba(192,192,192,.07),transparent);}
-.leader-card.rank-3{border-color:#cd7f32;background:linear-gradient(135deg,rgba(205,127,50,.07),transparent);}
-.ldr-rank{font-size:1.35rem;width:34px;text-align:center;flex-shrink:0}
-.ldr-av{width:38px;height:38px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-weight:900;font-size:1rem;color:#fff;flex-shrink:0;position:relative;}
-.ldr-tier-badge{position:absolute;bottom:-3px;right:-3px;font-size:.6rem;background:var(--surface);border-radius:99px;padding:1px 3px;border:1px solid var(--border);}
+.leader-card.is-me{border-color:var(--a1);background:linear-gradient(135deg,rgba(108,92,231,.07),rgba(0,206,201,.04));}
+.leader-card.rank-1{border-color:#fdcb6e;background:linear-gradient(135deg,rgba(253,203,110,.07),rgba(253,121,168,.04));}
+.leader-card.rank-2{border-color:#c0c0c0;background:linear-gradient(135deg,rgba(192,192,192,.06),transparent);}
+.leader-card.rank-3{border-color:#cd7f32;background:linear-gradient(135deg,rgba(205,127,50,.06),transparent);}
+.ldr-rank{font-size:1.2rem;width:30px;text-align:center;flex-shrink:0}
+.ldr-av{width:36px;height:36px;border-radius:50%;background:var(--grad);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-weight:800;font-size:.95rem;color:#fff;
+  flex-shrink:0;position:relative;}
+.ldr-tier-badge{position:absolute;bottom:-3px;right:-3px;font-size:.55rem;
+  background:var(--surface);border-radius:99px;padding:1px 3px;border:1px solid var(--border);}
 .ldr-info{flex:1;min-width:0}
-.ldr-name{font-weight:600;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ldr-pts{font-size:.72rem;color:var(--text2);margin-top:1px}
-.you-tag{display:inline-block;background:var(--grad);color:#fff;font-size:.6rem;font-weight:700;padding:1px 6px;border-radius:99px;vertical-align:middle;margin-left:4px;}
-.ldr-right{display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0}
-.ldr-ton{font-family:'Outfit',sans-serif;font-size:.78rem;font-weight:700;color:var(--gold);}
-.ldr-refs{font-size:.68rem;color:var(--text2);}
-.ldr-my-rank{background:var(--surface2);border:1px solid var(--a1);border-radius:var(--r2);padding:10px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
-.ldr-my-rank-lbl{font-size:.75rem;color:var(--text2);}
-.ldr-my-rank-val{font-family:'Outfit',sans-serif;font-size:.95rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.ldr-update-note{font-size:.68rem;color:var(--text3);text-align:center;margin-top:4px;margin-bottom:8px}
+.ldr-name{font-weight:600;font-size:.85rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ldr-pts{font-size:.7rem;color:var(--text2);margin-top:1px}
+.you-tag{display:inline-block;background:var(--grad);color:#fff;font-size:.58rem;
+  font-weight:700;padding:1px 5px;border-radius:99px;vertical-align:middle;margin-left:3px;}
+.ldr-right{display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0}
+.ldr-ton{font-family:'Syne',sans-serif;font-size:.75rem;font-weight:700;color:var(--gold);}
+.ldr-refs{font-size:.65rem;color:var(--text2);}
+.ldr-my-rank{background:var(--surface2);border:1px solid var(--a1);border-radius:var(--r2);
+  padding:9px 13px;display:flex;align-items:center;justify-content:space-between;margin-bottom:11px;}
+.ldr-my-rank-lbl{font-size:.72rem;color:var(--text2);}
+.ldr-my-rank-val{font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.ldr-update-note{font-size:.65rem;color:var(--text3);text-align:center;margin-bottom:7px}
 
 /* BOTTOM NAV */
-.nav{position:fixed;bottom:0;left:0;right:0;height:var(--nav-h);background:rgba(13,13,26,.92);border-top:1px solid var(--border);display:flex;justify-content:space-around;align-items:stretch;z-index:300;max-width:480px;margin:0 auto;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);transition:background var(--t);}
-.light .nav{background:rgba(240,241,255,.92)}
-.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--text3);transition:color var(--t);position:relative;padding-top:6px;cursor:pointer;}
-.nav-item::after{content:"";position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:0;height:3px;background:var(--grad);border-radius:99px 99px 0 0;transition:width var(--t);}
+.nav{
+  position:fixed;bottom:0;left:0;right:0;height:var(--nav-h);
+  background:rgba(8,8,18,.94);border-top:1px solid var(--border);
+  display:flex;justify-content:space-around;align-items:stretch;
+  z-index:300;max-width:480px;margin:0 auto;
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+}
+.light .nav{background:rgba(240,241,255,.94)}
+.nav-item{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:3px;color:var(--text3);transition:color var(--t);position:relative;
+  padding-top:5px;cursor:pointer;
+}
+.nav-item::after{
+  content:"";position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+  width:0;height:2px;background:var(--grad);border-radius:99px 99px 0 0;
+  transition:width var(--t);
+}
 .nav-item.active{color:var(--a1)}
-.nav-item.active::after{width:24px}
-.nav-ico{font-size:1.3rem}
-.nav-lbl{font-size:.62rem;font-weight:600;letter-spacing:.04em}
+.nav-item.active::after{width:22px}
+.nav-ico{font-size:1.2rem}
+.nav-lbl{font-size:.6rem;font-weight:600;letter-spacing:.03em}
 
 /* MODALS */
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:600;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px);}
-.overlay.open{display:flex;animation:ovFade .2s ease}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.68);z-index:600;
+  align-items:flex-end;justify-content:center;backdrop-filter:blur(4px);}
+.overlay.open{display:flex;animation:ovFade .18s ease}
 @keyframes ovFade{from{opacity:0}to{opacity:1}}
-.sheet{background:var(--surface);width:100%;max-width:480px;border-radius:22px 22px 0 0;padding:6px 16px 32px;max-height:88vh;overflow-y:auto;animation:sheetUp .26s cubic-bezier(.4,0,.2,1);}
+.sheet{background:var(--surface);width:100%;max-width:480px;border-radius:20px 20px 0 0;
+  padding:6px 14px 32px;max-height:88vh;overflow-y:auto;
+  animation:sheetUp .24s cubic-bezier(.4,0,.2,1);}
 @keyframes sheetUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-.sheet-handle{width:38px;height:4px;border-radius:99px;background:var(--border2);margin:8px auto 14px;}
-.sheet-title{font-family:'Outfit',sans-serif;font-size:1rem;font-weight:700;text-align:center;margin-bottom:16px;}
+.sheet-handle{width:36px;height:3px;border-radius:99px;background:var(--border2);margin:7px auto 12px;}
+.sheet-title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;
+  text-align:center;margin-bottom:14px;background:var(--grad);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 
 /* FORM */
-.fgroup{margin-bottom:13px}
-.flabel{display:block;font-size:.78rem;font-weight:600;color:var(--text2);margin-bottom:5px}
-.finput{width:100%;padding:12px;border-radius:var(--r2);border:1.5px solid var(--border);background:var(--surface2);color:var(--text);font-size:.9rem;transition:border-color var(--t);}
+.fgroup{margin-bottom:11px}
+.flabel{display:block;font-size:.72rem;font-weight:600;color:var(--text2);margin-bottom:5px}
+.finput{width:100%;padding:10px 12px;border-radius:var(--r2);border:1px solid var(--border);
+  background:var(--surface2);color:var(--text);font-size:.82rem;
+  transition:border-color var(--t);}
 .finput:focus{outline:none;border-color:var(--a1)}
-.btn-grad{width:100%;padding:14px;border-radius:var(--r2);background:var(--grad);color:#fff;font-family:'Outfit',sans-serif;font-weight:700;font-size:.93rem;box-shadow:0 4px 18px rgba(124,106,255,.30);transition:opacity var(--t),transform var(--t);}
-.btn-grad:active{opacity:.87;transform:scale(.99)}
-.btn-grad:disabled{opacity:.5;cursor:not-allowed;box-shadow:none}
-.btn-ghost{width:100%;padding:12px;border-radius:var(--r2);border:1.5px solid var(--border2);color:var(--text2);font-size:.88rem;font-weight:600;transition:background var(--t),color var(--t);margin-top:8px;}
-.btn-ghost:active{background:var(--surface2)}
-.btn-outline-a{flex:1;padding:11px;border-radius:var(--r2);border:1.5px solid var(--a1);color:var(--a1);font-family:'Outfit',sans-serif;font-weight:700;font-size:.83rem;transition:background var(--t),color var(--t);}
-.btn-outline-a:active{background:var(--a1);color:#fff}
-.btn-solid-a{flex:1;padding:11px;border-radius:var(--r2);background:var(--grad);color:#fff;font-family:'Outfit',sans-serif;font-weight:700;font-size:.83rem;transition:opacity var(--t);}
-.btn-solid-a:active{opacity:.87}
 
-/* TOAST */
-#toasts{position:fixed;top:calc(var(--hdr-h)+8px);left:50%;transform:translateX(-50%);z-index:9999;display:flex;flex-direction:column;gap:7px;align-items:center;width:88%;max-width:380px;pointer-events:none;}
-.toast{padding:10px 16px;border-radius:12px;font-size:.85rem;font-weight:600;color:#fff;box-shadow:0 6px 24px rgba(0,0,0,.3);opacity:0;transform:translateY(-6px) scale(.96);transition:opacity .28s ease,transform .28s ease;pointer-events:all;text-align:center;max-width:100%;}
-.toast.show{opacity:1;transform:translateY(0) scale(1)}
-.t-ok  {background:linear-gradient(135deg,#00e5a0,#00b87a)}
-.t-err {background:linear-gradient(135deg,#ff4d6a,#c0392b)}
-.t-warn{background:linear-gradient(135deg,#ffd166,#e8961e);color:#1a1a1a}
-.t-inf {background:var(--grad)}
+/* BUTTONS */
+.btn-grad{width:100%;padding:13px;border-radius:99px;background:var(--grad);color:#fff;
+  font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;
+  box-shadow:0 4px 18px rgba(108,92,231,.35);transition:transform .15s,opacity .15s;
+  margin-bottom:8px;}
+.btn-grad:active{transform:scale(.97);opacity:.9}
+.btn-ghost{width:100%;padding:12px;border-radius:99px;
+  background:var(--surface2);border:1px solid var(--border);
+  color:var(--text2);font-family:'Syne',sans-serif;font-weight:600;font-size:.88rem;
+  transition:border-color var(--t);}
+.btn-ghost:active{border-color:var(--border2)}
+.btn-outline-a{padding:10px;border-radius:10px;border:1px solid var(--border);
+  background:var(--surface2);color:var(--text);font-size:.78rem;font-weight:600;
+  display:flex;align-items:center;justify-content:center;gap:5px;
+  transition:border-color var(--t);}
+.btn-outline-a:active{border-color:var(--a1)}
+.btn-solid-a{padding:10px;border-radius:10px;background:var(--grad);color:#fff;
+  font-size:.78rem;font-weight:600;display:flex;align-items:center;justify-content:center;gap:5px;
+  box-shadow:0 3px 12px rgba(108,92,231,.3);transition:opacity var(--t);}
+.btn-solid-a:active{opacity:.85}
 
-/* SECTION HEADINGS */
-.s-head{
-  font-family:'Outfit',sans-serif;font-size:1rem;font-weight:800;
-  margin-bottom:12px;display:flex;align-items:center;gap:8px;
-  padding:10px 14px;
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:14px;
-  box-shadow:var(--shadow);
-}
-.s-head::before{
-  content:"";width:3px;height:18px;
-  background:var(--grad);border-radius:99px;flex-shrink:0;
-}
-.s-head-sub{font-size:.72rem;color:var(--text2);font-weight:400;margin-left:auto}
-.empty{text-align:center;padding:36px 20px;color:var(--text2);font-size:.85rem}
-.skeleton-list .skel{margin-bottom:8px}
-
-/* WITHDRAW BALANCE */
-.wbal{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r2);padding:12px 14px;margin-bottom:14px;}
-.wbal-lbl{font-size:.72rem;color:var(--text2);margin-bottom:3px}
-.wbal-val{font-family:'Outfit',sans-serif;font-size:1.55rem;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-
-/* WITHDRAW INFO BOX */
-.withdraw-info{background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.2);border-radius:var(--r2);padding:11px 13px;margin-bottom:13px;font-size:.76rem;color:var(--text2);line-height:1.6;}
+/* WITHDRAW */
+.wbal{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r2);
+  padding:11px 13px;margin-bottom:12px;}
+.wbal-lbl{font-size:.7rem;color:var(--text2);margin-bottom:2px}
+.wbal-val{font-family:'Syne',sans-serif;font-size:1.45rem;font-weight:800;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.withdraw-info{background:rgba(0,206,201,.06);border:1px solid rgba(0,206,201,.18);
+  border-radius:var(--r2);padding:10px 12px;margin-bottom:12px;
+  font-size:.74rem;color:var(--text2);line-height:1.6;}
 .withdraw-info strong{color:var(--a2)}
 
-/* REFER SECTION */
-.ref-section-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px}
-.ref-stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:12px 8px;text-align:center;box-shadow:var(--shadow);}
-.ref-stat-card .rsv{font-family:'Outfit',sans-serif;font-size:1.2rem;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.ref-stat-card .rsl{font-size:.62rem;color:var(--text2);margin-top:2px}
-.ref-reward-note{background:rgba(0,229,160,.07);border:1px solid rgba(0,229,160,.2);border-radius:var(--r2);padding:11px 13px;margin-bottom:13px;font-size:.76rem;color:var(--text2);line-height:1.6;}
-.ref-reward-note strong{color:var(--a4)}
-
 /* NOTICE POPUP */
-.notice-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:900;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px);}
-.notice-overlay.open{display:flex;animation:ovFade .3s ease}
-.notice-box{background:var(--surface);border:1px solid var(--border2);border-radius:22px;padding:0 0 20px;max-width:400px;width:100%;max-height:90vh;overflow-y:auto;animation:noticeIn .35s cubic-bezier(.34,1.56,.64,1);}
+.notice-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:900;
+  align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px);}
+.notice-overlay.open{display:flex;animation:ovFade .28s ease}
+.notice-box{background:var(--surface);border:1px solid var(--border2);border-radius:20px;
+  padding:0 0 18px;max-width:400px;width:100%;max-height:90vh;overflow-y:auto;
+  animation:noticeIn .32s cubic-bezier(.34,1.56,.64,1);}
 @keyframes noticeIn{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
-.notice-top{background:var(--grad);padding:24px 20px 20px;border-radius:22px 22px 0 0;text-align:center;}
-.notice-logo{width:64px;height:64px;background:rgba(255,255,255,.2);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 12px;}
-.notice-title{font-family:'Outfit',sans-serif;font-size:1.35rem;font-weight:900;color:#fff;margin-bottom:4px;}
-.notice-tagline{font-size:.78rem;color:rgba(255,255,255,.8)}
-.notice-body{padding:18px 18px 4px;}
-.notice-desc{font-size:.83rem;color:var(--text2);line-height:1.7;margin-bottom:16px;}
+.notice-top{background:var(--grad);padding:22px 18px 18px;border-radius:20px 20px 0 0;text-align:center;}
+.notice-logo{width:60px;height:60px;background:rgba(255,255,255,.2);border-radius:16px;
+  display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin:0 auto 10px;}
+.notice-title{font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:800;color:#fff;margin-bottom:3px;}
+.notice-tagline{font-size:.76rem;color:rgba(255,255,255,.8)}
+.notice-body{padding:16px 16px 3px;}
+.notice-desc{font-size:.8rem;color:var(--text2);line-height:1.7;margin-bottom:14px;}
 .notice-desc strong{color:var(--text)}
-.notice-join-btns{display:flex;flex-direction:column;gap:9px;margin-bottom:16px;}
-.notice-join-btn{display:flex;align-items:center;gap:11px;padding:13px 15px;border-radius:var(--r2);border:1.5px solid var(--border2);background:var(--surface2);color:var(--text);font-weight:600;font-size:.88rem;transition:border-color var(--t),background var(--t);}
-.notice-join-btn:active{background:var(--glass-b)}
-.notice-join-btn .btn-ico{font-size:1.4rem;flex-shrink:0}
-.notice-join-btn .btn-txt small{display:block;font-size:.68rem;color:var(--text2);font-weight:400;margin-top:1px}
-.notice-rules{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r2);padding:13px;margin-bottom:14px;}
-.notice-rules-title{font-family:'Outfit',sans-serif;font-size:.85rem;font-weight:700;margin-bottom:9px;display:flex;align-items:center;gap:6px;}
-.rule-row{display:flex;align-items:center;gap:9px;font-size:.78rem;color:var(--text2);padding:5px 0;border-bottom:1px solid var(--border);}
+.notice-join-btns{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;}
+.notice-join-btn{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:var(--r2);
+  border:1.5px solid var(--border2);background:var(--surface2);color:var(--text);
+  font-weight:600;font-size:.85rem;transition:border-color var(--t);}
+.notice-join-btn:active{background:var(--border2)}
+.notice-join-btn .btn-ico{font-size:1.3rem;flex-shrink:0}
+.notice-join-btn .btn-txt small{display:block;font-size:.65rem;color:var(--text2);font-weight:400;margin-top:1px}
+.notice-rules{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r2);
+  padding:12px;margin-bottom:12px;}
+.notice-rules-title{font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700;
+  margin-bottom:8px;display:flex;align-items:center;gap:5px;}
+.rule-row{display:flex;align-items:center;gap:8px;font-size:.75rem;color:var(--text2);
+  padding:4px 0;border-bottom:1px solid var(--border);}
 .rule-row:last-child{border-bottom:none;padding-bottom:0}
-.rule-ico{font-size:1rem;width:20px;text-align:center;flex-shrink:0}
-.rule-val{font-family:'Outfit',sans-serif;font-weight:700;color:var(--a4);margin-right:4px}
-.notice-start-btn{width:100%;padding:15px;border-radius:99px;background:var(--grad);color:#fff;font-family:'Outfit',sans-serif;font-weight:900;font-size:1rem;letter-spacing:.04em;box-shadow:0 6px 24px rgba(124,106,255,.45);transition:transform var(--t),opacity var(--t);}
+.rule-ico{font-size:.95rem;width:18px;text-align:center;flex-shrink:0}
+.rule-val{font-family:'Syne',sans-serif;font-weight:700;color:var(--a4);margin-right:3px}
+.notice-start-btn{width:100%;padding:14px;border-radius:99px;background:var(--grad);color:#fff;
+  font-family:'Syne',sans-serif;font-weight:800;font-size:.95rem;
+  box-shadow:0 5px 22px rgba(108,92,231,.42);transition:transform var(--t),opacity var(--t);}
 .notice-start-btn:active{transform:scale(.97);opacity:.9}
-.notice-skip{display:block;text-align:center;font-size:.75rem;color:var(--text3);margin-top:11px;padding-bottom:4px;cursor:pointer;}
-.notice-skip:active{color:var(--text2)}
+.notice-skip{display:block;text-align:center;font-size:.72rem;color:var(--text3);
+  margin-top:10px;padding-bottom:3px;cursor:pointer;}
 
-/* WEEKLY GIFT MODAL */
-.gift-tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
-.gift-tile{background:var(--surface2);border:1.5px solid var(--border);border-radius:12px;padding:10px 5px;text-align:center;cursor:pointer;transition:border-color var(--t),transform var(--t);}
-.gift-tile.collected{border-color:var(--a4);background:rgba(0,229,160,.08);cursor:default;}
-.gift-tile.today-gift{border-color:var(--gold);box-shadow:0 0 12px rgba(255,209,102,.3);}
-.gift-tile .gt-ico{font-size:1.4rem;margin-bottom:3px}
-.gift-tile .gt-day{font-size:.6rem;color:var(--text2)}
-.gift-tile .gt-val{font-family:'Outfit',sans-serif;font-size:.72rem;font-weight:700;color:var(--a4)}
+/* TOAST */
+.toast-wrap{position:fixed;top:66px;left:50%;transform:translateX(-50%);
+  z-index:2000;display:flex;flex-direction:column;align-items:center;gap:7px;
+  pointer-events:none;width:max-content;max-width:320px;}
+.toast{padding:10px 18px;border-radius:99px;font-size:.8rem;font-weight:600;
+  opacity:0;transform:translateY(-10px);
+  transition:opacity .25s, transform .25s;pointer-events:none;white-space:nowrap;
+  box-shadow:0 4px 20px rgba(0,0,0,.4);}
+.toast.show{opacity:1;transform:translateY(0)}
+.t-ok  {background:#00b894;color:#fff}
+.t-err {background:#d63031;color:#fff}
+.t-warn{background:#fdcb6e;color:#1a1a1a}
+.t-inf {background:var(--a1);color:#fff}
 
-/* UTILITIES */
 .mt6{margin-top:6px}.mt10{margin-top:10px}.mt12{margin-top:12px}
-.flex-row{display:flex;gap:8px}
+.skeleton-list .skel{margin-bottom:7px}
 </style>
 </head>
 <body>
 
 <!-- Toast Container -->
-<div id="toasts"></div>
+<div id="toasts" class="toast-wrap"></div>
 
 <!-- ═══════════════════════════════════════════════════
      WELCOME NOTICE POPUP
@@ -549,23 +662,20 @@ a{color:inherit;text-decoration:none}
       <div class="notice-tagline">Earn real TON crypto — simple &amp; free</div>
     </div>
     <div class="notice-body">
-      <!-- Join Channel & Group -->
-      <div style="font-family:'Outfit',sans-serif;font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:9px;display:flex;align-items:center;gap:6px">📣 Join Our Community First!</div>
+      <div style="font-family:'Syne',sans-serif;font-size:.8rem;font-weight:700;color:var(--text);margin-bottom:8px;display:flex;align-items:center;gap:5px">📣 Join Our Community First!</div>
       <div class="notice-join-btns">
         <a href="https://t.me/tonXhub_Earn" target="_blank" class="notice-join-btn">
           <span class="btn-ico">📢</span>
           <div class="btn-txt">Official Channel<small>@tonXhub_Earn — Updates &amp; Promo Codes</small></div>
-          <span style="margin-left:auto;font-size:.75rem;color:var(--a2)">Join →</span>
+          <span style="margin-left:auto;font-size:.73rem;color:var(--a2)">Join →</span>
         </a>
         <a href="https://t.me/tonX_hub_chat" target="_blank" class="notice-join-btn">
           <span class="btn-ico">💬</span>
           <div class="btn-txt">Community Group<small>@tonX_hub_chat — Chat &amp; Support</small></div>
-          <span style="margin-left:auto;font-size:.75rem;color:var(--a4)">Join →</span>
+          <span style="margin-left:auto;font-size:.73rem;color:var(--a4)">Join →</span>
         </a>
       </div>
-
-      <!-- How it works -->
-      <div class="notice-rules" style="margin-bottom:14px">
+      <div class="notice-rules" style="margin-bottom:12px">
         <div class="notice-rules-title">🚀 How It Works</div>
         <div class="rule-row"><span class="rule-ico">📣</span><span>Watch <strong style="color:var(--a2)">Ads</strong> → earn <span class="rule-val">+10 pts</span> per ad, no limit!</span></div>
         <div class="rule-row"><span class="rule-ico">✅</span><span>Complete <strong style="color:var(--a2)">Tasks</strong> → earn bonus pts set by admin</span></div>
@@ -575,7 +685,6 @@ a{color:inherit;text-decoration:none}
         <div class="rule-row"><span class="rule-ico">🎟️</span><span>Enter <strong style="color:var(--a2)">Promo Codes</strong> from channel for bonus pts!</span></div>
         <div class="rule-row"><span class="rule-ico">💎</span><span>Convert: <span class="rule-val">50,000 pts</span> = <span class="rule-val">1 TON</span> crypto</span></div>
       </div>
-      <!-- Withdraw Rules -->
       <div class="notice-rules">
         <div class="notice-rules-title">💸 Withdraw Rules</div>
         <div class="rule-row"><span class="rule-ico">💰</span><span><span class="rule-val">50,000</span> Points = 1 TON</span></div>
@@ -586,20 +695,6 @@ a{color:inherit;text-decoration:none}
       <button class="notice-start-btn" onclick="closeNotice()">🚀 Start Earning!</button>
       <span class="notice-skip" onclick="closeNotice()">Skip for now</span>
     </div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════════════════
-     WEEKLY GIFT MODAL
-═══════════════════════════════════════════════════ -->
-<div class="overlay" id="weeklyGiftModal">
-  <div class="sheet">
-    <div class="sheet-handle"></div>
-    <div class="sheet-title">🎀 Weekly Gift Box</div>
-    <p style="font-size:.78rem;color:var(--text2);text-align:center;margin-bottom:14px">Collect your free gift every 7 days. Streak earns bigger rewards!</p>
-    <div class="gift-tiles" id="giftTiles"></div>
-    <button class="btn-grad" id="claimWeeklyGift">🎀 Claim Weekly Gift</button>
-    <button class="btn-ghost" onclick="closeModal('weeklyGiftModal')">Close</button>
   </div>
 </div>
 
@@ -632,91 +727,104 @@ a{color:inherit;text-decoration:none}
       <!-- ════ HOME ════ -->
       <div class="section active" id="homeSection">
 
-        <!-- Balance Hero -->
+        <!-- Balance Hero — new card style -->
         <div class="hero">
-          <div class="hero-lbl">Your Balance</div>
-          <div class="hero-pts" id="dispPoints">0</div>
-          <div class="hero-sub" id="dispTonHero">≈ 0.0000 TON</div>
-          <div class="prog-track"><div id="progressBar"></div></div>
-          <div id="progressLabel">0 / 50,000 pts → 1 TON</div>
-          <div class="hero-grid">
-            <div class="h-tile">
-              <div class="h-tile-v" id="dispTon">0.0000</div>
-              <div class="h-tile-l">TON Earned</div>
+          <div class="hero-top">
+            <div class="hero-lbl">Your Balance</div>
+            <div class="hero-pts" id="dispPoints">0</div>
+            <div class="hero-sub" id="dispTonHero">≈ 0.0000 TON</div>
+            <div class="prog-track"><div id="progressBar"></div></div>
+            <div id="progressLabel">0 / 50,000 pts → 1 TON</div>
+          </div>
+          <div class="hero-stats">
+            <div class="h-stat">
+              <div class="h-stat-v" id="dispTon">0.0000</div>
+              <div class="h-stat-l">TON Earned</div>
             </div>
-            <div class="h-tile" onclick="showValidReferPopup()" style="cursor:pointer">
-              <div class="h-tile-v" id="dispRefs">0</div>
-              <div class="h-tile-l">Valid Refers</div>
+            <div class="h-stat" onclick="showValidReferPopup()" style="cursor:pointer">
+              <div class="h-stat-v" id="dispRefs">0</div>
+              <div class="h-stat-l">Valid Refers</div>
             </div>
-            <div class="h-tile" onclick="showNormalReferPopup()" style="cursor:pointer">
-              <div class="h-tile-v" id="dispTotalRefs2">0</div>
-              <div class="h-tile-l">Total Refers</div>
+            <div class="h-stat" onclick="showNormalReferPopup()" style="cursor:pointer">
+              <div class="h-stat-v" id="dispTotalRefs2">0</div>
+              <div class="h-stat-l">Total Refers</div>
             </div>
           </div>
         </div>
 
-        <!-- Refer Counters (hidden IDs kept for JS compatibility) -->
+        <!-- Hidden IDs for JS compatibility -->
         <span id="normalReferCount" style="display:none">0</span>
         <span id="validReferCount" style="display:none">0</span>
 
-        <!-- Icon Action Row: Daily | Withdraw | Weekly Gift | Promo Code -->
-        <div class="icon-action-row">
-          <div class="icon-action-btn" onclick="openDailyPopup()">
-            <span class="ia-ico">🎁</span>
-            <span class="ia-lbl">Daily Bonus</span>
+        <!-- Quick Actions: Daily | Spin | Promo -->
+        <div class="qa-row">
+          <div class="qa-btn" onclick="openDailyPopup()">
+            <span class="qa-ico">🎁</span>
+            <span class="qa-lbl">Daily Bonus</span>
           </div>
-          <div class="icon-action-btn" onclick="openModal('withdrawModal')">
-            <span class="ia-ico">💸</span>
-            <span class="ia-lbl">Withdraw</span>
+          <div class="qa-btn" onclick="showFeatPopup('spin')">
+            <span class="qa-ico">🎰</span>
+            <span class="qa-lbl">Spin Wheel</span>
           </div>
-          <div class="icon-action-btn" onclick="showFeatPopup('weekly')">
-            <span class="ia-ico">🎀</span>
-            <span class="ia-lbl">Weekly Gift</span>
-          </div>
-          <div class="icon-action-btn" onclick="showFeatPopup('promo')">
-            <span class="ia-ico">🎟️</span>
-            <span class="ia-lbl">Promo Code</span>
+          <div class="qa-btn" onclick="showFeatPopup('promo')">
+            <span class="qa-ico">🎟️</span>
+            <span class="qa-lbl">Promo Code</span>
           </div>
         </div>
 
-        <!-- UX Table -->
-        <div class="ux-table">
-          <div class="ux-tile" onclick="showFeatPopup('tasks')">
-            <span class="ux-tile-ico">✅</span>
-            <span class="ux-tile-lbl">Tasks</span>
-            <span class="ux-tile-val">Earn pts</span>
+        <!-- Refer Banner (replaces refer info card) -->
+        <div class="refer-banner">
+          <div class="rb-top">
+            <div class="rb-ico">👥</div>
+            <div>
+              <div class="rb-title">Refer &amp; Earn</div>
+              <div class="rb-sub">Each valid refer = +400 pts</div>
+            </div>
           </div>
-          <div class="ux-tile" onclick="showFeatPopup('ads')">
-            <span class="ux-tile-ico">📣</span>
-            <span class="ux-tile-lbl">Watch Ads</span>
-            <span class="ux-tile-val">+10 pts</span>
+          <div class="rb-stats">
+            <div class="rbs">
+              <div class="rbs-v" id="rbTotal">0</div>
+              <div class="rbs-l">Total Refers</div>
+            </div>
+            <div class="rbs">
+              <div class="rbs-v" id="rbValid">0</div>
+              <div class="rbs-l">Valid Refers</div>
+            </div>
+            <div class="rbs">
+              <div class="rbs-v" id="rbEarned">0</div>
+              <div class="rbs-l">Pts Earned</div>
+            </div>
           </div>
-          <div class="ux-tile" onclick="showFeatPopup('leaderboard')">
-            <span class="ux-tile-ico">🏆</span>
-            <span class="ux-tile-lbl">Leaderboard</span>
-            <span class="ux-tile-val">Top earners</span>
-          </div>
-          <div class="ux-tile" onclick="showFeatPopup('refer')">
-            <span class="ux-tile-ico">👥</span>
-            <span class="ux-tile-lbl">Refer Info</span>
-            <span class="ux-tile-val">+400 pts</span>
+          <div class="rb-btns">
+            <button class="rb-btn-copy" id="homeRefCopy">📋 Copy Link</button>
+            <button class="rb-btn-share" id="homeRefShare">📤 Share Link</button>
           </div>
         </div>
 
-        <!-- Spin Wheel (hidden, kept for JS/initSpin compatibility) -->
+        <!-- Feature Grid: Tasks + Watch Ads -->
+        <div class="feat-grid">
+          <div class="feat-tile" onclick="showFeatPopup('tasks')">
+            <span class="ft-ico">✅</span>
+            <span class="ft-lbl">Tasks</span>
+            <span class="ft-val">Earn pts</span>
+          </div>
+          <div class="feat-tile" onclick="showFeatPopup('ads')">
+            <span class="ft-ico">📣</span>
+            <span class="ft-lbl">Watch Ads</span>
+            <span class="ft-val">+10 pts</span>
+          </div>
+        </div>
+
+        <!-- Hidden spin/daily/promo elements for JS compatibility -->
         <div style="display:none" id="homeSpinCard">
           <canvas id="spinCanvas" width="270" height="270"></canvas>
           <button id="spinBtn">SPIN</button>
           <div id="spinNote"></div>
         </div>
-
-        <!-- Daily Bonus (hidden, kept for JS renderStreak/updateDailyBtn compatibility) -->
         <div style="display:none" id="dailyBonusCard">
           <div class="streak-grid" id="streakGrid"></div>
           <button class="daily-btn" id="dailyBtn">⏳ Loading…</button>
         </div>
-
-        <!-- Promo input (hidden, kept for JS togglePromo/promoSubmit compatibility) -->
         <div style="display:none" id="promoCard">
           <input id="promoInput" type="text" autocapitalize="characters"/>
           <button id="promoSubmit">Apply</button>
@@ -727,8 +835,6 @@ a{color:inherit;text-decoration:none}
       <!-- ════ REFER ════ -->
       <div class="section" id="referSection">
         <div class="s-head">👥 Refer &amp; Earn</div>
-
-        <!-- Stats -->
         <div class="ref-section-stats">
           <div class="ref-stat-card">
             <div class="rsv" id="refTotalVal">0</div>
@@ -743,15 +849,11 @@ a{color:inherit;text-decoration:none}
             <div class="rsl">Pts Earned</div>
           </div>
         </div>
-
-        <!-- Reward Note -->
         <div class="ref-reward-note">
           🎯 Per refer reward: <strong>400 points</strong><br/>
           ✅ A refer becomes <strong>valid</strong> only when the referred person watches <strong>20 ads</strong>.<br/>
           💡 Share your link and ask your friends to watch ads!
         </div>
-
-        <!-- Link & Share -->
         <div class="card card-glow">
           <div class="card-title">🔗 Your Referral Link</div>
           <div class="ref-row">
@@ -762,13 +864,9 @@ a{color:inherit;text-decoration:none}
             <button class="btn-solid-a"   id="shareRef">📤 Share</button>
           </div>
         </div>
-
-        <!-- Referred List -->
         <div class="card">
           <div class="card-title">📋 Referred Users</div>
-          <div id="referredList">
-            <div class="empty">Loading…</div>
-          </div>
+          <div id="referredList"><div class="empty">Loading…</div></div>
         </div>
       </div><!-- /referSection -->
 
@@ -792,21 +890,17 @@ a{color:inherit;text-decoration:none}
       <!-- ════ EARN (ADS) ════ -->
       <div class="section" id="earnSection">
         <div class="s-head">📣 Watch Ads &amp; Earn</div>
-
-        <!-- Total Ads Watched Badge -->
         <div class="ads-total-badge">
-          <span style="font-size:1.5rem">📺</span>
+          <span style="font-size:1.4rem">📺</span>
           <div>
             <div class="atb-val" id="adsWatchedCount">0</div>
             <div class="atb-lbl">Total Ads Watched</div>
           </div>
           <div style="margin-left:auto;text-align:right">
-            <div style="font-size:.7rem;color:var(--text2)">Each ad = <strong style="color:var(--a4)">10 pts</strong></div>
-            <div style="font-size:.68rem;color:var(--text3)">No limit</div>
+            <div style="font-size:.68rem;color:var(--text2)">Each ad = <strong style="color:var(--a4)">10 pts</strong></div>
+            <div style="font-size:.65rem;color:var(--text3)">No limit</div>
           </div>
         </div>
-
-        <!-- Monetag Ads -->
         <div class="ads-card">
           <div class="ads-card-title">🌐 Monetag Ads</div>
           <div class="ads-sub">Watch full ad (minimum 7 seconds) to earn +10 pts. Leaving before 7s = no reward.</div>
@@ -816,8 +910,6 @@ a{color:inherit;text-decoration:none}
           </button>
           <div class="ad-note">⚠️ Must watch at least 7 seconds for reward</div>
         </div>
-
-        <!-- GigaPub Ads -->
         <div class="ads-card">
           <div class="ads-card-title">🚀 GigaPub Ads</div>
           <div class="ads-sub">Click the ad to earn +10 pts. Reward credited after ad interaction.</div>
@@ -827,7 +919,6 @@ a{color:inherit;text-decoration:none}
           </button>
           <div class="ad-note">ℹ️ Click the ad content to receive your reward</div>
         </div>
-
       </div><!-- /earnSection -->
 
       <!-- ════ LEADERBOARD ════ -->
@@ -885,20 +976,20 @@ a{color:inherit;text-decoration:none}
   <div class="daily-popup-box">
     <div class="daily-popup-top">
       <button class="daily-popup-close" onclick="closeDailyPopup()">✕</button>
-      <div style="font-size:2.5rem;margin-bottom:8px">🎁</div>
+      <div style="font-size:2.2rem;margin-bottom:7px">🎁</div>
       <div class="daily-popup-title">Daily Login Bonus</div>
       <div class="daily-popup-sub">Login every day to earn streak rewards!</div>
     </div>
     <div class="daily-popup-body">
       <div class="daily-streak-row" id="popupStreakGrid"></div>
-      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:12px 14px;margin-bottom:14px;">
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:11px 13px;margin-bottom:12px;">
         <div class="feat-info-row" style="padding-top:0">
           <span class="feat-info-ico">📅</span>
           <div class="feat-info-text"><strong>7-Day Streak System</strong>Complete your streak for bigger rewards each day.</div>
         </div>
         <div class="feat-info-row">
           <span class="feat-info-ico">💰</span>
-          <div class="feat-info-text"><strong>Rewards</strong><span class="feat-info-val">Day 1: 5pts → Day 7: 20pts</span></div>
+          <div class="feat-info-text"><strong>Rewards</strong>Day 1: 5pts → Day 7: 20pts — streak keeps growing!</div>
         </div>
         <div class="feat-info-row">
           <span class="feat-info-ico">⏰</span>
@@ -914,7 +1005,7 @@ a{color:inherit;text-decoration:none}
   </div>
 </div>
 
-<!-- FEATURE POPUP (reusable for all buttons) -->
+<!-- FEATURE POPUP (reusable) -->
 <div class="feat-overlay" id="featOverlay">
   <div class="feat-box">
     <div class="feat-top" id="featTop">
@@ -928,7 +1019,6 @@ a{color:inherit;text-decoration:none}
 </div>
 
 <!-- MODALS -->
-
 <!-- Withdraw Modal -->
 <div class="overlay" id="withdrawModal">
   <div class="sheet">
@@ -940,10 +1030,9 @@ a{color:inherit;text-decoration:none}
     </div>
     <div class="wbal" style="margin-bottom:0">
       <div class="wbal-lbl">Points Balance</div>
-      <div style="font-family:'Outfit',sans-serif;font-size:1.1rem;font-weight:800;color:var(--a4)"><span id="wbalPts">0</span> pts</div>
+      <div style="font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;color:var(--a4)"><span id="wbalPts">0</span> pts</div>
     </div>
-    <!-- Live TON preview -->
-    <div style="text-align:center;padding:8px 0;font-size:.78rem;color:var(--text2)">
+    <div style="text-align:center;padding:7px 0;font-size:.76rem;color:var(--text2)">
       Entering <strong id="wPtsPreview" style="color:var(--a4)">0</strong> pts = <strong id="wTonPreview" style="color:var(--gold)">0.0000</strong> TON
     </div>
     <div class="withdraw-info mt10">
@@ -965,9 +1054,8 @@ a{color:inherit;text-decoration:none}
   </div>
 </div>
 
-
 <!-- ═══════════════════════════════════════════════════════
-     LOCAL STORAGE ENGINE (Firebase removed)
+     LOCAL STORAGE ENGINE
 ═══════════════════════════════════════════════════════ -->
 <script>
 
@@ -976,18 +1064,18 @@ const tg = window.Telegram?.WebApp || null;
 if (!tg || !tg.initData || tg.initData === "") {
   document.body.innerHTML = `
     <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;
-      min-height:100vh;background:#0d0d1a;color:#e8e8ff;font-family:'Plus Jakarta Sans',sans-serif;
+      min-height:100vh;background:#080812;color:#eeeeff;font-family:'Space Grotesk',sans-serif;
       padding:32px;text-align:center;gap:16px;">
       <div style="font-size:3rem">🔒</div>
-      <div style="font-family:'Outfit',sans-serif;font-size:1.4rem;font-weight:900;
-        background:linear-gradient(135deg,#7c6aff,#00d4ff);-webkit-background-clip:text;
+      <div style="font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;
+        background:linear-gradient(135deg,#6c5ce7,#00cec9);-webkit-background-clip:text;
         -webkit-text-fill-color:transparent;">TonXHub</div>
-      <p style="color:#7878a8;font-size:.9rem;line-height:1.6">
+      <p style="color:#6868a0;font-size:.88rem;line-height:1.6">
         This app only works inside Telegram.<br/>Please open it via the bot link.
       </p>
-      <a href="https://t.me/tonXhubEarn_bot/TonXHub" style="padding:14px 28px;border-radius:99px;
-        background:linear-gradient(135deg,#7c6aff,#00d4ff);color:#fff;
-        font-family:'Outfit',sans-serif;font-weight:700;font-size:.95rem;">
+      <a href="https://t.me/tonXhubEarn_bot/TonXHub" style="padding:13px 26px;border-radius:99px;
+        background:linear-gradient(135deg,#6c5ce7,#00cec9);color:#fff;
+        font-family:'Syne',sans-serif;font-weight:700;font-size:.92rem;">
         Open in Telegram →
       </a>
     </div>`;
@@ -1008,7 +1096,7 @@ const PTS_PER_TON      = 50000;
 const MIN_WITHDRAW_PTS = 1500;
 const SPIN_PRIZES      = [25, 5, 15, 0, 10, 20, 5, 0];
 const SPIN_LABELS      = ["25🎯","5","15","😢","10","20⭐","5","😢"];
-const SPIN_COLORS      = ["#7c6aff","#00d4ff","#ff6b9d","#20203f","#ffd166","#00e5a0","#7c6aff","#20203f"];
+const SPIN_COLORS      = ["#6c5ce7","#00cec9","#fd79a8","#1a1a38","#fdcb6e","#00b894","#6c5ce7","#1a1a38"];
 const SPIN_COOL        = 3600000;
 const DAILY_COOL       = 86400000;
 const DAILY_REWARDS    = [5, 10, 10, 15, 15, 20, 20];
@@ -1034,9 +1122,7 @@ const S = {
   spinLast: parseInt(localStorage.getItem("tonxSpinLast") || "0"),
 };
 
-/* ─────────────────────────────────────────────────────
-   LOCAL STORAGE HELPERS
-───────────────────────────────────────────────────── */
+/* ─── LOCAL STORAGE HELPERS ─── */
 function lsLoad() {
   try {
     const raw = localStorage.getItem(LS_KEY);
@@ -1077,7 +1163,6 @@ function lsSave() {
 
 function initUser() {
   lsLoad();
-  // Register referral if new user and has ref param
   if (REF_ID && REF_ID !== USER_ID && !S.referredBy) {
     S.referredBy = REF_ID;
     S.referValid = false;
@@ -1100,9 +1185,7 @@ function addPoints(pts) {
   refreshUI();
 }
 
-/* ─────────────────────────────────────────────────────
-   DAILY BONUS
-───────────────────────────────────────────────────── */
+/* ─── DAILY BONUS ─── */
 function claimDailyBonus() {
   const now   = Date.now();
   const lastD = S.lastDaily;
@@ -1118,9 +1201,7 @@ function claimDailyBonus() {
   return { reward, streak };
 }
 
-/* ─────────────────────────────────────────────────────
-   WEEKLY GIFT
-───────────────────────────────────────────────────── */
+/* ─── WEEKLY GIFT ─── */
 function claimWeeklyGift() {
   const now   = Date.now();
   const lastG = S.lastWeeklyGift;
@@ -1139,9 +1220,7 @@ function claimWeeklyGift() {
   return { reward, streak };
 }
 
-/* ─────────────────────────────────────────────────────
-   WITHDRAW
-───────────────────────────────────────────────────── */
+/* ─── WITHDRAW ─── */
 function submitWithdraw(wallet, pointsAmt) {
   if (!wallet || wallet.length < 8) throw new Error("Invalid wallet address");
   if (pointsAmt < MIN_WITHDRAW_PTS) throw new Error(`Minimum ${MIN_WITHDRAW_PTS} points required`);
@@ -1158,57 +1237,37 @@ function submitWithdraw(wallet, pointsAmt) {
   return id;
 }
 
-/* ─────────────────────────────────────────────────────
-   PROMO CODES — stored in localStorage by admin
-   Admin adds via: localStorage.setItem('tonxhub_promos', JSON.stringify({...}))
-   Format: { "CODE": { pts: 200, expiry: 1780000000000, maxUses: 100, currentUses: 0 } }
-───────────────────────────────────────────────────── */
+/* ─── PROMO CODES ─── */
 function applyPromoCode(code) {
   if (!code) throw new Error("Enter a code first");
   const upperCode = code.toUpperCase();
-
-  // Load promo codes from localStorage
   let promos = {};
   try { promos = JSON.parse(localStorage.getItem(LS_PROMO_KEY) || "{}"); } catch(e) {}
-
   const c = promos[upperCode];
   if (!c) throw new Error("Invalid promo code");
   if (c.expiry && Date.now() > c.expiry) throw new Error("Promo code expired");
   if (c.maxUses && (c.currentUses || 0) >= c.maxUses) throw new Error("Promo code limit reached");
-
-  // Check if already used
   if (S.usedPromos[upperCode]) throw new Error("Already used this code");
-
-  // Mark used and increment usage
   S.usedPromos[upperCode] = { usedAt: Date.now() };
   c.currentUses = (c.currentUses || 0) + 1;
   promos[upperCode] = c;
   localStorage.setItem(LS_PROMO_KEY, JSON.stringify(promos));
-
   addPoints(c.pts || 0);
   return c.pts || 0;
 }
 
-/* ─────────────────────────────────────────────────────
-   ADMIN TASKS — stored in localStorage by admin
-   Admin adds via: localStorage.setItem('tonxhub_tasks', JSON.stringify([...]))
-   Format: [{ id, icon, name, desc, pts, url, cooldown }]
-───────────────────────────────────────────────────── */
+/* ─── ADMIN TASKS ─── */
 function loadAdminTasks() {
   try {
     return JSON.parse(localStorage.getItem(LS_TASKS_KEY) || "[]");
   } catch(e) { return []; }
 }
 
-/* ─────────────────────────────────────────────────────
-   ADS WATCHED — increment & check referral validation
-───────────────────────────────────────────────────── */
+/* ─── ADS WATCHED ─── */
 function recordAdWatch() {
   S.adsWatched++;
-  // Check referral validation (this user referred by someone)
   if (S.referredBy && !S.referValid && S.adsWatched >= ADS_PER_VALID_REF) {
     S.referValid = true;
-    // Reward the referrer — stored in their localStorage key
     const refKey = `tonxhub_user_${S.referredBy}`;
     try {
       const raw = localStorage.getItem(refKey);
@@ -1216,7 +1275,6 @@ function recordAdWatch() {
         const refData = JSON.parse(raw);
         refData.validRefs = (refData.validRefs || 0) + 1;
         refData.points    = (refData.points    || 0) + REF_REWARD_PTS;
-        // Check if referrer's points cross TON threshold
         const total = refData.points;
         const earnedTon = Math.floor(total / PTS_PER_TON);
         if (earnedTon > 0) {
@@ -1233,9 +1291,7 @@ function recordAdWatch() {
   addPoints(ADS_REWARD_PTS);
 }
 
-/* ─────────────────────────────────────────────────────
-   LEADERBOARD — reads from all stored user keys
-───────────────────────────────────────────────────── */
+/* ─── LEADERBOARD ─── */
 function loadLeaderboard() {
   const list = [];
   for (let i = 0; i < localStorage.length; i++) {
@@ -1247,20 +1303,13 @@ function loadLeaderboard() {
       const pts      = d.points || 0;
       const ton      = d.ton    || 0;
       const totalPts = pts + ton * PTS_PER_TON;
-      list.push({
-        id: d.userId,
-        name: d.firstName || d.username || "Anonymous",
-        pts, ton, totalPts,
-        refs: d.validRefs || 0
-      });
+      list.push({ id: d.userId, name: d.firstName || d.username || "Anonymous", pts, ton, totalPts, refs: d.validRefs || 0 });
     } catch(e) {}
   }
   return list.sort((a,b) => b.totalPts - a.totalPts).slice(0, 50);
 }
 
-/* ─────────────────────────────────────────────────────
-   REFER SECTION — referred users list
-───────────────────────────────────────────────────── */
+/* ─── REFERRED USERS ─── */
 function loadReferredUsers() {
   const list = [];
   for (let i = 0; i < localStorage.length; i++) {
@@ -1269,20 +1318,14 @@ function loadReferredUsers() {
     try {
       const d = JSON.parse(localStorage.getItem(key));
       if (d && d.referredBy === USER_ID) {
-        list.push({
-          name: d.firstName || d.username || "Anonymous",
-          adsWatched: d.adsWatched || 0,
-          valid: d.referValid || false
-        });
+        list.push({ name: d.firstName || d.username || "Anonymous", adsWatched: d.adsWatched || 0, valid: d.referValid || false });
       }
     } catch(e) {}
   }
   return list;
 }
 
-/* ─────────────────────────────────────────────────────
-   REFRESH UI (replaces Firebase subscribeUser)
-───────────────────────────────────────────────────── */
+/* ─── REFRESH UI ─── */
 function refreshUI() {
   renderDash();
   renderTasks();
@@ -1296,9 +1339,7 @@ function refreshUI() {
   updateHomeReferCounters();
 }
 
-/* ─────────────────────────────────────────────────────
-   RENDER: DASHBOARD
-───────────────────────────────────────────────────── */
+/* ─── RENDER: DASHBOARD ─── */
 const counterCache = {};
 function animCount(id, to, dec=0) {
   const el = document.getElementById(id);
@@ -1330,8 +1371,7 @@ function renderDash() {
 
   const pct = Math.min((S.points / PTS_PER_TON) * 100, 100);
   document.getElementById("progressBar").style.width = pct + "%";
-  document.getElementById("progressLabel").textContent =
-    `${S.points.toLocaleString()} / 50,000 pts → 1 TON`;
+  document.getElementById("progressLabel").textContent = `${S.points.toLocaleString()} / 50,000 pts → 1 TON`;
 
   const rl = document.getElementById("refLink");
   if (rl) rl.value = `${BOT_LINK}?startapp=${USER_ID}`;
@@ -1343,6 +1383,14 @@ function renderDash() {
   if (wv) wv.textContent = S.ton.toFixed(4);
   const wp = document.getElementById("wbalPts");
   if (wp) wp.textContent = S.points.toLocaleString();
+
+  // Update home refer banner
+  const rb = document.getElementById("rbTotal");
+  const rbv = document.getElementById("rbValid");
+  const rbe = document.getElementById("rbEarned");
+  if (rb) rb.textContent = S.refs;
+  if (rbv) rbv.textContent = S.validRefs;
+  if (rbe) rbe.textContent = (S.validRefs * REF_REWARD_PTS).toLocaleString();
 }
 
 function renderReferSection() {
@@ -1353,7 +1401,6 @@ function renderReferSection() {
   if (vv) vv.textContent = S.validRefs;
   if (ev) ev.textContent = (S.validRefs * REF_REWARD_PTS).toLocaleString();
 
-  // Referred users list
   const listEl = document.getElementById("referredList");
   if (!listEl) return;
   const referred = loadReferredUsers();
@@ -1362,20 +1409,18 @@ function renderReferSection() {
     return;
   }
   listEl.innerHTML = referred.map(u => `
-    <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border)">
       <div>
-        <div style="font-size:.85rem;font-weight:600">${u.name}</div>
-        <div style="font-size:.72rem;color:var(--text2)">Ads watched: ${u.adsWatched} / ${ADS_PER_VALID_REF}</div>
+        <div style="font-size:.83rem;font-weight:600">${u.name}</div>
+        <div style="font-size:.7rem;color:var(--text2)">Ads watched: ${u.adsWatched} / ${ADS_PER_VALID_REF}</div>
       </div>
-      <span style="font-size:.72rem;padding:3px 9px;border-radius:99px;background:${u.valid ? 'rgba(0,229,160,.15)' : 'rgba(120,120,168,.12)'};color:${u.valid ? 'var(--a4)' : 'var(--text2)'}">
+      <span style="font-size:.7rem;padding:3px 8px;border-radius:99px;background:${u.valid ? 'rgba(0,184,148,.14)' : 'rgba(104,104,160,.12)'};color:${u.valid ? 'var(--a4)' : 'var(--text2)'}">
         ${u.valid ? '✅ Valid' : '⏳ Pending'}
       </span>
     </div>`).join("");
 }
 
-/* ─────────────────────────────────────────────────────
-   RENDER: DAILY STREAK
-───────────────────────────────────────────────────── */
+/* ─── RENDER: DAILY STREAK ─── */
 function renderStreak() {
   const grid = document.getElementById("streakGrid");
   if (!grid) return;
@@ -1385,50 +1430,17 @@ function renderStreak() {
     const isToday = S.dailyStreak === i + 1;
     const div = document.createElement("div");
     div.className = "streak-day" + (claimed?" claimed":"") + (isToday?" today":"");
-    div.innerHTML = `<div class="sd-num">Day ${i+1}</div>
-      <div class="sd-icon">${claimed?"✅":"🎁"}</div>
-      <div class="sd-pts">+${DAILY_REWARDS[i]}</div>`;
+    div.innerHTML = `<div class="sd-num">D${i+1}</div><div class="sd-icon">${claimed?"✅":"🎁"}</div><div class="sd-pts">+${DAILY_REWARDS[i]}</div>`;
     grid.appendChild(div);
   }
 }
 
-/* ─────────────────────────────────────────────────────
-   RENDER: WEEKLY GIFT TILES
-───────────────────────────────────────────────────── */
+/* ─── RENDER: WEEKLY GIFT TILES ─── */
 function renderGiftTiles() {
-  const container = document.getElementById("giftTiles");
-  if (!container) return;
-  container.innerHTML = "";
-  const canClaim   = Date.now() - S.lastWeeklyGift >= WEEKLY_GIFT_COOL;
-  const currentWeek= S.weeklyGiftStreak;
-  for (let i = 0; i < 8; i++) {
-    const collected = i < currentWeek;
-    const isNext    = i === currentWeek && canClaim;
-    const div = document.createElement("div");
-    div.className = "gift-tile" + (collected?" collected":"") + (isNext?" today-gift":"");
-    div.innerHTML = `<div class="gt-ico">${collected?"✅":"🎀"}</div>
-      <div class="gt-day">Week ${i+1}</div>
-      <div class="gt-val">+${WEEKLY_GIFTS[i]} pts</div>`;
-    container.appendChild(div);
-  }
-  const claimBtn = document.getElementById("claimWeeklyGift");
-  if (!claimBtn) return;
-  if (!canClaim) {
-    const rem  = WEEKLY_GIFT_COOL - (Date.now() - S.lastWeeklyGift);
-    const days = Math.floor(rem / 86400000);
-    const hrs  = Math.floor((rem % 86400000) / 3600000);
-    claimBtn.disabled = true;
-    claimBtn.textContent = `⏳ Come back in ${days}d ${hrs}h`;
-  } else {
-    claimBtn.disabled = false;
-    const idx = Math.min(S.weeklyGiftStreak, WEEKLY_GIFTS.length - 1);
-    claimBtn.textContent = `🎀 Claim +${WEEKLY_GIFTS[idx]} pts`;
-  }
+  // Keep function for compatibility but no UI needed
 }
 
-/* ─────────────────────────────────────────────────────
-   RENDER: TASKS
-───────────────────────────────────────────────────── */
+/* ─── RENDER: TASKS ─── */
 let cdTicker = null;
 let TASKS_DATA = [];
 
@@ -1442,7 +1454,6 @@ function renderTasks() {
   }
   container.innerHTML = "";
   let doneCount = 0;
-
   TASKS_DATA.forEach(t => {
     const td     = S.completedTasks?.[t.id] || {};
     const last   = td.lastTime || 0;
@@ -1451,7 +1462,6 @@ function renderTasks() {
     const remSec = onCD ? Math.ceil((t.cooldown - (now - last)) / 1000) : 0;
     const pct    = onCD ? Math.min(((now - last) / t.cooldown) * 100, 100) : 100;
     if (td.count) doneCount++;
-
     const card = document.createElement("div");
     card.className = "task-card" + (onCD ? " on-cooldown" : "");
     card.dataset.tid = t.id;
@@ -1464,22 +1474,15 @@ function renderTasks() {
       </div>
       <div class="t-right">
         <div class="t-pts">+${t.pts} pts</div>
-        <button class="t-btn${onCD?" dis":""}"
-          data-id="${t.id}" data-pts="${t.pts}"
-          data-cd="${t.cooldown}" data-url="${t.url}"
-          ${onCD?"disabled":""}>
+        <button class="t-btn${onCD?" dis":""}" data-id="${t.id}" data-pts="${t.pts}" data-cd="${t.cooldown}" data-url="${t.url}" ${onCD?"disabled":""}>
           ${onCD ? fmtTime(remSec) : "Go →"}
         </button>
       </div>`;
     container.appendChild(card);
   });
-
   const dc = document.getElementById("taskDoneCount");
   if (dc) dc.textContent = `${doneCount}/${TASKS_DATA.length} done`;
-
-  container.querySelectorAll(".t-btn:not(.dis)").forEach(btn =>
-    btn.addEventListener("click", onTaskClick));
-
+  container.querySelectorAll(".t-btn:not(.dis)").forEach(btn => btn.addEventListener("click", onTaskClick));
   startCDTicker();
 }
 
@@ -1510,26 +1513,18 @@ async function onTaskClick(e) {
   const pts = parseInt(btn.dataset.pts);
   const cd  = parseInt(btn.dataset.cd);
   const url = btn.dataset.url;
-
-  btn.disabled = true;
-  btn.textContent = "Visit…";
+  btn.disabled = true; btn.textContent = "Visit…";
   window.open(url, "_blank");
-
   let countdown = 5;
   const ticker = setInterval(() => {
-    countdown--;
-    btn.textContent = `${countdown}s…`;
+    countdown--; btn.textContent = `${countdown}s…`;
     if (countdown <= 0) clearInterval(ticker);
   }, 1000);
-
   await new Promise(r => setTimeout(r, 5000));
   clearInterval(ticker);
-  btn.textContent = "Claim!";
-  btn.disabled = false;
-
+  btn.textContent = "Claim!"; btn.disabled = false;
   btn.onclick = () => {
-    btn.disabled = true;
-    btn.textContent = "Saving…";
+    btn.disabled = true; btn.textContent = "Saving…";
     try {
       const now  = Date.now();
       const prev = S.completedTasks[id] || {};
@@ -1540,22 +1535,16 @@ async function onTaskClick(e) {
       S.completedTasks[id] = { lastTime: now, count: (prev.count || 0) + 1 };
       addPoints(pts);
       toast(`✅ Task complete! +${pts} pts`, "ok");
-      haptic("medium");
-      renderTasks();
+      haptic("medium"); renderTasks();
     } catch(err) {
-      if (err.message.startsWith("COOLDOWN:")) {
-        toast(`⏳ Cooldown: ${err.message.slice(9)}`, "warn");
-      } else {
-        toast("Error: " + err.message, "err");
-      }
+      if (err.message.startsWith("COOLDOWN:")) toast(`⏳ Cooldown: ${err.message.slice(9)}`, "warn");
+      else toast("Error: " + err.message, "err");
       renderTasks();
     }
   };
 }
 
-/* ─────────────────────────────────────────────────────
-   DAILY BONUS BUTTON
-───────────────────────────────────────────────────── */
+/* ─── DAILY BONUS BUTTON ─── */
 function updateDailyBtn() {
   const btn = document.getElementById("dailyBtn");
   if (!btn) return;
@@ -1575,8 +1564,7 @@ function updateDailyBtn() {
 
 document.getElementById("dailyBtn").addEventListener("click", () => {
   const btn = document.getElementById("dailyBtn");
-  btn.disabled = true;
-  btn.textContent = "Claiming…";
+  btn.disabled = true; btn.textContent = "Claiming…";
   try {
     const { reward, streak } = claimDailyBonus();
     toast(`🎁 Day ${streak} bonus! +${reward} pts`, "ok");
@@ -1588,39 +1576,18 @@ document.getElementById("dailyBtn").addEventListener("click", () => {
   }
 });
 
-/* ─────────────────────────────────────────────────────
-   WEEKLY GIFT
-───────────────────────────────────────────────────── */
-document.getElementById("claimWeeklyGift").addEventListener("click", () => {
-  const btn = document.getElementById("claimWeeklyGift");
-  btn.disabled = true;
-  btn.textContent = "Claiming…";
-  try {
-    const { reward, streak } = claimWeeklyGift();
-    toast(`🎀 Week ${streak} gift! +${reward} pts`, "ok");
-    haptic("heavy");
-    closeModal("weeklyGiftModal");
-  } catch(err) {
-    if (err.message.startsWith("WAIT:")) toast(`⏳ ${err.message.slice(5)} remaining`, "warn");
-    else toast("Error: " + err.message, "err");
-    renderGiftTiles();
-  }
-});
-
-/* ─────────────────────────────────────────────────────
-   SPIN WHEEL
-───────────────────────────────────────────────────── */
+/* ─── SPIN WHEEL ─── */
 let spinRunning = false;
 let spinAngle   = 0;
 
 const spinStyles = document.createElement("style");
 spinStyles.textContent = `
   .spin-wrap{display:flex;flex-direction:column;align-items:center;gap:14px;padding:6px 0 4px;}
-  #spinCanvas{border-radius:50%;box-shadow:0 0 0 3px var(--border),0 8px 40px rgba(124,106,255,.35);max-width:265px;width:100%;aspect-ratio:1/1;display:block;}
-  .spin-main-btn{width:100%;max-width:230px;padding:14px;border-radius:99px;background:var(--grad);color:#fff;font-family:'Outfit',sans-serif;font-weight:900;font-size:1rem;letter-spacing:.04em;box-shadow:0 6px 24px rgba(124,106,255,.40);transition:transform var(--t),opacity var(--t),box-shadow var(--t);}
+  #spinCanvas{border-radius:50%;box-shadow:0 0 0 3px var(--border),0 8px 40px rgba(108,92,231,.35);max-width:265px;width:100%;aspect-ratio:1/1;display:block;}
+  .spin-main-btn{width:100%;max-width:230px;padding:14px;border-radius:99px;background:var(--grad);color:#fff;font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;box-shadow:0 6px 24px rgba(108,92,231,.4);transition:transform var(--t),opacity var(--t);}
   .spin-main-btn:active:not(:disabled){transform:scale(.96)}
   .spin-main-btn:disabled{opacity:.5;cursor:not-allowed;box-shadow:none}
-  .spin-note{font-size:.72rem;color:var(--text2);text-align:center}
+  .spin-note{font-size:.7rem;color:var(--text2);text-align:center}
 `;
 document.head.appendChild(spinStyles);
 
@@ -1643,20 +1610,20 @@ function drawWheel(currentAngle) {
     const end   = start + arc;
     ctx.beginPath(); ctx.moveTo(cx, cy); ctx.arc(cx, cy, R, start, end); ctx.closePath();
     ctx.fillStyle = SPIN_COLORS[i]; ctx.fill();
-    ctx.strokeStyle = "rgba(0,0,0,.25)"; ctx.lineWidth = 2; ctx.stroke();
+    ctx.strokeStyle = "rgba(0,0,0,.22)"; ctx.lineWidth = 2; ctx.stroke();
     ctx.save(); ctx.translate(cx, cy); ctx.rotate(start + arc/2);
-    ctx.textAlign = "right"; ctx.fillStyle = "#fff"; ctx.font = `bold 13px 'Outfit',sans-serif`;
+    ctx.textAlign = "right"; ctx.fillStyle = "#fff"; ctx.font = `bold 13px 'Syne',sans-serif`;
     ctx.shadowColor = "rgba(0,0,0,.4)"; ctx.shadowBlur = 4;
     ctx.fillText(SPIN_LABELS[i], R - 10, 5); ctx.restore();
   }
   ctx.beginPath(); ctx.arc(cx, cy, 22, 0, Math.PI*2);
-  ctx.fillStyle = "#0d0d1a"; ctx.fill();
-  ctx.strokeStyle = "rgba(255,255,255,.15)"; ctx.lineWidth = 2; ctx.stroke();
+  ctx.fillStyle = "#080812"; ctx.fill();
+  ctx.strokeStyle = "rgba(255,255,255,.12)"; ctx.lineWidth = 2; ctx.stroke();
   ctx.fillStyle = "#fff"; ctx.font = "bold 16px Arial";
   ctx.textAlign = "center"; ctx.textBaseline = "middle";
   ctx.fillText("🎰", cx, cy);
   ctx.beginPath(); ctx.moveTo(cx-8, 4); ctx.lineTo(cx+8, 4); ctx.lineTo(cx, 22); ctx.closePath();
-  ctx.fillStyle = "#ffd166"; ctx.fill();
+  ctx.fillStyle = "#fdcb6e"; ctx.fill();
 }
 
 function updateSpinBtn() {
@@ -1678,11 +1645,9 @@ function updateSpinBtn() {
 document.getElementById("spinBtn").addEventListener("click", () => {
   const now = Date.now();
   if (now - S.spinLast < SPIN_COOL || spinRunning) return;
-  spinRunning = true;
-  S.spinLast  = now;
+  spinRunning = true; S.spinLast = now;
   localStorage.setItem("tonxSpinLast", now);
   updateSpinBtn();
-
   const slices   = SPIN_PRIZES.length;
   const arc      = (Math.PI * 2) / slices;
   const prizeIdx = Math.floor(Math.random() * slices);
@@ -1691,7 +1656,6 @@ document.getElementById("spinBtn").addEventListener("click", () => {
   let start = null;
   const duration = 4000;
   const startAngle = spinAngle;
-
   function easeOut(t) { return 1 - Math.pow(1 - t, 4); }
   function animate(ts) {
     if (!start) start = ts;
@@ -1703,14 +1667,8 @@ document.getElementById("spinBtn").addEventListener("click", () => {
     } else {
       spinRunning = false;
       const prize = SPIN_PRIZES[prizeIdx];
-      if (prize > 0) {
-        addPoints(prize);
-        toast(`🎰 You won ${prize} pts!`, "ok");
-        haptic("heavy");
-      } else {
-        toast("😢 No prize this time!", "warn");
-        haptic("light");
-      }
+      if (prize > 0) { addPoints(prize); toast(`🎰 You won ${prize} pts!`, "ok"); haptic("heavy"); }
+      else { toast("😢 No prize this time!", "warn"); haptic("light"); }
       updateSpinBtn();
     }
   }
@@ -1718,9 +1676,7 @@ document.getElementById("spinBtn").addEventListener("click", () => {
 });
 setInterval(updateSpinBtn, 1000);
 
-/* ─────────────────────────────────────────────────────
-   ADS — MONETAG
-───────────────────────────────────────────────────── */
+/* ─── ADS — MONETAG ─── */
 let monetagBusy = false;
 document.getElementById("monetagBtn").addEventListener("click", async () => {
   if (monetagBusy) return;
@@ -1728,17 +1684,11 @@ document.getElementById("monetagBtn").addEventListener("click", async () => {
   const btn   = document.getElementById("monetagBtn");
   const timer = document.getElementById("monetagTimer");
   btn.disabled = true;
-
   try {
     let adWatchSec = 0;
-    const countUp = setInterval(() => {
-      adWatchSec++;
-      if (timer) timer.textContent = `${adWatchSec}s`;
-    }, 1000);
-
+    const countUp = setInterval(() => { adWatchSec++; if (timer) timer.textContent = `${adWatchSec}s`; }, 1000);
     await window.show_10353766();
     clearInterval(countUp);
-
     if (adWatchSec >= MONETAG_MIN_SEC) {
       recordAdWatch();
       toast(`📣 +${ADS_REWARD_PTS} pts earned! (Monetag)`, "ok");
@@ -1750,14 +1700,11 @@ document.getElementById("monetagBtn").addEventListener("click", async () => {
     toast("Ad failed to load. Try again.", "err");
   } finally {
     if (timer) timer.textContent = "";
-    btn.disabled = false;
-    monetagBusy  = false;
+    btn.disabled = false; monetagBusy = false;
   }
 });
 
-/* ─────────────────────────────────────────────────────
-   ADS — GIGAPUB
-───────────────────────────────────────────────────── */
+/* ─── ADS — GIGAPUB ─── */
 let gigaBusy = false;
 document.getElementById("gigapubBtn").addEventListener("click", async () => {
   if (gigaBusy) return;
@@ -1766,7 +1713,6 @@ document.getElementById("gigapubBtn").addEventListener("click", async () => {
   const timer = document.getElementById("gigapubTimer");
   btn.disabled = true;
   if (timer) timer.textContent = "Loading…";
-
   try {
     await window.showGiga();
     recordAdWatch();
@@ -1776,21 +1722,18 @@ document.getElementById("gigapubBtn").addEventListener("click", async () => {
     toast("Ad failed or was skipped.", "warn");
   } finally {
     if (timer) timer.textContent = "";
-    btn.disabled = false;
-    gigaBusy     = false;
+    btn.disabled = false; gigaBusy = false;
   }
 });
 
-/* ─────────────────────────────────────────────────────
-   LEADERBOARD
-───────────────────────────────────────────────────── */
+/* ─── LEADERBOARD ─── */
 function getTier(totalPts) {
-  if (totalPts >= 500000) return { label: "💎 Diamond", color: "#00d4ff" };
+  if (totalPts >= 500000) return { label: "💎 Diamond", color: "#00cec9" };
   if (totalPts >= 200000) return { label: "🏅 Platinum", color: "#a78bfa" };
-  if (totalPts >= 100000) return { label: "🥇 Gold",     color: "#ffd166" };
+  if (totalPts >= 100000) return { label: "🥇 Gold",     color: "#fdcb6e" };
   if (totalPts >= 50000)  return { label: "🥈 Silver",   color: "#c0c0c0" };
   if (totalPts >= 10000)  return { label: "🥉 Bronze",   color: "#cd7f32" };
-  return { label: "🌱 Starter", color: "#00e5a0" };
+  return { label: "🌱 Starter", color: "#00b894" };
 }
 
 function renderLeaderboard() {
@@ -1818,7 +1761,7 @@ function renderLeaderboard() {
       d.className = "leader-card" + rankClass + (isMe ? " is-me" : "");
       d.innerHTML = `
         <div class="ldr-rank">${medal}</div>
-        <div class="ldr-av" style="background:${i<3?`linear-gradient(135deg,${tier.color},${i===0?'#ff6b9d':'#7c6aff'})`:'var(--grad)'}">
+        <div class="ldr-av" style="background:${i<3?`linear-gradient(135deg,${tier.color},${i===0?'#fd79a8':'#6c5ce7'})`:'var(--grad)'}">
           ${(u.name[0]||"?").toUpperCase()}
           <div class="ldr-tier-badge" title="${tier.label}">${tier.label.split(" ")[0]}</div>
         </div>
@@ -1841,9 +1784,7 @@ function renderLeaderboard() {
 
 document.getElementById("ldrRefresh")?.addEventListener("click", renderLeaderboard);
 
-/* ─────────────────────────────────────────────────────
-   WITHDRAW
-───────────────────────────────────────────────────── */
+/* ─── WITHDRAW ─── */
 document.getElementById("wPts")?.addEventListener("input", () => {
   const pts = parseInt(document.getElementById("wPts").value) || 0;
   const ton = (pts / PTS_PER_TON).toFixed(4);
@@ -1855,17 +1796,13 @@ document.getElementById("wSubmit").addEventListener("click", () => {
   const wallet   = document.getElementById("wWallet").value.trim();
   const pointsIn = parseInt(document.getElementById("wPts").value);
   const btn      = document.getElementById("wSubmit");
-
   if (!wallet || wallet.length < 8) return toast("Invalid wallet address", "err");
   if (!wallet.startsWith("UQ") && !wallet.startsWith("EQ"))
     return toast("Only Tonkeeper address (UQ… or EQ…)", "err");
   if (!pointsIn || pointsIn < MIN_WITHDRAW_PTS)
     return toast(`Minimum ${MIN_WITHDRAW_PTS} points`, "err");
-  if (pointsIn > S.points)
-    return toast("Insufficient points", "err");
-
-  btn.disabled = true;
-  btn.textContent = "Processing…";
+  if (pointsIn > S.points) return toast("Insufficient points", "err");
+  btn.disabled = true; btn.textContent = "Processing…";
   try {
     const id  = submitWithdraw(wallet, pointsIn);
     const ton = (pointsIn / PTS_PER_TON).toFixed(4);
@@ -1876,16 +1813,12 @@ document.getElementById("wSubmit").addEventListener("click", () => {
   } catch(err) {
     toast("Error: " + err.message, "err");
   } finally {
-    btn.disabled = false;
-    btn.textContent = "Confirm Withdraw";
+    btn.disabled = false; btn.textContent = "Confirm Withdraw";
   }
 });
 
-/* ─────────────────────────────────────────────────────
-   PROMO CODE
-───────────────────────────────────────────────────── */
-window.togglePromo = function() { /* no-op — handled via feat popup */ };
-
+/* ─── PROMO CODE ─── */
+window.togglePromo = function() {};
 document.getElementById("promoSubmit").addEventListener("click", () => {
   const code = document.getElementById("promoInput").value.trim();
   const btn  = document.getElementById("promoSubmit");
@@ -1903,9 +1836,7 @@ document.getElementById("promoSubmit").addEventListener("click", () => {
   }
 });
 
-/* ─────────────────────────────────────────────────────
-   NAVIGATION
-───────────────────────────────────────────────────── */
+/* ─── NAVIGATION ─── */
 window.navTo = function(sec) {
   document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
   document.querySelectorAll(".nav-item").forEach(n => n.classList.remove("active"));
@@ -1913,14 +1844,11 @@ window.navTo = function(sec) {
   document.querySelector(`[data-sec="${sec}"]`)?.classList.add("active");
   if (sec === "leaderSection") renderLeaderboard();
 };
-
 document.querySelectorAll(".nav-item").forEach(item => {
   item.addEventListener("click", () => navTo(item.dataset.sec));
 });
 
-/* ─────────────────────────────────────────────────────
-   THEME
-───────────────────────────────────────────────────── */
+/* ─── THEME ─── */
 function applyTheme() {
   document.body.classList.toggle("light", !S.dark);
   document.getElementById("themeToggle").textContent = S.dark ? "☀️" : "🌙";
@@ -1932,9 +1860,7 @@ document.getElementById("themeToggle").addEventListener("click", () => {
 });
 applyTheme();
 
-/* ─────────────────────────────────────────────────────
-   MODALS
-───────────────────────────────────────────────────── */
+/* ─── MODALS ─── */
 window.openModal = function(id) {
   const el = document.getElementById(id);
   if (!el) return;
@@ -1943,7 +1869,6 @@ window.openModal = function(id) {
     document.getElementById("wbalVal").textContent = S.ton.toFixed(4);
     document.getElementById("wbalPts").textContent = S.points.toLocaleString();
   }
-  if (id === "weeklyGiftModal") renderGiftTiles();
 };
 window.closeModal = function(id) {
   document.getElementById(id)?.classList.remove("open");
@@ -1952,9 +1877,7 @@ document.querySelectorAll(".overlay").forEach(ov => {
   ov.addEventListener("click", e => { if (e.target === ov) ov.classList.remove("open"); });
 });
 
-/* ─────────────────────────────────────────────────────
-   DAILY BONUS POPUP
-───────────────────────────────────────────────────── */
+/* ─── DAILY BONUS POPUP ─── */
 window.openDailyPopup = function() {
   document.getElementById("dailyBonusPopup").classList.add("open");
   renderPopupStreak();
@@ -1973,9 +1896,7 @@ function renderPopupStreak() {
     const isToday = S.dailyStreak === i + 1;
     const div = document.createElement("div");
     div.className = "streak-day" + (claimed?" claimed":"") + (isToday?" today":"");
-    div.innerHTML = `<div class="sd-num">Day ${i+1}</div>
-      <div class="sd-icon">${claimed?"✅":"🎁"}</div>
-      <div class="sd-pts">+${DAILY_REWARDS[i]}</div>`;
+    div.innerHTML = `<div class="sd-num">D${i+1}</div><div class="sd-icon">${claimed?"✅":"🎁"}</div><div class="sd-pts">+${DAILY_REWARDS[i]}</div>`;
     grid.appendChild(div);
   }
 }
@@ -1999,8 +1920,7 @@ function updateDailyPopupBtn() {
 
 document.getElementById("dailyPopupBtn").addEventListener("click", () => {
   const btn = document.getElementById("dailyPopupBtn");
-  btn.disabled = true;
-  btn.textContent = "Claiming…";
+  btn.disabled = true; btn.textContent = "Claiming…";
   try {
     const { reward, streak } = claimDailyBonus();
     toast(`🎁 Day ${streak} bonus! +${reward} pts`, "ok");
@@ -2015,9 +1935,7 @@ document.getElementById("dailyPopupBtn").addEventListener("click", () => {
   }
 });
 
-/* ─────────────────────────────────────────────────────
-   FEATURE POPUP SYSTEM
-───────────────────────────────────────────────────── */
+/* ─── FEATURE POPUP SYSTEM ─── */
 const FEAT_DATA = {
   refer: {
     ico: "👥", title: "Refer & Earn", subtitle: "Invite friends and earn real rewards!",
@@ -2039,15 +1957,11 @@ const FEAT_DATA = {
         <span class="feat-info-ico">📊</span>
         <div class="feat-info-text"><strong>No Limit</strong>Refer unlimited friends — more refers = more rewards!</div>
       </div>
-      <div class="feat-info-row">
-        <span class="feat-info-ico">👛</span>
-        <div class="feat-info-text"><strong>Points → TON</strong>Every 50,000 pts = <span class="feat-info-val">1 TON</span> crypto</div>
-      </div>
       <button class="feat-cta" onclick="closeFeatPopup();navTo('referSection')">👥 Go to Refer Section →</button>`
   },
   tasks: {
     ico: "✅", title: "Complete Tasks", subtitle: "Do simple tasks and earn big points!",
-    grad: "var(--grad3)",
+    grad: "linear-gradient(135deg,#00b894 0%,#00cec9 100%)",
     body: `
       <div class="feat-info-row" style="padding-top:0">
         <span class="feat-info-ico">📋</span>
@@ -2069,7 +1983,7 @@ const FEAT_DATA = {
   },
   ads: {
     ico: "📣", title: "Watch Ads & Earn", subtitle: "Watch short ads for instant point rewards!",
-    grad: "linear-gradient(135deg,#ff6b9d 0%,#ffd166 100%)",
+    grad: "linear-gradient(135deg,#fd79a8 0%,#fdcb6e 100%)",
     body: `
       <div class="feat-info-row" style="padding-top:0">
         <span class="feat-info-ico">📺</span>
@@ -2089,31 +2003,9 @@ const FEAT_DATA = {
       </div>
       <button class="feat-cta" onclick="closeFeatPopup();navTo('earnSection')">📣 Go to Earn Ads →</button>`
   },
-  leaderboard: {
-    ico: "🏆", title: "Leaderboard", subtitle: "Compete with top earners worldwide!",
-    grad: "linear-gradient(135deg,#ffd166 0%,#ff6b9d 100%)",
-    body: `
-      <div class="feat-info-row" style="padding-top:0">
-        <span class="feat-info-ico">🥇</span>
-        <div class="feat-info-text"><strong>Top 50 Rankings</strong>See the top 50 highest earners on TonXHub.</div>
-      </div>
-      <div class="feat-info-row">
-        <span class="feat-info-ico">⏰</span>
-        <div class="feat-info-text"><strong>Update Frequency</strong>Leaderboard refreshes on each visit.</div>
-      </div>
-      <div class="feat-info-row">
-        <span class="feat-info-ico">💎</span>
-        <div class="feat-info-text"><strong>Tiers</strong>🌱 Starter → 🥉 Bronze → 🥈 Silver → 🥇 Gold → 🏅 Platinum → 💎 Diamond</div>
-      </div>
-      <div class="feat-info-row">
-        <span class="feat-info-ico">📈</span>
-        <div class="feat-info-text"><strong>Total Score</strong>Ranking is based on total lifetime points + TON earned.</div>
-      </div>
-      <button class="feat-cta" onclick="closeFeatPopup();navTo('leaderSection')">🏆 Go to Leaderboard →</button>`
-  },
   promo: {
     ico: "🎟️", title: "Promo Code", subtitle: "Enter secret codes for bonus points!",
-    grad: "linear-gradient(135deg,#7c6aff 0%,#ff6b9d 100%)",
+    grad: "linear-gradient(135deg,#6c5ce7 0%,#fd79a8 100%)",
     body: `
       <div class="feat-info-row" style="padding-top:0">
         <span class="feat-info-ico">🎟️</span>
@@ -2131,30 +2023,22 @@ const FEAT_DATA = {
         <span class="feat-info-ico">⏳</span>
         <div class="feat-info-text"><strong>Expiry</strong>Promo codes have an expiry date — use them quickly!</div>
       </div>
-      <div style="margin-top:14px">
+      <div style="margin-top:12px">
         <div class="promo-input-row">
           <input class="promo-input" id="featPromoInput" type="text" placeholder="Enter promo code…" autocomplete="off" autocapitalize="characters"/>
           <button class="promo-submit" id="featPromoSubmit">Apply</button>
         </div>
       </div>`
   },
-  weekly: {
-    ico: "🎀", title: "Weekly Gift Box", subtitle: "Claim a bigger gift every 7 days!",
-    grad: "linear-gradient(135deg,#ff6b9d 0%,#ffd166 100%)",
+  spin: {
+    ico: "🎰", title: "Spin Wheel", subtitle: "Spin every 60 minutes for free prizes!",
+    grad: "linear-gradient(135deg,#6c5ce7 0%,#00cec9 100%)",
     body: `
-      <div class="feat-info-row" style="padding-top:0">
-        <span class="feat-info-ico">🎀</span>
-        <div class="feat-info-text"><strong>Weekly Reward</strong>Claim a gift once every <span class="feat-info-val">7 days</span>.</div>
-      </div>
-      <div class="feat-info-row">
-        <span class="feat-info-ico">📈</span>
-        <div class="feat-info-text"><strong>Growing Rewards</strong>Streak week 1 gives <span class="feat-info-val">50 pts</span>, Week 8 gives <span class="feat-info-val">500 pts</span>!</div>
-      </div>
-      <div class="feat-info-row">
-        <span class="feat-info-ico">🔄</span>
-        <div class="feat-info-text"><strong>Streak System</strong>The longer your weekly streak, the more you earn each week.</div>
-      </div>
-      <button class="feat-cta" onclick="closeFeatPopup();openModal('weeklyGiftModal')">🎀 Open Gift Box →</button>`
+      <div class="spin-wrap">
+        <canvas id="spinCanvasPopup" width="260" height="260"></canvas>
+        <button class="spin-main-btn" id="spinBtnPopup">🎰 SPIN!</button>
+        <div class="spin-note" id="spinNotePopup">Cooldown resets every 60 minutes</div>
+      </div>`
   },
 };
 
@@ -2170,7 +2054,10 @@ window.showFeatPopup = function(type) {
   top.style.background = data.grad;
   overlay.classList.add("open");
 
-  // Wire promo submit inside popup
+  if (type === "spin") {
+    initSpinPopup();
+  }
+
   if (type === "promo") {
     const fsBtn = document.getElementById("featPromoSubmit");
     if (fsBtn) {
@@ -2194,6 +2081,95 @@ window.showFeatPopup = function(type) {
   }
 };
 
+/* Spin popup canvas */
+let spinPopupRunning = false;
+let spinPopupAngle = 0;
+
+function initSpinPopup() {
+  drawWheelOn("spinCanvasPopup", spinPopupAngle);
+  updateSpinPopupBtn();
+}
+
+function drawWheelOn(canvasId, currentAngle) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+  const W = canvas.width, H = canvas.height;
+  const cx = W/2, cy = H/2, R = cx - 6;
+  const slices = SPIN_PRIZES.length;
+  const arc    = (Math.PI * 2) / slices;
+  ctx.clearRect(0, 0, W, H);
+  for (let i = 0; i < slices; i++) {
+    const start = currentAngle + i * arc;
+    const end   = start + arc;
+    ctx.beginPath(); ctx.moveTo(cx, cy); ctx.arc(cx, cy, R, start, end); ctx.closePath();
+    ctx.fillStyle = SPIN_COLORS[i]; ctx.fill();
+    ctx.strokeStyle = "rgba(0,0,0,.22)"; ctx.lineWidth = 2; ctx.stroke();
+    ctx.save(); ctx.translate(cx, cy); ctx.rotate(start + arc/2);
+    ctx.textAlign = "right"; ctx.fillStyle = "#fff"; ctx.font = `bold 12px 'Syne',sans-serif`;
+    ctx.shadowColor = "rgba(0,0,0,.4)"; ctx.shadowBlur = 4;
+    ctx.fillText(SPIN_LABELS[i], R - 8, 5); ctx.restore();
+  }
+  ctx.beginPath(); ctx.arc(cx, cy, 20, 0, Math.PI*2);
+  ctx.fillStyle = "#080812"; ctx.fill();
+  ctx.strokeStyle = "rgba(255,255,255,.12)"; ctx.lineWidth = 2; ctx.stroke();
+  ctx.fillStyle = "#fff"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+  ctx.fillText("🎰", cx, cy);
+  ctx.beginPath(); ctx.moveTo(cx-7, 4); ctx.lineTo(cx+7, 4); ctx.lineTo(cx, 20); ctx.closePath();
+  ctx.fillStyle = "#fdcb6e"; ctx.fill();
+}
+
+function updateSpinPopupBtn() {
+  const btn  = document.getElementById("spinBtnPopup");
+  const note = document.getElementById("spinNotePopup");
+  if (!btn) return;
+  const rem = SPIN_COOL - (Date.now() - S.spinLast);
+  if (rem <= 0) {
+    btn.disabled = false; btn.textContent = "🎰 SPIN!";
+    if (note) note.textContent = "Free spin available!";
+  } else {
+    btn.disabled = true;
+    const m = Math.floor(rem / 60000), s = Math.floor((rem % 60000) / 1000);
+    btn.textContent = `⏳ ${m}m ${s}s`;
+    if (note) note.textContent = "Come back for your next free spin!";
+  }
+}
+
+document.getElementById("featBody").addEventListener("click", e => {
+  if (e.target.id === "spinBtnPopup" || e.target.closest("#spinBtnPopup")) {
+    const now = Date.now();
+    if (now - S.spinLast < SPIN_COOL || spinPopupRunning) return;
+    spinPopupRunning = true; S.spinLast = now;
+    localStorage.setItem("tonxSpinLast", now);
+    updateSpinPopupBtn(); updateSpinBtn();
+    const slices   = SPIN_PRIZES.length;
+    const arc      = (Math.PI * 2) / slices;
+    const prizeIdx = Math.floor(Math.random() * slices);
+    const target   = (Math.PI * 2) - (prizeIdx * arc + arc/2) + Math.PI/2;
+    const totalAngle = (5 + Math.random() * 3) * Math.PI * 2 + target;
+    let start = null;
+    const duration = 4000;
+    const startAngle = spinPopupAngle;
+    function easeOut(t) { return 1 - Math.pow(1 - t, 4); }
+    function animate(ts) {
+      if (!start) start = ts;
+      const progress = Math.min((ts - start) / duration, 1);
+      spinPopupAngle = startAngle + totalAngle * easeOut(progress);
+      drawWheelOn("spinCanvasPopup", spinPopupAngle);
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        spinPopupRunning = false;
+        const prize = SPIN_PRIZES[prizeIdx];
+        if (prize > 0) { addPoints(prize); toast(`🎰 You won ${prize} pts!`, "ok"); haptic("heavy"); }
+        else { toast("😢 No prize this time!", "warn"); haptic("light"); }
+        updateSpinPopupBtn();
+      }
+    }
+    requestAnimationFrame(animate);
+  }
+});
+
 window.closeFeatPopup = function() {
   document.getElementById("featOverlay")?.classList.remove("open");
 };
@@ -2205,9 +2181,7 @@ document.getElementById("dailyBonusPopup").addEventListener("click", e => {
   if (e.target === document.getElementById("dailyBonusPopup")) closeDailyPopup();
 });
 
-/* ─────────────────────────────────────────────────────
-   NOTICE POPUP
-───────────────────────────────────────────────────── */
+/* ─── NOTICE POPUP ─── */
 window.closeNotice = function() {
   document.getElementById("noticeOverlay")?.classList.remove("open");
 };
@@ -2218,15 +2192,13 @@ function showNotice() {
   }
 }
 
-/* ─────────────────────────────────────────────────────
-   NORMAL REFER & VALID REFER POPUPS
-───────────────────────────────────────────────────── */
+/* ─── NORMAL/VALID REFER POPUPS ─── */
 window.showNormalReferPopup = function() {
   const total = S.refs || 0;
   FEAT_DATA["normalRefer"] = {
     ico: "🔗", title: "Normal Refers",
     subtitle: `You have referred ${total} friend${total !== 1 ? 's' : ''} so far`,
-    grad: "linear-gradient(135deg,#00d4ff 0%,#7c6aff 100%)",
+    grad: "linear-gradient(135deg,#00cec9 0%,#6c5ce7 100%)",
     body: `
       <div class="feat-info-row" style="padding-top:0">
         <span class="feat-info-ico">🔗</span>
@@ -2240,10 +2212,6 @@ window.showNormalReferPopup = function() {
         <span class="feat-info-ico">⚡</span>
         <div class="feat-info-text"><strong>Next Step</strong>Ask them to watch <span class="feat-info-val">20 Ads</span> to make your refer valid and earn <span class="feat-info-val">400 pts</span>.</div>
       </div>
-      <div class="feat-info-row">
-        <span class="feat-info-ico">📤</span>
-        <div class="feat-info-text"><strong>Share Your Link</strong>Keep inviting more friends to grow your earnings!</div>
-      </div>
       <button class="feat-cta" onclick="closeFeatPopup();navTo('referSection')">👥 Go to Refer Section →</button>`
   };
   showFeatPopup("normalRefer");
@@ -2256,7 +2224,7 @@ window.showValidReferPopup = function() {
   FEAT_DATA["validRefer"] = {
     ico: "✅", title: "Valid Refers",
     subtitle: `${valid} of your ${total} refers are valid`,
-    grad: "linear-gradient(135deg,#00e5a0 0%,#00d4ff 100%)",
+    grad: "linear-gradient(135deg,#00b894 0%,#00cec9 100%)",
     body: `
       <div class="feat-info-row" style="padding-top:0">
         <span class="feat-info-ico">✅</span>
@@ -2264,24 +2232,18 @@ window.showValidReferPopup = function() {
       </div>
       <div class="feat-info-row">
         <span class="feat-info-ico">💰</span>
-        <div class="feat-info-text"><strong>Points Earned from Refers</strong><span class="feat-info-val">+${earned} pts</span> earned so far (${valid} × 400 pts).</div>
+        <div class="feat-info-text"><strong>Points Earned from Refers</strong><span class="feat-info-val">+${earned} pts</span> earned so far.</div>
       </div>
       <div class="feat-info-row">
         <span class="feat-info-ico">ℹ️</span>
         <div class="feat-info-text"><strong>What makes a refer valid?</strong>Your referred friend must watch <span class="feat-info-val">20 Ads</span> after joining.</div>
-      </div>
-      <div class="feat-info-row">
-        <span class="feat-info-ico">📊</span>
-        <div class="feat-info-text"><strong>Keep Going!</strong>${total - valid > 0 ? `<span class="feat-info-val">${total - valid}</span> refer${total - valid !== 1 ? 's' : ''} still pending — tell them to watch ads!` : 'All your refers are valid. Invite more friends!'}</div>
       </div>
       <button class="feat-cta" onclick="closeFeatPopup();navTo('referSection')">👥 View Refer Details →</button>`
   };
   showFeatPopup("validRefer");
 };
 
-/* ─────────────────────────────────────────────────────
-   UPDATE HOME REFER COUNTERS
-───────────────────────────────────────────────────── */
+/* ─── UPDATE HOME REFER COUNTERS ─── */
 function updateHomeReferCounters() {
   const nc = document.getElementById("normalReferCount");
   const vc = document.getElementById("validReferCount");
@@ -2289,9 +2251,7 @@ function updateHomeReferCounters() {
   if (vc) vc.textContent = S.validRefs || 0;
 }
 
-/* ─────────────────────────────────────────────────────
-   REFERRAL BUTTONS
-───────────────────────────────────────────────────── */
+/* ─── REFERRAL BUTTONS ─── */
 document.getElementById("copyRef").addEventListener("click", () => {
   navigator.clipboard.writeText(`${BOT_LINK}?startapp=${USER_ID}`)
     .then(() => toast("📋 Link copied!", "ok"))
@@ -2305,9 +2265,21 @@ document.getElementById("shareRef").addEventListener("click", () => {
   else navigator.clipboard.writeText(link).then(() => toast("Link copied!", "ok"));
 });
 
-/* ─────────────────────────────────────────────────────
-   TOAST
-───────────────────────────────────────────────────── */
+/* Home banner refer buttons */
+document.getElementById("homeRefCopy").addEventListener("click", () => {
+  navigator.clipboard.writeText(`${BOT_LINK}?startapp=${USER_ID}`)
+    .then(() => toast("📋 Link copied!", "ok"))
+    .catch(() => toast("Copy failed", "err"));
+});
+document.getElementById("homeRefShare").addEventListener("click", () => {
+  const link = `${BOT_LINK}?startapp=${USER_ID}`;
+  const text = `💎 Join TonXHub & earn real TON crypto!\n🔗 ${link}`;
+  if (tg?.shareURL) tg.shareURL(link, text);
+  else if (navigator.share) navigator.share({ title:"TonXHub", text });
+  else navigator.clipboard.writeText(link).then(() => toast("Link copied!", "ok"));
+});
+
+/* ─── TOAST ─── */
 function toast(msg, type="inf") {
   const tc = document.getElementById("toasts");
   const el = document.createElement("div");
@@ -2326,17 +2298,13 @@ function haptic(type="light") {
   tg?.HapticFeedback?.impactOccurred?.(type);
 }
 
-/* ─────────────────────────────────────────────────────
-   SKELETON
-───────────────────────────────────────────────────── */
+/* ─── SKELETON ─── */
 function showSkel(show) {
   document.getElementById("skelWrap").classList.toggle("hidden", !show);
   document.getElementById("mainWrap").classList.toggle("hidden", show);
 }
 
-/* ─────────────────────────────────────────────────────
-   BOOT
-───────────────────────────────────────────────────── */
+/* ─── BOOT ─── */
 function boot() {
   showSkel(true);
   try {
