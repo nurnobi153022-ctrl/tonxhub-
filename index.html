@@ -1,1163 +1,2347 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Ton X HUB - Earning Platform</title>
-    
-    <!-- Telegram Web App SDK -->
-    <script src="https://telegram.org/js/telegram-web-app.js?56"></script>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#080812"/>
+<title>TonXHub</title>
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Mono:wght@500&family=Outfit:wght@400;600;700;900&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<!-- Telegram WebApp SDK -->
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-    <!-- Monetag SDK -->
-    <script src='//libtl.com/sdk.js' data-zone='10353766' data-sdk='show_10353766'></script>
-    <!-- GigaPub SDK -->
-    <script src="https://ad.gigapub.tech/script?id=4942"></script>
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
 
-    <!-- === ANTI-CHEAT SYSTEM === -->
-    <script>
-        document.addEventListener('contextmenu', event => event.preventDefault());
-        document.onkeydown = function (e) {
-            if (e.keyCode == 123) return false; 
-            if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false; 
-            if (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) return false; 
-            if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false; 
-            if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false; 
-        }
-    </script>
+<!-- Monetag SDK -->
+<script src='//libtl.com/sdk.js' data-zone='10353766' data-sdk='show_10353766'></script>
+<!-- GigaPub SDK -->
+<script src="https://ad.gigapub.tech/script?id=4942"></script>
 
-    <style>
-        /* === GREEN & BLACK THEME VARIABLES === */
-        :root {
-            --bg-color: #050A05;        
-            --card-bg: rgba(10, 22, 10, 0.90); 
-            --header-bg: rgba(5, 10, 5, 0.97); 
-            --primary-color: #00C853;   
-            --primary-hover: #00A843;
-            --primary-glow: rgba(0, 200, 83, 0.4);
-            --secondary-color: #00E676;
-            --text-title: #FFFFFF;      
-            --text-body: #8FBCA0;       
-            --border-subtle: rgba(0, 200, 83, 0.15); 
-            --input-bg: rgba(5, 15, 5, 0.85); 
-            --success-color: #00E676;   
-            --danger-color: #FF5252;    
-            --warning-color: #FFD600;   
-            --disabled-bg: #0D1A0D;
-            --disabled-text: #3A5A3A;
-            --shadow-card: 0 8px 32px rgba(0, 200, 83, 0.07);
-            --radius-card: 16px;
-            --radius-btn: 12px;
-            --grad: linear-gradient(135deg, #00C853 0%, #00BFA5 100%);
-            --grad2: linear-gradient(135deg, #00E676 0%, #00C853 100%);
-        }
+<style>
+/* ═══════════════════════════════════════════════════════
+   CSS VARIABLES
+═══════════════════════════════════════════════════════ */
+:root {
+  --bg:      #080812;
+  --bg2:     #0e0e20;
+  --surface: #13132b;
+  --surface2:#1a1a38;
+  --border:  rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.13);
+  --text:    #eeeeff;
+  --text2:   #6868a0;
+  --text3:   #3a3a68;
 
-        body { 
-            background-color: var(--bg-color); color: var(--text-body); font-family: 'Inter', sans-serif; 
-            margin: 0; padding: 70px 0 90px; min-height: 100vh; box-sizing: border-box; 
-            -webkit-font-smoothing: antialiased; overflow-x: hidden; position: relative;
-        }
+  --a1: #6c5ce7;
+  --a2: #00cec9;
+  --a3: #fd79a8;
+  --a4: #00b894;
+  --gold: #fdcb6e;
 
-        /* === STARRY BACKGROUND === */
-        .stars-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
-            background-image: 
-                radial-gradient(1px 1px at 20px 30px, #00C853, rgba(0,0,0,0)),
-                radial-gradient(1px 1px at 40px 70px, #ffffff44, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 50px 160px, #00C85355, rgba(0,0,0,0)),
-                radial-gradient(1px 1px at 90px 40px, #ffffff33, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 160px 120px, #00E67633, rgba(0,0,0,0)),
-                radial-gradient(1px 1px at 250px 250px, #00C853, rgba(0,0,0,0));
-            background-repeat: repeat; background-size: 200px 200px; 
-            animation: twinkle 4s infinite alternate; opacity: 0.5;
-        }
-        @keyframes twinkle { 0% { opacity: 0.2; transform: scale(0.98); } 100% { opacity: 0.6; transform: scale(1); } }
+  --grad:      linear-gradient(135deg,#6c5ce7 0%,#00cec9 100%);
+  --grad2:     linear-gradient(135deg,#fd79a8 0%,#6c5ce7 100%);
+  --grad3:     linear-gradient(135deg,#00b894 0%,#00cec9 100%);
+  --grad-gold: linear-gradient(135deg,#fdcb6e 0%,#e17055 100%);
 
-        .glow-orb-1, .glow-orb-2 { position: fixed; border-radius: 50%; filter: blur(120px); z-index: -1; animation: floatOrb 10s infinite alternate ease-in-out; }
-        .glow-orb-1 { width: 300px; height: 300px; background: rgba(0, 200, 83, 0.18); top: -50px; left: -50px; opacity: 0.6; }
-        .glow-orb-2 { width: 350px; height: 350px; background: rgba(0, 230, 118, 0.12); bottom: -100px; right: -50px; opacity: 0.5; animation-delay: -5s; }
-        @keyframes floatOrb { 0% { transform: translateY(0) scale(1); } 100% { transform: translateY(40px) scale(1.15); } }
+  --r:   14px;
+  --r2:  10px;
+  --r3:  22px;
+  --nav-h: 66px;
+  --hdr-h: 56px;
+  --t: .2s cubic-bezier(.4,0,.2,1);
+  --shadow: 0 4px 20px rgba(0,0,0,.5);
+}
 
-        .container { max-width: 800px; margin: 0 auto; padding: 0 16px; position: relative; z-index: 1; }
+.light {
+  --bg:      #f0f1ff;
+  --bg2:     #e8eaff;
+  --surface: #ffffff;
+  --surface2:#f4f5ff;
+  --border:  rgba(108,92,231,0.10);
+  --border2: rgba(108,92,231,0.20);
+  --text:    #14142a;
+  --text2:   #5858a0;
+  --text3:   #a0a0c8;
+  --shadow:  0 4px 20px rgba(108,92,231,.10);
+}
 
-        /* HEADER */
-        .main-header { 
-            background-color: var(--header-bg); padding: 0 16px; 
-            border-bottom: 1px solid var(--border-subtle); 
-            position: fixed; top: 0; left: 0; right: 0; z-index: 1000; 
-            display: flex; justify-content: space-between; align-items: center; 
-            height: 64px; backdrop-filter: blur(12px); 
-        }
-        .site-branding { display: flex; align-items: center; gap: 10px; }
-        .brand-logo { 
-            width: 34px; height: 34px; border-radius: 10px; 
-            background: var(--grad); display: flex; align-items: center; justify-content: center;
-            font-size: 16px; box-shadow: 0 4px 14px rgba(0,200,83,0.45);
-        }
-        .site-title { 
-            font-size: 1.2rem; color: var(--text-title); font-weight: 800; margin: 0; 
-            font-family: 'Outfit', sans-serif;
-            background: var(--grad2);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: 0.5px; 
-        }
-        .header-right { display: flex; align-items: center; gap: 10px; }
-        .header-icon-btn { 
-            background: var(--card-bg); border: 1px solid var(--border-subtle); 
-            color: var(--text-title); width: 38px; height: 38px; border-radius: 10px; 
-            display: flex; align-items: center; justify-content: center; cursor: pointer; 
-            transition: all 0.25s cubic-bezier(.4,0,.2,1); font-size: 1.1rem;
-        }
-        .header-icon-btn:hover { 
-            background: rgba(0,200,83,0.12); color: var(--primary-color); 
-            box-shadow: 0 0 15px rgba(0,200,83,0.3); border-color: var(--primary-color);
-            transform: scale(1.05);
-        }
-        .header-icon-btn:active { transform: scale(0.93); }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-family:'Space Grotesk',sans-serif;font-size:15px;
+  -webkit-tap-highlight-color:transparent;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);min-height:100vh;
+  overflow-x:hidden;transition:background var(--t),color var(--t)}
+input,button,textarea{font-family:inherit}
+button{cursor:pointer;border:none;background:none;color:inherit}
+a{color:inherit;text-decoration:none}
+::-webkit-scrollbar{width:2px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:99px}
 
-        /* === HOME PROFILE SECTION === */
-        .profile-card { 
-            background: linear-gradient(145deg, rgba(10, 22, 10, 0.95), rgba(5, 10, 5, 0.98)); 
-            border-radius: 20px; padding: 30px 20px; text-align: center; 
-            border: 1px solid var(--border-subtle); 
-            box-shadow: 0 10px 30px rgba(0, 200, 83, 0.1); 
-            margin-bottom: 20px; position: relative; overflow: hidden; 
-        }
-        .profile-card::before {
-            content: ""; position: absolute; top: -60px; right: -60px;
-            width: 180px; height: 180px; border-radius: 50%;
-            background: rgba(0,200,83,0.06); pointer-events: none;
-        }
-        .profile-avatar { 
-            width: 70px; height: 70px; 
-            background: rgba(0, 200, 83, 0.08); 
-            border: 2px solid var(--primary-color); 
-            border-radius: 50%; display: flex; align-items: center; justify-content: center; 
-            font-size: 2.5rem; color: var(--primary-color); margin: 0 auto 15px; 
-            box-shadow: 0 0 20px rgba(0, 200, 83, 0.35); 
-        }
-        .profile-id { 
-            background: var(--input-bg); padding: 6px 15px; border-radius: 20px; 
-            display: inline-flex; align-items: center; gap: 8px; font-size: 0.8rem; 
-            font-family: 'Roboto Mono', monospace; border: 1px solid var(--border-subtle); 
-            margin-bottom: 20px; cursor: pointer; color: var(--text-body); 
-            transition: all 0.2s;
-        }
-        .profile-id:active { transform: scale(0.97); border-color: var(--primary-color); }
-        .profile-balances { display: flex; flex-direction: column; gap: 5px; }
-        .main-ton-balance { 
-            font-size: 2.5rem; font-weight: 800; color: var(--text-title); margin: 0; line-height: 1; 
-            text-shadow: 0 0 20px rgba(0, 200, 83, 0.35); 
-        }
-        .sub-pts-balance { 
-            font-size: 1rem; color: var(--success-color); font-weight: 600; margin: 0; 
-            text-shadow: 0 0 8px rgba(0, 230, 118, 0.3); 
-        }
+/* LAYOUT SHELL */
+.shell{
+  display:flex;flex-direction:column;
+  max-width:480px;margin:0 auto;
+  min-height:100vh;position:relative;
+  background:var(--bg);
+}
 
-        .stats-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 25px; }
-        .stat-item { 
-            background: var(--card-bg); border: 1px solid var(--border-subtle); border-radius: 12px; 
-            padding: 15px 10px; text-align: center; display: flex; flex-direction: column; justify-content: center; 
-            transition: all 0.2s;
-        }
-        .stat-item:hover { border-color: var(--primary-color); box-shadow: 0 0 12px rgba(0,200,83,0.15); }
-        .stat-item span { font-size: 0.7rem; color: var(--text-body); text-transform: uppercase; font-weight: 600; margin-bottom: 5px; letter-spacing: 0.5px; }
-        .stat-item strong { font-size: 1.1rem; color: var(--text-title); font-weight: 700; }
+/* Subtle mesh bg */
+.shell::before{
+  content:"";position:fixed;inset:0;max-width:480px;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 60% 40% at 20% 10%, rgba(108,92,231,.12) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 35% at 80% 80%, rgba(0,206,201,.08) 0%, transparent 55%);
+}
 
-        .action-buttons-vertical { display: flex; flex-direction: column; gap: 12px; }
+/* HEADER */
+.hdr{
+  position:sticky;top:0;z-index:300;
+  height:var(--hdr-h);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 16px;
+  background:rgba(8,8,18,.82);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+}
+.light .hdr{background:rgba(240,241,255,.88)}
+.hdr-brand{
+  display:flex;align-items:center;gap:8px;
+  font-family:'Syne',sans-serif;
+  font-size:1.15rem;font-weight:800;
+  background:var(--grad);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.brand-ico{
+  width:30px;height:30px;border-radius:9px;
+  background:var(--grad);
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;flex-shrink:0;
+  box-shadow:0 3px 10px rgba(108,92,231,.4);
+}
+.hdr-right{display:flex;gap:6px;align-items:center}
+.ico-btn{
+  width:34px;height:34px;border-radius:9px;
+  background:var(--surface2);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;color:var(--text2);
+  transition:background var(--t),transform var(--t);
+}
+.ico-btn:active{transform:scale(.88);background:var(--border2)}
 
-        /* CARDS & BUTTONS */
-        .card, .special-ad-card { 
-            background-color: var(--card-bg); backdrop-filter: blur(8px); 
-            border-radius: var(--radius-card); padding: 20px; 
-            border: 1px solid var(--border-subtle); box-shadow: var(--shadow-card); 
-            margin-bottom: 20px; position: relative; 
-        }
+/* SKELETON */
+.skel-wrap{padding:14px}
+.skel{
+  background:linear-gradient(90deg,var(--surface) 25%,var(--surface2) 50%,var(--surface) 75%);
+  background-size:200% 100%;animation:shimmer 1.5s infinite;
+  border-radius:var(--r);
+}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+.skel-hero{height:185px;margin-bottom:10px}
+.skel-row{height:64px;margin-bottom:9px}
+.skel-sm{height:42px;margin-bottom:7px}
+.hidden{display:none!important}
 
-        /* === ANIMATED BUTTONS === */
-        .form-button, .task-button { 
-            width: 100%; padding: 14px; border: none; border-radius: var(--radius-btn); 
-            font-weight: 700; font-size: 0.95rem; cursor: pointer; 
-            background: var(--grad);
-            color: #fff; 
-            transition: all 0.25s cubic-bezier(.4,0,.2,1); 
-            display: flex; align-items: center; justify-content: center; gap: 8px; 
-            text-decoration: none; 
-            box-shadow: 0 4px 20px rgba(0, 200, 83, 0.35);
-            position: relative; overflow: hidden;
-            font-family: 'Outfit', sans-serif;
-            letter-spacing: 0.03em;
-        }
-        .form-button::before {
-            content: "";
-            position: absolute; inset: 0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0));
-            opacity: 0; transition: opacity 0.25s;
-        }
-        .form-button:hover:not(:disabled)::before { opacity: 1; }
-        .form-button.outline { 
-            background: transparent; 
-            border: 1.5px solid var(--primary-color); 
-            color: var(--primary-color); box-shadow: none; font-weight: 600; 
-        }
-        .form-button.outline:hover:not(:disabled) { 
-            background: rgba(0, 200, 83, 0.1); 
-            box-shadow: 0 0 18px rgba(0,200,83,0.25);
-        }
-        .task-button { width: auto; padding: 8px 16px; font-size: 0.85rem; border-radius: 8px; }
-        .form-button:hover:not(:disabled) { 
-            transform: translateY(-2px) scale(1.01); 
-            box-shadow: 0 8px 28px rgba(0, 200, 83, 0.55); 
-        }
-        .form-button:active:not(:disabled) { transform: scale(0.97) translateY(0); }
-        .form-button:disabled, .task-button:disabled { 
-            background: var(--disabled-bg); color: var(--disabled-text); 
-            cursor: not-allowed; border: 1px solid var(--border-subtle); 
-            box-shadow: none; transform: none;
-        }
+/* CONTENT */
+.content{flex:1;overflow-y:auto;padding-bottom:calc(var(--nav-h)+14px)}
+.section{display:none;padding:12px;animation:fadeUp .24s ease}
+.section.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
-        /* Pulse animation for main action buttons */
-        @keyframes pulse-green {
-            0% { box-shadow: 0 4px 20px rgba(0,200,83,0.35); }
-            50% { box-shadow: 0 4px 30px rgba(0,200,83,0.65), 0 0 0 6px rgba(0,200,83,0.08); }
-            100% { box-shadow: 0 4px 20px rgba(0,200,83,0.35); }
-        }
-        #action-invite { animation: pulse-green 2.5s infinite; }
+/* ═══ BALANCE HERO — New Style ═══ */
+.hero{
+  border-radius:var(--r3);
+  padding:0;
+  margin-bottom:10px;
+  position:relative;overflow:hidden;
+  background:var(--surface);
+  border:1px solid var(--border);
+  box-shadow:0 8px 32px rgba(0,0,0,.4);
+}
+.hero-top{
+  padding:20px 18px 16px;
+  background:linear-gradient(135deg,rgba(108,92,231,.22) 0%,rgba(0,206,201,.12) 100%);
+  border-bottom:1px solid var(--border);
+  position:relative;
+}
+/* Decorative corner accent instead of shape */
+.hero-top::before{
+  content:"";position:absolute;top:0;right:0;
+  width:100px;height:100px;
+  background:conic-gradient(from 180deg at 100% 0%, #6c5ce7 0deg, transparent 90deg);
+  opacity:.18;pointer-events:none;
+}
+.hero-top::after{
+  content:"";position:absolute;bottom:0;left:0;
+  width:80px;height:80px;
+  background:conic-gradient(from 0deg at 0% 100%, #00cec9 0deg, transparent 90deg);
+  opacity:.12;pointer-events:none;
+}
+.hero-lbl{
+  font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--text2);margin-bottom:4px;font-weight:600;
+}
+.hero-pts{
+  font-family:'Syne',sans-serif;font-size:3rem;font-weight:800;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;line-height:1;margin-bottom:3px;
+}
+.hero-sub{font-size:.73rem;color:var(--text2);margin-bottom:14px}
+.prog-track{background:var(--border2);border-radius:99px;height:6px;overflow:hidden;margin-bottom:5px}
+#progressBar{height:100%;background:var(--grad);border-radius:99px;width:0%;transition:width .7s ease}
+#progressLabel{font-size:.65rem;color:var(--text2)}
 
-        /* Ripple effect */
-        @keyframes ripple {
-            to { transform: scale(4); opacity: 0; }
-        }
-        .ripple-effect {
-            position: absolute; border-radius: 50%;
-            background: rgba(255,255,255,0.25);
-            width: 10px; height: 10px;
-            transform: scale(0); animation: ripple 0.6s linear;
-            pointer-events: none;
-        }
+/* Hero bottom stats strip */
+.hero-stats{
+  display:grid;grid-template-columns:1fr 1fr 1fr;
+  padding:0;
+}
+.h-stat{
+  padding:12px 8px;text-align:center;
+  border-right:1px solid var(--border);
+  cursor:pointer;
+  transition:background var(--t);
+}
+.h-stat:last-child{border-right:none}
+.h-stat:active{background:var(--surface2)}
+.h-stat-v{
+  font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.h-stat-l{font-size:.6rem;color:var(--text2);margin-top:1px;font-weight:500}
 
-        .special-ad-card { display: flex; flex-direction: column; gap: 10px; text-align: left; }
-        .special-ad-header { display: flex; justify-content: space-between; align-items: center; }
-        .special-ad-header h4 { margin: 0; color: var(--text-title); font-size: 1rem; }
-        .special-ad-limit { 
-            font-size: 0.8rem; color: var(--primary-color); background: rgba(0,200,83,0.08); 
-            padding: 4px 10px; border-radius: 99px; border: 1px solid var(--border-subtle);
-            font-weight: 700; font-family: 'Roboto Mono', monospace;
-        }
+/* ═══ QUICK ACTIONS ROW ═══ */
+.qa-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+.qa-btn{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:14px;padding:13px 8px;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  cursor:pointer;
+  transition:border-color var(--t),transform var(--t),box-shadow var(--t);
+  box-shadow:0 2px 0 rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.18);
+  position:relative;overflow:hidden;
+}
+.qa-btn::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(160deg,rgba(255,255,255,.05) 0%,transparent 50%);
+  pointer-events:none;
+}
+.qa-btn:active{transform:scale(.95);box-shadow:0 1px 0 rgba(0,0,0,.4)}
+.qa-ico{font-size:1.5rem}
+.qa-lbl{font-size:.65rem;font-weight:600;color:var(--text2);text-align:center;letter-spacing:.02em}
 
-        /* FORMS */
-        .form-group { margin-bottom: 20px; text-align: left; }
-        .form-group label { display: block; margin-bottom: 8px; font-weight: 500; color: var(--text-body); font-size: 0.9rem; }
-        input[type="text"], input[type="number"], select { 
-            width: 100%; padding: 14px; box-sizing: border-box; border-radius: var(--radius-btn); 
-            border: 1.5px solid var(--border-subtle); background-color: var(--input-bg); 
-            color: var(--text-title); font-size: 0.95rem; outline: none; 
-            font-family: 'Inter', sans-serif; transition: all 0.2s; 
-        }
-        input:focus, select:focus { border-color: var(--primary-color); box-shadow: 0 0 12px rgba(0, 200, 83, 0.18); }
-        input:read-only { background-color: var(--disabled-bg); color: var(--text-body); }
-        .input-group { display: flex; gap: 10px; margin-bottom: 16px; }
-        .input-group input { flex-grow: 1; text-align: center; font-family: 'Roboto Mono', monospace; }
-        .input-group button { width: auto; flex-shrink: 0; padding: 0 20px; }
+/* ═══ REFER BANNER (Home) ═══ */
+.refer-banner{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:16px;padding:14px 16px;margin-bottom:10px;
+  position:relative;overflow:hidden;
+  box-shadow:0 2px 0 rgba(0,0,0,.3);
+}
+.refer-banner::before{
+  content:"";position:absolute;right:-20px;top:-20px;
+  width:100px;height:100px;border-radius:50%;
+  background:radial-gradient(circle,rgba(108,92,231,.18) 0%,transparent 70%);
+}
+.rb-top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.rb-ico{
+  width:44px;height:44px;border-radius:12px;flex-shrink:0;
+  background:linear-gradient(135deg,rgba(108,92,231,.25),rgba(0,206,201,.15));
+  border:1px solid rgba(108,92,231,.3);
+  display:flex;align-items:center;justify-content:center;font-size:1.4rem;
+}
+.rb-title{font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;margin-bottom:1px}
+.rb-sub{font-size:.68rem;color:var(--text2)}
+.rb-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px}
+.rbs{
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:10px;padding:9px 6px;text-align:center;
+}
+.rbs-v{
+  font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.rbs-l{font-size:.6rem;color:var(--text2);margin-top:1px}
+.rb-btns{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.rb-btn-copy{
+  padding:10px;border-radius:10px;
+  background:var(--surface2);border:1px solid var(--border);
+  color:var(--text);font-size:.78rem;font-weight:600;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  transition:border-color var(--t),transform var(--t);
+}
+.rb-btn-copy:active{transform:scale(.97);border-color:var(--a1)}
+.rb-btn-share{
+  padding:10px;border-radius:10px;
+  background:var(--grad);color:#fff;
+  font-size:.78rem;font-weight:600;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  box-shadow:0 3px 12px rgba(108,92,231,.35);
+  transition:opacity var(--t),transform var(--t);
+}
+.rb-btn-share:active{transform:scale(.97);opacity:.88}
 
-        /* SECTION TITLE */
-        .section-title { 
-            font-size: 1.2rem; margin-bottom: 20px; color: var(--text-title); font-weight: 700; 
-            font-family: 'Outfit', sans-serif;
-            border-left: 4px solid var(--primary-color); padding-left: 12px; 
-            text-shadow: 0 0 12px rgba(0, 200, 83, 0.3); 
-        }
+/* Feature grid tiles */
+.feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.feat-tile{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:14px;padding:14px 10px;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  cursor:pointer;position:relative;overflow:hidden;
+  transition:transform .17s cubic-bezier(.34,1.56,.64,1),border-color var(--t);
+  box-shadow:0 3px 0 rgba(0,0,0,.32),0 5px 18px rgba(0,0,0,.2);
+}
+.feat-tile::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(160deg,rgba(255,255,255,.05) 0%,transparent 55%);
+  pointer-events:none;
+}
+.feat-tile:hover{transform:translateY(-2px);border-color:var(--border2)}
+.feat-tile:active{transform:scale(.95)}
+.ft-ico{font-size:1.65rem}
+.ft-lbl{font-size:.68rem;font-weight:600;color:var(--text2);text-align:center;letter-spacing:.02em}
+.ft-val{font-family:'Syne',sans-serif;font-size:.72rem;font-weight:700;color:var(--a4)}
 
-        /* NAVIGATION */
-        .bottom-nav { 
-            position: fixed; bottom: 0; left: 0; right: 0; 
-            background-color: rgba(5, 10, 5, 0.97); 
-            backdrop-filter: blur(12px); 
-            border-top: 1px solid var(--border-subtle); 
-            display: flex; justify-content: space-around; 
-            padding: 10px 0 20px; z-index: 1000; 
-        }
-        .bottom-nav-item { 
-            display: flex; flex-direction: column; align-items: center; gap: 6px; 
-            color: var(--disabled-text); text-decoration: none; font-size: 0.7rem; font-weight: 600; 
-            width: 25%; transition: all 0.25s cubic-bezier(.4,0,.2,1);
-            font-family: 'Outfit', sans-serif;
-            position: relative;
-        }
-        .bottom-nav-item::after {
-            content: ""; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
-            width: 0; height: 3px; background: var(--grad); border-radius: 99px 99px 0 0;
-            transition: width 0.25s cubic-bezier(.4,0,.2,1);
-        }
-        .bottom-nav-item.active::after { width: 22px; }
-        .bottom-nav-item:hover { color: var(--text-title); }
-        .bottom-nav-item.active { color: var(--primary-color); transform: translateY(-2px); }
-        .bottom-nav-item i { font-size: 1.25rem; }
+/* CARDS */
+.card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:16px;padding:14px;margin-bottom:9px;
+  box-shadow:0 3px 0 rgba(0,0,0,.28),0 5px 20px rgba(0,0,0,.18);
+  position:relative;overflow:hidden;
+}
+.card::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent);
+}
+.card-title{
+  font-family:'Syne',sans-serif;font-size:.88rem;font-weight:700;
+  margin-bottom:10px;display:flex;align-items:center;gap:7px;
+}
+.card-glow{padding-left:17px}
+.card-glow::before{
+  content:"";position:absolute;left:0;top:14px;bottom:14px;
+  width:3px;border-radius:0 99px 99px 0;background:var(--grad);
+}
 
-        .content-section { display: none; opacity: 0; animation: fadeEffect 0.3s forwards; }
-        .content-section.active { display: block; }
-        @keyframes fadeEffect { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        
-        .loader { border: 3px solid var(--input-bg); border-top: 3px solid var(--primary-color); border-radius: 50%; width: 30px; height: 30px; animation: spin 0.8s linear infinite; margin: 30px auto; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+/* SECTION HEADING */
+.s-head{
+  font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;
+  margin-bottom:12px;display:flex;align-items:center;gap:8px;
+}
+.s-head-sub{font-size:.7rem;color:var(--text2);font-weight:400;margin-left:auto}
+.empty{text-align:center;padding:32px 20px;color:var(--text2);font-size:.83rem}
 
-        /* MODALS */
-        .modal-overlay { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.87); z-index: 2000; display: none; 
-            justify-content: center; align-items: center; 
-            backdrop-filter: blur(6px); padding: 15px; box-sizing: border-box; 
-        }
-        .modal-overlay.show { display: flex; }
-        .modal-content { 
-            background: linear-gradient(145deg, rgba(10,22,10,0.98), rgba(5,10,5,0.99));
-            color: var(--text-title); padding: 20px; border-radius: 22px; 
-            width: 100%; max-width: 360px; text-align: center; 
-            border: 1px solid var(--border-subtle); 
-            box-shadow: 0 10px 40px rgba(0,200,83,0.18); 
-            display: flex; flex-direction: column; max-height: 85vh; 
-            position: relative; overflow: hidden;
-            animation: popIn 0.3s cubic-bezier(0.34,1.56,0.64,1);
-        }
-        @keyframes popIn { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        
-        /* VERIFICATION MODAL */
-        .activation-modal { 
-            background: linear-gradient(145deg, rgba(10,22,10,0.99), rgba(5,10,5,1));
-            backdrop-filter: blur(15px); padding: 28px 22px; border-radius: 22px; 
-            width: 100%; max-width: 340px; text-align: center; 
-            border: 1.5px solid var(--primary-color); 
-            box-shadow: 0 0 40px rgba(0, 200, 83, 0.22); 
-            animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; 
-        }
-        .verify-btn { 
-            display: flex; align-items: center; gap: 12px; 
-            background: rgba(0,200,83,0.06); 
-            border: 1.5px solid var(--border-subtle); color: var(--text-title); 
-            padding: 14px; border-radius: var(--radius-btn); text-decoration: none; 
-            font-weight: 600; font-size: 0.95rem; transition: all 0.25s; 
-        }
-        .verify-btn:hover { 
-            border-color: var(--primary-color); color: var(--primary-color); 
-            background: rgba(0, 200, 83, 0.08); 
-            transform: translateX(3px);
-        }
-        .verify-btn i { color: var(--primary-color); font-size: 1.3rem; }
-        
-        /* LOTTERY WHEEL CSS */
-        .wheel-container { position: relative; width: 250px; height: 250px; margin: 0 auto; }
-        #wheelCanvas { 
-            width: 100%; height: 100%; border-radius: 50%; 
-            box-shadow: 0 0 20px rgba(0,200,83,0.45), 0 0 0 6px rgba(0,200,83,0.12); 
-            transition: transform 4s cubic-bezier(0.175, 0.885, 0.32, 1.05); 
-        }
-        .pointer { 
-            position: absolute; top: 50%; right: -15px; transform: translateY(-50%); 
-            width: 0; height: 0; border-top: 12px solid transparent; 
-            border-bottom: 12px solid transparent; border-right: 25px solid #00C853; 
-            z-index: 10; filter: drop-shadow(-3px 3px 5px rgba(0,200,83,0.5)); 
-        }
-        #confettiCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+/* FEATURE POPUP OVERLAY */
+.feat-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:800;
+  align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(10px);}
+.feat-overlay.open{display:flex;animation:ovFade .22s ease}
+.feat-box{background:var(--surface);border:1px solid var(--border2);border-radius:22px;
+  width:100%;max-width:400px;max-height:88vh;overflow-y:auto;
+  animation:noticeIn .28s cubic-bezier(.34,1.56,.64,1);}
+.feat-top{padding:18px 16px 14px;border-radius:22px 22px 0 0;
+  background:var(--grad);text-align:center;position:relative;}
+.feat-close-btn{position:absolute;top:11px;right:13px;width:28px;height:28px;border-radius:50%;
+  background:rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;
+  font-size:13px;color:#fff;cursor:pointer;transition:background .15s;}
+.feat-close-btn:active{background:rgba(0,0,0,.45)}
+.feat-ico-big{font-size:2.5rem;margin-bottom:7px}
+.feat-title{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;color:#fff;margin-bottom:2px}
+.feat-subtitle{font-size:.73rem;color:rgba(255,255,255,.8)}
+.feat-body{padding:14px 16px 18px}
+.feat-info-row{display:flex;align-items:flex-start;gap:9px;padding:9px 0;border-bottom:1px solid var(--border);}
+.feat-info-row:last-child{border-bottom:none;padding-bottom:0}
+.feat-info-ico{font-size:1.2rem;width:24px;text-align:center;flex-shrink:0;margin-top:1px}
+.feat-info-text{font-size:.78rem;color:var(--text2);line-height:1.55}
+.feat-info-text strong{color:var(--text);display:block;font-size:.8rem;margin-bottom:1px}
+.feat-info-val{font-family:'Syne',sans-serif;font-weight:700;color:var(--a4)}
+.feat-cta{width:100%;padding:13px;border-radius:99px;background:var(--grad);color:#fff;
+  font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;margin-top:12px;
+  box-shadow:0 4px 18px rgba(108,92,231,.35);transition:transform .15s,opacity .15s;}
+.feat-cta:active{transform:scale(.97);opacity:.9}
 
-        /* AD WATCH BUTTONS special style */
-        .ad-watch-btn {
-            background: linear-gradient(135deg, #00C853, #00BFA5);
-            color: #fff; border: none; border-radius: 10px;
-            padding: 10px 20px; font-weight: 700; font-size: 0.88rem;
-            cursor: pointer; transition: all 0.25s cubic-bezier(.4,0,.2,1);
-            font-family: 'Outfit', sans-serif;
-            box-shadow: 0 4px 16px rgba(0,200,83,0.35);
-            position: relative; overflow: hidden;
-        }
-        .ad-watch-btn:hover:not(:disabled) {
-            transform: scale(1.05) translateY(-1px);
-            box-shadow: 0 6px 22px rgba(0,200,83,0.55);
-        }
-        .ad-watch-btn:active:not(:disabled) { transform: scale(0.96); }
-        .ad-watch-btn:disabled {
-            background: var(--disabled-bg); color: var(--disabled-text);
-            box-shadow: none; cursor: not-allowed;
-            border: 1px solid var(--border-subtle);
-        }
+/* PROMO CODE */
+.promo-input-row{display:flex;gap:7px;margin-top:8px}
+.promo-input{flex:1;padding:9px 11px;border-radius:var(--r2);border:1px solid var(--border);
+  background:var(--surface2);color:var(--text);font-size:.8rem;}
+.promo-input:focus{outline:none;border-color:var(--a1)}
+.promo-submit{padding:9px 14px;border-radius:var(--r2);background:var(--grad);color:#fff;
+  font-family:'Syne',sans-serif;font-weight:700;font-size:.8rem;white-space:nowrap;
+  transition:opacity var(--t);}
+.promo-submit:active{opacity:.85}
 
-        /* Shimmer on disabled reset text */
-        @keyframes shimmer-text {
-            0%,100% { opacity: 0.6; } 50% { opacity: 1; }
-        }
-        .ad-watch-btn:disabled { animation: shimmer-text 2s infinite; }
+/* DAILY BONUS */
+.daily-btn{width:100%;padding:13px;border-radius:var(--r2);background:var(--grad-gold);
+  color:#1a1a1a;font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;
+  box-shadow:0 3px 16px rgba(253,203,110,.25);transition:opacity var(--t),transform var(--t);}
+.daily-btn:active:not(:disabled){transform:scale(.98)}
+.daily-btn:disabled{opacity:.5;cursor:not-allowed;box-shadow:none}
 
-        /* HOME LINKS ROW */
-        .home-links-row {
-            display: flex; gap: 10px; margin-top: 25px;
-        }
-        .home-link-btn {
-            flex: 1; display: flex; align-items: center; justify-content: center; gap: 7px;
-            padding: 12px; border-radius: 12px;
-            border: 1.5px solid var(--border-subtle);
-            background: rgba(0,200,83,0.05);
-            color: var(--text-title); font-size: 0.88rem; font-weight: 600;
-            text-decoration: none; transition: all 0.25s cubic-bezier(.4,0,.2,1);
-            font-family: 'Outfit', sans-serif;
-        }
-        .home-link-btn:hover {
-            border-color: var(--primary-color);
-            background: rgba(0,200,83,0.1);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 18px rgba(0,200,83,0.2);
-        }
-        .home-link-btn:active { transform: scale(0.97) translateY(0); }
-        .home-link-btn i { color: var(--primary-color); font-size: 1.1rem; }
-    </style>
+/* DAILY STREAK */
+.streak-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:10px}
+.streak-day{background:var(--surface2);border:1px solid var(--border);border-radius:8px;
+  padding:6px 2px;text-align:center;}
+.streak-day.claimed{background:linear-gradient(135deg,rgba(108,92,231,.22),rgba(0,206,201,.12));border-color:var(--a1);}
+.streak-day.today{border-color:var(--gold);box-shadow:0 0 8px rgba(253,203,110,.3);}
+.sd-num{font-size:.58rem;color:var(--text2);margin-bottom:1px}
+.sd-pts{font-family:'Syne',sans-serif;font-size:.72rem;font-weight:700;color:var(--a4)}
+.sd-icon{font-size:.85rem}
+
+/* DAILY BONUS POPUP */
+.daily-popup-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.80);z-index:850;
+  align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(12px);}
+.daily-popup-overlay.open{display:flex;animation:ovFade .22s ease}
+.daily-popup-box{background:var(--surface);border:1px solid var(--border2);border-radius:22px;
+  width:100%;max-width:420px;overflow:hidden;animation:noticeIn .3s cubic-bezier(.34,1.56,.64,1);}
+.daily-popup-top{background:var(--grad-gold);padding:18px 16px 14px;text-align:center;position:relative;}
+.daily-popup-close{position:absolute;top:11px;right:13px;width:28px;height:28px;border-radius:50%;
+  background:rgba(0,0,0,.18);display:flex;align-items:center;justify-content:center;
+  font-size:13px;color:#1a1a1a;cursor:pointer;font-weight:700;}
+.daily-popup-title{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;color:#1a1a1a;margin-bottom:2px}
+.daily-popup-sub{font-size:.73rem;color:rgba(0,0,0,.6)}
+.daily-popup-body{padding:14px 16px 18px}
+.daily-streak-row{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:12px}
+.daily-popup-btn{width:100%;padding:13px;border-radius:99px;background:var(--grad-gold);color:#1a1a1a;
+  font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;
+  box-shadow:0 4px 18px rgba(253,203,110,.3);transition:transform .15s,opacity .15s;}
+.daily-popup-btn:active:not(:disabled){transform:scale(.97);opacity:.9}
+.daily-popup-btn:disabled{opacity:.5;cursor:not-allowed;box-shadow:none}
+
+/* REFERRAL SECTION */
+.ref-section-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:11px}
+.ref-stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);
+  padding:11px 7px;text-align:center;box-shadow:var(--shadow);}
+.ref-stat-card .rsv{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.ref-stat-card .rsl{font-size:.6rem;color:var(--text2);margin-top:1px}
+.ref-reward-note{background:rgba(0,184,148,.07);border:1px solid rgba(0,184,148,.18);
+  border-radius:var(--r2);padding:10px 12px;margin-bottom:11px;
+  font-size:.74rem;color:var(--text2);line-height:1.6;}
+.ref-reward-note strong{color:var(--a4)}
+.ref-row{display:flex;gap:6px}
+.ref-input{flex:1;padding:9px 11px;border-radius:var(--r2);border:1px solid var(--border);
+  background:var(--surface2);color:var(--text2);font-size:.76rem;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.ref-input:focus{outline:none;border-color:var(--a1)}
+.ref-acts{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:7px}
+
+/* TASK CARDS */
+.task-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
+  padding:12px;display:flex;align-items:center;gap:10px;margin-bottom:7px;
+  transition:border-color var(--t),transform var(--t);box-shadow:var(--shadow);}
+.task-card:active{transform:scale(.99)}
+.task-card.on-cooldown{opacity:.6}
+.t-icon{width:40px;height:40px;border-radius:10px;background:var(--surface2);
+  border:1px solid var(--border);display:flex;align-items:center;justify-content:center;
+  font-size:1.15rem;flex-shrink:0;}
+.t-body{flex:1;min-width:0}
+.t-name{font-weight:600;font-size:.86rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.t-desc{font-size:.7rem;color:var(--text2);margin-top:1px}
+.cooldown-track{height:3px;background:var(--border);border-radius:99px;margin-top:4px;overflow:hidden;}
+.cooldown-fill{height:100%;background:var(--grad);border-radius:99px;transition:width 1s linear}
+.t-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0}
+.t-pts{font-family:'Syne',sans-serif;font-size:.78rem;font-weight:700;color:var(--a4)}
+.t-btn{padding:6px 12px;border-radius:var(--r2);background:var(--grad);color:#fff;
+  font-family:'Syne',sans-serif;font-weight:700;font-size:.76rem;white-space:nowrap;
+  box-shadow:0 2px 10px rgba(108,92,231,.28);transition:opacity var(--t),transform var(--t);}
+.t-btn:active{opacity:.85;transform:scale(.95)}
+.t-btn.dis{background:var(--surface2);color:var(--text3);box-shadow:none;cursor:not-allowed;}
+.task-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.task-hdr-title{font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700}
+.task-badge{font-size:.65rem;font-weight:600;padding:3px 8px;border-radius:99px;
+  background:var(--surface2);color:var(--text2);border:1px solid var(--border);}
+.pill-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.pill{padding:3px 9px;border-radius:99px;font-size:.68rem;font-weight:600;display:flex;align-items:center;gap:3px;}
+.pill-green{background:rgba(0,184,148,.10);color:var(--a4);border:1px solid rgba(0,184,148,.22)}
+.pill-cyan{background:rgba(0,206,201,.10);color:var(--a2);border:1px solid rgba(0,206,201,.22)}
+
+/* ADS CARD */
+.ads-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
+  padding:14px;margin-bottom:9px;box-shadow:var(--shadow);}
+.ads-card-title{font-family:'Syne',sans-serif;font-size:.88rem;font-weight:700;
+  margin-bottom:3px;display:flex;align-items:center;gap:6px;}
+.ads-sub{font-size:.7rem;color:var(--text2);margin-bottom:11px}
+.ad-btn{width:100%;padding:13px;border-radius:var(--r2);display:flex;align-items:center;
+  justify-content:center;gap:8px;font-family:'Syne',sans-serif;font-weight:700;font-size:.87rem;
+  transition:opacity var(--t),transform var(--t);margin-bottom:7px;position:relative;}
+.ad-btn:active:not(:disabled){transform:scale(.98);opacity:.88}
+.ad-btn:disabled{opacity:.5;cursor:not-allowed}
+.ad-btn-monetag{background:linear-gradient(135deg,#fd79a8,#6c5ce7);color:#fff;
+  box-shadow:0 3px 16px rgba(253,121,168,.28);}
+.ad-btn-giga{background:linear-gradient(135deg,#00b894,#00cec9);color:#fff;
+  box-shadow:0 3px 16px rgba(0,184,148,.28);}
+.ad-timer{position:absolute;right:13px;font-size:.7rem;opacity:.85}
+.ad-note{font-size:.66rem;color:var(--text3);text-align:center;margin-top:1px}
+.ads-total-badge{display:flex;align-items:center;gap:7px;background:var(--surface2);
+  border:1px solid var(--border);border-radius:var(--r2);padding:9px 12px;margin-bottom:9px;}
+.atb-val{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.atb-lbl{font-size:.7rem;color:var(--text2)}
+
+/* LEADERBOARD */
+.leader-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
+  padding:10px 12px;display:flex;align-items:center;gap:9px;margin-bottom:7px;
+  transition:border-color var(--t),transform var(--t);}
+.leader-card:active{transform:scale(.99)}
+.leader-card.is-me{border-color:var(--a1);background:linear-gradient(135deg,rgba(108,92,231,.07),rgba(0,206,201,.04));}
+.leader-card.rank-1{border-color:#fdcb6e;background:linear-gradient(135deg,rgba(253,203,110,.07),rgba(253,121,168,.04));}
+.leader-card.rank-2{border-color:#c0c0c0;background:linear-gradient(135deg,rgba(192,192,192,.06),transparent);}
+.leader-card.rank-3{border-color:#cd7f32;background:linear-gradient(135deg,rgba(205,127,50,.06),transparent);}
+.ldr-rank{font-size:1.2rem;width:30px;text-align:center;flex-shrink:0}
+.ldr-av{width:36px;height:36px;border-radius:50%;background:var(--grad);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-weight:800;font-size:.95rem;color:#fff;
+  flex-shrink:0;position:relative;}
+.ldr-tier-badge{position:absolute;bottom:-3px;right:-3px;font-size:.55rem;
+  background:var(--surface);border-radius:99px;padding:1px 3px;border:1px solid var(--border);}
+.ldr-info{flex:1;min-width:0}
+.ldr-name{font-weight:600;font-size:.85rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ldr-pts{font-size:.7rem;color:var(--text2);margin-top:1px}
+.you-tag{display:inline-block;background:var(--grad);color:#fff;font-size:.58rem;
+  font-weight:700;padding:1px 5px;border-radius:99px;vertical-align:middle;margin-left:3px;}
+.ldr-right{display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0}
+.ldr-ton{font-family:'Syne',sans-serif;font-size:.75rem;font-weight:700;color:var(--gold);}
+.ldr-refs{font-size:.65rem;color:var(--text2);}
+.ldr-my-rank{background:var(--surface2);border:1px solid var(--a1);border-radius:var(--r2);
+  padding:9px 13px;display:flex;align-items:center;justify-content:space-between;margin-bottom:11px;}
+.ldr-my-rank-lbl{font-size:.72rem;color:var(--text2);}
+.ldr-my-rank-val{font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.ldr-update-note{font-size:.65rem;color:var(--text3);text-align:center;margin-bottom:7px}
+
+/* BOTTOM NAV */
+.nav{
+  position:fixed;bottom:0;left:0;right:0;height:var(--nav-h);
+  background:rgba(8,8,18,.94);border-top:1px solid var(--border);
+  display:flex;justify-content:space-around;align-items:stretch;
+  z-index:300;max-width:480px;margin:0 auto;
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+}
+.light .nav{background:rgba(240,241,255,.94)}
+.nav-item{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:3px;color:var(--text3);transition:color var(--t);position:relative;
+  padding-top:5px;cursor:pointer;
+}
+.nav-item::after{
+  content:"";position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+  width:0;height:2px;background:var(--grad);border-radius:99px 99px 0 0;
+  transition:width var(--t);
+}
+.nav-item.active{color:var(--a1)}
+.nav-item.active::after{width:22px}
+.nav-ico{font-size:1.2rem}
+.nav-lbl{font-size:.6rem;font-weight:600;letter-spacing:.03em}
+
+/* MODALS */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.68);z-index:600;
+  align-items:flex-end;justify-content:center;backdrop-filter:blur(4px);}
+.overlay.open{display:flex;animation:ovFade .18s ease}
+@keyframes ovFade{from{opacity:0}to{opacity:1}}
+.sheet{background:var(--surface);width:100%;max-width:480px;border-radius:20px 20px 0 0;
+  padding:6px 14px 32px;max-height:88vh;overflow-y:auto;
+  animation:sheetUp .24s cubic-bezier(.4,0,.2,1);}
+@keyframes sheetUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.sheet-handle{width:36px;height:3px;border-radius:99px;background:var(--border2);margin:7px auto 12px;}
+.sheet-title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;
+  text-align:center;margin-bottom:14px;background:var(--grad);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+
+/* FORM */
+.fgroup{margin-bottom:11px}
+.flabel{display:block;font-size:.72rem;font-weight:600;color:var(--text2);margin-bottom:5px}
+.finput{width:100%;padding:10px 12px;border-radius:var(--r2);border:1px solid var(--border);
+  background:var(--surface2);color:var(--text);font-size:.82rem;
+  transition:border-color var(--t);}
+.finput:focus{outline:none;border-color:var(--a1)}
+
+/* BUTTONS */
+.btn-grad{width:100%;padding:13px;border-radius:99px;background:var(--grad);color:#fff;
+  font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;
+  box-shadow:0 4px 18px rgba(108,92,231,.35);transition:transform .15s,opacity .15s;
+  margin-bottom:8px;}
+.btn-grad:active{transform:scale(.97);opacity:.9}
+.btn-ghost{width:100%;padding:12px;border-radius:99px;
+  background:var(--surface2);border:1px solid var(--border);
+  color:var(--text2);font-family:'Syne',sans-serif;font-weight:600;font-size:.88rem;
+  transition:border-color var(--t);}
+.btn-ghost:active{border-color:var(--border2)}
+.btn-outline-a{padding:10px;border-radius:10px;border:1px solid var(--border);
+  background:var(--surface2);color:var(--text);font-size:.78rem;font-weight:600;
+  display:flex;align-items:center;justify-content:center;gap:5px;
+  transition:border-color var(--t);}
+.btn-outline-a:active{border-color:var(--a1)}
+.btn-solid-a{padding:10px;border-radius:10px;background:var(--grad);color:#fff;
+  font-size:.78rem;font-weight:600;display:flex;align-items:center;justify-content:center;gap:5px;
+  box-shadow:0 3px 12px rgba(108,92,231,.3);transition:opacity var(--t);}
+.btn-solid-a:active{opacity:.85}
+
+/* WITHDRAW */
+.wbal{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r2);
+  padding:11px 13px;margin-bottom:12px;}
+.wbal-lbl{font-size:.7rem;color:var(--text2);margin-bottom:2px}
+.wbal-val{font-family:'Syne',sans-serif;font-size:1.45rem;font-weight:800;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.withdraw-info{background:rgba(0,206,201,.06);border:1px solid rgba(0,206,201,.18);
+  border-radius:var(--r2);padding:10px 12px;margin-bottom:12px;
+  font-size:.74rem;color:var(--text2);line-height:1.6;}
+.withdraw-info strong{color:var(--a2)}
+
+/* NOTICE POPUP */
+.notice-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:900;
+  align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px);}
+.notice-overlay.open{display:flex;animation:ovFade .28s ease}
+.notice-box{background:var(--surface);border:1px solid var(--border2);border-radius:20px;
+  padding:0 0 18px;max-width:400px;width:100%;max-height:90vh;overflow-y:auto;
+  animation:noticeIn .32s cubic-bezier(.34,1.56,.64,1);}
+@keyframes noticeIn{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
+.notice-top{background:var(--grad);padding:22px 18px 18px;border-radius:20px 20px 0 0;text-align:center;}
+.notice-logo{width:60px;height:60px;background:rgba(255,255,255,.2);border-radius:16px;
+  display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin:0 auto 10px;}
+.notice-title{font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:800;color:#fff;margin-bottom:3px;}
+.notice-tagline{font-size:.76rem;color:rgba(255,255,255,.8)}
+.notice-body{padding:16px 16px 3px;}
+.notice-desc{font-size:.8rem;color:var(--text2);line-height:1.7;margin-bottom:14px;}
+.notice-desc strong{color:var(--text)}
+.notice-join-btns{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;}
+.notice-join-btn{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:var(--r2);
+  border:1.5px solid var(--border2);background:var(--surface2);color:var(--text);
+  font-weight:600;font-size:.85rem;transition:border-color var(--t);}
+.notice-join-btn:active{background:var(--border2)}
+.notice-join-btn .btn-ico{font-size:1.3rem;flex-shrink:0}
+.notice-join-btn .btn-txt small{display:block;font-size:.65rem;color:var(--text2);font-weight:400;margin-top:1px}
+.notice-rules{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r2);
+  padding:12px;margin-bottom:12px;}
+.notice-rules-title{font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700;
+  margin-bottom:8px;display:flex;align-items:center;gap:5px;}
+.rule-row{display:flex;align-items:center;gap:8px;font-size:.75rem;color:var(--text2);
+  padding:4px 0;border-bottom:1px solid var(--border);}
+.rule-row:last-child{border-bottom:none;padding-bottom:0}
+.rule-ico{font-size:.95rem;width:18px;text-align:center;flex-shrink:0}
+.rule-val{font-family:'Syne',sans-serif;font-weight:700;color:var(--a4);margin-right:3px}
+.notice-start-btn{width:100%;padding:14px;border-radius:99px;background:var(--grad);color:#fff;
+  font-family:'Syne',sans-serif;font-weight:800;font-size:.95rem;
+  box-shadow:0 5px 22px rgba(108,92,231,.42);transition:transform var(--t),opacity var(--t);}
+.notice-start-btn:active{transform:scale(.97);opacity:.9}
+.notice-skip{display:block;text-align:center;font-size:.72rem;color:var(--text3);
+  margin-top:10px;padding-bottom:3px;cursor:pointer;}
+
+/* TOAST */
+.toast-wrap{position:fixed;top:66px;left:50%;transform:translateX(-50%);
+  z-index:2000;display:flex;flex-direction:column;align-items:center;gap:7px;
+  pointer-events:none;width:max-content;max-width:320px;}
+.toast{padding:10px 18px;border-radius:99px;font-size:.8rem;font-weight:600;
+  opacity:0;transform:translateY(-10px);
+  transition:opacity .25s, transform .25s;pointer-events:none;white-space:nowrap;
+  box-shadow:0 4px 20px rgba(0,0,0,.4);}
+.toast.show{opacity:1;transform:translateY(0)}
+.t-ok  {background:#00b894;color:#fff}
+.t-err {background:#d63031;color:#fff}
+.t-warn{background:#fdcb6e;color:#1a1a1a}
+.t-inf {background:var(--a1);color:#fff}
+
+.mt6{margin-top:6px}.mt10{margin-top:10px}.mt12{margin-top:12px}
+.skeleton-list .skel{margin-bottom:7px}
+</style>
 </head>
 <body>
 
-    <div class="stars-bg"></div>
-    <div class="glow-orb-1"></div>
-    <div class="glow-orb-2"></div>
+<!-- Toast Container -->
+<div id="toasts" class="toast-wrap"></div>
 
-    <!-- HEADER -->
-    <header class="main-header">
-        <div class="site-branding">
-            <div class="brand-logo">💎</div>
-            <h1 class="site-title">Ton X HUB</h1>
-        </div>
-        <div class="header-right">
-            <button class="header-icon-btn" id="withdraw-modal-btn"><i class="fas fa-wallet"></i></button>
-            <button class="header-icon-btn" id="history-btn"><i class="fas fa-history"></i></button>
-        </div>
-    </header>
-
-    <main class="container">
-        <!-- === HOME SECTION === -->
-        <section id="home-content" class="content-section active">
-            
-            <div class="profile-card">
-                <div class="profile-avatar"><i class="fas fa-user-astronaut"></i></div>
-                <div class="profile-id" id="profile-id-display">
-                    ID: <span>...</span> <i class="fas fa-copy"></i>
-                </div>
-                <div class="profile-balances">
-                    <h2 class="main-ton-balance"><span id="home-ton">0.0000</span> TON</h2>
-                    <p class="sub-pts-balance"><span id="home-pts">0</span> Points</p>
-                </div>
-            </div>
-
-            <div class="stats-row">
-                <div class="stat-item">
-                    <span>Lifetime</span>
-                    <strong id="home-life">0 Pts</strong>
-                </div>
-                <div class="stat-item" style="border-color: rgba(0,200,83,0.35);">
-                    <span style="color: var(--primary-color);">Normal Invites</span>
-                    <strong id="home-normal-ref">0</strong>
-                </div>
-                <div class="stat-item" style="border-color: rgba(0,230,118,0.35);">
-                    <span style="color: var(--success-color);">Valid Referrals</span>
-                    <strong id="home-valid-ref">0</strong>
-                </div>
-            </div>
-
-            <div class="action-buttons-vertical">
-                <button class="form-button" id="action-invite"><i class="fas fa-user-plus"></i> Invite & Earn 400 Pts</button>
-                <button class="form-button outline" id="action-promo-code"><i class="fas fa-ticket-alt"></i> Enter Promo Code</button>
-            </div>
-
-            <div class="home-links-row">
-                 <a href="https://t.me/tonXhub_Earn" target="_blank" class="home-link-btn">
-                     <i class="fab fa-telegram-plane"></i> Channel
-                 </a>
-                 <a href="https://t.me/tonX_hub_chat" target="_blank" class="home-link-btn">
-                     <i class="fas fa-users"></i> Group
-                 </a>
-                 <a href="https://t.me/Your_Admin11" target="_blank" class="home-link-btn">
-                     <i class="fas fa-headset"></i> Support
-                 </a>
-             </div>
-        </section>
-
-        <!-- ADS SECTION -->
-        <section id="ads-content" class="content-section">
-             <h3 class="section-title">Daily Ad Mission</h3>
-             <div style="text-align: center; margin-bottom: 15px; color: var(--primary-color); font-size: 0.9rem; background: rgba(0,200,83,0.06); padding: 10px; border-radius: 12px; border: 1px solid var(--border-subtle);">
-                 <i class="fas fa-info-circle"></i> Ads & Spins reset automatically everyday at <b>12:00 AM</b>.
-             </div>
-             
-             <!-- 1. Mixed Random Ad Button -->
-             <div class="special-ad-card">
-                 <div class="special-ad-header">
-                     <div>
-                        <h4><i class="fas fa-random" style="color:var(--primary-color); margin-right:5px;"></i> Lucky View</h4>
-                        <p style="font-size:0.8rem; color:var(--disabled-text); margin:0;">Mixed Network</p>
-                     </div>
-                     <span class="special-ad-limit" id="limit-mixed">0/20</span>
-                 </div>
-                 <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
-                    <span style="color:var(--success-color); font-weight:bold;">+12 Points</span>
-                    <button id="btn-watch-mixed" class="ad-watch-btn">Watch</button>
-                 </div>
-             </div>
-
-             <!-- 2. Monetag Button -->
-             <div class="special-ad-card">
-                 <div class="special-ad-header">
-                     <div>
-                        <h4><i class="fas fa-eye" style="color:#00E676; margin-right:5px;"></i> Fast View</h4>
-                        <p style="font-size:0.8rem; color:var(--disabled-text); margin:0;">Monetag Network</p>
-                     </div>
-                     <span class="special-ad-limit" id="limit-monetag">0/15</span>
-                 </div>
-                 <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
-                    <span style="color:var(--success-color); font-weight:bold;">+12 Points</span>
-                    <button id="btn-watch-monetag" class="ad-watch-btn">Watch</button>
-                 </div>
-             </div>
-
-             <!-- 3. GigaPub Button -->
-             <div class="special-ad-card">
-                 <div class="special-ad-header">
-                     <div>
-                        <h4><i class="fas fa-mouse-pointer" style="color:#FFD600; margin-right:5px;"></i> Click View</h4>
-                        <p style="font-size:0.8rem; color:var(--disabled-text); margin:0;">GigaPub Network</p>
-                     </div>
-                     <span class="special-ad-limit" id="limit-giga">0/15</span>
-                 </div>
-                 <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
-                    <span style="color:var(--success-color); font-weight:bold;">+12 Points</span>
-                    <button id="btn-watch-giga" class="ad-watch-btn">Watch</button>
-                 </div>
-             </div>
-        </section>
-
-        <!-- LOTTERY SECTION -->
-        <section id="lottery-content" class="content-section">
-            <h3 class="section-title">Lucky Spin Wheel</h3>
-            <div class="card" style="text-align: center; position: relative; padding-bottom: 30px; overflow: hidden;">
-                <canvas id="confettiCanvas"></canvas>
-                <h2 style="margin: 0 0 10px; font-size: 24px; text-transform: uppercase; color: var(--primary-color); text-shadow: 0 2px 12px rgba(0,200,83,0.4); font-family:'Outfit',sans-serif;">
-                    <i class="fas fa-dharmachakra"></i> Premium Wheel
-                </h2>
-                <div class="spin-limit" id="spinLimitText" style="font-size: 13px; color: var(--success-color); background: rgba(0,200,83,0.08); padding: 5px 15px; border-radius: 20px; display: inline-block; margin-bottom: 25px; border: 1px solid rgba(0,200,83,0.2);">
-                    Remaining Spins Today: 10/10
-                </div>
-                <div class="wheel-container">
-                    <div class="pointer"></div>
-                    <canvas id="wheelCanvas" width="400" height="400"></canvas>
-                </div>
-                <button id="spinBtn" class="form-button" style="margin-top: 30px; border-radius: 50px; padding: 15px;">
-                    <i class="fas fa-play-circle"></i> SPIN NOW (Watch Ad)
-                </button>
-                <div id="lotteryResult" style="margin-top: 20px; font-size: 16px; font-weight: 600; min-height: 25px; color: var(--primary-color);">Test your luck to win points!</div>
-            </div>
-        </section>
-
-        <!-- TASKS SECTION -->
-        <section id="task-content" class="content-section">
-            <h3 class="section-title">Earn Tasks</h3>
-            <div id="task-list" style="display: grid; gap: 16px;"></div>
-        </section>
-
-    </main>
-
-    <!-- BOTTOM NAVIGATION -->
-    <nav class="bottom-nav">
-        <a href="#" class="bottom-nav-item active" data-tab-target="#home-content"><i class="fas fa-home"></i> Home</a>
-        <a href="#" class="bottom-nav-item" data-tab-target="#ads-content"><i class="fas fa-play"></i> Ads</a>
-        <a href="#" class="bottom-nav-item" data-tab-target="#lottery-content"><i class="fas fa-dharmachakra"></i> Lottery</a>
-        <a href="#" class="bottom-nav-item" data-tab-target="#task-content"><i class="fas fa-list"></i> Tasks</a>
-    </nav>
-
-    <!-- === MODALS === -->
-
-    <!-- Withdraw Modal -->
-    <div id="withdrawModalOverlay" class="modal-overlay">
-        <div class="modal-content" style="padding: 20px; max-width: 330px; text-align: left;">
-            <h3 style="margin: 0 0 10px; color: var(--primary-color); font-size: 1.15rem; border-bottom: 1px solid var(--border-subtle); padding-bottom: 8px; font-family:'Outfit',sans-serif;">
-                <i class="fas fa-wallet"></i> Withdraw Funds
-            </h3>
-            
-            <h2 style="text-align: center; font-size: 1.8rem; margin: 10px 0 0; text-shadow: 0 0 10px rgba(0,200,83,0.3);" id="withdrawPointBalance">0.0000 TON</h2>
-            <p style="text-align: center; color: var(--text-body); margin: 5px 0 15px; font-size: 0.8rem;">Rate: 50,000 Pts = 1.00 TON</p>
-
-            <form id="withdrawalForm">
-                 <div style="background: rgba(255, 214, 0, 0.08); border: 1px solid var(--warning-color); padding: 10px; border-radius: 8px; margin-bottom: 15px; display: flex; gap: 8px; align-items: flex-start;">
-                     <i class="fas fa-info-circle" style="color: var(--warning-color); margin-top: 2px; font-size: 1rem;"></i>
-                     <div style="font-size: 0.75rem; line-height: 1.4; color: #D1D5DB;">
-                         <strong>Notice:</strong> Min withdraw 1500 Pts. Requires 1 Valid Referral per withdrawal. Use Tonkeeper address only.
-                     </div>
-                 </div>
-
-                 <div class="form-group" style="margin-bottom: 12px;">
-                    <label style="font-size: 0.8rem; margin-bottom: 5px;">Amount (Points)</label>
-                    <input type="number" id="withdrawalAmount" placeholder="Ex: 1500" required style="padding: 10px; font-size: 0.9rem;">
-                    <div id="realtime-ton-display" style="margin-top: 5px; font-size: 0.85rem; color: var(--success-color); font-weight: bold; display: none;">
-                        You Receive: <span id="calc-ton-val">0.0000</span> TON
-                    </div>
-                 </div>
-                 
-                 <div class="form-group" style="margin-bottom: 18px;">
-                    <label style="font-size: 0.8rem; margin-bottom: 5px;">Tonkeeper Address</label>
-                    <input type="text" id="accountDetails" placeholder="Enter address" required style="padding: 10px; font-size: 0.9rem;">
-                 </div>
-                 
-                 <div style="display: flex; gap: 10px;">
-                     <button type="button" class="form-button outline close-modal-btn" style="padding: 12px; font-size: 0.9rem; flex: 1;">Cancel</button>
-                     <button id="submitWithdrawalBtn" class="form-button" style="padding: 12px; font-size: 0.9rem; flex: 1;">Submit</button>
-                 </div>
-            </form>
-        </div>
+<!-- ═══════════════════════════════════════════════════
+     WELCOME NOTICE POPUP
+═══════════════════════════════════════════════════ -->
+<div class="notice-overlay" id="noticeOverlay">
+  <div class="notice-box">
+    <div class="notice-top">
+      <div class="notice-logo">💎</div>
+      <div class="notice-title">Welcome to TonXHub!</div>
+      <div class="notice-tagline">Earn real TON crypto — simple &amp; free</div>
     </div>
+    <div class="notice-body">
+      <div style="font-family:'Syne',sans-serif;font-size:.8rem;font-weight:700;color:var(--text);margin-bottom:8px;display:flex;align-items:center;gap:5px">📣 Join Our Community First!</div>
+      <div class="notice-join-btns">
+        <a href="https://t.me/tonXhub_Earn" target="_blank" class="notice-join-btn">
+          <span class="btn-ico">📢</span>
+          <div class="btn-txt">Official Channel<small>@tonXhub_Earn — Updates &amp; Promo Codes</small></div>
+          <span style="margin-left:auto;font-size:.73rem;color:var(--a2)">Join →</span>
+        </a>
+        <a href="https://t.me/tonX_hub_chat" target="_blank" class="notice-join-btn">
+          <span class="btn-ico">💬</span>
+          <div class="btn-txt">Community Group<small>@tonX_hub_chat — Chat &amp; Support</small></div>
+          <span style="margin-left:auto;font-size:.73rem;color:var(--a4)">Join →</span>
+        </a>
+      </div>
+      <div class="notice-rules" style="margin-bottom:12px">
+        <div class="notice-rules-title">🚀 How It Works</div>
+        <div class="rule-row"><span class="rule-ico">📣</span><span>Watch <strong style="color:var(--a2)">Ads</strong> → earn <span class="rule-val">+10 pts</span> per ad, no limit!</span></div>
+        <div class="rule-row"><span class="rule-ico">✅</span><span>Complete <strong style="color:var(--a2)">Tasks</strong> → earn bonus pts set by admin</span></div>
+        <div class="rule-row"><span class="rule-ico">🎁</span><span><strong style="color:var(--a2)">Daily Bonus</strong> → claim every 24h, streak grows rewards!</span></div>
+        <div class="rule-row"><span class="rule-ico">🎰</span><span><strong style="color:var(--a2)">Spin Wheel</strong> → 1 free spin every 60 min</span></div>
+        <div class="rule-row"><span class="rule-ico">👥</span><span><strong style="color:var(--a2)">Refer Friends</strong> → friend watches 20 ads → you earn <span class="rule-val">400 pts</span></span></div>
+        <div class="rule-row"><span class="rule-ico">🎟️</span><span>Enter <strong style="color:var(--a2)">Promo Codes</strong> from channel for bonus pts!</span></div>
+        <div class="rule-row"><span class="rule-ico">💎</span><span>Convert: <span class="rule-val">50,000 pts</span> = <span class="rule-val">1 TON</span> crypto</span></div>
+      </div>
+      <div class="notice-rules">
+        <div class="notice-rules-title">💸 Withdraw Rules</div>
+        <div class="rule-row"><span class="rule-ico">💰</span><span><span class="rule-val">50,000</span> Points = 1 TON</span></div>
+        <div class="rule-row"><span class="rule-ico">💸</span><span>Minimum Withdraw: <span class="rule-val">1,500</span> pts</span></div>
+        <div class="rule-row"><span class="rule-ico">👛</span><span>Only <span class="rule-val">Tonkeeper</span> address accepted</span></div>
+        <div class="rule-row"><span class="rule-ico">⏱️</span><span>Processed within <span class="rule-val">24–48 hours</span></span></div>
+      </div>
+      <button class="notice-start-btn" onclick="closeNotice()">🚀 Start Earning!</button>
+      <span class="notice-skip" onclick="closeNotice()">Skip for now</span>
+    </div>
+  </div>
+</div>
 
-    <!-- Promo Code Modal -->
-    <div id="promoModalOverlay" class="modal-overlay">
-        <div class="modal-content" style="text-align: left; max-width: 320px;">
-            <h3 style="margin-top: 0; color: var(--primary-color); font-family:'Outfit',sans-serif;"><i class="fas fa-ticket-alt"></i> Promo Code</h3>
-            <p style="font-size: 0.85rem; color: var(--text-body); margin-bottom: 15px;">Enter promo code to claim reward. Requires watching 1 ad.</p>
-            <div class="form-group" style="margin-bottom: 12px;">
-                <input type="text" id="promoCodeInput" placeholder="Enter Code Here">
+<div class="shell">
+
+  <!-- HEADER -->
+  <header class="hdr">
+    <div class="hdr-brand">
+      <div class="brand-ico">💎</div>
+      TonXHub
+    </div>
+    <div class="hdr-right">
+      <button class="ico-btn" id="themeToggle" title="Toggle theme">🌙</button>
+      <button class="ico-btn" onclick="openModal('withdrawModal')">💸</button>
+    </div>
+  </header>
+
+  <!-- SKELETON -->
+  <div id="skelWrap" class="skel-wrap">
+    <div class="skel skel-hero"></div>
+    <div class="skel skel-row"></div>
+    <div class="skel skel-row"></div>
+    <div class="skel skel-sm"></div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div id="mainWrap" class="hidden">
+    <div class="content">
+
+      <!-- ════ HOME ════ -->
+      <div class="section active" id="homeSection">
+
+        <!-- Balance Hero — new card style -->
+        <div class="hero">
+          <div class="hero-top">
+            <div class="hero-lbl">Your Balance</div>
+            <div class="hero-pts" id="dispPoints">0</div>
+            <div class="hero-sub" id="dispTonHero">≈ 0.0000 TON</div>
+            <div class="prog-track"><div id="progressBar"></div></div>
+            <div id="progressLabel">0 / 50,000 pts → 1 TON</div>
+          </div>
+          <div class="hero-stats">
+            <div class="h-stat">
+              <div class="h-stat-v" id="dispTon">0.0000</div>
+              <div class="h-stat-l">TON Earned</div>
             </div>
-            <button id="claimPromoBtn" class="form-button">Claim Reward</button>
-            <button class="form-button close-modal-btn outline" style="margin-top: 10px;">Close</button>
-        </div>
-    </div>
-
-    <!-- Invite Modal -->
-    <div id="inviteModalOverlay" class="modal-overlay">
-        <div class="modal-content" style="max-width: 340px;">
-            <i class="fas fa-gift" style="font-size: 3rem; color: var(--primary-color); margin-bottom: 15px; text-shadow: 0 0 20px rgba(0,200,83,0.45);"></i>
-            <h3 style="margin-top: 0; color: var(--text-title); font-family:'Outfit',sans-serif;">Invite Friends & Earn</h3>
-            <p style="font-size: 0.9rem; line-height: 1.6; color: var(--text-body); margin-bottom: 20px;">
-                When your friend registers: <b style="color:var(--primary-color);">+1 Normal Invite</b><br>
-                When friend watches 15 ads: <b style="color:var(--success-color);">+1 Valid Referral & 400 Pts!</b><br>
-                <span style="font-size: 0.75rem; color: var(--warning-color);">*1 Valid Referral unlocks 1 Withdrawal.</span>
-            </p>
-            <div class="input-group">
-               <input type="text" id="modalReferralLinkInput" readonly value="Loading...">
-               <button id="modalCopyReferralLinkBtn" class="form-button"><i class="fas fa-copy"></i></button>
+            <div class="h-stat" onclick="showValidReferPopup()" style="cursor:pointer">
+              <div class="h-stat-v" id="dispRefs">0</div>
+              <div class="h-stat-l">Valid Refers</div>
             </div>
-            <button class="form-button close-modal-btn outline" style="margin-top: 10px;">Close</button>
-        </div>
-    </div>
-
-    <!-- Success Modal -->
-    <div id="successModalOverlay" class="modal-overlay">
-        <div class="modal-content" style="max-width: 280px;">
-            <i class="fas fa-check-circle" style="font-size: 3.5rem; color: var(--success-color); margin-bottom: 15px;"></i>
-            <h3 id="successModalTitle" style="font-family:'Outfit',sans-serif;">Success!</h3>
-            <p id="successModalMessage" style="color: var(--text-body);">Action completed.</p>
-        </div>
-    </div>
-
-    <!-- History Modal -->
-    <div id="historyModalOverlay" class="modal-overlay">
-        <div class="modal-content" style="max-height: 75vh; padding: 20px;">
-            <h3 style="margin-top:0; color: var(--primary-color); border-bottom: 1px solid var(--border-subtle); padding-bottom: 10px; text-align: left; font-family:'Outfit',sans-serif;">
-                <i class="fas fa-history"></i> History
-            </h3>
-            <div id="combined-history-list" style="overflow-y: auto; flex-grow: 1; text-align: left; margin-top: 10px;"></div>
-            <button class="form-button close-modal-btn outline" style="margin-top: 15px;">Close</button>
-        </div>
-    </div>
-
-    <!-- VERIFICATION MODAL (Join Channel & Group) -->
-    <div id="activationModalOverlay" class="modal-overlay">
-        <div class="activation-modal">
-            <div style="background: rgba(0,200,83,0.1); width: 68px; height: 68px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; border: 1.5px solid rgba(0,200,83,0.35);">
-                <i class="fas fa-shield-check" style="font-size: 2.3rem; color: var(--primary-color);"></i>
+            <div class="h-stat" onclick="showNormalReferPopup()" style="cursor:pointer">
+              <div class="h-stat-v" id="dispTotalRefs2">0</div>
+              <div class="h-stat-l">Total Refers</div>
             </div>
-            <h3 style="color: var(--text-title); margin: 0 0 10px; font-size: 1.35rem; font-family:'Outfit',sans-serif;">Verification Required</h3>
-            <p style="color: var(--text-body); margin: 0 0 22px; font-size: 0.85rem; line-height: 1.55;">
-                Please join our Official Channel and Group to unlock all earning features and withdrawals.
-            </p>
-            <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:20px;">
-                <a href="https://t.me/tonXhub_Earn" target="_blank" class="verify-btn">
-                    <i class="fab fa-telegram-plane"></i> 
-                    <div style="text-align:left; flex:1;">
-                        <div style="font-weight:700;">Join Channel</div>
-                        <div style="font-size:0.72rem; color:var(--text-body); margin-top:2px;">@tonXhub_Earn</div>
-                    </div>
-                    <i class="fas fa-chevron-right" style="font-size:0.8rem; color:var(--text-body);"></i>
-                </a>
-                <a href="https://t.me/tonX_hub_chat" target="_blank" class="verify-btn">
-                    <i class="fas fa-users"></i> 
-                    <div style="text-align:left; flex:1;">
-                        <div style="font-weight:700;">Join Group</div>
-                        <div style="font-size:0.72rem; color:var(--text-body); margin-top:2px;">@tonX_hub_chat</div>
-                    </div>
-                    <i class="fas fa-chevron-right" style="font-size:0.8rem; color:var(--text-body);"></i>
-                </a>
-            </div>
-            <button id="activateAccountBtn" class="form-button" style="padding: 14px;">Verify Account</button>
+          </div>
         </div>
+
+        <!-- Hidden IDs for JS compatibility -->
+        <span id="normalReferCount" style="display:none">0</span>
+        <span id="validReferCount" style="display:none">0</span>
+
+        <!-- Quick Actions: Daily | Spin | Promo -->
+        <div class="qa-row">
+          <div class="qa-btn" onclick="openDailyPopup()">
+            <span class="qa-ico">🎁</span>
+            <span class="qa-lbl">Daily Bonus</span>
+          </div>
+          <div class="qa-btn" onclick="showFeatPopup('spin')">
+            <span class="qa-ico">🎰</span>
+            <span class="qa-lbl">Spin Wheel</span>
+          </div>
+          <div class="qa-btn" onclick="showFeatPopup('promo')">
+            <span class="qa-ico">🎟️</span>
+            <span class="qa-lbl">Promo Code</span>
+          </div>
+        </div>
+
+        <!-- Refer Banner (replaces refer info card) -->
+        <div class="refer-banner">
+          <div class="rb-top">
+            <div class="rb-ico">👥</div>
+            <div>
+              <div class="rb-title">Refer &amp; Earn</div>
+              <div class="rb-sub">Each valid refer = +400 pts</div>
+            </div>
+          </div>
+          <div class="rb-stats">
+            <div class="rbs">
+              <div class="rbs-v" id="rbTotal">0</div>
+              <div class="rbs-l">Total Refers</div>
+            </div>
+            <div class="rbs">
+              <div class="rbs-v" id="rbValid">0</div>
+              <div class="rbs-l">Valid Refers</div>
+            </div>
+            <div class="rbs">
+              <div class="rbs-v" id="rbEarned">0</div>
+              <div class="rbs-l">Pts Earned</div>
+            </div>
+          </div>
+          <div class="rb-btns">
+            <button class="rb-btn-copy" id="homeRefCopy">📋 Copy Link</button>
+            <button class="rb-btn-share" id="homeRefShare">📤 Share Link</button>
+          </div>
+        </div>
+
+        <!-- Feature Grid: Tasks + Watch Ads -->
+        <div class="feat-grid">
+          <div class="feat-tile" onclick="showFeatPopup('tasks')">
+            <span class="ft-ico">✅</span>
+            <span class="ft-lbl">Tasks</span>
+            <span class="ft-val">Earn pts</span>
+          </div>
+          <div class="feat-tile" onclick="showFeatPopup('ads')">
+            <span class="ft-ico">📣</span>
+            <span class="ft-lbl">Watch Ads</span>
+            <span class="ft-val">+10 pts</span>
+          </div>
+        </div>
+
+        <!-- Hidden spin/daily/promo elements for JS compatibility -->
+        <div style="display:none" id="homeSpinCard">
+          <canvas id="spinCanvas" width="270" height="270"></canvas>
+          <button id="spinBtn">SPIN</button>
+          <div id="spinNote"></div>
+        </div>
+        <div style="display:none" id="dailyBonusCard">
+          <div class="streak-grid" id="streakGrid"></div>
+          <button class="daily-btn" id="dailyBtn">⏳ Loading…</button>
+        </div>
+        <div style="display:none" id="promoCard">
+          <input id="promoInput" type="text" autocapitalize="characters"/>
+          <button id="promoSubmit">Apply</button>
+        </div>
+
+      </div><!-- /homeSection -->
+
+      <!-- ════ REFER ════ -->
+      <div class="section" id="referSection">
+        <div class="s-head">👥 Refer &amp; Earn</div>
+        <div class="ref-section-stats">
+          <div class="ref-stat-card">
+            <div class="rsv" id="refTotalVal">0</div>
+            <div class="rsl">Total Refers</div>
+          </div>
+          <div class="ref-stat-card">
+            <div class="rsv" id="refValidVal">0</div>
+            <div class="rsl">Valid Refers</div>
+          </div>
+          <div class="ref-stat-card">
+            <div class="rsv" id="refEarnedVal">0</div>
+            <div class="rsl">Pts Earned</div>
+          </div>
+        </div>
+        <div class="ref-reward-note">
+          🎯 Per refer reward: <strong>400 points</strong><br/>
+          ✅ A refer becomes <strong>valid</strong> only when the referred person watches <strong>20 ads</strong>.<br/>
+          💡 Share your link and ask your friends to watch ads!
+        </div>
+        <div class="card card-glow">
+          <div class="card-title">🔗 Your Referral Link</div>
+          <div class="ref-row">
+            <input class="ref-input" id="refLink" readonly value="Loading…"/>
+          </div>
+          <div class="ref-acts">
+            <button class="btn-outline-a" id="copyRef">📋 Copy Link</button>
+            <button class="btn-solid-a"   id="shareRef">📤 Share</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">📋 Referred Users</div>
+          <div id="referredList"><div class="empty">Loading…</div></div>
+        </div>
+      </div><!-- /referSection -->
+
+      <!-- ════ TASKS ════ -->
+      <div class="section" id="taskSection">
+        <div class="task-hdr">
+          <div class="task-hdr-title">📋 Available Tasks</div>
+          <div class="task-badge" id="taskDoneCount">0/0 done</div>
+        </div>
+        <div class="pill-row">
+          <div class="pill pill-green">✅ Reward set by admin</div>
+          <div class="pill pill-cyan">⏱️ 5s visit required</div>
+        </div>
+        <div id="taskList">
+          <div class="skel skel-row"></div>
+          <div class="skel skel-row"></div>
+          <div class="skel skel-row"></div>
+        </div>
+      </div><!-- /taskSection -->
+
+      <!-- ════ EARN (ADS) ════ -->
+      <div class="section" id="earnSection">
+        <div class="s-head">📣 Watch Ads &amp; Earn</div>
+        <div class="ads-total-badge">
+          <span style="font-size:1.4rem">📺</span>
+          <div>
+            <div class="atb-val" id="adsWatchedCount">0</div>
+            <div class="atb-lbl">Total Ads Watched</div>
+          </div>
+          <div style="margin-left:auto;text-align:right">
+            <div style="font-size:.68rem;color:var(--text2)">Each ad = <strong style="color:var(--a4)">10 pts</strong></div>
+            <div style="font-size:.65rem;color:var(--text3)">No limit</div>
+          </div>
+        </div>
+        <div class="ads-card">
+          <div class="ads-card-title">🌐 Monetag Ads</div>
+          <div class="ads-sub">Watch full ad (minimum 7 seconds) to earn +10 pts. Leaving before 7s = no reward.</div>
+          <button class="ad-btn ad-btn-monetag" id="monetagBtn">
+            <span>▶️ Watch Monetag Ad</span>
+            <span class="ad-timer" id="monetagTimer"></span>
+          </button>
+          <div class="ad-note">⚠️ Must watch at least 7 seconds for reward</div>
+        </div>
+        <div class="ads-card">
+          <div class="ads-card-title">🚀 GigaPub Ads</div>
+          <div class="ads-sub">Click the ad to earn +10 pts. Reward credited after ad interaction.</div>
+          <button class="ad-btn ad-btn-giga" id="gigapubBtn">
+            <span>🖱️ Watch GigaPub Ad</span>
+            <span class="ad-timer" id="gigapubTimer"></span>
+          </button>
+          <div class="ad-note">ℹ️ Click the ad content to receive your reward</div>
+        </div>
+      </div><!-- /earnSection -->
+
+      <!-- ════ LEADERBOARD ════ -->
+      <div class="section" id="leaderSection">
+        <div class="s-head">🏆 Top Earners<span class="s-head-sub" id="ldrRefresh" style="cursor:pointer;color:var(--a2)">↻ Refresh</span></div>
+        <div class="ldr-update-note">📌 Rankings update every 24 hours</div>
+        <div id="myRankBar" class="ldr-my-rank" style="display:none">
+          <div>
+            <div class="ldr-my-rank-lbl">Your Rank</div>
+            <div class="ldr-my-rank-val" id="myRankVal">—</div>
+          </div>
+          <div style="text-align:right">
+            <div class="ldr-my-rank-lbl">Your Points</div>
+            <div class="ldr-my-rank-val" id="myRankPts">—</div>
+          </div>
+        </div>
+        <div id="leaderList">
+          <div class="skel skel-row"></div>
+          <div class="skel skel-row"></div>
+          <div class="skel skel-row"></div>
+        </div>
+      </div><!-- /leaderSection -->
+
+    </div><!-- /content -->
+  </div><!-- /mainWrap -->
+
+  <!-- BOTTOM NAV -->
+  <nav class="nav">
+    <div class="nav-item active" data-sec="homeSection">
+      <span class="nav-ico">🏠</span>
+      <span class="nav-lbl">Home</span>
     </div>
-    
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-        import { getFirestore, collection, getDocs, query, where, orderBy, limit, addDoc, serverTimestamp, doc, getDoc, setDoc, updateDoc, runTransaction, increment, arrayUnion, Timestamp, writeBatch } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
-        
-        const firebaseConfig = {
-            apiKey: "AIzaSyAtq-jAYRwKSKw5QP1V4JJY0h-MTtehyGU",
-            authDomain: "ton-xhub.firebaseapp.com",
-            databaseURL: "https://ton-xhub-default-rtdb.firebaseio.com",
-            projectId: "ton-xhub",
-            storageBucket: "ton-xhub.firebasestorage.app",
-            messagingSenderId: "92006827548",
-            appId: "1:92006827548:web:b5bf4f81443330e8dc81d9",
-            measurementId: "G-H4BNY46JVQ"
-        };
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const tg = window.Telegram.WebApp;
+    <div class="nav-item" data-sec="referSection">
+      <span class="nav-ico">👥</span>
+      <span class="nav-lbl">Refer</span>
+    </div>
+    <div class="nav-item" data-sec="taskSection">
+      <span class="nav-ico">✅</span>
+      <span class="nav-lbl">Tasks</span>
+    </div>
+    <div class="nav-item" data-sec="earnSection">
+      <span class="nav-ico">📣</span>
+      <span class="nav-lbl">Earn</span>
+    </div>
+    <div class="nav-item" data-sec="leaderSection">
+      <span class="nav-ico">🏆</span>
+      <span class="nav-lbl">Ranks</span>
+    </div>
+  </nav>
 
-        let currentUser = null;
-        let isSubmittingWithdrawal = false;
-        
-        const REFERRAL_REWARD_POINTS = 400; 
-        const POINTS_TO_TON_RATE = 0.00002; 
-        
-        function getTodayDateString() {
-            return new Date().toLocaleDateString('en-US', { timeZone: 'Asia/Dhaka', year: 'numeric', month: '2-digit', day: '2-digit' });
+</div><!-- /shell -->
+
+<!-- DAILY BONUS POPUP -->
+<div class="daily-popup-overlay" id="dailyBonusPopup">
+  <div class="daily-popup-box">
+    <div class="daily-popup-top">
+      <button class="daily-popup-close" onclick="closeDailyPopup()">✕</button>
+      <div style="font-size:2.2rem;margin-bottom:7px">🎁</div>
+      <div class="daily-popup-title">Daily Login Bonus</div>
+      <div class="daily-popup-sub">Login every day to earn streak rewards!</div>
+    </div>
+    <div class="daily-popup-body">
+      <div class="daily-streak-row" id="popupStreakGrid"></div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:11px 13px;margin-bottom:12px;">
+        <div class="feat-info-row" style="padding-top:0">
+          <span class="feat-info-ico">📅</span>
+          <div class="feat-info-text"><strong>7-Day Streak System</strong>Complete your streak for bigger rewards each day.</div>
+        </div>
+        <div class="feat-info-row">
+          <span class="feat-info-ico">💰</span>
+          <div class="feat-info-text"><strong>Rewards</strong>Day 1: 5pts → Day 7: 20pts — streak keeps growing!</div>
+        </div>
+        <div class="feat-info-row">
+          <span class="feat-info-ico">⏰</span>
+          <div class="feat-info-text"><strong>Reset Time</strong>Resets every 24 hours. Don't miss a day!</div>
+        </div>
+        <div class="feat-info-row">
+          <span class="feat-info-ico">⚠️</span>
+          <div class="feat-info-text"><strong>Note</strong>Missing a day resets your streak back to Day 1.</div>
+        </div>
+      </div>
+      <button class="daily-popup-btn" id="dailyPopupBtn">⏳ Loading…</button>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURE POPUP (reusable) -->
+<div class="feat-overlay" id="featOverlay">
+  <div class="feat-box">
+    <div class="feat-top" id="featTop">
+      <button class="feat-close-btn" onclick="closeFeatPopup()">✕</button>
+      <div class="feat-ico-big" id="featIco">⭐</div>
+      <div class="feat-title" id="featTitle">Feature</div>
+      <div class="feat-subtitle" id="featSubtitle"></div>
+    </div>
+    <div class="feat-body" id="featBody"></div>
+  </div>
+</div>
+
+<!-- MODALS -->
+<!-- Withdraw Modal -->
+<div class="overlay" id="withdrawModal">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">💸 Withdraw TON</div>
+    <div class="wbal">
+      <div class="wbal-lbl">Available Balance</div>
+      <div class="wbal-val"><span id="wbalVal">0.0000</span> TON</div>
+    </div>
+    <div class="wbal" style="margin-bottom:0">
+      <div class="wbal-lbl">Points Balance</div>
+      <div style="font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;color:var(--a4)"><span id="wbalPts">0</span> pts</div>
+    </div>
+    <div style="text-align:center;padding:7px 0;font-size:.76rem;color:var(--text2)">
+      Entering <strong id="wPtsPreview" style="color:var(--a4)">0</strong> pts = <strong id="wTonPreview" style="color:var(--gold)">0.0000</strong> TON
+    </div>
+    <div class="withdraw-info mt10">
+      ⚠️ Minimum withdraw: <strong>1,500 points</strong><br/>
+      👛 Only <strong>Tonkeeper Wallet</strong> address accepted<br/>
+      ⏱️ Processed within <strong>24–48 hours</strong><br/>
+      💱 Rate: <strong>50,000 pts = 1 TON</strong>
+    </div>
+    <div class="fgroup">
+      <label class="flabel">Tonkeeper Wallet Address</label>
+      <input class="finput" id="wWallet" type="text" placeholder="UQ… or EQ… (Tonkeeper only)" autocomplete="off"/>
+    </div>
+    <div class="fgroup">
+      <label class="flabel">Points to Withdraw (min. 1,500)</label>
+      <input class="finput" id="wPts" type="number" min="1500" step="100" placeholder="1500"/>
+    </div>
+    <button class="btn-grad" id="wSubmit">Confirm Withdraw</button>
+    <button class="btn-ghost" onclick="closeModal('withdrawModal')">Cancel</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     LOCAL STORAGE ENGINE
+═══════════════════════════════════════════════════════ -->
+<script>
+
+/* ─── TELEGRAM GUARD ─── */
+const tg = window.Telegram?.WebApp || null;
+if (!tg || !tg.initData || tg.initData === "") {
+  document.body.innerHTML = `
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;
+      min-height:100vh;background:#080812;color:#eeeeff;font-family:'Space Grotesk',sans-serif;
+      padding:32px;text-align:center;gap:16px;">
+      <div style="font-size:3rem">🔒</div>
+      <div style="font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;
+        background:linear-gradient(135deg,#6c5ce7,#00cec9);-webkit-background-clip:text;
+        -webkit-text-fill-color:transparent;">TonXHub</div>
+      <p style="color:#6868a0;font-size:.88rem;line-height:1.6">
+        This app only works inside Telegram.<br/>Please open it via the bot link.
+      </p>
+      <a href="https://t.me/tonXhubEarn_bot/TonXHub" style="padding:13px 26px;border-radius:99px;
+        background:linear-gradient(135deg,#6c5ce7,#00cec9);color:#fff;
+        font-family:'Syne',sans-serif;font-weight:700;font-size:.92rem;">
+        Open in Telegram →
+      </a>
+    </div>`;
+  throw new Error("Not in Telegram");
+}
+
+/* ─── TELEGRAM USER ─── */
+tg.ready(); tg.expand();
+const TG_USER = tg?.initDataUnsafe?.user || {};
+const USER_ID = String(TG_USER.id || `guest_${Math.floor(Math.random()*999999)}`);
+const REF_ID  = tg?.initDataUnsafe?.start_param
+              || new URLSearchParams(location.search).get("ref")
+              || null;
+
+/* ─── CONSTANTS ─── */
+const BOT_LINK         = "https://t.me/tonXhubEarn_bot/TonXHub";
+const PTS_PER_TON      = 50000;
+const MIN_WITHDRAW_PTS = 1500;
+const SPIN_PRIZES      = [25, 5, 15, 0, 10, 20, 5, 0];
+const SPIN_LABELS      = ["25🎯","5","15","😢","10","20⭐","5","😢"];
+const SPIN_COLORS      = ["#6c5ce7","#00cec9","#fd79a8","#1a1a38","#fdcb6e","#00b894","#6c5ce7","#1a1a38"];
+const SPIN_COOL        = 3600000;
+const DAILY_COOL       = 86400000;
+const DAILY_REWARDS    = [5, 10, 10, 15, 15, 20, 20];
+const WEEKLY_GIFT_COOL = 7 * 24 * 3600000;
+const WEEKLY_GIFTS     = [50, 75, 100, 150, 200, 250, 300, 500];
+const REF_REWARD_PTS   = 400;
+const ADS_PER_VALID_REF= 20;
+const ADS_REWARD_PTS   = 10;
+const MONETAG_MIN_SEC  = 7;
+const LS_KEY           = `tonxhub_user_${USER_ID}`;
+const LS_TASKS_KEY     = `tonxhub_tasks`;
+const LS_PROMO_KEY     = `tonxhub_promos`;
+
+/* ─── APP STATE ─── */
+const S = {
+  points: 0, ton: 0, refs: 0, validRefs: 0,
+  completedTasks: {}, lastDaily: 0, dailyStreak: 0,
+  adsWatched: 0, lastWeeklyGift: 0, weeklyGiftStreak: 0,
+  usedPromos: {},
+  referredBy: null, referValid: false, referAdsCount: 0,
+  withdrawals: [],
+  dark: localStorage.getItem("tonxDark") !== "false",
+  spinLast: parseInt(localStorage.getItem("tonxSpinLast") || "0"),
+};
+
+/* ─── LOCAL STORAGE HELPERS ─── */
+function lsLoad() {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (!raw) return;
+    const d = JSON.parse(raw);
+    S.points           = d.points           || 0;
+    S.ton              = d.ton              || 0;
+    S.refs             = d.refs             || 0;
+    S.validRefs        = d.validRefs        || 0;
+    S.completedTasks   = d.completedTasks   || {};
+    S.lastDaily        = d.lastDaily        || 0;
+    S.dailyStreak      = d.dailyStreak      || 0;
+    S.adsWatched       = d.adsWatched       || 0;
+    S.lastWeeklyGift   = d.lastWeeklyGift   || 0;
+    S.weeklyGiftStreak = d.weeklyGiftStreak || 0;
+    S.usedPromos       = d.usedPromos       || {};
+    S.referredBy       = d.referredBy       || null;
+    S.referValid       = d.referValid       || false;
+    S.referAdsCount    = d.referAdsCount    || 0;
+    S.withdrawals      = d.withdrawals      || [];
+  } catch(e) {}
+}
+
+function lsSave() {
+  const data = {
+    points: S.points, ton: S.ton, refs: S.refs, validRefs: S.validRefs,
+    completedTasks: S.completedTasks, lastDaily: S.lastDaily, dailyStreak: S.dailyStreak,
+    adsWatched: S.adsWatched, lastWeeklyGift: S.lastWeeklyGift,
+    weeklyGiftStreak: S.weeklyGiftStreak, usedPromos: S.usedPromos,
+    referredBy: S.referredBy, referValid: S.referValid,
+    referAdsCount: S.referAdsCount, withdrawals: S.withdrawals,
+    username: TG_USER.username || "user",
+    firstName: TG_USER.first_name || "User",
+    userId: USER_ID,
+  };
+  localStorage.setItem(LS_KEY, JSON.stringify(data));
+}
+
+function initUser() {
+  lsLoad();
+  if (REF_ID && REF_ID !== USER_ID && !S.referredBy) {
+    S.referredBy = REF_ID;
+    S.referValid = false;
+    S.referAdsCount = 0;
+    lsSave();
+  }
+}
+
+function addPoints(pts) {
+  const total = S.points + pts;
+  const earnedTon = Math.floor(total / PTS_PER_TON);
+  const remainPts = total % PTS_PER_TON;
+  if (earnedTon > 0) {
+    S.ton    += earnedTon;
+    S.points  = remainPts;
+  } else {
+    S.points  = total;
+  }
+  lsSave();
+  refreshUI();
+}
+
+/* ─── DAILY BONUS ─── */
+function claimDailyBonus() {
+  const now   = Date.now();
+  const lastD = S.lastDaily;
+  if (now - lastD < DAILY_COOL) {
+    const rem = DAILY_COOL - (now - lastD);
+    throw new Error(`WAIT:${Math.floor(rem/3600000)}h ${Math.floor((rem%3600000)/60000)}m`);
+  }
+  const streak = (now - lastD < DAILY_COOL * 2) ? Math.min(S.dailyStreak + 1, 7) : 1;
+  const reward = DAILY_REWARDS[streak - 1] || 5;
+  S.lastDaily   = now;
+  S.dailyStreak = streak;
+  addPoints(reward);
+  return { reward, streak };
+}
+
+/* ─── WEEKLY GIFT ─── */
+function claimWeeklyGift() {
+  const now   = Date.now();
+  const lastG = S.lastWeeklyGift;
+  if (now - lastG < WEEKLY_GIFT_COOL) {
+    const rem  = WEEKLY_GIFT_COOL - (now - lastG);
+    const days = Math.floor(rem / 86400000);
+    const hrs  = Math.floor((rem % 86400000) / 3600000);
+    throw new Error(`WAIT:${days}d ${hrs}h`);
+  }
+  const streak = S.weeklyGiftStreak + 1;
+  const idx    = Math.min(streak - 1, WEEKLY_GIFTS.length - 1);
+  const reward = WEEKLY_GIFTS[idx];
+  S.weeklyGiftStreak = streak;
+  S.lastWeeklyGift   = now;
+  addPoints(reward);
+  return { reward, streak };
+}
+
+/* ─── WITHDRAW ─── */
+function submitWithdraw(wallet, pointsAmt) {
+  if (!wallet || wallet.length < 8) throw new Error("Invalid wallet address");
+  if (pointsAmt < MIN_WITHDRAW_PTS) throw new Error(`Minimum ${MIN_WITHDRAW_PTS} points required`);
+  if (S.points < pointsAmt) throw new Error("Insufficient points");
+  const tonAmt = pointsAmt / PTS_PER_TON;
+  const id = `WD-${Date.now().toString(36).toUpperCase()}`;
+  S.withdrawals.push({
+    id, wallet, pointAmount: pointsAmt, tonAmount: tonAmt,
+    status: "pending", createdAt: Date.now()
+  });
+  S.points -= pointsAmt;
+  lsSave();
+  refreshUI();
+  return id;
+}
+
+/* ─── PROMO CODES ─── */
+function applyPromoCode(code) {
+  if (!code) throw new Error("Enter a code first");
+  const upperCode = code.toUpperCase();
+  let promos = {};
+  try { promos = JSON.parse(localStorage.getItem(LS_PROMO_KEY) || "{}"); } catch(e) {}
+  const c = promos[upperCode];
+  if (!c) throw new Error("Invalid promo code");
+  if (c.expiry && Date.now() > c.expiry) throw new Error("Promo code expired");
+  if (c.maxUses && (c.currentUses || 0) >= c.maxUses) throw new Error("Promo code limit reached");
+  if (S.usedPromos[upperCode]) throw new Error("Already used this code");
+  S.usedPromos[upperCode] = { usedAt: Date.now() };
+  c.currentUses = (c.currentUses || 0) + 1;
+  promos[upperCode] = c;
+  localStorage.setItem(LS_PROMO_KEY, JSON.stringify(promos));
+  addPoints(c.pts || 0);
+  return c.pts || 0;
+}
+
+/* ─── ADMIN TASKS ─── */
+function loadAdminTasks() {
+  try {
+    return JSON.parse(localStorage.getItem(LS_TASKS_KEY) || "[]");
+  } catch(e) { return []; }
+}
+
+/* ─── ADS WATCHED ─── */
+function recordAdWatch() {
+  S.adsWatched++;
+  if (S.referredBy && !S.referValid && S.adsWatched >= ADS_PER_VALID_REF) {
+    S.referValid = true;
+    const refKey = `tonxhub_user_${S.referredBy}`;
+    try {
+      const raw = localStorage.getItem(refKey);
+      if (raw) {
+        const refData = JSON.parse(raw);
+        refData.validRefs = (refData.validRefs || 0) + 1;
+        refData.points    = (refData.points    || 0) + REF_REWARD_PTS;
+        const total = refData.points;
+        const earnedTon = Math.floor(total / PTS_PER_TON);
+        if (earnedTon > 0) {
+          refData.ton    = (refData.ton || 0) + earnedTon;
+          refData.points = total % PTS_PER_TON;
         }
+        localStorage.setItem(refKey, JSON.stringify(refData));
+      }
+    } catch(e) {}
+    toast("🎉 Your referrer earned 400 pts from your activity!", "ok");
+  }
+  lsSave();
+  document.getElementById("adsWatchedCount").textContent = S.adsWatched;
+  addPoints(ADS_REWARD_PTS);
+}
 
-        const AD_CONFIG = { mixed: { limit: 20 }, monetag: { limit: 15 }, giga: { limit: 15 } };
+/* ─── LEADERBOARD ─── */
+function loadLeaderboard() {
+  const list = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (!key.startsWith("tonxhub_user_")) continue;
+    try {
+      const d = JSON.parse(localStorage.getItem(key));
+      if (!d || !d.userId) continue;
+      const pts      = d.points || 0;
+      const ton      = d.ton    || 0;
+      const totalPts = pts + ton * PTS_PER_TON;
+      list.push({ id: d.userId, name: d.firstName || d.username || "Anonymous", pts, ton, totalPts, refs: d.validRefs || 0 });
+    } catch(e) {}
+  }
+  return list.sort((a,b) => b.totalPts - a.totalPts).slice(0, 50);
+}
 
-        // AD FUNCTIONS using actual SDKs from soan.html
-        const showMonetagAd = () => new Promise((res) => {
-            try {
-                if (typeof show_10353766 === 'function') {
-                    show_10353766();
-                }
-            } catch(e) {}
-            setTimeout(res, 7000);
-        });
+/* ─── REFERRED USERS ─── */
+function loadReferredUsers() {
+  const list = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (!key.startsWith("tonxhub_user_")) continue;
+    try {
+      const d = JSON.parse(localStorage.getItem(key));
+      if (d && d.referredBy === USER_ID) {
+        list.push({ name: d.firstName || d.username || "Anonymous", adsWatched: d.adsWatched || 0, valid: d.referValid || false });
+      }
+    } catch(e) {}
+  }
+  return list;
+}
 
-        const showGigaPubAd = () => new Promise((res) => {
-            try {
-                if (window.gigapub && typeof window.gigapub.show === 'function') {
-                    window.gigapub.show();
-                }
-            } catch(e) {}
-            setTimeout(res, 5000);
-        });
+/* ─── REFRESH UI ─── */
+function refreshUI() {
+  renderDash();
+  renderTasks();
+  updateDailyBtn();
+  renderStreak();
+  renderPopupStreak();
+  updateDailyPopupBtn();
+  renderGiftTiles();
+  renderReferSection();
+  document.getElementById("adsWatchedCount").textContent = S.adsWatched;
+  updateHomeReferCounters();
+}
 
-        const showFallbackAd = () => new Promise((res) => { setTimeout(res, 6000); });
+/* ─── RENDER: DASHBOARD ─── */
+const counterCache = {};
+function animCount(id, to, dec=0) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const from = counterCache[id] || 0;
+  counterCache[id] = to;
+  const diff = to - from, steps = 28;
+  let i = 0;
+  clearInterval(el._ci);
+  el._ci = setInterval(() => {
+    i++;
+    const v = from + diff * (i / steps);
+    el.textContent = dec ? v.toFixed(dec) : Math.floor(v).toLocaleString();
+    if (i >= steps) {
+      el.textContent = dec ? to.toFixed(dec) : to.toLocaleString();
+      clearInterval(el._ci);
+    }
+  }, 14);
+}
 
-        async function showRandomAd() { 
-            try { 
-                const ads = [showMonetagAd, showGigaPubAd];
-                const choice = ads[Math.floor(Math.random() * ads.length)];
-                await choice(); 
-            } catch(err) { await showFallbackAd(); } 
+function renderDash() {
+  animCount("dispPoints", S.points);
+  animCount("dispTon",    S.ton, 4);
+  animCount("dispRefs",   S.validRefs);
+
+  const tonEquiv = (S.points / PTS_PER_TON).toFixed(4);
+  const heroSub  = document.getElementById("dispTonHero");
+  if (heroSub) heroSub.textContent = `≈ ${tonEquiv} TON`;
+
+  const pct = Math.min((S.points / PTS_PER_TON) * 100, 100);
+  document.getElementById("progressBar").style.width = pct + "%";
+  document.getElementById("progressLabel").textContent = `${S.points.toLocaleString()} / 50,000 pts → 1 TON`;
+
+  const rl = document.getElementById("refLink");
+  if (rl) rl.value = `${BOT_LINK}?startapp=${USER_ID}`;
+
+  const tr2 = document.getElementById("dispTotalRefs2");
+  if (tr2) tr2.textContent = S.refs;
+
+  const wv = document.getElementById("wbalVal");
+  if (wv) wv.textContent = S.ton.toFixed(4);
+  const wp = document.getElementById("wbalPts");
+  if (wp) wp.textContent = S.points.toLocaleString();
+
+  // Update home refer banner
+  const rb = document.getElementById("rbTotal");
+  const rbv = document.getElementById("rbValid");
+  const rbe = document.getElementById("rbEarned");
+  if (rb) rb.textContent = S.refs;
+  if (rbv) rbv.textContent = S.validRefs;
+  if (rbe) rbe.textContent = (S.validRefs * REF_REWARD_PTS).toLocaleString();
+}
+
+function renderReferSection() {
+  const tv = document.getElementById("refTotalVal");
+  const vv = document.getElementById("refValidVal");
+  const ev = document.getElementById("refEarnedVal");
+  if (tv) tv.textContent = S.refs;
+  if (vv) vv.textContent = S.validRefs;
+  if (ev) ev.textContent = (S.validRefs * REF_REWARD_PTS).toLocaleString();
+
+  const listEl = document.getElementById("referredList");
+  if (!listEl) return;
+  const referred = loadReferredUsers();
+  if (!referred.length) {
+    listEl.innerHTML = `<div class="empty">No referrals yet. Share your link!</div>`;
+    return;
+  }
+  listEl.innerHTML = referred.map(u => `
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border)">
+      <div>
+        <div style="font-size:.83rem;font-weight:600">${u.name}</div>
+        <div style="font-size:.7rem;color:var(--text2)">Ads watched: ${u.adsWatched} / ${ADS_PER_VALID_REF}</div>
+      </div>
+      <span style="font-size:.7rem;padding:3px 8px;border-radius:99px;background:${u.valid ? 'rgba(0,184,148,.14)' : 'rgba(104,104,160,.12)'};color:${u.valid ? 'var(--a4)' : 'var(--text2)'}">
+        ${u.valid ? '✅ Valid' : '⏳ Pending'}
+      </span>
+    </div>`).join("");
+}
+
+/* ─── RENDER: DAILY STREAK ─── */
+function renderStreak() {
+  const grid = document.getElementById("streakGrid");
+  if (!grid) return;
+  grid.innerHTML = "";
+  for (let i = 0; i < 7; i++) {
+    const claimed = S.dailyStreak > i;
+    const isToday = S.dailyStreak === i + 1;
+    const div = document.createElement("div");
+    div.className = "streak-day" + (claimed?" claimed":"") + (isToday?" today":"");
+    div.innerHTML = `<div class="sd-num">D${i+1}</div><div class="sd-icon">${claimed?"✅":"🎁"}</div><div class="sd-pts">+${DAILY_REWARDS[i]}</div>`;
+    grid.appendChild(div);
+  }
+}
+
+/* ─── RENDER: WEEKLY GIFT TILES ─── */
+function renderGiftTiles() {
+  // Keep function for compatibility but no UI needed
+}
+
+/* ─── RENDER: TASKS ─── */
+let cdTicker = null;
+let TASKS_DATA = [];
+
+function renderTasks() {
+  const container = document.getElementById("taskList");
+  if (!container) return;
+  if (!TASKS_DATA.length) {
+    container.innerHTML = `<div class="empty">No tasks available yet. Check back soon!</div>`;
+    document.getElementById("taskDoneCount").textContent = "0/0 done";
+    return;
+  }
+  container.innerHTML = "";
+  let doneCount = 0;
+  TASKS_DATA.forEach(t => {
+    const td     = S.completedTasks?.[t.id] || {};
+    const last   = td.lastTime || 0;
+    const now    = Date.now();
+    const onCD   = now - last < t.cooldown;
+    const remSec = onCD ? Math.ceil((t.cooldown - (now - last)) / 1000) : 0;
+    const pct    = onCD ? Math.min(((now - last) / t.cooldown) * 100, 100) : 100;
+    if (td.count) doneCount++;
+    const card = document.createElement("div");
+    card.className = "task-card" + (onCD ? " on-cooldown" : "");
+    card.dataset.tid = t.id;
+    card.innerHTML = `
+      <div class="t-icon">${t.icon}</div>
+      <div class="t-body">
+        <div class="t-name">${t.name}</div>
+        <div class="t-desc">${t.desc}</div>
+        ${onCD ? `<div class="cooldown-track"><div class="cooldown-fill" style="width:${pct}%"></div></div>` : ""}
+      </div>
+      <div class="t-right">
+        <div class="t-pts">+${t.pts} pts</div>
+        <button class="t-btn${onCD?" dis":""}" data-id="${t.id}" data-pts="${t.pts}" data-cd="${t.cooldown}" data-url="${t.url}" ${onCD?"disabled":""}>
+          ${onCD ? fmtTime(remSec) : "Go →"}
+        </button>
+      </div>`;
+    container.appendChild(card);
+  });
+  const dc = document.getElementById("taskDoneCount");
+  if (dc) dc.textContent = `${doneCount}/${TASKS_DATA.length} done`;
+  container.querySelectorAll(".t-btn:not(.dis)").forEach(btn => btn.addEventListener("click", onTaskClick));
+  startCDTicker();
+}
+
+function fmtTime(sec) {
+  if (sec >= 3600) return `${Math.floor(sec/3600)}h`;
+  if (sec >= 60)   return `${Math.floor(sec/60)}m`;
+  return `${sec}s`;
+}
+
+function startCDTicker() {
+  if (cdTicker) clearInterval(cdTicker);
+  if (!document.querySelector(".t-btn.dis")) return;
+  cdTicker = setInterval(() => {
+    document.querySelectorAll(".t-btn.dis").forEach(btn => {
+      const cd  = parseInt(btn.dataset.cd);
+      const tid = btn.dataset.id;
+      const td  = S.completedTasks?.[tid] || {};
+      const rem = Math.ceil((cd - (Date.now() - (td.lastTime||0))) / 1000);
+      if (rem <= 0) { clearInterval(cdTicker); renderTasks(); }
+      else btn.textContent = fmtTime(rem);
+    });
+  }, 1000);
+}
+
+async function onTaskClick(e) {
+  const btn = e.currentTarget;
+  const id  = btn.dataset.id;
+  const pts = parseInt(btn.dataset.pts);
+  const cd  = parseInt(btn.dataset.cd);
+  const url = btn.dataset.url;
+  btn.disabled = true; btn.textContent = "Visit…";
+  window.open(url, "_blank");
+  let countdown = 5;
+  const ticker = setInterval(() => {
+    countdown--; btn.textContent = `${countdown}s…`;
+    if (countdown <= 0) clearInterval(ticker);
+  }, 1000);
+  await new Promise(r => setTimeout(r, 5000));
+  clearInterval(ticker);
+  btn.textContent = "Claim!"; btn.disabled = false;
+  btn.onclick = () => {
+    btn.disabled = true; btn.textContent = "Saving…";
+    try {
+      const now  = Date.now();
+      const prev = S.completedTasks[id] || {};
+      if (prev.lastTime && now - prev.lastTime < cd) {
+        const rem = Math.ceil((cd - (now - prev.lastTime)) / 1000);
+        throw new Error(`COOLDOWN:${fmtTime(rem)}`);
+      }
+      S.completedTasks[id] = { lastTime: now, count: (prev.count || 0) + 1 };
+      addPoints(pts);
+      toast(`✅ Task complete! +${pts} pts`, "ok");
+      haptic("medium"); renderTasks();
+    } catch(err) {
+      if (err.message.startsWith("COOLDOWN:")) toast(`⏳ Cooldown: ${err.message.slice(9)}`, "warn");
+      else toast("Error: " + err.message, "err");
+      renderTasks();
+    }
+  };
+}
+
+/* ─── DAILY BONUS BUTTON ─── */
+function updateDailyBtn() {
+  const btn = document.getElementById("dailyBtn");
+  if (!btn) return;
+  const now = Date.now();
+  const rem = DAILY_COOL - (now - S.lastDaily);
+  if (rem <= 0) {
+    const nextDay = Math.min(S.dailyStreak + 1, 7);
+    btn.disabled = false;
+    btn.textContent = `🎁 Claim Day ${nextDay} — +${DAILY_REWARDS[nextDay-1]} pts`;
+  } else {
+    btn.disabled = true;
+    const h = Math.floor(rem / 3600000);
+    const m = Math.floor((rem % 3600000) / 60000);
+    btn.textContent = `⏳ Come back in ${h}h ${m}m`;
+  }
+}
+
+document.getElementById("dailyBtn").addEventListener("click", () => {
+  const btn = document.getElementById("dailyBtn");
+  btn.disabled = true; btn.textContent = "Claiming…";
+  try {
+    const { reward, streak } = claimDailyBonus();
+    toast(`🎁 Day ${streak} bonus! +${reward} pts`, "ok");
+    haptic("heavy");
+  } catch(err) {
+    if (err.message.startsWith("WAIT:")) toast(`⏳ ${err.message.slice(5)} remaining`, "warn");
+    else toast("Error: " + err.message, "err");
+    updateDailyBtn();
+  }
+});
+
+/* ─── SPIN WHEEL ─── */
+let spinRunning = false;
+let spinAngle   = 0;
+
+const spinStyles = document.createElement("style");
+spinStyles.textContent = `
+  .spin-wrap{display:flex;flex-direction:column;align-items:center;gap:14px;padding:6px 0 4px;}
+  #spinCanvas{border-radius:50%;box-shadow:0 0 0 3px var(--border),0 8px 40px rgba(108,92,231,.35);max-width:265px;width:100%;aspect-ratio:1/1;display:block;}
+  .spin-main-btn{width:100%;max-width:230px;padding:14px;border-radius:99px;background:var(--grad);color:#fff;font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;box-shadow:0 6px 24px rgba(108,92,231,.4);transition:transform var(--t),opacity var(--t);}
+  .spin-main-btn:active:not(:disabled){transform:scale(.96)}
+  .spin-main-btn:disabled{opacity:.5;cursor:not-allowed;box-shadow:none}
+  .spin-note{font-size:.7rem;color:var(--text2);text-align:center}
+`;
+document.head.appendChild(spinStyles);
+
+function initSpin() {
+  drawWheel(spinAngle);
+  updateSpinBtn();
+}
+
+function drawWheel(currentAngle) {
+  const canvas = document.getElementById("spinCanvas");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+  const W = canvas.width, H = canvas.height;
+  const cx = W/2, cy = H/2, R = cx - 6;
+  const slices = SPIN_PRIZES.length;
+  const arc    = (Math.PI * 2) / slices;
+  ctx.clearRect(0, 0, W, H);
+  for (let i = 0; i < slices; i++) {
+    const start = currentAngle + i * arc;
+    const end   = start + arc;
+    ctx.beginPath(); ctx.moveTo(cx, cy); ctx.arc(cx, cy, R, start, end); ctx.closePath();
+    ctx.fillStyle = SPIN_COLORS[i]; ctx.fill();
+    ctx.strokeStyle = "rgba(0,0,0,.22)"; ctx.lineWidth = 2; ctx.stroke();
+    ctx.save(); ctx.translate(cx, cy); ctx.rotate(start + arc/2);
+    ctx.textAlign = "right"; ctx.fillStyle = "#fff"; ctx.font = `bold 13px 'Syne',sans-serif`;
+    ctx.shadowColor = "rgba(0,0,0,.4)"; ctx.shadowBlur = 4;
+    ctx.fillText(SPIN_LABELS[i], R - 10, 5); ctx.restore();
+  }
+  ctx.beginPath(); ctx.arc(cx, cy, 22, 0, Math.PI*2);
+  ctx.fillStyle = "#080812"; ctx.fill();
+  ctx.strokeStyle = "rgba(255,255,255,.12)"; ctx.lineWidth = 2; ctx.stroke();
+  ctx.fillStyle = "#fff"; ctx.font = "bold 16px Arial";
+  ctx.textAlign = "center"; ctx.textBaseline = "middle";
+  ctx.fillText("🎰", cx, cy);
+  ctx.beginPath(); ctx.moveTo(cx-8, 4); ctx.lineTo(cx+8, 4); ctx.lineTo(cx, 22); ctx.closePath();
+  ctx.fillStyle = "#fdcb6e"; ctx.fill();
+}
+
+function updateSpinBtn() {
+  const btn  = document.getElementById("spinBtn");
+  const note = document.getElementById("spinNote");
+  if (!btn) return;
+  const rem = SPIN_COOL - (Date.now() - S.spinLast);
+  if (rem <= 0) {
+    btn.disabled = false; btn.textContent = "🎰 SPIN!";
+    if (note) note.textContent = "Cooldown resets every 60 minutes";
+  } else {
+    btn.disabled = true;
+    const m = Math.floor(rem / 60000), s = Math.floor((rem % 60000) / 1000);
+    btn.textContent = `⏳ ${m}m ${s}s`;
+    if (note) note.textContent = "Come back for your next free spin!";
+  }
+}
+
+document.getElementById("spinBtn").addEventListener("click", () => {
+  const now = Date.now();
+  if (now - S.spinLast < SPIN_COOL || spinRunning) return;
+  spinRunning = true; S.spinLast = now;
+  localStorage.setItem("tonxSpinLast", now);
+  updateSpinBtn();
+  const slices   = SPIN_PRIZES.length;
+  const arc      = (Math.PI * 2) / slices;
+  const prizeIdx = Math.floor(Math.random() * slices);
+  const target   = (Math.PI * 2) - (prizeIdx * arc + arc/2) + Math.PI/2;
+  const totalAngle = (5 + Math.random() * 3) * Math.PI * 2 + target;
+  let start = null;
+  const duration = 4000;
+  const startAngle = spinAngle;
+  function easeOut(t) { return 1 - Math.pow(1 - t, 4); }
+  function animate(ts) {
+    if (!start) start = ts;
+    const progress = Math.min((ts - start) / duration, 1);
+    spinAngle = startAngle + totalAngle * easeOut(progress);
+    drawWheel(spinAngle);
+    if (progress < 1) {
+      requestAnimationFrame(animate);
+    } else {
+      spinRunning = false;
+      const prize = SPIN_PRIZES[prizeIdx];
+      if (prize > 0) { addPoints(prize); toast(`🎰 You won ${prize} pts!`, "ok"); haptic("heavy"); }
+      else { toast("😢 No prize this time!", "warn"); haptic("light"); }
+      updateSpinBtn();
+    }
+  }
+  requestAnimationFrame(animate);
+});
+setInterval(updateSpinBtn, 1000);
+
+/* ─── ADS — MONETAG ─── */
+let monetagBusy = false;
+document.getElementById("monetagBtn").addEventListener("click", async () => {
+  if (monetagBusy) return;
+  monetagBusy = true;
+  const btn   = document.getElementById("monetagBtn");
+  const timer = document.getElementById("monetagTimer");
+  btn.disabled = true;
+  try {
+    let adWatchSec = 0;
+    const countUp = setInterval(() => { adWatchSec++; if (timer) timer.textContent = `${adWatchSec}s`; }, 1000);
+    await window.show_10353766();
+    clearInterval(countUp);
+    if (adWatchSec >= MONETAG_MIN_SEC) {
+      recordAdWatch();
+      toast(`📣 +${ADS_REWARD_PTS} pts earned! (Monetag)`, "ok");
+      haptic("medium");
+    } else {
+      toast("⚠️ Watch at least 7 seconds for reward", "warn");
+    }
+  } catch(e) {
+    toast("Ad failed to load. Try again.", "err");
+  } finally {
+    if (timer) timer.textContent = "";
+    btn.disabled = false; monetagBusy = false;
+  }
+});
+
+/* ─── ADS — GIGAPUB ─── */
+let gigaBusy = false;
+document.getElementById("gigapubBtn").addEventListener("click", async () => {
+  if (gigaBusy) return;
+  gigaBusy = true;
+  const btn   = document.getElementById("gigapubBtn");
+  const timer = document.getElementById("gigapubTimer");
+  btn.disabled = true;
+  if (timer) timer.textContent = "Loading…";
+  try {
+    await window.showGiga();
+    recordAdWatch();
+    toast(`🚀 +${ADS_REWARD_PTS} pts earned! (GigaPub)`, "ok");
+    haptic("medium");
+  } catch(e) {
+    toast("Ad failed or was skipped.", "warn");
+  } finally {
+    if (timer) timer.textContent = "";
+    btn.disabled = false; gigaBusy = false;
+  }
+});
+
+/* ─── LEADERBOARD ─── */
+function getTier(totalPts) {
+  if (totalPts >= 500000) return { label: "💎 Diamond", color: "#00cec9" };
+  if (totalPts >= 200000) return { label: "🏅 Platinum", color: "#a78bfa" };
+  if (totalPts >= 100000) return { label: "🥇 Gold",     color: "#fdcb6e" };
+  if (totalPts >= 50000)  return { label: "🥈 Silver",   color: "#c0c0c0" };
+  if (totalPts >= 10000)  return { label: "🥉 Bronze",   color: "#cd7f32" };
+  return { label: "🌱 Starter", color: "#00b894" };
+}
+
+function renderLeaderboard() {
+  const container = document.getElementById("leaderList");
+  if (!container) return;
+  container.innerHTML = `<div class="skeleton-list">${Array(5).fill('<div class="skel skel-row"></div>').join("")}</div>`;
+  try {
+    const list = loadLeaderboard();
+    container.innerHTML = "";
+    const myIdx    = list.findIndex(u => u.id === USER_ID);
+    const myRankBar= document.getElementById("myRankBar");
+    if (myRankBar && myIdx >= 0) {
+      myRankBar.style.display = "flex";
+      document.getElementById("myRankVal").textContent = `#${myIdx + 1} of ${list.length}`;
+      document.getElementById("myRankPts").textContent = `${list[myIdx].totalPts.toLocaleString()} pts`;
+    } else if (myRankBar) {
+      myRankBar.style.display = "none";
+    }
+    list.forEach((u, i) => {
+      const medal = ["🥇","🥈","🥉"][i] || `#${i+1}`;
+      const isMe  = u.id === USER_ID;
+      const tier  = getTier(u.totalPts);
+      const rankClass = i === 0 ? " rank-1" : i === 1 ? " rank-2" : i === 2 ? " rank-3" : "";
+      const d = document.createElement("div");
+      d.className = "leader-card" + rankClass + (isMe ? " is-me" : "");
+      d.innerHTML = `
+        <div class="ldr-rank">${medal}</div>
+        <div class="ldr-av" style="background:${i<3?`linear-gradient(135deg,${tier.color},${i===0?'#fd79a8':'#6c5ce7'})`:'var(--grad)'}">
+          ${(u.name[0]||"?").toUpperCase()}
+          <div class="ldr-tier-badge" title="${tier.label}">${tier.label.split(" ")[0]}</div>
+        </div>
+        <div class="ldr-info">
+          <div class="ldr-name">${u.name}${isMe?"<span class='you-tag'>You</span>":""}</div>
+          <div class="ldr-pts" style="color:${tier.color}">${tier.label}</div>
+          <div class="ldr-pts">${u.totalPts.toLocaleString()} pts</div>
+        </div>
+        <div class="ldr-right">
+          <div class="ldr-ton">💎 ${u.ton.toFixed(4)} TON</div>
+          <div class="ldr-refs">👥 ${u.refs} refs</div>
+        </div>`;
+      container.appendChild(d);
+    });
+    if (!list.length) container.innerHTML = `<div class="empty">No data yet. Be the first!</div>`;
+  } catch(e) {
+    container.innerHTML = `<div class="empty">⚠️ Failed to load</div>`;
+  }
+}
+
+document.getElementById("ldrRefresh")?.addEventListener("click", renderLeaderboard);
+
+/* ─── WITHDRAW ─── */
+document.getElementById("wPts")?.addEventListener("input", () => {
+  const pts = parseInt(document.getElementById("wPts").value) || 0;
+  const ton = (pts / PTS_PER_TON).toFixed(4);
+  document.getElementById("wPtsPreview").textContent = pts.toLocaleString();
+  document.getElementById("wTonPreview").textContent = ton;
+});
+
+document.getElementById("wSubmit").addEventListener("click", () => {
+  const wallet   = document.getElementById("wWallet").value.trim();
+  const pointsIn = parseInt(document.getElementById("wPts").value);
+  const btn      = document.getElementById("wSubmit");
+  if (!wallet || wallet.length < 8) return toast("Invalid wallet address", "err");
+  if (!wallet.startsWith("UQ") && !wallet.startsWith("EQ"))
+    return toast("Only Tonkeeper address (UQ… or EQ…)", "err");
+  if (!pointsIn || pointsIn < MIN_WITHDRAW_PTS)
+    return toast(`Minimum ${MIN_WITHDRAW_PTS} points`, "err");
+  if (pointsIn > S.points) return toast("Insufficient points", "err");
+  btn.disabled = true; btn.textContent = "Processing…";
+  try {
+    const id  = submitWithdraw(wallet, pointsIn);
+    const ton = (pointsIn / PTS_PER_TON).toFixed(4);
+    toast(`✅ Withdraw submitted! ${ton} TON · Ref: ${id}`, "ok");
+    closeModal("withdrawModal");
+    document.getElementById("wWallet").value = "";
+    document.getElementById("wPts").value    = "";
+  } catch(err) {
+    toast("Error: " + err.message, "err");
+  } finally {
+    btn.disabled = false; btn.textContent = "Confirm Withdraw";
+  }
+});
+
+/* ─── PROMO CODE ─── */
+window.togglePromo = function() {};
+document.getElementById("promoSubmit").addEventListener("click", () => {
+  const code = document.getElementById("promoInput").value.trim();
+  const btn  = document.getElementById("promoSubmit");
+  if (!code) return;
+  btn.disabled = true;
+  try {
+    const pts = applyPromoCode(code);
+    toast(`🎟️ Promo applied! +${pts} pts`, "ok");
+    haptic("heavy");
+    document.getElementById("promoInput").value = "";
+  } catch(err) {
+    toast("❌ " + err.message, "err");
+  } finally {
+    btn.disabled = false;
+  }
+});
+
+/* ─── NAVIGATION ─── */
+window.navTo = function(sec) {
+  document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+  document.querySelectorAll(".nav-item").forEach(n => n.classList.remove("active"));
+  document.getElementById(sec)?.classList.add("active");
+  document.querySelector(`[data-sec="${sec}"]`)?.classList.add("active");
+  if (sec === "leaderSection") renderLeaderboard();
+};
+document.querySelectorAll(".nav-item").forEach(item => {
+  item.addEventListener("click", () => navTo(item.dataset.sec));
+});
+
+/* ─── THEME ─── */
+function applyTheme() {
+  document.body.classList.toggle("light", !S.dark);
+  document.getElementById("themeToggle").textContent = S.dark ? "☀️" : "🌙";
+}
+document.getElementById("themeToggle").addEventListener("click", () => {
+  S.dark = !S.dark;
+  localStorage.setItem("tonxDark", S.dark);
+  applyTheme();
+});
+applyTheme();
+
+/* ─── MODALS ─── */
+window.openModal = function(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.add("open");
+  if (id === "withdrawModal") {
+    document.getElementById("wbalVal").textContent = S.ton.toFixed(4);
+    document.getElementById("wbalPts").textContent = S.points.toLocaleString();
+  }
+};
+window.closeModal = function(id) {
+  document.getElementById(id)?.classList.remove("open");
+};
+document.querySelectorAll(".overlay").forEach(ov => {
+  ov.addEventListener("click", e => { if (e.target === ov) ov.classList.remove("open"); });
+});
+
+/* ─── DAILY BONUS POPUP ─── */
+window.openDailyPopup = function() {
+  document.getElementById("dailyBonusPopup").classList.add("open");
+  renderPopupStreak();
+  updateDailyPopupBtn();
+};
+window.closeDailyPopup = function() {
+  document.getElementById("dailyBonusPopup")?.classList.remove("open");
+};
+
+function renderPopupStreak() {
+  const grid = document.getElementById("popupStreakGrid");
+  if (!grid) return;
+  grid.innerHTML = "";
+  for (let i = 0; i < 7; i++) {
+    const claimed = S.dailyStreak > i;
+    const isToday = S.dailyStreak === i + 1;
+    const div = document.createElement("div");
+    div.className = "streak-day" + (claimed?" claimed":"") + (isToday?" today":"");
+    div.innerHTML = `<div class="sd-num">D${i+1}</div><div class="sd-icon">${claimed?"✅":"🎁"}</div><div class="sd-pts">+${DAILY_REWARDS[i]}</div>`;
+    grid.appendChild(div);
+  }
+}
+
+function updateDailyPopupBtn() {
+  const btn = document.getElementById("dailyPopupBtn");
+  if (!btn) return;
+  const now = Date.now();
+  const rem = DAILY_COOL - (now - S.lastDaily);
+  if (rem <= 0) {
+    const nextDay = Math.min(S.dailyStreak + 1, 7);
+    btn.disabled = false;
+    btn.textContent = `🎁 Claim Day ${nextDay} — +${DAILY_REWARDS[nextDay-1]} pts`;
+  } else {
+    btn.disabled = true;
+    const h = Math.floor(rem / 3600000);
+    const m = Math.floor((rem % 3600000) / 60000);
+    btn.textContent = `⏳ Come back in ${h}h ${m}m`;
+  }
+}
+
+document.getElementById("dailyPopupBtn").addEventListener("click", () => {
+  const btn = document.getElementById("dailyPopupBtn");
+  btn.disabled = true; btn.textContent = "Claiming…";
+  try {
+    const { reward, streak } = claimDailyBonus();
+    toast(`🎁 Day ${streak} bonus! +${reward} pts`, "ok");
+    haptic("heavy");
+    renderPopupStreak();
+    updateDailyPopupBtn();
+    updateDailyBtn();
+  } catch(err) {
+    if (err.message.startsWith("WAIT:")) toast(`⏳ ${err.message.slice(5)} remaining`, "warn");
+    else toast("Error: " + err.message, "err");
+    updateDailyPopupBtn();
+  }
+});
+
+/* ─── FEATURE POPUP SYSTEM ─── */
+const FEAT_DATA = {
+  refer: {
+    ico: "👥", title: "Refer & Earn", subtitle: "Invite friends and earn real rewards!",
+    grad: "var(--grad2)",
+    body: `
+      <div class="feat-info-row" style="padding-top:0">
+        <span class="feat-info-ico">🔗</span>
+        <div class="feat-info-text"><strong>How it works</strong>Share your unique referral link with friends.</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">💰</span>
+        <div class="feat-info-text"><strong>Reward per Refer</strong><span class="feat-info-val">+400 Points</span> per valid referral</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">✅</span>
+        <div class="feat-info-text"><strong>Valid Refer Condition</strong>Your friend must watch <span class="feat-info-val">20 Ads</span> to make the referral valid.</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">📊</span>
+        <div class="feat-info-text"><strong>No Limit</strong>Refer unlimited friends — more refers = more rewards!</div>
+      </div>
+      <button class="feat-cta" onclick="closeFeatPopup();navTo('referSection')">👥 Go to Refer Section →</button>`
+  },
+  tasks: {
+    ico: "✅", title: "Complete Tasks", subtitle: "Do simple tasks and earn big points!",
+    grad: "linear-gradient(135deg,#00b894 0%,#00cec9 100%)",
+    body: `
+      <div class="feat-info-row" style="padding-top:0">
+        <span class="feat-info-ico">📋</span>
+        <div class="feat-info-text"><strong>What are Tasks?</strong>Simple actions like joining channels, visiting links etc.</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">💰</span>
+        <div class="feat-info-text"><strong>Reward</strong>Each task reward is <span class="feat-info-val">set by admin</span> — could be 10 to 500+ pts!</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">⏱️</span>
+        <div class="feat-info-text"><strong>Visit Requirement</strong>You must stay on the task page for at least <span class="feat-info-val">5 seconds</span>.</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">🔄</span>
+        <div class="feat-info-text"><strong>Cooldown</strong>Each task has a cooldown before you can redo it (usually 24h).</div>
+      </div>
+      <button class="feat-cta" onclick="closeFeatPopup();navTo('taskSection')">✅ Go to Tasks →</button>`
+  },
+  ads: {
+    ico: "📣", title: "Watch Ads & Earn", subtitle: "Watch short ads for instant point rewards!",
+    grad: "linear-gradient(135deg,#fd79a8 0%,#fdcb6e 100%)",
+    body: `
+      <div class="feat-info-row" style="padding-top:0">
+        <span class="feat-info-ico">📺</span>
+        <div class="feat-info-text"><strong>Monetag Ads</strong>Watch full ad (min 7 seconds) → <span class="feat-info-val">+10 pts</span></div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">🖱️</span>
+        <div class="feat-info-text"><strong>GigaPub Ads</strong>Click the ad to interact → <span class="feat-info-val">+10 pts</span> per click</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">♾️</span>
+        <div class="feat-info-text"><strong>No Daily Limit</strong>Watch as many ads as you want — unlimited rewards!</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">👥</span>
+        <div class="feat-info-text"><strong>Referral Boost</strong>Your ad views help validate your referrer's reward after <span class="feat-info-val">20 ads</span>.</div>
+      </div>
+      <button class="feat-cta" onclick="closeFeatPopup();navTo('earnSection')">📣 Go to Earn Ads →</button>`
+  },
+  promo: {
+    ico: "🎟️", title: "Promo Code", subtitle: "Enter secret codes for bonus points!",
+    grad: "linear-gradient(135deg,#6c5ce7 0%,#fd79a8 100%)",
+    body: `
+      <div class="feat-info-row" style="padding-top:0">
+        <span class="feat-info-ico">🎟️</span>
+        <div class="feat-info-text"><strong>What is a Promo Code?</strong>Special codes shared by the admin that give bonus points.</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">📢</span>
+        <div class="feat-info-text"><strong>Where to get codes?</strong>Follow <span class="feat-info-val">@tonXhub_Earn</span> on Telegram for exclusive codes.</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">⚠️</span>
+        <div class="feat-info-text"><strong>One-time use</strong>Each code can only be used <span class="feat-info-val">once per user</span>.</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">⏳</span>
+        <div class="feat-info-text"><strong>Expiry</strong>Promo codes have an expiry date — use them quickly!</div>
+      </div>
+      <div style="margin-top:12px">
+        <div class="promo-input-row">
+          <input class="promo-input" id="featPromoInput" type="text" placeholder="Enter promo code…" autocomplete="off" autocapitalize="characters"/>
+          <button class="promo-submit" id="featPromoSubmit">Apply</button>
+        </div>
+      </div>`
+  },
+  spin: {
+    ico: "🎰", title: "Spin Wheel", subtitle: "Spin every 60 minutes for free prizes!",
+    grad: "linear-gradient(135deg,#6c5ce7 0%,#00cec9 100%)",
+    body: `
+      <div class="spin-wrap">
+        <canvas id="spinCanvasPopup" width="260" height="260"></canvas>
+        <button class="spin-main-btn" id="spinBtnPopup">🎰 SPIN!</button>
+        <div class="spin-note" id="spinNotePopup">Cooldown resets every 60 minutes</div>
+      </div>`
+  },
+};
+
+window.showFeatPopup = function(type) {
+  const data = FEAT_DATA[type];
+  if (!data) return;
+  const overlay = document.getElementById("featOverlay");
+  const top     = document.getElementById("featTop");
+  document.getElementById("featIco").textContent      = data.ico;
+  document.getElementById("featTitle").textContent    = data.title;
+  document.getElementById("featSubtitle").textContent = data.subtitle;
+  document.getElementById("featBody").innerHTML       = data.body;
+  top.style.background = data.grad;
+  overlay.classList.add("open");
+
+  if (type === "spin") {
+    initSpinPopup();
+  }
+
+  if (type === "promo") {
+    const fsBtn = document.getElementById("featPromoSubmit");
+    if (fsBtn) {
+      fsBtn.onclick = () => {
+        const code = document.getElementById("featPromoInput").value.trim();
+        if (!code) { toast("Enter a promo code", "warn"); return; }
+        fsBtn.disabled = true; fsBtn.textContent = "…";
+        try {
+          const pts = applyPromoCode(code);
+          toast(`🎟️ Promo applied! +${pts} pts`, "ok");
+          haptic("heavy");
+          document.getElementById("featPromoInput").value = "";
+          closeFeatPopup();
+        } catch(err) {
+          toast("❌ " + err.message, "err");
+        } finally {
+          fsBtn.disabled = false; fsBtn.textContent = "Apply";
         }
+      };
+    }
+  }
+};
 
-        // Ripple effect on buttons
-        document.querySelectorAll('.form-button, .ad-watch-btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                const ripple = document.createElement('span');
-                ripple.className = 'ripple-effect';
-                const rect = this.getBoundingClientRect();
-                ripple.style.left = (e.clientX - rect.left - 5) + 'px';
-                ripple.style.top  = (e.clientY - rect.top - 5) + 'px';
-                this.appendChild(ripple);
-                setTimeout(() => ripple.remove(), 650);
-            });
-        });
+/* Spin popup canvas */
+let spinPopupRunning = false;
+let spinPopupAngle = 0;
 
-        async function runAdAndVerifyTime(btnId, adFunc) {
-            const btn = document.getElementById(btnId);
-            if (!btn) return false;
-            btn.dataset.busy = "true"; btn.disabled = true;
-            let originalHTML = btn.innerHTML;
-            const minDuration = 6000; const startTime = Date.now();
+function initSpinPopup() {
+  drawWheelOn("spinCanvasPopup", spinPopupAngle);
+  updateSpinPopupBtn();
+}
 
-            const timerInterval = setInterval(() => {
-                let left = Math.ceil((minDuration - (Date.now() - startTime)) / 1000);
-                if (left > 0) btn.textContent = `⏳ Wait ${left}s...`; else btn.textContent = "Processing...";
-            }, 500);
+function drawWheelOn(canvasId, currentAngle) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+  const W = canvas.width, H = canvas.height;
+  const cx = W/2, cy = H/2, R = cx - 6;
+  const slices = SPIN_PRIZES.length;
+  const arc    = (Math.PI * 2) / slices;
+  ctx.clearRect(0, 0, W, H);
+  for (let i = 0; i < slices; i++) {
+    const start = currentAngle + i * arc;
+    const end   = start + arc;
+    ctx.beginPath(); ctx.moveTo(cx, cy); ctx.arc(cx, cy, R, start, end); ctx.closePath();
+    ctx.fillStyle = SPIN_COLORS[i]; ctx.fill();
+    ctx.strokeStyle = "rgba(0,0,0,.22)"; ctx.lineWidth = 2; ctx.stroke();
+    ctx.save(); ctx.translate(cx, cy); ctx.rotate(start + arc/2);
+    ctx.textAlign = "right"; ctx.fillStyle = "#fff"; ctx.font = `bold 12px 'Syne',sans-serif`;
+    ctx.shadowColor = "rgba(0,0,0,.4)"; ctx.shadowBlur = 4;
+    ctx.fillText(SPIN_LABELS[i], R - 8, 5); ctx.restore();
+  }
+  ctx.beginPath(); ctx.arc(cx, cy, 20, 0, Math.PI*2);
+  ctx.fillStyle = "#080812"; ctx.fill();
+  ctx.strokeStyle = "rgba(255,255,255,.12)"; ctx.lineWidth = 2; ctx.stroke();
+  ctx.fillStyle = "#fff"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+  ctx.fillText("🎰", cx, cy);
+  ctx.beginPath(); ctx.moveTo(cx-7, 4); ctx.lineTo(cx+7, 4); ctx.lineTo(cx, 20); ctx.closePath();
+  ctx.fillStyle = "#fdcb6e"; ctx.fill();
+}
 
-            return new Promise(async (resolve) => {
-                let adClosedEarly = false;
-                const visibilityHandler = () => { if (!document.hidden && (Date.now() - startTime) < minDuration) adClosedEarly = true; };
-                document.addEventListener('visibilitychange', visibilityHandler);
-                try {
-                    let adExecStart = Date.now();
-                    if (adFunc) await adFunc();
-                    if ((Date.now() - adExecStart) > 500 && (Date.now() - adExecStart) < minDuration) adClosedEarly = true;
-                    let remaining = minDuration - (Date.now() - startTime);
-                    if (remaining > 0) await new Promise(r => setTimeout(r, remaining)); 
-                } catch (err) { adClosedEarly = true; }
+function updateSpinPopupBtn() {
+  const btn  = document.getElementById("spinBtnPopup");
+  const note = document.getElementById("spinNotePopup");
+  if (!btn) return;
+  const rem = SPIN_COOL - (Date.now() - S.spinLast);
+  if (rem <= 0) {
+    btn.disabled = false; btn.textContent = "🎰 SPIN!";
+    if (note) note.textContent = "Free spin available!";
+  } else {
+    btn.disabled = true;
+    const m = Math.floor(rem / 60000), s = Math.floor((rem % 60000) / 1000);
+    btn.textContent = `⏳ ${m}m ${s}s`;
+    if (note) note.textContent = "Come back for your next free spin!";
+  }
+}
 
-                clearInterval(timerInterval); document.removeEventListener('visibilitychange', visibilityHandler);
-                btn.dataset.busy = "false"; 
-                if (adClosedEarly) {
-                    alert("⚠️ Ad closed too early! Watch for at least 6 seconds to receive points.");
-                    btn.innerHTML = originalHTML; btn.disabled = false; resolve(false);
-                } else { resolve(true); }
-            });
-        }
+document.getElementById("featBody").addEventListener("click", e => {
+  if (e.target.id === "spinBtnPopup" || e.target.closest("#spinBtnPopup")) {
+    const now = Date.now();
+    if (now - S.spinLast < SPIN_COOL || spinPopupRunning) return;
+    spinPopupRunning = true; S.spinLast = now;
+    localStorage.setItem("tonxSpinLast", now);
+    updateSpinPopupBtn(); updateSpinBtn();
+    const slices   = SPIN_PRIZES.length;
+    const arc      = (Math.PI * 2) / slices;
+    const prizeIdx = Math.floor(Math.random() * slices);
+    const target   = (Math.PI * 2) - (prizeIdx * arc + arc/2) + Math.PI/2;
+    const totalAngle = (5 + Math.random() * 3) * Math.PI * 2 + target;
+    let start = null;
+    const duration = 4000;
+    const startAngle = spinPopupAngle;
+    function easeOut(t) { return 1 - Math.pow(1 - t, 4); }
+    function animate(ts) {
+      if (!start) start = ts;
+      const progress = Math.min((ts - start) / duration, 1);
+      spinPopupAngle = startAngle + totalAngle * easeOut(progress);
+      drawWheelOn("spinCanvasPopup", spinPopupAngle);
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        spinPopupRunning = false;
+        const prize = SPIN_PRIZES[prizeIdx];
+        if (prize > 0) { addPoints(prize); toast(`🎰 You won ${prize} pts!`, "ok"); haptic("heavy"); }
+        else { toast("😢 No prize this time!", "warn"); haptic("light"); }
+        updateSpinPopupBtn();
+      }
+    }
+    requestAnimationFrame(animate);
+  }
+});
 
-        async function checkDailyReset(user) {
-            const todayStr = getTodayDateString();
-            if (user.lastResetDate !== todayStr) {
-                const updates = { adsWatchedMixed: 0, adsWatchedMonetag: 0, adsWatchedGiga: 0, dailyBonusClaimed: false, dailySpinsUsed: 0, lastResetDate: todayStr };
-                Object.assign(user, updates); 
-                try { await updateDoc(doc(db, 'users', user.id), updates); } catch(e){} 
-                return true;
-            }
-            return false;
-        }
+window.closeFeatPopup = function() {
+  document.getElementById("featOverlay")?.classList.remove("open");
+};
 
-        async function fetchAndUpdateCurrentUser() {
-            if (!currentUser?.id) return;
-            try {
-                const userRef = doc(db, 'users', currentUser.id);
-                const userSnap = await getDoc(userRef);
-                if (userSnap.exists()) {
-                    currentUser = { id: userSnap.id, ...userSnap.data() };
-                    await checkDailyReset(currentUser);
-                    updateBalanceUI(); updateAdButtonStats(); updateLotteryUI();
-                }
-            } catch (error) {}
-        }
+document.getElementById("featOverlay").addEventListener("click", e => {
+  if (e.target === document.getElementById("featOverlay")) closeFeatPopup();
+});
+document.getElementById("dailyBonusPopup").addEventListener("click", e => {
+  if (e.target === document.getElementById("dailyBonusPopup")) closeDailyPopup();
+});
 
-        async function initializeUser(tgUser, referrerCode) {
-            const userId = String(tgUser.id);
-            const userRef = doc(db, 'users', userId);
-            let userSnap = await getDoc(userRef);
-            const todayStr = getTodayDateString();
+/* ─── NOTICE POPUP ─── */
+window.closeNotice = function() {
+  document.getElementById("noticeOverlay")?.classList.remove("open");
+};
+function showNotice() {
+  if (!localStorage.getItem("tonxNoticeSeen")) {
+    setTimeout(() => document.getElementById("noticeOverlay")?.classList.add("open"), 800);
+    localStorage.setItem("tonxNoticeSeen", "1");
+  }
+}
 
-            if (!userSnap.exists()) {
-                const defaultUserData = {
-                    tonBalance: 0, pointBalance: 0, lifetimePointsEarned: 0, referralCount: 0, totalInvites: 0, spentReferrals: 0, completedTasks: [], 
-                    createdAt: serverTimestamp(), telegramUsername: tgUser.username || 'N/A', isBanned: false, isActivated: false, isGroupVerified: false, 
-                    lifetimeAdsWatched: 0, adsWatchedMixed: 0, adsWatchedMonetag: 0, adsWatchedGiga: 0, dailyBonusClaimed: false, dailySpinsUsed: 0, lastResetDate: todayStr 
-                };
+/* ─── NORMAL/VALID REFER POPUPS ─── */
+window.showNormalReferPopup = function() {
+  const total = S.refs || 0;
+  FEAT_DATA["normalRefer"] = {
+    ico: "🔗", title: "Normal Refers",
+    subtitle: `You have referred ${total} friend${total !== 1 ? 's' : ''} so far`,
+    grad: "linear-gradient(135deg,#00cec9 0%,#6c5ce7 100%)",
+    body: `
+      <div class="feat-info-row" style="padding-top:0">
+        <span class="feat-info-ico">🔗</span>
+        <div class="feat-info-text"><strong>Total Refers</strong>You have invited <span class="feat-info-val">${total}</span> friend${total !== 1 ? 's' : ''} to TonXHub.</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">ℹ️</span>
+        <div class="feat-info-text"><strong>What is Normal Refer?</strong>Any user who joined using your referral link — even if they haven't watched ads yet.</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">⚡</span>
+        <div class="feat-info-text"><strong>Next Step</strong>Ask them to watch <span class="feat-info-val">20 Ads</span> to make your refer valid and earn <span class="feat-info-val">400 pts</span>.</div>
+      </div>
+      <button class="feat-cta" onclick="closeFeatPopup();navTo('referSection')">👥 Go to Refer Section →</button>`
+  };
+  showFeatPopup("normalRefer");
+};
 
-                if (referrerCode && referrerCode !== userId) {
-                    defaultUserData.referredBy = referrerCode;
-                    try { await updateDoc(doc(db, 'users', referrerCode), { totalInvites: increment(1) }); } catch(e) {}
-                }
-                await setDoc(userRef, defaultUserData);
-                userSnap = await getDoc(userRef);
-            }
+window.showValidReferPopup = function() {
+  const valid  = S.validRefs || 0;
+  const total  = S.refs      || 0;
+  const earned = valid * 400;
+  FEAT_DATA["validRefer"] = {
+    ico: "✅", title: "Valid Refers",
+    subtitle: `${valid} of your ${total} refers are valid`,
+    grad: "linear-gradient(135deg,#00b894 0%,#00cec9 100%)",
+    body: `
+      <div class="feat-info-row" style="padding-top:0">
+        <span class="feat-info-ico">✅</span>
+        <div class="feat-info-text"><strong>Valid Refers</strong><span class="feat-info-val">${valid}</span> out of ${total} total refers are valid.</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">💰</span>
+        <div class="feat-info-text"><strong>Points Earned from Refers</strong><span class="feat-info-val">+${earned} pts</span> earned so far.</div>
+      </div>
+      <div class="feat-info-row">
+        <span class="feat-info-ico">ℹ️</span>
+        <div class="feat-info-text"><strong>What makes a refer valid?</strong>Your referred friend must watch <span class="feat-info-val">20 Ads</span> after joining.</div>
+      </div>
+      <button class="feat-cta" onclick="closeFeatPopup();navTo('referSection')">👥 View Refer Details →</button>`
+  };
+  showFeatPopup("validRefer");
+};
 
-            currentUser = { id: userSnap.id, ...userSnap.data() };
-            if (currentUser.isBanned) { document.body.innerHTML = `<h3 style="text-align:center; margin-top:50px; color:red;">Account Banned</h3>`; return null; }
-            
-            await checkDailyReset(currentUser); 
-            updateBalanceUI(); 
-            
-            const link = `https://t.me/tonXhubEarn_bot/TonXHub?startapp=${userId}`;
-            document.getElementById('modalReferralLinkInput').value = link;
+/* ─── UPDATE HOME REFER COUNTERS ─── */
+function updateHomeReferCounters() {
+  const nc = document.getElementById("normalReferCount");
+  const vc = document.getElementById("validReferCount");
+  if (nc) nc.textContent = S.refs || 0;
+  if (vc) vc.textContent = S.validRefs || 0;
+}
 
-            updateAdButtonStats(); updateLotteryUI();
-            return { isActivated: currentUser.isActivated };
-        }
+/* ─── REFERRAL BUTTONS ─── */
+document.getElementById("copyRef").addEventListener("click", () => {
+  navigator.clipboard.writeText(`${BOT_LINK}?startapp=${USER_ID}`)
+    .then(() => toast("📋 Link copied!", "ok"))
+    .catch(() => toast("Copy failed", "err"));
+});
+document.getElementById("shareRef").addEventListener("click", () => {
+  const link = `${BOT_LINK}?startapp=${USER_ID}`;
+  const text = `💎 Join TonXHub & earn real TON crypto!\n🔗 ${link}`;
+  if (tg?.shareURL) tg.shareURL(link, text);
+  else if (navigator.share) navigator.share({ title:"TonXHub", text });
+  else navigator.clipboard.writeText(link).then(() => toast("Link copied!", "ok"));
+});
 
-        function updateAdButtonStats() {
-            if(!currentUser) return;
-            const updateButton = (btnId, limitId, count, maxLimit) => {
-                const btn = document.getElementById(btnId);
-                document.getElementById(limitId).textContent = `${count}/${maxLimit}`;
-                if (btn.dataset.busy === "true") return;
-                
-                if (count >= maxLimit) {
-                    btn.disabled = true; btn.textContent = "Resets 12:00 AM";
-                } else {
-                    btn.disabled = false; btn.textContent = "Watch";
-                }
-            };
-            updateButton('btn-watch-mixed', 'limit-mixed', currentUser.adsWatchedMixed || 0, AD_CONFIG.mixed.limit);
-            updateButton('btn-watch-monetag', 'limit-monetag', currentUser.adsWatchedMonetag || 0, AD_CONFIG.monetag.limit);
-            updateButton('btn-watch-giga', 'limit-giga', currentUser.adsWatchedGiga || 0, AD_CONFIG.giga.limit);
-        }
+/* Home banner refer buttons */
+document.getElementById("homeRefCopy").addEventListener("click", () => {
+  navigator.clipboard.writeText(`${BOT_LINK}?startapp=${USER_ID}`)
+    .then(() => toast("📋 Link copied!", "ok"))
+    .catch(() => toast("Copy failed", "err"));
+});
+document.getElementById("homeRefShare").addEventListener("click", () => {
+  const link = `${BOT_LINK}?startapp=${USER_ID}`;
+  const text = `💎 Join TonXHub & earn real TON crypto!\n🔗 ${link}`;
+  if (tg?.shareURL) tg.shareURL(link, text);
+  else if (navigator.share) navigator.share({ title:"TonXHub", text });
+  else navigator.clipboard.writeText(link).then(() => toast("Link copied!", "ok"));
+});
 
-        function updateBalanceUI() {
-            const points = currentUser.pointBalance || 0;
-            const equivalentTon = points * POINTS_TO_TON_RATE; 
-            
-            document.getElementById('home-ton').textContent = equivalentTon.toFixed(4);
-            document.getElementById('home-pts').textContent = Math.floor(points);
-            document.getElementById('home-life').textContent = `${Math.floor(currentUser.lifetimePointsEarned || 0)} Pts`;
-            document.getElementById('home-normal-ref').textContent = currentUser.totalInvites || 0;
-            document.getElementById('home-valid-ref').textContent = currentUser.referralCount || 0;
-            if(document.getElementById('withdrawPointBalance')) document.getElementById('withdrawPointBalance').textContent = `${equivalentTon.toFixed(4)} TON`;
-        }
+/* ─── TOAST ─── */
+function toast(msg, type="inf") {
+  const tc = document.getElementById("toasts");
+  const el = document.createElement("div");
+  const map = {ok:"t-ok", err:"t-err", warn:"t-warn", inf:"t-inf"};
+  el.className = `toast ${map[type]||"t-inf"}`;
+  el.textContent = msg;
+  tc.appendChild(el);
+  requestAnimationFrame(() => el.classList.add("show"));
+  setTimeout(() => {
+    el.classList.remove("show");
+    setTimeout(() => el.remove(), 380);
+  }, 3000);
+}
 
-        const handleAdClick = async (type, btnId, maxLimit, adFunc) => {
-            const watchCount = type === 'mixed' ? currentUser.adsWatchedMixed : type === 'monetag' ? currentUser.adsWatchedMonetag : currentUser.adsWatchedGiga;
-            if((watchCount || 0) >= maxLimit) return;
-            const success = await runAdAndVerifyTime(btnId, adFunc);
-            if (success) await processAdReward(type, 12);
-        };
+function haptic(type="light") {
+  tg?.HapticFeedback?.impactOccurred?.(type);
+}
 
-        document.getElementById('btn-watch-mixed').addEventListener('click', () => handleAdClick('mixed', 'btn-watch-mixed', AD_CONFIG.mixed.limit, showRandomAd));
-        document.getElementById('btn-watch-monetag').addEventListener('click', () => handleAdClick('monetag', 'btn-watch-monetag', AD_CONFIG.monetag.limit, showMonetagAd));
-        document.getElementById('btn-watch-giga').addEventListener('click', () => handleAdClick('giga', 'btn-watch-giga', AD_CONFIG.giga.limit, showGigaPubAd));
+/* ─── SKELETON ─── */
+function showSkel(show) {
+  document.getElementById("skelWrap").classList.toggle("hidden", !show);
+  document.getElementById("mainWrap").classList.toggle("hidden", show);
+}
 
-        async function processAdReward(type, points) {
-            const userRef = doc(db, 'users', currentUser.id);
-            const updates = { lifetimeAdsWatched: increment(1) };
-            if (type === 'mixed') updates.adsWatchedMixed = increment(1); 
-            else if (type === 'monetag') updates.adsWatchedMonetag = increment(1); 
-            else if (type === 'giga') updates.adsWatchedGiga = increment(1); 
+/* ─── BOOT ─── */
+function boot() {
+  showSkel(true);
+  try {
+    initUser();
+    initSpin();
+    showNotice();
+    TASKS_DATA = loadAdminTasks();
+    refreshUI();
+  } catch(err) {
+    toast("⚠️ " + (err.message || "Error"), "err");
+    console.error(err);
+  } finally {
+    showSkel(false);
+  }
+}
 
-            let totalToGrant = points;
-            updates.pointBalance = increment(totalToGrant);
-            updates.lifetimePointsEarned = increment(totalToGrant);
-            await updateDoc(userRef, updates);
+boot();
 
-            const currentAdsTotal = (currentUser.lifetimeAdsWatched || 0) + 1;
-            if (currentAdsTotal === 15 && currentUser.referredBy) {
-                try {
-                    await runTransaction(db, async (t) => {
-                        const refDocRef = doc(db, 'users', currentUser.referredBy);
-                        const refDoc = await t.get(refDocRef);
-                        if(refDoc.exists()) {
-                            t.update(refDocRef, { pointBalance: increment(REFERRAL_REWARD_POINTS), lifetimePointsEarned: increment(REFERRAL_REWARD_POINTS), referralCount: increment(1) });
-                            t.set(doc(collection(db, 'transactions')), { userId: currentUser.referredBy, type: 'Referral Reward', details: `Valid Ref UID: ${currentUser.id}`, pointAmount: REFERRAL_REWARD_POINTS, createdAt: serverTimestamp() });
-                        }
-                    });
-                } catch(e) {}
-            }
-            let msg = `+${points} Points`;
-            showSuccessModal("Ad Complete", msg);
-            await fetchAndUpdateCurrentUser();
-        }
+</script>
 
-        async function fetchAndRenderTasks() {
-            const container = document.getElementById('task-list');
-            container.innerHTML = '<div class="loader"></div>';
-            try {
-                const q = query(collection(db, 'tasks'), where("isApproved", "==", true), orderBy("createdAt", "desc"), limit(20));
-                const snapshot = await getDocs(q);
-                container.innerHTML = '';
-                let count = 0;
-                snapshot.forEach(docSnap => {
-                    const task = docSnap.data();
-                    if (currentUser.completedTasks?.includes(docSnap.id) || ((task.limit || 0) > 0 && (task.completionCount || 0) >= task.limit)) return;
-                    const card = document.createElement('div'); 
-                    card.style = "background: var(--card-bg); padding:15px; border-radius:12px; border:1px solid var(--border-subtle); display:flex; justify-content:space-between; align-items:center; transition: border-color 0.2s;";
-                    card.innerHTML = `<div><h4 style="margin:0 0 5px; color:var(--text-title); font-family:'Outfit',sans-serif;">${task.title}</h4><p style="margin:0; font-size:0.85rem; color:var(--text-body);">+${(task.rewardPoints || 5)} Points</p></div><button class="ad-watch-btn" style="padding:9px 18px;" data-task-id="${docSnap.id}" data-task-url="${task.url}" data-state="start">Go</button>`;
-                    container.appendChild(card); count++;
-                });
-                if (count === 0) container.innerHTML = '<p style="text-align:center; color:var(--text-body);">No new tasks.</p>';
-            } catch (error) {}
-        }
+<!--
+╔═══════════════════════════════════════════════════════════════╗
+║   ADMIN: ADD TASKS via browser console                        ║
+║   localStorage.setItem('tonxhub_tasks', JSON.stringify([      ║
+║     { id:"t1", icon:"📢", name:"Join Channel",               ║
+║       desc:"Subscribe and earn pts", pts:50,                  ║
+║       url:"https://t.me/tonXhub_Earn",                        ║
+║       cooldown:86400000 }                                     ║
+║   ]));                                                        ║
+╠═══════════════════════════════════════════════════════════════╣
+║   ADMIN: ADD PROMO CODES via browser console                  ║
+║   localStorage.setItem('tonxhub_promos', JSON.stringify({     ║
+║     "TONX2025": { pts:200, expiry:1800000000000,              ║
+║                  maxUses:100, currentUses:0 }                 ║
+║   }));                                                        ║
+╚═══════════════════════════════════════════════════════════════╝
+-->
 
-        document.getElementById('task-list').addEventListener('click', async (e) => {
-            const button = e.target.closest('.ad-watch-btn'); if (!button || button.disabled) return;
-            const { taskId, taskUrl, state } = button.dataset;
-            if (state === 'start') {
-                tg.openLink(taskUrl); button.disabled = true; let c = 6; button.textContent = `⏳ ${c}s`;
-                const t = setInterval(() => { c--; button.textContent = `⏳ ${c}s`; if (c <= 0) { clearInterval(t); button.disabled = false; button.textContent = 'Claim ✓'; button.dataset.state = 'claim'; } }, 1000);
-            } else if (state === 'claim') { 
-                button.disabled = true; button.textContent = '...';
-                try {
-                    const taskSnap = await getDoc(doc(db, 'tasks', taskId));
-                    if(!taskSnap.exists()) throw "Not found";
-                    const reward = taskSnap.data().rewardPoints || 0;
-                    await updateDoc(doc(db, 'users', currentUser.id), { completedTasks: arrayUnion(taskId), pointBalance: increment(reward), lifetimePointsEarned: increment(reward) });
-                    await updateDoc(doc(db, 'tasks', taskId), { completionCount: increment(1) });
-                    showSuccessModal("Task Done! ✅", `+${reward} Points added.`);
-                    button.closest('div').remove(); fetchAndUpdateCurrentUser();
-                } catch(err) { alert('Failed'); button.disabled = false; button.textContent = 'Claim ✓'; }
-            }
-        });
-
-        // --- WITHDRAW LOGIC ---
-        document.getElementById('withdraw-modal-btn').addEventListener('click', () => {
-            document.getElementById('withdrawModalOverlay').classList.add('show');
-            updateBalanceUI(); 
-        });
-
-        document.getElementById('withdrawalAmount').addEventListener('input', (e) => {
-            const amt = parseFloat(e.target.value);
-            const display = document.getElementById('realtime-ton-display');
-            if(amt > 0) { document.getElementById('calc-ton-val').textContent = (amt * POINTS_TO_TON_RATE).toFixed(4); display.style.display = 'block'; }
-            else { display.style.display = 'none'; }
-        });
-
-        document.getElementById('submitWithdrawalBtn').addEventListener('click', async (e) => {
-            e.preventDefault(); if(isSubmittingWithdrawal) return;
-            const amount = parseFloat(document.getElementById('withdrawalAmount').value);
-            const details = document.getElementById('accountDetails').value.trim(); 
-            
-            if (!details || isNaN(amount) || amount < 1500) return alert('Min withdraw 1500 Pts and address required.');
-            if ((currentUser.pointBalance || 0) < amount) return alert('Insufficient Points.');
-            if (((currentUser.referralCount || 0) - (currentUser.spentReferrals || 0)) < 1) return alert("You need at least 1 Valid Referral to withdraw.");
-            if(!confirm(`Withdraw ${amount} Pts to Tonkeeper?\nCosts 1 Valid Referral.`)) return;
-
-            isSubmittingWithdrawal = true;
-            try {
-                await runTransaction(db, async (t) => {
-                    const userRef = doc(db, 'users', currentUser.id); const uData = (await t.get(userRef)).data();
-                    if (uData.pointBalance < amount || (uData.referralCount - uData.spentReferrals) < 1) throw new Error("Requirements not met.");
-                    t.set(doc(collection(db, 'withdrawals')), { userId: currentUser.id, method: 'Tonkeeper', details, status: 'pending', createdAt: serverTimestamp(), pointAmount: amount, tonAmount: amount * POINTS_TO_TON_RATE });
-                    t.update(userRef, { pointBalance: increment(-amount), spentReferrals: increment(1) });
-                });
-                document.getElementById('withdrawalForm').reset(); 
-                document.getElementById('withdrawModalOverlay').classList.remove('show');
-                showSuccessModal("Request Sent! 🎉", `Withdrawal pending.`);
-                await fetchAndUpdateCurrentUser(); 
-            } catch (err) { alert(err.message); } finally { isSubmittingWithdrawal = false; }
-        });
-
-        // --- HISTORY LOGIC ---
-        document.getElementById('history-btn').addEventListener('click', async () => {
-            document.getElementById('historyModalOverlay').classList.add('show');
-            const container = document.getElementById('combined-history-list');
-            container.innerHTML = '<div class="loader"></div>';
-            try {
-                const wQ = query(collection(db, "withdrawals"), where("userId", "==", currentUser.id));
-                const tQ = query(collection(db, "transactions"), where("userId", "==", currentUser.id));
-                const [wSnap, tSnap] = await Promise.all([getDocs(wQ), getDocs(tQ)]);
-                
-                let list = [];
-                wSnap.forEach(d => list.push({ ...d.data(), isW: true, time: d.data().createdAt }));
-                tSnap.forEach(d => list.push({ ...d.data(), isW: false, time: d.data().createdAt }));
-                
-                list.sort((a, b) => (b.time?.toMillis() || 0) - (a.time?.toMillis() || 0));
-                list = list.slice(0, 20); 
-                
-                if(list.length === 0) { container.innerHTML = '<p style="text-align:center; color:var(--text-body);">No history found.</p>'; return; }
-                
-                container.innerHTML = list.map(d => {
-                    const date = d.time ? d.time.toDate().toLocaleDateString() : '';
-                    let title = d.type || "Transaction";
-                    let amt = d.pointAmount ? `+${d.pointAmount}` : `+${d.tonAmount} TON`;
-                    let color = "var(--success-color)";
-                    
-                    if(d.isW || d.type === 'Withdrawal') { 
-                        title = "Withdraw (" + d.status + ")"; 
-                        amt = `-${d.pointAmount} Pts`; 
-                        color = "var(--danger-color)"; 
-                    }
-                    
-                    return `<div style="display:flex; justify-content:space-between; align-items:center; padding: 12px 0; border-bottom: 1px solid var(--border-subtle);">
-                        <div><strong style="display:block; color:var(--text-title); font-size:0.95rem;">${title}</strong><small style="color:var(--text-body); font-size:0.75rem;">${date}</small></div>
-                        <strong style="color:${color}; font-size:0.95rem;">${amt}</strong>
-                    </div>`;
-                }).join('');
-            } catch(e) { container.innerHTML = '<p style="text-align:center; color:red;">Failed to load history.</p>'; }
-        });
-
-        // --- PROMO CODE ---
-        document.getElementById('claimPromoBtn').addEventListener('click', async () => {
-            const code = document.getElementById('promoCodeInput').value.trim();
-            if (!code) return;
-            const success = await runAdAndVerifyTime('claimPromoBtn', showRandomAd);
-            if (!success) return; 
-            const btn = document.getElementById('claimPromoBtn'); btn.disabled = true; btn.textContent = "Checking...";
-            try {
-                await runTransaction(db, async (t) => {
-                    const promoRef = doc(db, 'promo_codes', code); const p = (await t.get(promoRef)).data();
-                    if (!p || !p.isActive || p.currentUses >= p.maxUses || (p.usersClaimed && p.usersClaimed.includes(currentUser.id))) throw new Error("Invalid/Used Code.");
-                    t.update(doc(db, 'users', currentUser.id), { pointBalance: increment(p.rewardAmount), lifetimePointsEarned: increment(p.rewardAmount) });
-                    t.update(promoRef, { currentUses: increment(1), usersClaimed: arrayUnion(currentUser.id) });
-                    return p.rewardAmount;
-                }).then((amt) => { document.getElementById('promoModalOverlay').classList.remove('show'); showSuccessModal("Success! 🎟️", `Got ${amt} Pts.`); document.getElementById('promoCodeInput').value=""; fetchAndUpdateCurrentUser(); });
-            } catch(e) { alert(e.message); } finally { btn.disabled = false; btn.textContent = "Claim Reward"; }
-        });
-
-        // --- UI CLICKS ---
-        document.getElementById('profile-id-display').addEventListener('click', () => { navigator.clipboard.writeText(currentUser.id); showSuccessModal("Copied!", `ID Copied.`); });
-        document.getElementById('modalCopyReferralLinkBtn').addEventListener('click', () => { navigator.clipboard.writeText(document.getElementById('modalReferralLinkInput').value); });
-        
-        document.getElementById('action-invite').addEventListener('click', () => document.getElementById('inviteModalOverlay').classList.add('show'));
-        document.getElementById('action-promo-code').addEventListener('click', () => document.getElementById('promoModalOverlay').classList.add('show'));
-        document.querySelectorAll('.close-modal-btn').forEach(b => b.addEventListener('click', (e) => e.target.closest('.modal-overlay').classList.remove('show')));
-
-        document.querySelectorAll('.bottom-nav-item').forEach((link, idx) => {
-            link.addEventListener('click', (e) => { 
-                e.preventDefault(); 
-                document.querySelectorAll('.bottom-nav-item, .content-section').forEach(el => el.classList.remove('active'));
-                link.classList.add('active'); document.querySelector(link.dataset.tabTarget).classList.add('active');
-                if(link.dataset.tabTarget === '#task-content') fetchAndRenderTasks();
-                if(link.dataset.tabTarget === '#ads-content') updateAdButtonStats();
-            });
-        });
-
-        function showSuccessModal(title, msg) {
-            document.getElementById('successModalTitle').textContent = title;
-            document.getElementById('successModalMessage').innerHTML = msg;
-            document.getElementById('successModalOverlay').classList.add('show');
-            setTimeout(() => document.getElementById('successModalOverlay').classList.remove('show'), 3000);
-        }
-
-        // --- LOTTERY ---
-        class LotteryWheel {
-            constructor(cId) { 
-                this.c = document.getElementById(cId); this.ctx = this.c.getContext("2d"); this.rot = 0; 
-                this.seg = [
-                    { l: "5 Pts", v: 5, c: "#00C853", w: 40 }, 
-                    { l: "8 Pts", v: 8, c: "#00897B", w: 30 }, 
-                    { l: "10 Pts", v: 10, c: "#1B5E20", w: 20 }, 
-                    { l: "15 Pts", v: 15, c: "#2E7D32", w: 5 }, 
-                    { l: "17 Pts", v: 17, c: "#00695C", w: 3 }, 
-                    { l: "20 Pts", v: 20, c: "#00E676", w: 2 }
-                ]; 
-                this.draw(); 
-            }
-            draw() { const a = (2*Math.PI)/this.seg.length; const cx = this.c.width/2; const cy = this.c.height/2; const r = cx; this.seg.forEach((s, i) => { this.ctx.beginPath(); this.ctx.moveTo(cx, cy); this.ctx.arc(cx, cy, r, i*a, (i+1)*a); this.ctx.fillStyle = s.c; this.ctx.fill(); this.ctx.lineWidth=4; this.ctx.strokeStyle="rgba(0,200,83,0.25)"; this.ctx.stroke(); this.ctx.save(); this.ctx.translate(cx, cy); this.ctx.rotate(i*a + a/2); this.ctx.textAlign="right"; this.ctx.fillStyle = "#fff"; this.ctx.font="bold 34px Arial"; this.ctx.fillText(s.l, r-30, 12); this.ctx.restore(); }); }
-            spin(resEl, cb) { const wId = (() => { let rnd=Math.random()*100, s=0; for(let i=0;i<this.seg.length;i++){ s+=this.seg[i].w; if(rnd<=s) return i; } return 0;})(); const a = 360/this.seg.length; const tg = (wId*a)+(a/2); const fn = this.rot + (Math.floor(Math.random()*4)+6)*360 + (360-tg) - (this.rot%360); this.c.style.transform = `rotate(${fn}deg)`; this.rot = fn; resEl.innerText = "Spinning... 🌀"; setTimeout(() => { resEl.innerHTML = `🎉 Won ${this.seg[wId].l}!`; if(cb) cb(this.seg[wId]); }, 4000); }
-        }
-        const wheel = new LotteryWheel("wheelCanvas");
-        
-        async function updateLotteryUI() {
-            if(!currentUser) return;
-            let left = 10 - (currentUser.dailySpinsUsed || 0);
-            document.getElementById("spinLimitText").innerText = `Remaining Spins Today: ${left}/10`;
-            const btn = document.getElementById("spinBtn");
-            if(left <= 0) { btn.innerHTML = '<i class="fas fa-ban"></i> Limit Reached'; btn.disabled = true; }
-            else { btn.innerHTML = '<i class="fas fa-play-circle"></i> SPIN NOW (Watch Ad)'; btn.disabled = false; }
-        }
-
-        document.getElementById('spinBtn').addEventListener('click', async () => {
-            if ((currentUser.dailySpinsUsed || 0) >= 10) return;
-            const btn = document.getElementById('spinBtn'); btn.dataset.busy = "true";
-            const ok = await runAdAndVerifyTime('spinBtn', showRandomAd);
-            if (!ok) { btn.dataset.busy = "false"; updateLotteryUI(); return; }
-            btn.disabled = true; btn.innerHTML = '<i class="fas fa-dharmachakra"></i> Spinning...';
-            wheel.spin(document.getElementById("lotteryResult"), async (pz) => {
-                try {
-                    await updateDoc(doc(db, 'users', currentUser.id), { dailySpinsUsed: increment(1), pointBalance: increment(pz.v), lifetimePointsEarned: increment(pz.v) });
-                    showSuccessModal("🎉 Won!", `Got ${pz.v} Pts!`);
-                } catch(e){} finally { btn.dataset.busy = "false"; await fetchAndUpdateCurrentUser(); }
-            });
-        });
-
-        // --- VERIFICATION (no external API, just check join buttons) ---
-        async function checkMembershipAndEnforce() {
-            // Show modal to prompt user to join channel and group
-            document.getElementById('activationModalOverlay').classList.add('show');
-        }
-
-        document.getElementById('activateAccountBtn').addEventListener('click', async () => {
-            // Simply close the modal when user clicks verify (no API call)
-            document.getElementById('activationModalOverlay').classList.remove('show');
-        });
-
-        async function main() {
-            try {
-                if (!tg.initDataUnsafe?.user) { document.body.innerHTML = `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:#050A05;color:#fff;font-family:'Outfit',sans-serif;padding:32px;text-align:center;gap:16px;"><div style="font-size:3rem">🔒</div><div style="font-size:1.4rem;font-weight:900;background:linear-gradient(135deg,#00C853,#00BFA5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Ton X HUB</div><p style="color:#8FBCA0;">Open in Telegram to use this app.</p></div>`; return; }
-                tg.ready(); tg.expand(); tg.setHeaderColor('#050A05'); 
-                await initializeUser(tg.initDataUnsafe.user, tg.initDataUnsafe.start_param);
-                document.getElementById('profile-id-display').querySelector('span').textContent = currentUser.id;
-                // Show join modal for new users only if not activated
-                if (!currentUser.isActivated) {
-                    await checkMembershipAndEnforce();
-                }
-            } catch (error) {}
-        }
-        main();
-    </script>
 </body>
 </html>
