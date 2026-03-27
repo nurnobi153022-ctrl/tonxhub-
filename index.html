@@ -34,29 +34,29 @@
     </script>
 
     <style>
-        /* === GREEN & BLACK THEME VARIABLES === */
+        /* === GALAXY PREMIUM DARK THEME VARIABLES === */
         :root {
-            --bg-color: #050A05;        
-            --card-bg: rgba(10, 22, 10, 0.90); 
-            --header-bg: rgba(5, 10, 5, 0.97); 
-            --primary-color: #00C853;   
-            --primary-hover: #00A843;
-            --primary-glow: rgba(0, 200, 83, 0.4);
-            --secondary-color: #00E676;
+            --bg-color: #0B001A;        
+            --card-bg: rgba(20, 10, 40, 0.85); 
+            --header-bg: rgba(11, 0, 26, 0.95); 
+            --primary-color: #9D4EDD;   
+            --primary-hover: #7B2CBF;
+            --primary-glow: rgba(157, 78, 221, 0.4);
+            --secondary-color: #00F5FF;
             --text-title: #FFFFFF;      
-            --text-body: #8FBCA0;       
-            --border-subtle: rgba(0, 200, 83, 0.15); 
-            --input-bg: rgba(5, 15, 5, 0.85); 
-            --success-color: #00E676;   
-            --danger-color: #FF5252;    
+            --text-body: #C8B6FF;       
+            --border-subtle: rgba(157, 78, 221, 0.25); 
+            --input-bg: rgba(15, 5, 25, 0.85); 
+            --success-color: #00F5FF;   
+            --danger-color: #FF2A6D;    
             --warning-color: #FFD600;   
-            --disabled-bg: #0D1A0D;
-            --disabled-text: #3A5A3A;
-            --shadow-card: 0 8px 32px rgba(0, 200, 83, 0.07);
-            --radius-card: 16px;
-            --radius-btn: 12px;
-            --grad: linear-gradient(135deg, #00C853 0%, #00BFA5 100%);
-            --grad2: linear-gradient(135deg, #00E676 0%, #00C853 100%);
+            --disabled-bg: #1A0B2E;
+            --disabled-text: #6A4C93;
+            --shadow-card: 0 8px 32px rgba(157, 78, 221, 0.15);
+            --radius-card: 20px;
+            --radius-btn: 14px;
+            --grad: linear-gradient(135deg, #9D4EDD 0%, #00F5FF 100%);
+            --grad2: linear-gradient(135deg, #00F5FF 0%, #9D4EDD 100%);
         }
 
         body { 
@@ -65,24 +65,24 @@
             -webkit-font-smoothing: antialiased; overflow-x: hidden; position: relative;
         }
 
-        /* === STARRY BACKGROUND === */
+        /* === STARRY GALAXY BACKGROUND === */
         .stars-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
             background-image: 
-                radial-gradient(1px 1px at 20px 30px, #00C853, rgba(0,0,0,0)),
-                radial-gradient(1px 1px at 40px 70px, #ffffff44, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 50px 160px, #00C85355, rgba(0,0,0,0)),
-                radial-gradient(1px 1px at 90px 40px, #ffffff33, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 160px 120px, #00E67633, rgba(0,0,0,0)),
-                radial-gradient(1px 1px at 250px 250px, #00C853, rgba(0,0,0,0));
+                radial-gradient(1.5px 1.5px at 20px 30px, #9D4EDD, rgba(0,0,0,0)),
+                radial-gradient(1.5px 1.5px at 40px 70px, #ffffff66, rgba(0,0,0,0)),
+                radial-gradient(2.5px 2.5px at 50px 160px, #00F5FF66, rgba(0,0,0,0)),
+                radial-gradient(1.5px 1.5px at 90px 40px, #ffffff44, rgba(0,0,0,0)),
+                radial-gradient(2.5px 2.5px at 160px 120px, #9D4EDD44, rgba(0,0,0,0)),
+                radial-gradient(1.5px 1.5px at 250px 250px, #00F5FF, rgba(0,0,0,0));
             background-repeat: repeat; background-size: 200px 200px; 
-            animation: twinkle 4s infinite alternate; opacity: 0.5;
+            animation: twinkle 4s infinite alternate; opacity: 0.7;
         }
-        @keyframes twinkle { 0% { opacity: 0.2; transform: scale(0.98); } 100% { opacity: 0.6; transform: scale(1); } }
+        @keyframes twinkle { 0% { opacity: 0.3; transform: scale(0.98); } 100% { opacity: 0.8; transform: scale(1.02); } }
 
-        .glow-orb-1, .glow-orb-2 { position: fixed; border-radius: 50%; filter: blur(120px); z-index: -1; animation: floatOrb 10s infinite alternate ease-in-out; }
-        .glow-orb-1 { width: 300px; height: 300px; background: rgba(0, 200, 83, 0.18); top: -50px; left: -50px; opacity: 0.6; }
-        .glow-orb-2 { width: 350px; height: 350px; background: rgba(0, 230, 118, 0.12); bottom: -100px; right: -50px; opacity: 0.5; animation-delay: -5s; }
+        .glow-orb-1, .glow-orb-2 { position: fixed; border-radius: 50%; filter: blur(140px); z-index: -1; animation: floatOrb 10s infinite alternate ease-in-out; }
+        .glow-orb-1 { width: 350px; height: 350px; background: rgba(157, 78, 221, 0.25); top: -50px; left: -50px; }
+        .glow-orb-2 { width: 400px; height: 400px; background: rgba(0, 245, 255, 0.15); bottom: -100px; right: -50px; animation-delay: -5s; }
         @keyframes floatOrb { 0% { transform: translateY(0) scale(1); } 100% { transform: translateY(40px) scale(1.15); } }
 
         .container { max-width: 800px; margin: 0 auto; padding: 0 16px; position: relative; z-index: 1; }
@@ -99,7 +99,7 @@
         .brand-logo { 
             width: 34px; height: 34px; border-radius: 10px; 
             background: var(--grad); display: flex; align-items: center; justify-content: center;
-            font-size: 16px; box-shadow: 0 4px 14px rgba(0,200,83,0.45);
+            font-size: 16px; box-shadow: 0 4px 14px rgba(157,78,221,0.45);
         }
         .site-title { 
             font-size: 1.2rem; color: var(--text-title); font-weight: 800; margin: 0; 
@@ -112,110 +112,111 @@
         .header-right { display: flex; align-items: center; gap: 10px; }
         .header-icon-btn { 
             background: var(--card-bg); border: 1px solid var(--border-subtle); 
-            color: var(--text-title); width: 38px; height: 38px; border-radius: 10px; 
+            color: var(--text-title); width: 38px; height: 38px; border-radius: 12px; 
             display: flex; align-items: center; justify-content: center; cursor: pointer; 
             transition: all 0.25s cubic-bezier(.4,0,.2,1); font-size: 1.1rem;
         }
         .header-icon-btn:hover { 
-            background: rgba(0,200,83,0.12); color: var(--primary-color); 
-            box-shadow: 0 0 15px rgba(0,200,83,0.3); border-color: var(--primary-color);
+            background: rgba(157,78,221,0.15); color: var(--secondary-color); 
+            box-shadow: 0 0 15px rgba(157,78,221,0.3); border-color: var(--primary-color);
             transform: scale(1.05);
         }
         .header-icon-btn:active { transform: scale(0.93); }
 
         /* === HOME PROFILE SECTION === */
         .profile-card { 
-            background: linear-gradient(145deg, rgba(10, 22, 10, 0.95), rgba(5, 10, 5, 0.98)); 
-            border-radius: 20px; padding: 30px 20px; text-align: center; 
+            background: linear-gradient(145deg, rgba(30, 15, 50, 0.85), rgba(15, 5, 25, 0.95)); 
+            border-radius: var(--radius-card); padding: 30px 20px; text-align: center; 
             border: 1px solid var(--border-subtle); 
-            box-shadow: 0 10px 30px rgba(0, 200, 83, 0.1); 
+            box-shadow: var(--shadow-card); 
             margin-bottom: 20px; position: relative; overflow: hidden; 
         }
         .profile-card::before {
             content: ""; position: absolute; top: -60px; right: -60px;
             width: 180px; height: 180px; border-radius: 50%;
-            background: rgba(0,200,83,0.06); pointer-events: none;
+            background: rgba(157,78,221,0.1); pointer-events: none;
         }
         .profile-avatar { 
-            width: 70px; height: 70px; 
-            background: rgba(0, 200, 83, 0.08); 
-            border: 2px solid var(--primary-color); 
+            width: 75px; height: 75px; 
+            background: rgba(157, 78, 221, 0.1); 
+            border: 2px solid var(--secondary-color); 
             border-radius: 50%; display: flex; align-items: center; justify-content: center; 
-            font-size: 2.5rem; color: var(--primary-color); margin: 0 auto 15px; 
-            box-shadow: 0 0 20px rgba(0, 200, 83, 0.35); 
+            font-size: 2.8rem; color: var(--secondary-color); margin: 0 auto 15px; 
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.35); 
         }
         .profile-id { 
-            background: var(--input-bg); padding: 6px 15px; border-radius: 20px; 
-            display: inline-flex; align-items: center; gap: 8px; font-size: 0.8rem; 
+            background: var(--input-bg); padding: 8px 18px; border-radius: 20px; 
+            display: inline-flex; align-items: center; gap: 8px; font-size: 0.85rem; 
             font-family: 'Roboto Mono', monospace; border: 1px solid var(--border-subtle); 
             margin-bottom: 20px; cursor: pointer; color: var(--text-body); 
             transition: all 0.2s;
         }
-        .profile-id:active { transform: scale(0.97); border-color: var(--primary-color); }
+        .profile-id:active { transform: scale(0.97); border-color: var(--secondary-color); }
         .profile-balances { display: flex; flex-direction: column; gap: 5px; }
         .main-ton-balance { 
             font-size: 2.5rem; font-weight: 800; color: var(--text-title); margin: 0; line-height: 1; 
-            text-shadow: 0 0 20px rgba(0, 200, 83, 0.35); 
+            text-shadow: 0 0 20px rgba(157, 78, 221, 0.4); 
         }
         .sub-pts-balance { 
-            font-size: 1rem; color: var(--success-color); font-weight: 600; margin: 0; 
-            text-shadow: 0 0 8px rgba(0, 230, 118, 0.3); 
+            font-size: 1rem; color: var(--secondary-color); font-weight: 600; margin: 0; 
+            text-shadow: 0 0 8px rgba(0, 245, 255, 0.3); 
         }
 
-        .stats-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 25px; }
+        .stats-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 25px; }
         .stat-item { 
-            background: var(--card-bg); border: 1px solid var(--border-subtle); border-radius: 12px; 
+            background: var(--card-bg); border: 1px solid var(--border-subtle); border-radius: 16px; 
             padding: 15px 10px; text-align: center; display: flex; flex-direction: column; justify-content: center; 
-            transition: all 0.2s;
+            transition: all 0.2s; box-shadow: var(--shadow-card);
         }
-        .stat-item:hover { border-color: var(--primary-color); box-shadow: 0 0 12px rgba(0,200,83,0.15); }
+        .stat-item:hover { border-color: var(--secondary-color); box-shadow: 0 0 15px rgba(0,245,255,0.2); transform: translateY(-3px); }
         .stat-item span { font-size: 0.7rem; color: var(--text-body); text-transform: uppercase; font-weight: 600; margin-bottom: 5px; letter-spacing: 0.5px; }
-        .stat-item strong { font-size: 1.1rem; color: var(--text-title); font-weight: 700; }
+        .stat-item strong { font-size: 1.15rem; color: var(--text-title); font-weight: 700; }
 
-        .action-buttons-vertical { display: flex; flex-direction: column; gap: 12px; }
+        .action-buttons-vertical { display: flex; flex-direction: column; gap: 14px; }
 
         /* CARDS & BUTTONS */
         .card, .special-ad-card { 
             background-color: var(--card-bg); backdrop-filter: blur(8px); 
-            border-radius: var(--radius-card); padding: 20px; 
+            border-radius: var(--radius-card); padding: 22px; 
             border: 1px solid var(--border-subtle); box-shadow: var(--shadow-card); 
             margin-bottom: 20px; position: relative; 
         }
 
         /* === ANIMATED BUTTONS === */
         .form-button, .task-button { 
-            width: 100%; padding: 14px; border: none; border-radius: var(--radius-btn); 
+            width: 100%; padding: 15px; border: none; border-radius: var(--radius-btn); 
             font-weight: 700; font-size: 0.95rem; cursor: pointer; 
             background: var(--grad);
             color: #fff; 
             transition: all 0.25s cubic-bezier(.4,0,.2,1); 
             display: flex; align-items: center; justify-content: center; gap: 8px; 
             text-decoration: none; 
-            box-shadow: 0 4px 20px rgba(0, 200, 83, 0.35);
+            box-shadow: 0 4px 20px rgba(157, 78, 221, 0.4);
             position: relative; overflow: hidden;
             font-family: 'Outfit', sans-serif;
-            letter-spacing: 0.03em;
+            letter-spacing: 0.05em;
         }
         .form-button::before {
             content: "";
             position: absolute; inset: 0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0));
+            background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0));
             opacity: 0; transition: opacity 0.25s;
         }
         .form-button:hover:not(:disabled)::before { opacity: 1; }
         .form-button.outline { 
             background: transparent; 
-            border: 1.5px solid var(--primary-color); 
-            color: var(--primary-color); box-shadow: none; font-weight: 600; 
+            border: 1.5px solid var(--secondary-color); 
+            color: var(--secondary-color); box-shadow: none; font-weight: 600; 
         }
         .form-button.outline:hover:not(:disabled) { 
-            background: rgba(0, 200, 83, 0.1); 
-            box-shadow: 0 0 18px rgba(0,200,83,0.25);
+            background: rgba(0, 245, 255, 0.1); 
+            box-shadow: 0 0 18px rgba(0,245,255,0.3);
+            border-color: var(--secondary-color);
         }
-        .task-button { width: auto; padding: 8px 16px; font-size: 0.85rem; border-radius: 8px; }
+        .task-button { width: auto; padding: 10px 18px; font-size: 0.85rem; border-radius: 10px; }
         .form-button:hover:not(:disabled) { 
-            transform: translateY(-2px) scale(1.01); 
-            box-shadow: 0 8px 28px rgba(0, 200, 83, 0.55); 
+            transform: translateY(-2px) scale(1.02); 
+            box-shadow: 0 8px 28px rgba(0, 245, 255, 0.5); 
         }
         .form-button:active:not(:disabled) { transform: scale(0.97) translateY(0); }
         .form-button:disabled, .task-button:disabled { 
@@ -225,12 +226,12 @@
         }
 
         /* Pulse animation for main action buttons */
-        @keyframes pulse-green {
-            0% { box-shadow: 0 4px 20px rgba(0,200,83,0.35); }
-            50% { box-shadow: 0 4px 30px rgba(0,200,83,0.65), 0 0 0 6px rgba(0,200,83,0.08); }
-            100% { box-shadow: 0 4px 20px rgba(0,200,83,0.35); }
+        @keyframes pulse-purple {
+            0% { box-shadow: 0 4px 20px rgba(157,78,221,0.35); }
+            50% { box-shadow: 0 4px 30px rgba(157,78,221,0.65), 0 0 0 6px rgba(157,78,221,0.15); }
+            100% { box-shadow: 0 4px 20px rgba(157,78,221,0.35); }
         }
-        #action-invite { animation: pulse-green 2.5s infinite; }
+        #action-invite { animation: pulse-purple 2.5s infinite; }
 
         /* Ripple effect */
         @keyframes ripple {
@@ -246,10 +247,10 @@
 
         .special-ad-card { display: flex; flex-direction: column; gap: 10px; text-align: left; }
         .special-ad-header { display: flex; justify-content: space-between; align-items: center; }
-        .special-ad-header h4 { margin: 0; color: var(--text-title); font-size: 1rem; }
+        .special-ad-header h4 { margin: 0; color: var(--text-title); font-size: 1.05rem; }
         .special-ad-limit { 
-            font-size: 0.8rem; color: var(--primary-color); background: rgba(0,200,83,0.08); 
-            padding: 4px 10px; border-radius: 99px; border: 1px solid var(--border-subtle);
+            font-size: 0.85rem; color: var(--secondary-color); background: rgba(0,245,255,0.1); 
+            padding: 5px 12px; border-radius: 99px; border: 1px solid var(--border-subtle);
             font-weight: 700; font-family: 'Roboto Mono', monospace;
         }
 
@@ -257,12 +258,12 @@
         .form-group { margin-bottom: 20px; text-align: left; }
         .form-group label { display: block; margin-bottom: 8px; font-weight: 500; color: var(--text-body); font-size: 0.9rem; }
         input[type="text"], input[type="number"], select { 
-            width: 100%; padding: 14px; box-sizing: border-box; border-radius: var(--radius-btn); 
+            width: 100%; padding: 15px; box-sizing: border-box; border-radius: var(--radius-btn); 
             border: 1.5px solid var(--border-subtle); background-color: var(--input-bg); 
             color: var(--text-title); font-size: 0.95rem; outline: none; 
             font-family: 'Inter', sans-serif; transition: all 0.2s; 
         }
-        input:focus, select:focus { border-color: var(--primary-color); box-shadow: 0 0 12px rgba(0, 200, 83, 0.18); }
+        input:focus, select:focus { border-color: var(--secondary-color); box-shadow: 0 0 15px rgba(0, 245, 255, 0.25); }
         input:read-only { background-color: var(--disabled-bg); color: var(--text-body); }
         .input-group { display: flex; gap: 10px; margin-bottom: 16px; }
         .input-group input { flex-grow: 1; text-align: center; font-family: 'Roboto Mono', monospace; }
@@ -270,59 +271,60 @@
 
         /* SECTION TITLE */
         .section-title { 
-            font-size: 1.2rem; margin-bottom: 20px; color: var(--text-title); font-weight: 700; 
+            font-size: 1.25rem; margin-bottom: 22px; color: var(--text-title); font-weight: 700; 
             font-family: 'Outfit', sans-serif;
             border-left: 4px solid var(--primary-color); padding-left: 12px; 
-            text-shadow: 0 0 12px rgba(0, 200, 83, 0.3); 
+            text-shadow: 0 0 12px rgba(157, 78, 221, 0.4); 
         }
 
         /* NAVIGATION */
         .bottom-nav { 
             position: fixed; bottom: 0; left: 0; right: 0; 
-            background-color: rgba(5, 10, 5, 0.97); 
+            background-color: rgba(11, 0, 26, 0.95); 
             backdrop-filter: blur(12px); 
             border-top: 1px solid var(--border-subtle); 
             display: flex; justify-content: space-around; 
-            padding: 10px 0 20px; z-index: 1000; 
+            padding: 12px 0 22px; z-index: 1000; 
         }
         .bottom-nav-item { 
             display: flex; flex-direction: column; align-items: center; gap: 6px; 
-            color: var(--disabled-text); text-decoration: none; font-size: 0.7rem; font-weight: 600; 
+            color: var(--disabled-text); text-decoration: none; font-size: 0.75rem; font-weight: 600; 
             width: 25%; transition: all 0.25s cubic-bezier(.4,0,.2,1);
             font-family: 'Outfit', sans-serif;
             position: relative;
         }
         .bottom-nav-item::after {
-            content: ""; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
-            width: 0; height: 3px; background: var(--grad); border-radius: 99px 99px 0 0;
+            content: ""; position: absolute; bottom: -12px; left: 50%; transform: translateX(-50%);
+            width: 0; height: 4px; background: var(--grad); border-radius: 99px 99px 0 0;
             transition: width 0.25s cubic-bezier(.4,0,.2,1);
+            box-shadow: 0 -2px 10px rgba(0, 245, 255, 0.5);
         }
-        .bottom-nav-item.active::after { width: 22px; }
+        .bottom-nav-item.active::after { width: 28px; }
         .bottom-nav-item:hover { color: var(--text-title); }
-        .bottom-nav-item.active { color: var(--primary-color); transform: translateY(-2px); }
-        .bottom-nav-item i { font-size: 1.25rem; }
+        .bottom-nav-item.active { color: var(--secondary-color); transform: translateY(-3px); }
+        .bottom-nav-item i { font-size: 1.3rem; }
 
         .content-section { display: none; opacity: 0; animation: fadeEffect 0.3s forwards; }
         .content-section.active { display: block; }
-        @keyframes fadeEffect { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeEffect { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         
-        .loader { border: 3px solid var(--input-bg); border-top: 3px solid var(--primary-color); border-radius: 50%; width: 30px; height: 30px; animation: spin 0.8s linear infinite; margin: 30px auto; }
+        .loader { border: 3px solid var(--input-bg); border-top: 3px solid var(--secondary-color); border-radius: 50%; width: 34px; height: 34px; animation: spin 0.8s linear infinite; margin: 30px auto; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         /* MODALS */
         .modal-overlay { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.87); z-index: 2000; display: none; 
+            background: rgba(5,0,10,0.85); z-index: 2000; display: none; 
             justify-content: center; align-items: center; 
-            backdrop-filter: blur(6px); padding: 15px; box-sizing: border-box; 
+            backdrop-filter: blur(8px); padding: 15px; box-sizing: border-box; 
         }
         .modal-overlay.show { display: flex; }
         .modal-content { 
-            background: linear-gradient(145deg, rgba(10,22,10,0.98), rgba(5,10,5,0.99));
-            color: var(--text-title); padding: 20px; border-radius: 22px; 
-            width: 100%; max-width: 360px; text-align: center; 
+            background: linear-gradient(145deg, rgba(30,15,50,0.98), rgba(15,5,25,0.99));
+            color: var(--text-title); padding: 25px; border-radius: 24px; 
+            width: 100%; max-width: 380px; text-align: center; 
             border: 1px solid var(--border-subtle); 
-            box-shadow: 0 10px 40px rgba(0,200,83,0.18); 
+            box-shadow: 0 10px 40px rgba(157,78,221,0.25); 
             display: flex; flex-direction: column; max-height: 85vh; 
             position: relative; overflow: hidden;
             animation: popIn 0.3s cubic-bezier(0.34,1.56,0.64,1);
@@ -331,55 +333,56 @@
         
         /* VERIFICATION MODAL */
         .activation-modal { 
-            background: linear-gradient(145deg, rgba(10,22,10,0.99), rgba(5,10,5,1));
-            backdrop-filter: blur(15px); padding: 28px 22px; border-radius: 22px; 
-            width: 100%; max-width: 340px; text-align: center; 
+            background: linear-gradient(145deg, rgba(30,15,50,0.99), rgba(11,0,26,1));
+            backdrop-filter: blur(15px); padding: 30px 24px; border-radius: 24px; 
+            width: 100%; max-width: 360px; text-align: center; 
             border: 1.5px solid var(--primary-color); 
-            box-shadow: 0 0 40px rgba(0, 200, 83, 0.22); 
+            box-shadow: 0 0 40px rgba(157, 78, 221, 0.3); 
             animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; 
         }
         .verify-btn { 
             display: flex; align-items: center; gap: 12px; 
-            background: rgba(0,200,83,0.06); 
+            background: rgba(157,78,221,0.1); 
             border: 1.5px solid var(--border-subtle); color: var(--text-title); 
-            padding: 14px; border-radius: var(--radius-btn); text-decoration: none; 
+            padding: 16px; border-radius: var(--radius-btn); text-decoration: none; 
             font-weight: 600; font-size: 0.95rem; transition: all 0.25s; 
         }
         .verify-btn:hover { 
-            border-color: var(--primary-color); color: var(--primary-color); 
-            background: rgba(0, 200, 83, 0.08); 
-            transform: translateX(3px);
+            border-color: var(--secondary-color); color: var(--secondary-color); 
+            background: rgba(0, 245, 255, 0.1); 
+            transform: translateX(4px);
         }
-        .verify-btn i { color: var(--primary-color); font-size: 1.3rem; }
+        .verify-btn i { color: var(--secondary-color); font-size: 1.35rem; }
         
         /* LOTTERY WHEEL CSS */
-        .wheel-container { position: relative; width: 250px; height: 250px; margin: 0 auto; }
+        .wheel-container { position: relative; width: 260px; height: 260px; margin: 0 auto; }
         #wheelCanvas { 
             width: 100%; height: 100%; border-radius: 50%; 
-            box-shadow: 0 0 20px rgba(0,200,83,0.45), 0 0 0 6px rgba(0,200,83,0.12); 
+            box-shadow: 0 0 25px rgba(157,78,221,0.5), 0 0 0 8px rgba(157,78,221,0.15); 
             transition: transform 4s cubic-bezier(0.175, 0.885, 0.32, 1.05); 
         }
         .pointer { 
             position: absolute; top: 50%; right: -15px; transform: translateY(-50%); 
-            width: 0; height: 0; border-top: 12px solid transparent; 
-            border-bottom: 12px solid transparent; border-right: 25px solid #00C853; 
-            z-index: 10; filter: drop-shadow(-3px 3px 5px rgba(0,200,83,0.5)); 
+            width: 0; height: 0; border-top: 14px solid transparent; 
+            border-bottom: 14px solid transparent; border-right: 28px solid #9D4EDD; 
+            z-index: 10; filter: drop-shadow(-3px 3px 6px rgba(157,78,221,0.6)); 
         }
         #confettiCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
 
         /* AD WATCH BUTTONS special style */
         .ad-watch-btn {
-            background: linear-gradient(135deg, #00C853, #00BFA5);
-            color: #fff; border: none; border-radius: 10px;
-            padding: 10px 20px; font-weight: 700; font-size: 0.88rem;
+            background: linear-gradient(135deg, #9D4EDD, #00F5FF);
+            color: #fff; border: none; border-radius: 12px;
+            padding: 12px 22px; font-weight: 700; font-size: 0.9rem;
             cursor: pointer; transition: all 0.25s cubic-bezier(.4,0,.2,1);
             font-family: 'Outfit', sans-serif;
-            box-shadow: 0 4px 16px rgba(0,200,83,0.35);
+            box-shadow: 0 4px 16px rgba(157,78,221,0.35);
             position: relative; overflow: hidden;
+            letter-spacing: 0.03em;
         }
         .ad-watch-btn:hover:not(:disabled) {
-            transform: scale(1.05) translateY(-1px);
-            box-shadow: 0 6px 22px rgba(0,200,83,0.55);
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 6px 22px rgba(0,245,255,0.45);
         }
         .ad-watch-btn:active:not(:disabled) { transform: scale(0.96); }
         .ad-watch-btn:disabled {
@@ -396,25 +399,25 @@
 
         /* HOME LINKS ROW */
         .home-links-row {
-            display: flex; gap: 10px; margin-top: 25px;
+            display: flex; gap: 12px; margin-top: 25px;
         }
         .home-link-btn {
-            flex: 1; display: flex; align-items: center; justify-content: center; gap: 7px;
-            padding: 12px; border-radius: 12px;
+            flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 14px; border-radius: 14px;
             border: 1.5px solid var(--border-subtle);
-            background: rgba(0,200,83,0.05);
-            color: var(--text-title); font-size: 0.88rem; font-weight: 600;
+            background: rgba(157,78,221,0.08);
+            color: var(--text-title); font-size: 0.9rem; font-weight: 600;
             text-decoration: none; transition: all 0.25s cubic-bezier(.4,0,.2,1);
             font-family: 'Outfit', sans-serif;
         }
         .home-link-btn:hover {
-            border-color: var(--primary-color);
-            background: rgba(0,200,83,0.1);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 18px rgba(0,200,83,0.2);
+            border-color: var(--secondary-color);
+            background: rgba(0,245,255,0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,245,255,0.25);
         }
         .home-link-btn:active { transform: scale(0.97) translateY(0); }
-        .home-link-btn i { color: var(--primary-color); font-size: 1.1rem; }
+        .home-link-btn i { color: var(--secondary-color); font-size: 1.15rem; }
     </style>
 </head>
 <body>
@@ -455,11 +458,11 @@
                     <span>Lifetime</span>
                     <strong id="home-life">0 Pts</strong>
                 </div>
-                <div class="stat-item" style="border-color: rgba(0,200,83,0.35);">
+                <div class="stat-item" style="border-color: rgba(157,78,221,0.35);">
                     <span style="color: var(--primary-color);">Normal Invites</span>
                     <strong id="home-normal-ref">0</strong>
                 </div>
-                <div class="stat-item" style="border-color: rgba(0,230,118,0.35);">
+                <div class="stat-item" style="border-color: rgba(0,245,255,0.35);">
                     <span style="color: var(--success-color);">Valid Referrals</span>
                     <strong id="home-valid-ref">0</strong>
                 </div>
@@ -477,7 +480,7 @@
                  <a href="https://t.me/tonX_hub_chat" target="_blank" class="home-link-btn">
                      <i class="fas fa-users"></i> Group
                  </a>
-                 <a href="https://t.me/Your_Admin11" target="_blank" class="home-link-btn">
+                 <a href="https://t.me/Play35GN" target="_blank" class="home-link-btn">
                      <i class="fas fa-headset"></i> Support
                  </a>
              </div>
@@ -486,7 +489,7 @@
         <!-- ADS SECTION -->
         <section id="ads-content" class="content-section">
              <h3 class="section-title">Daily Ad Mission</h3>
-             <div style="text-align: center; margin-bottom: 15px; color: var(--primary-color); font-size: 0.9rem; background: rgba(0,200,83,0.06); padding: 10px; border-radius: 12px; border: 1px solid var(--border-subtle);">
+             <div style="text-align: center; margin-bottom: 15px; color: var(--secondary-color); font-size: 0.9rem; background: rgba(0,245,255,0.1); padding: 12px; border-radius: 14px; border: 1px solid var(--border-subtle);">
                  <i class="fas fa-info-circle"></i> Ads & Spins reset automatically everyday at <b>12:00 AM</b>.
              </div>
              
@@ -500,7 +503,7 @@
                      <span class="special-ad-limit" id="limit-mixed">0/20</span>
                  </div>
                  <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
-                    <span style="color:var(--success-color); font-weight:bold;">+12 Points</span>
+                    <span style="color:var(--success-color); font-weight:bold;">+10 Points</span>
                     <button id="btn-watch-mixed" class="ad-watch-btn">Watch</button>
                  </div>
              </div>
@@ -509,13 +512,13 @@
              <div class="special-ad-card">
                  <div class="special-ad-header">
                      <div>
-                        <h4><i class="fas fa-eye" style="color:#00E676; margin-right:5px;"></i> Fast View</h4>
+                        <h4><i class="fas fa-eye" style="color:#00F5FF; margin-right:5px;"></i> Fast View</h4>
                         <p style="font-size:0.8rem; color:var(--disabled-text); margin:0;">Monetag Network</p>
                      </div>
                      <span class="special-ad-limit" id="limit-monetag">0/15</span>
                  </div>
                  <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
-                    <span style="color:var(--success-color); font-weight:bold;">+12 Points</span>
+                    <span style="color:var(--success-color); font-weight:bold;">+10 Points</span>
                     <button id="btn-watch-monetag" class="ad-watch-btn">Watch</button>
                  </div>
              </div>
@@ -530,7 +533,7 @@
                      <span class="special-ad-limit" id="limit-giga">0/15</span>
                  </div>
                  <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
-                    <span style="color:var(--success-color); font-weight:bold;">+12 Points</span>
+                    <span style="color:var(--success-color); font-weight:bold;">+10 Points</span>
                     <button id="btn-watch-giga" class="ad-watch-btn">Watch</button>
                  </div>
              </div>
@@ -541,20 +544,20 @@
             <h3 class="section-title">Lucky Spin Wheel</h3>
             <div class="card" style="text-align: center; position: relative; padding-bottom: 30px; overflow: hidden;">
                 <canvas id="confettiCanvas"></canvas>
-                <h2 style="margin: 0 0 10px; font-size: 24px; text-transform: uppercase; color: var(--primary-color); text-shadow: 0 2px 12px rgba(0,200,83,0.4); font-family:'Outfit',sans-serif;">
+                <h2 style="margin: 0 0 10px; font-size: 24px; text-transform: uppercase; color: var(--secondary-color); text-shadow: 0 2px 12px rgba(0,245,255,0.4); font-family:'Outfit',sans-serif;">
                     <i class="fas fa-dharmachakra"></i> Premium Wheel
                 </h2>
-                <div class="spin-limit" id="spinLimitText" style="font-size: 13px; color: var(--success-color); background: rgba(0,200,83,0.08); padding: 5px 15px; border-radius: 20px; display: inline-block; margin-bottom: 25px; border: 1px solid rgba(0,200,83,0.2);">
+                <div class="spin-limit" id="spinLimitText" style="font-size: 13px; color: var(--success-color); background: rgba(0,245,255,0.1); padding: 6px 16px; border-radius: 20px; display: inline-block; margin-bottom: 25px; border: 1px solid rgba(0,245,255,0.25);">
                     Remaining Spins Today: 10/10
                 </div>
                 <div class="wheel-container">
                     <div class="pointer"></div>
                     <canvas id="wheelCanvas" width="400" height="400"></canvas>
                 </div>
-                <button id="spinBtn" class="form-button" style="margin-top: 30px; border-radius: 50px; padding: 15px;">
+                <button id="spinBtn" class="form-button" style="margin-top: 30px; border-radius: 50px; padding: 18px;">
                     <i class="fas fa-play-circle"></i> SPIN NOW (Watch Ad)
                 </button>
-                <div id="lotteryResult" style="margin-top: 20px; font-size: 16px; font-weight: 600; min-height: 25px; color: var(--primary-color);">Test your luck to win points!</div>
+                <div id="lotteryResult" style="margin-top: 20px; font-size: 16px; font-weight: 600; min-height: 25px; color: var(--secondary-color);">Test your luck to win points!</div>
             </div>
         </section>
 
@@ -578,38 +581,38 @@
 
     <!-- Withdraw Modal -->
     <div id="withdrawModalOverlay" class="modal-overlay">
-        <div class="modal-content" style="padding: 20px; max-width: 330px; text-align: left;">
-            <h3 style="margin: 0 0 10px; color: var(--primary-color); font-size: 1.15rem; border-bottom: 1px solid var(--border-subtle); padding-bottom: 8px; font-family:'Outfit',sans-serif;">
+        <div class="modal-content" style="padding: 25px; text-align: left;">
+            <h3 style="margin: 0 0 10px; color: var(--secondary-color); font-size: 1.25rem; border-bottom: 1px solid var(--border-subtle); padding-bottom: 10px; font-family:'Outfit',sans-serif;">
                 <i class="fas fa-wallet"></i> Withdraw Funds
             </h3>
             
-            <h2 style="text-align: center; font-size: 1.8rem; margin: 10px 0 0; text-shadow: 0 0 10px rgba(0,200,83,0.3);" id="withdrawPointBalance">0.0000 TON</h2>
-            <p style="text-align: center; color: var(--text-body); margin: 5px 0 15px; font-size: 0.8rem;">Rate: 50,000 Pts = 1.00 TON</p>
+            <h2 style="text-align: center; font-size: 2rem; margin: 15px 0 0; text-shadow: 0 0 15px rgba(0,245,255,0.4);" id="withdrawPointBalance">0.0000 TON</h2>
+            <p style="text-align: center; color: var(--text-body); margin: 5px 0 18px; font-size: 0.85rem;">Rate: 50,000 Pts = 1.00 TON</p>
 
             <form id="withdrawalForm">
-                 <div style="background: rgba(255, 214, 0, 0.08); border: 1px solid var(--warning-color); padding: 10px; border-radius: 8px; margin-bottom: 15px; display: flex; gap: 8px; align-items: flex-start;">
-                     <i class="fas fa-info-circle" style="color: var(--warning-color); margin-top: 2px; font-size: 1rem;"></i>
-                     <div style="font-size: 0.75rem; line-height: 1.4; color: #D1D5DB;">
+                 <div style="background: rgba(255, 214, 0, 0.1); border: 1px solid var(--warning-color); padding: 12px; border-radius: 12px; margin-bottom: 18px; display: flex; gap: 10px; align-items: flex-start;">
+                     <i class="fas fa-info-circle" style="color: var(--warning-color); margin-top: 2px; font-size: 1.05rem;"></i>
+                     <div style="font-size: 0.8rem; line-height: 1.45; color: #E2E8F0;">
                          <strong>Notice:</strong> Min withdraw 1500 Pts. Requires 1 Valid Referral per withdrawal. Use Tonkeeper address only.
                      </div>
                  </div>
 
-                 <div class="form-group" style="margin-bottom: 12px;">
-                    <label style="font-size: 0.8rem; margin-bottom: 5px;">Amount (Points)</label>
-                    <input type="number" id="withdrawalAmount" placeholder="Ex: 1500" required style="padding: 10px; font-size: 0.9rem;">
-                    <div id="realtime-ton-display" style="margin-top: 5px; font-size: 0.85rem; color: var(--success-color); font-weight: bold; display: none;">
+                 <div class="form-group" style="margin-bottom: 15px;">
+                    <label style="font-size: 0.85rem; margin-bottom: 6px;">Amount (Points)</label>
+                    <input type="number" id="withdrawalAmount" placeholder="Ex: 1500" required>
+                    <div id="realtime-ton-display" style="margin-top: 6px; font-size: 0.85rem; color: var(--success-color); font-weight: bold; display: none;">
                         You Receive: <span id="calc-ton-val">0.0000</span> TON
                     </div>
                  </div>
                  
-                 <div class="form-group" style="margin-bottom: 18px;">
-                    <label style="font-size: 0.8rem; margin-bottom: 5px;">Tonkeeper Address</label>
-                    <input type="text" id="accountDetails" placeholder="Enter address" required style="padding: 10px; font-size: 0.9rem;">
+                 <div class="form-group" style="margin-bottom: 22px;">
+                    <label style="font-size: 0.85rem; margin-bottom: 6px;">Tonkeeper Address</label>
+                    <input type="text" id="accountDetails" placeholder="Enter address" required>
                  </div>
                  
-                 <div style="display: flex; gap: 10px;">
-                     <button type="button" class="form-button outline close-modal-btn" style="padding: 12px; font-size: 0.9rem; flex: 1;">Cancel</button>
-                     <button id="submitWithdrawalBtn" class="form-button" style="padding: 12px; font-size: 0.9rem; flex: 1;">Submit</button>
+                 <div style="display: flex; gap: 12px;">
+                     <button type="button" class="form-button outline close-modal-btn" style="padding: 14px; font-size: 0.95rem; flex: 1;">Cancel</button>
+                     <button id="submitWithdrawalBtn" class="form-button" style="padding: 14px; font-size: 0.95rem; flex: 1;">Submit</button>
                  </div>
             </form>
         </div>
@@ -617,84 +620,84 @@
 
     <!-- Promo Code Modal -->
     <div id="promoModalOverlay" class="modal-overlay">
-        <div class="modal-content" style="text-align: left; max-width: 320px;">
-            <h3 style="margin-top: 0; color: var(--primary-color); font-family:'Outfit',sans-serif;"><i class="fas fa-ticket-alt"></i> Promo Code</h3>
-            <p style="font-size: 0.85rem; color: var(--text-body); margin-bottom: 15px;">Enter promo code to claim reward. Requires watching 1 ad.</p>
-            <div class="form-group" style="margin-bottom: 12px;">
+        <div class="modal-content" style="text-align: left; max-width: 340px;">
+            <h3 style="margin-top: 0; color: var(--secondary-color); font-family:'Outfit',sans-serif;"><i class="fas fa-ticket-alt"></i> Promo Code</h3>
+            <p style="font-size: 0.9rem; color: var(--text-body); margin-bottom: 18px;">Enter promo code to claim reward. Requires watching 1 ad.</p>
+            <div class="form-group" style="margin-bottom: 15px;">
                 <input type="text" id="promoCodeInput" placeholder="Enter Code Here">
             </div>
             <button id="claimPromoBtn" class="form-button">Claim Reward</button>
-            <button class="form-button close-modal-btn outline" style="margin-top: 10px;">Close</button>
+            <button class="form-button close-modal-btn outline" style="margin-top: 12px;">Close</button>
         </div>
     </div>
 
     <!-- Invite Modal -->
     <div id="inviteModalOverlay" class="modal-overlay">
-        <div class="modal-content" style="max-width: 340px;">
-            <i class="fas fa-gift" style="font-size: 3rem; color: var(--primary-color); margin-bottom: 15px; text-shadow: 0 0 20px rgba(0,200,83,0.45);"></i>
-            <h3 style="margin-top: 0; color: var(--text-title); font-family:'Outfit',sans-serif;">Invite Friends & Earn</h3>
-            <p style="font-size: 0.9rem; line-height: 1.6; color: var(--text-body); margin-bottom: 20px;">
+        <div class="modal-content" style="max-width: 360px;">
+            <i class="fas fa-gift" style="font-size: 3.5rem; color: var(--primary-color); margin-bottom: 18px; text-shadow: 0 0 25px rgba(157,78,221,0.5);"></i>
+            <h3 style="margin-top: 0; color: var(--text-title); font-family:'Outfit',sans-serif; font-size:1.4rem;">Invite Friends & Earn</h3>
+            <p style="font-size: 0.95rem; line-height: 1.6; color: var(--text-body); margin-bottom: 22px;">
                 When your friend registers: <b style="color:var(--primary-color);">+1 Normal Invite</b><br>
                 When friend watches 15 ads: <b style="color:var(--success-color);">+1 Valid Referral & 400 Pts!</b><br>
-                <span style="font-size: 0.75rem; color: var(--warning-color);">*1 Valid Referral unlocks 1 Withdrawal.</span>
+                <span style="font-size: 0.8rem; color: var(--warning-color); display:block; margin-top:8px;">*1 Valid Referral unlocks 1 Withdrawal.</span>
             </p>
             <div class="input-group">
                <input type="text" id="modalReferralLinkInput" readonly value="Loading...">
                <button id="modalCopyReferralLinkBtn" class="form-button"><i class="fas fa-copy"></i></button>
             </div>
-            <button class="form-button close-modal-btn outline" style="margin-top: 10px;">Close</button>
+            <button class="form-button close-modal-btn outline" style="margin-top: 12px;">Close</button>
         </div>
     </div>
 
     <!-- Success Modal -->
     <div id="successModalOverlay" class="modal-overlay">
-        <div class="modal-content" style="max-width: 280px;">
-            <i class="fas fa-check-circle" style="font-size: 3.5rem; color: var(--success-color); margin-bottom: 15px;"></i>
-            <h3 id="successModalTitle" style="font-family:'Outfit',sans-serif;">Success!</h3>
-            <p id="successModalMessage" style="color: var(--text-body);">Action completed.</p>
+        <div class="modal-content" style="max-width: 300px;">
+            <i class="fas fa-check-circle" style="font-size: 4rem; color: var(--success-color); margin-bottom: 18px; text-shadow: 0 0 20px rgba(0,245,255,0.4);"></i>
+            <h3 id="successModalTitle" style="font-family:'Outfit',sans-serif; font-size: 1.4rem;">Success!</h3>
+            <p id="successModalMessage" style="color: var(--text-body); font-size: 1rem;">Action completed.</p>
         </div>
     </div>
 
     <!-- History Modal -->
     <div id="historyModalOverlay" class="modal-overlay">
-        <div class="modal-content" style="max-height: 75vh; padding: 20px;">
-            <h3 style="margin-top:0; color: var(--primary-color); border-bottom: 1px solid var(--border-subtle); padding-bottom: 10px; text-align: left; font-family:'Outfit',sans-serif;">
+        <div class="modal-content" style="max-height: 75vh; padding: 25px;">
+            <h3 style="margin-top:0; color: var(--secondary-color); border-bottom: 1px solid var(--border-subtle); padding-bottom: 12px; text-align: left; font-family:'Outfit',sans-serif;">
                 <i class="fas fa-history"></i> History
             </h3>
-            <div id="combined-history-list" style="overflow-y: auto; flex-grow: 1; text-align: left; margin-top: 10px;"></div>
-            <button class="form-button close-modal-btn outline" style="margin-top: 15px;">Close</button>
+            <div id="combined-history-list" style="overflow-y: auto; flex-grow: 1; text-align: left; margin-top: 15px; padding-right:5px;"></div>
+            <button class="form-button close-modal-btn outline" style="margin-top: 18px;">Close</button>
         </div>
     </div>
 
     <!-- VERIFICATION MODAL (Join Channel & Group) -->
     <div id="activationModalOverlay" class="modal-overlay">
         <div class="activation-modal">
-            <div style="background: rgba(0,200,83,0.1); width: 68px; height: 68px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; border: 1.5px solid rgba(0,200,83,0.35);">
-                <i class="fas fa-shield-check" style="font-size: 2.3rem; color: var(--primary-color);"></i>
+            <div style="background: rgba(157,78,221,0.15); width: 75px; height: 75px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; border: 1.5px solid rgba(157,78,221,0.4);">
+                <i class="fas fa-shield-check" style="font-size: 2.6rem; color: var(--primary-color);"></i>
             </div>
-            <h3 style="color: var(--text-title); margin: 0 0 10px; font-size: 1.35rem; font-family:'Outfit',sans-serif;">Verification Required</h3>
-            <p style="color: var(--text-body); margin: 0 0 22px; font-size: 0.85rem; line-height: 1.55;">
+            <h3 style="color: var(--text-title); margin: 0 0 12px; font-size: 1.4rem; font-family:'Outfit',sans-serif;">Verification Required</h3>
+            <p style="color: var(--text-body); margin: 0 0 24px; font-size: 0.9rem; line-height: 1.55;">
                 Please join our Official Channel and Group to unlock all earning features and withdrawals.
             </p>
-            <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:20px;">
+            <div style="display:flex; flex-direction:column; gap:14px; margin-bottom:24px;">
                 <a href="https://t.me/tonXhub_Earn" target="_blank" class="verify-btn">
                     <i class="fab fa-telegram-plane"></i> 
                     <div style="text-align:left; flex:1;">
                         <div style="font-weight:700;">Join Channel</div>
-                        <div style="font-size:0.72rem; color:var(--text-body); margin-top:2px;">@tonXhub_Earn</div>
+                        <div style="font-size:0.75rem; color:var(--text-body); margin-top:3px;">@tonXhub_Earn</div>
                     </div>
-                    <i class="fas fa-chevron-right" style="font-size:0.8rem; color:var(--text-body);"></i>
+                    <i class="fas fa-chevron-right" style="font-size:0.85rem; color:var(--text-body);"></i>
                 </a>
                 <a href="https://t.me/tonX_hub_chat" target="_blank" class="verify-btn">
                     <i class="fas fa-users"></i> 
                     <div style="text-align:left; flex:1;">
                         <div style="font-weight:700;">Join Group</div>
-                        <div style="font-size:0.72rem; color:var(--text-body); margin-top:2px;">@tonX_hub_chat</div>
+                        <div style="font-size:0.75rem; color:var(--text-body); margin-top:3px;">@tonX_hub_chat</div>
                     </div>
-                    <i class="fas fa-chevron-right" style="font-size:0.8rem; color:var(--text-body);"></i>
+                    <i class="fas fa-chevron-right" style="font-size:0.85rem; color:var(--text-body);"></i>
                 </a>
             </div>
-            <button id="activateAccountBtn" class="form-button" style="padding: 14px;">Verify Account</button>
+            <button id="activateAccountBtn" class="form-button" style="padding: 16px;">Verify Account</button>
         </div>
     </div>
     
@@ -728,33 +731,31 @@
 
         const AD_CONFIG = { mixed: { limit: 20 }, monetag: { limit: 15 }, giga: { limit: 15 } };
 
-        // AD FUNCTIONS using actual SDKs from soan.html
-        const showMonetagAd = () => new Promise((res) => {
+        // === NEW ADS SYSTEM ===
+        const showMonetagAd = () => new Promise((resolve) => {
             try {
                 if (typeof show_10353766 === 'function') {
-                    show_10353766();
+                    show_10353766().then(() => resolve(true)).catch(() => resolve(false));
+                } else {
+                    resolve(false);
                 }
-            } catch(e) {}
-            setTimeout(res, 7000);
+            } catch(e) { resolve(false); }
         });
 
-        const showGigaPubAd = () => new Promise((res) => {
+        const showGigaPubAd = () => new Promise((resolve) => {
             try {
-                if (window.gigapub && typeof window.gigapub.show === 'function') {
-                    window.gigapub.show();
+                if (typeof window.showGiga === 'function') {
+                    window.showGiga().then(() => resolve(true)).catch(() => resolve(false));
+                } else {
+                    resolve(false);
                 }
-            } catch(e) {}
-            setTimeout(res, 5000);
+            } catch(e) { resolve(false); }
         });
-
-        const showFallbackAd = () => new Promise((res) => { setTimeout(res, 6000); });
 
         async function showRandomAd() { 
-            try { 
-                const ads = [showMonetagAd, showGigaPubAd];
-                const choice = ads[Math.floor(Math.random() * ads.length)];
-                await choice(); 
-            } catch(err) { await showFallbackAd(); } 
+            const ads =[showMonetagAd, showGigaPubAd];
+            const choice = ads[Math.floor(Math.random() * ads.length)];
+            return await choice(); 
         }
 
         // Ripple effect on buttons
@@ -775,32 +776,26 @@
             if (!btn) return false;
             btn.dataset.busy = "true"; btn.disabled = true;
             let originalHTML = btn.innerHTML;
-            const minDuration = 6000; const startTime = Date.now();
+            btn.textContent = "Processing Ad...";
 
-            const timerInterval = setInterval(() => {
-                let left = Math.ceil((minDuration - (Date.now() - startTime)) / 1000);
-                if (left > 0) btn.textContent = `⏳ Wait ${left}s...`; else btn.textContent = "Processing...";
-            }, 500);
-
-            return new Promise(async (resolve) => {
-                let adClosedEarly = false;
-                const visibilityHandler = () => { if (!document.hidden && (Date.now() - startTime) < minDuration) adClosedEarly = true; };
-                document.addEventListener('visibilitychange', visibilityHandler);
-                try {
-                    let adExecStart = Date.now();
-                    if (adFunc) await adFunc();
-                    if ((Date.now() - adExecStart) > 500 && (Date.now() - adExecStart) < minDuration) adClosedEarly = true;
-                    let remaining = minDuration - (Date.now() - startTime);
-                    if (remaining > 0) await new Promise(r => setTimeout(r, remaining)); 
-                } catch (err) { adClosedEarly = true; }
-
-                clearInterval(timerInterval); document.removeEventListener('visibilitychange', visibilityHandler);
-                btn.dataset.busy = "false"; 
-                if (adClosedEarly) {
-                    alert("⚠️ Ad closed too early! Watch for at least 6 seconds to receive points.");
-                    btn.innerHTML = originalHTML; btn.disabled = false; resolve(false);
-                } else { resolve(true); }
-            });
+            try {
+                const success = await adFunc();
+                btn.dataset.busy = "false";
+                btn.innerHTML = originalHTML;
+                btn.disabled = false;
+                
+                if (!success) {
+                    alert("⚠️ Ad was not completed or failed to load.");
+                    return false;
+                }
+                return true;
+            } catch (err) {
+                btn.dataset.busy = "false";
+                btn.innerHTML = originalHTML;
+                btn.disabled = false;
+                alert("⚠️ Ad error.");
+                return false;
+            }
         }
 
         async function checkDailyReset(user) {
@@ -835,7 +830,7 @@
 
             if (!userSnap.exists()) {
                 const defaultUserData = {
-                    tonBalance: 0, pointBalance: 0, lifetimePointsEarned: 0, referralCount: 0, totalInvites: 0, spentReferrals: 0, completedTasks: [], 
+                    tonBalance: 0, pointBalance: 0, lifetimePointsEarned: 0, referralCount: 0, totalInvites: 0, spentReferrals: 0, completedTasks:[], 
                     createdAt: serverTimestamp(), telegramUsername: tgUser.username || 'N/A', isBanned: false, isActivated: false, isGroupVerified: false, 
                     lifetimeAdsWatched: 0, adsWatchedMixed: 0, adsWatchedMonetag: 0, adsWatchedGiga: 0, dailyBonusClaimed: false, dailySpinsUsed: 0, lastResetDate: todayStr 
                 };
@@ -849,7 +844,7 @@
             }
 
             currentUser = { id: userSnap.id, ...userSnap.data() };
-            if (currentUser.isBanned) { document.body.innerHTML = `<h3 style="text-align:center; margin-top:50px; color:red;">Account Banned</h3>`; return null; }
+            if (currentUser.isBanned) { document.body.innerHTML = `<h3 style="text-align:center; margin-top:50px; color:var(--danger-color);">Account Banned</h3>`; return null; }
             
             await checkDailyReset(currentUser); 
             updateBalanceUI(); 
@@ -895,7 +890,7 @@
             const watchCount = type === 'mixed' ? currentUser.adsWatchedMixed : type === 'monetag' ? currentUser.adsWatchedMonetag : currentUser.adsWatchedGiga;
             if((watchCount || 0) >= maxLimit) return;
             const success = await runAdAndVerifyTime(btnId, adFunc);
-            if (success) await processAdReward(type, 12);
+            if (success) await processAdReward(type, 10); // Reward: 10 points
         };
 
         document.getElementById('btn-watch-mixed').addEventListener('click', () => handleAdClick('mixed', 'btn-watch-mixed', AD_CONFIG.mixed.limit, showRandomAd));
@@ -944,8 +939,8 @@
                     const task = docSnap.data();
                     if (currentUser.completedTasks?.includes(docSnap.id) || ((task.limit || 0) > 0 && (task.completionCount || 0) >= task.limit)) return;
                     const card = document.createElement('div'); 
-                    card.style = "background: var(--card-bg); padding:15px; border-radius:12px; border:1px solid var(--border-subtle); display:flex; justify-content:space-between; align-items:center; transition: border-color 0.2s;";
-                    card.innerHTML = `<div><h4 style="margin:0 0 5px; color:var(--text-title); font-family:'Outfit',sans-serif;">${task.title}</h4><p style="margin:0; font-size:0.85rem; color:var(--text-body);">+${(task.rewardPoints || 5)} Points</p></div><button class="ad-watch-btn" style="padding:9px 18px;" data-task-id="${docSnap.id}" data-task-url="${task.url}" data-state="start">Go</button>`;
+                    card.style = "background: var(--card-bg); padding:16px; border-radius:16px; border:1px solid var(--border-subtle); display:flex; justify-content:space-between; align-items:center; transition: border-color 0.2s; box-shadow: var(--shadow-card);";
+                    card.innerHTML = `<div><h4 style="margin:0 0 6px; color:var(--text-title); font-family:'Outfit',sans-serif; font-size:1.05rem;">${task.title}</h4><p style="margin:0; font-size:0.85rem; color:var(--text-body);">+${(task.rewardPoints || 5)} Points</p></div><button class="ad-watch-btn" style="padding:10px 20px;" data-task-id="${docSnap.id}" data-task-url="${task.url}" data-state="start">Go</button>`;
                     container.appendChild(card); count++;
                 });
                 if (count === 0) container.innerHTML = '<p style="text-align:center; color:var(--text-body);">No new tasks.</p>';
@@ -1020,7 +1015,7 @@
                 const tQ = query(collection(db, "transactions"), where("userId", "==", currentUser.id));
                 const [wSnap, tSnap] = await Promise.all([getDocs(wQ), getDocs(tQ)]);
                 
-                let list = [];
+                let list =[];
                 wSnap.forEach(d => list.push({ ...d.data(), isW: true, time: d.data().createdAt }));
                 tSnap.forEach(d => list.push({ ...d.data(), isW: false, time: d.data().createdAt }));
                 
@@ -1041,9 +1036,9 @@
                         color = "var(--danger-color)"; 
                     }
                     
-                    return `<div style="display:flex; justify-content:space-between; align-items:center; padding: 12px 0; border-bottom: 1px solid var(--border-subtle);">
-                        <div><strong style="display:block; color:var(--text-title); font-size:0.95rem;">${title}</strong><small style="color:var(--text-body); font-size:0.75rem;">${date}</small></div>
-                        <strong style="color:${color}; font-size:0.95rem;">${amt}</strong>
+                    return `<div style="display:flex; justify-content:space-between; align-items:center; padding: 14px 0; border-bottom: 1px solid var(--border-subtle);">
+                        <div><strong style="display:block; color:var(--text-title); font-size:1rem;">${title}</strong><small style="color:var(--text-body); font-size:0.8rem;">${date}</small></div>
+                        <strong style="color:${color}; font-size:1rem;">${amt}</strong>
                     </div>`;
                 }).join('');
             } catch(e) { container.innerHTML = '<p style="text-align:center; color:red;">Failed to load history.</p>'; }
@@ -1096,17 +1091,17 @@
         class LotteryWheel {
             constructor(cId) { 
                 this.c = document.getElementById(cId); this.ctx = this.c.getContext("2d"); this.rot = 0; 
-                this.seg = [
-                    { l: "5 Pts", v: 5, c: "#00C853", w: 40 }, 
-                    { l: "8 Pts", v: 8, c: "#00897B", w: 30 }, 
-                    { l: "10 Pts", v: 10, c: "#1B5E20", w: 20 }, 
-                    { l: "15 Pts", v: 15, c: "#2E7D32", w: 5 }, 
-                    { l: "17 Pts", v: 17, c: "#00695C", w: 3 }, 
-                    { l: "20 Pts", v: 20, c: "#00E676", w: 2 }
+                this.seg =[
+                    { l: "5 Pts", v: 5, c: "#9D4EDD", w: 40 }, 
+                    { l: "8 Pts", v: 8, c: "#7B2CBF", w: 30 }, 
+                    { l: "10 Pts", v: 10, c: "#5A189A", w: 20 }, 
+                    { l: "15 Pts", v: 15, c: "#00F5FF", w: 5 }, 
+                    { l: "17 Pts", v: 17, c: "#00B4D8", w: 3 }, 
+                    { l: "20 Pts", v: 20, c: "#0077B6", w: 2 }
                 ]; 
                 this.draw(); 
             }
-            draw() { const a = (2*Math.PI)/this.seg.length; const cx = this.c.width/2; const cy = this.c.height/2; const r = cx; this.seg.forEach((s, i) => { this.ctx.beginPath(); this.ctx.moveTo(cx, cy); this.ctx.arc(cx, cy, r, i*a, (i+1)*a); this.ctx.fillStyle = s.c; this.ctx.fill(); this.ctx.lineWidth=4; this.ctx.strokeStyle="rgba(0,200,83,0.25)"; this.ctx.stroke(); this.ctx.save(); this.ctx.translate(cx, cy); this.ctx.rotate(i*a + a/2); this.ctx.textAlign="right"; this.ctx.fillStyle = "#fff"; this.ctx.font="bold 34px Arial"; this.ctx.fillText(s.l, r-30, 12); this.ctx.restore(); }); }
+            draw() { const a = (2*Math.PI)/this.seg.length; const cx = this.c.width/2; const cy = this.c.height/2; const r = cx; this.seg.forEach((s, i) => { this.ctx.beginPath(); this.ctx.moveTo(cx, cy); this.ctx.arc(cx, cy, r, i*a, (i+1)*a); this.ctx.fillStyle = s.c; this.ctx.fill(); this.ctx.lineWidth=4; this.ctx.strokeStyle="rgba(157,78,221,0.5)"; this.ctx.stroke(); this.ctx.save(); this.ctx.translate(cx, cy); this.ctx.rotate(i*a + a/2); this.ctx.textAlign="right"; this.ctx.fillStyle = "#fff"; this.ctx.font="bold 34px Arial"; this.ctx.fillText(s.l, r-30, 12); this.ctx.restore(); }); }
             spin(resEl, cb) { const wId = (() => { let rnd=Math.random()*100, s=0; for(let i=0;i<this.seg.length;i++){ s+=this.seg[i].w; if(rnd<=s) return i; } return 0;})(); const a = 360/this.seg.length; const tg = (wId*a)+(a/2); const fn = this.rot + (Math.floor(Math.random()*4)+6)*360 + (360-tg) - (this.rot%360); this.c.style.transform = `rotate(${fn}deg)`; this.rot = fn; resEl.innerText = "Spinning... 🌀"; setTimeout(() => { resEl.innerHTML = `🎉 Won ${this.seg[wId].l}!`; if(cb) cb(this.seg[wId]); }, 4000); }
         }
         const wheel = new LotteryWheel("wheelCanvas");
@@ -1123,8 +1118,11 @@
         document.getElementById('spinBtn').addEventListener('click', async () => {
             if ((currentUser.dailySpinsUsed || 0) >= 10) return;
             const btn = document.getElementById('spinBtn'); btn.dataset.busy = "true";
+            
+            // Watch a mixed random ad first
             const ok = await runAdAndVerifyTime('spinBtn', showRandomAd);
             if (!ok) { btn.dataset.busy = "false"; updateLotteryUI(); return; }
+            
             btn.disabled = true; btn.innerHTML = '<i class="fas fa-dharmachakra"></i> Spinning...';
             wheel.spin(document.getElementById("lotteryResult"), async (pz) => {
                 try {
@@ -1147,8 +1145,8 @@
 
         async function main() {
             try {
-                if (!tg.initDataUnsafe?.user) { document.body.innerHTML = `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:#050A05;color:#fff;font-family:'Outfit',sans-serif;padding:32px;text-align:center;gap:16px;"><div style="font-size:3rem">🔒</div><div style="font-size:1.4rem;font-weight:900;background:linear-gradient(135deg,#00C853,#00BFA5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Ton X HUB</div><p style="color:#8FBCA0;">Open in Telegram to use this app.</p></div>`; return; }
-                tg.ready(); tg.expand(); tg.setHeaderColor('#050A05'); 
+                if (!tg.initDataUnsafe?.user) { document.body.innerHTML = `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:#0B001A;color:#fff;font-family:'Outfit',sans-serif;padding:32px;text-align:center;gap:16px;"><div style="font-size:3rem">🔒</div><div style="font-size:1.4rem;font-weight:900;background:linear-gradient(135deg,#9D4EDD,#00F5FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Ton X HUB</div><p style="color:#C8B6FF;">Open in Telegram to use this app.</p></div>`; return; }
+                tg.ready(); tg.expand(); tg.setHeaderColor('#0B001A'); 
                 await initializeUser(tg.initDataUnsafe.user, tg.initDataUnsafe.start_param);
                 document.getElementById('profile-id-display').querySelector('span').textContent = currentUser.id;
                 // Show join modal for new users only if not activated
