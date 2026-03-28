@@ -5,19 +5,27 @@ export default async function handler(req, res) {
     return res.status(200).json({ ok: true });
   }
 
-  const body = req.body;
-  const chatId = body.message?.chat?.id;
-  const text = body.message?.text;
+  let body;
+
+  try {
+    body = req.body;
+  } catch (e) {
+    return res.status(200).json({ ok: false });
+  }
+
+  console.log("Incoming:", body); // 🔥 debug
+
+  const chatId = body?.message?.chat?.id;
+  const text = body?.message?.text;
 
   if (!chatId) {
     return res.status(200).json({ ok: true });
   }
 
-  // 🔥 /start command
   if (text === "/start") {
 
-    // ✅ Firebase এ user save
-    await fetch("https://ton-xhub-default-rtdb.firebaseio.com/users/" + chatId + ".json", {
+    // Firebase save
+    await fetch(`https://ton-xhub-default-rtdb.firebaseio.com/users/${chatId}.json`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -26,13 +34,13 @@ export default async function handler(req, res) {
       })
     });
 
-    // ✅ Telegram Message + Buttons
+    // Telegram message
     await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         chat_id: chatId,
-        text: "🚀 Welcome to TONX HUB EARN BOT\n\nStart earning now by inviting friends!",
+        text: "🚀 Welcome to TONX HUB EARN BOT\n\nClick below buttons 👇",
         reply_markup: {
           inline_keyboard: [
             [
