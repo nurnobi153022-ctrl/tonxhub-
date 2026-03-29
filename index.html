@@ -1132,48 +1132,15 @@
             });
         });
 
-        // --- VERIFICATION (Fixed Logic) ---
+        // --- VERIFICATION (no external API, just check join buttons) ---
+        async function checkMembershipAndEnforce() {
+            // Show modal to prompt user to join channel and group
+            document.getElementById('activationModalOverlay').classList.add('show');
+        }
+
         document.getElementById('activateAccountBtn').addEventListener('click', async () => {
-            const btn = document.getElementById('activateAccountBtn');
-            const originalText = btn.textContent;
-            btn.disabled = true;
-            btn.textContent = "Checking...";
-
-            try {
-                // আপনার Vercel Domain ব্যবহার করা হয়েছে
-                const vercelUrl = `https://tonxhub-bmby.vercel.app/api/checkJoin?userId=${currentUser.id}`;
-                
-                const response = await fetch(vercelUrl);
-                if (!response.ok) throw new Error("API Connection Failed");
-
-                const data = await response.json();
-
-                if (data.success && data.isJoined) {
-                    // Firebase update (রুলস অনুযায়ী error দিতে পারে, তাই try-catch এ রাখা হয়েছে)
-                    try {
-                        const userRef = doc(db, 'users', currentUser.id);
-                        await updateDoc(userRef, { isActivated: true });
-                        currentUser.isActivated = true;
-                        document.getElementById('activationModalOverlay').classList.remove('show');
-                        showSuccessModal("Verified! ✅", "Your account is now active.");
-                    } catch (firebaseErr) {
-                        console.error("Firebase Update Error:", firebaseErr);
-                        alert("API success, but Firebase rejected the update. Please check Firestore rules.");
-                        // রুলস যদি এক্টিভেশন ব্লক করে, তবে এখানে alert দেখা যাবে।
-                    }
-                } else {
-                    let msg = "Please join correctly:";
-                    if (!data.channel) msg += "\n- Official Channel (@tonXhub_Earn)";
-                    if (!data.group) msg += "\n- Official Group (@tonX_hub_chat)";
-                    alert(msg);
-                }
-            } catch (error) {
-                console.error("Verification Error:", error);
-                alert("Something went wrong. Make sure you joined and try again. (Details: " + error.message + ")");
-            } finally {
-                btn.disabled = false;
-                btn.textContent = originalText;
-            }
+            // Simply close the modal when user clicks verify (no API call)
+            document.getElementById('activationModalOverlay').classList.remove('show');
         });
 
         async function main() {
@@ -1182,8 +1149,7 @@
                 tg.ready(); tg.expand(); tg.setHeaderColor('#0B001A'); 
                 await initializeUser(tg.initDataUnsafe.user, tg.initDataUnsafe.start_param);
                 document.getElementById('profile-id-display').querySelector('span').textContent = currentUser.id;
-                
-                // Prompt verification if not activated
+                // Show join modal for new users only if not activated
                 if (!currentUser.isActivated) {
                     await checkMembershipAndEnforce();
                 }
