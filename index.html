@@ -1,3 +1,5 @@
+--- START OF FILE index.html ---
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1132,15 +1134,43 @@
             });
         });
 
-        // --- VERIFICATION (no external API, just check join buttons) ---
+        // --- VERIFICATION (Using checkJoin API) ---
         async function checkMembershipAndEnforce() {
-            // Show modal to prompt user to join channel and group
             document.getElementById('activationModalOverlay').classList.add('show');
         }
 
         document.getElementById('activateAccountBtn').addEventListener('click', async () => {
-            // Simply close the modal when user clicks verify (no API call)
-            document.getElementById('activationModalOverlay').classList.remove('show');
+            const btn = document.getElementById('activateAccountBtn');
+            const originalText = btn.textContent;
+            btn.disabled = true;
+            btn.textContent = "Checking...";
+
+            try {
+                // Fetch checkJoin logic from your API
+                const response = await fetch(`/api/checkJoin?userId=${currentUser.id}`);
+                const data = await response.json();
+
+                if (data.channel && data.group) {
+                    // Update Firebase status
+                    await updateDoc(doc(db, 'users', currentUser.id), { isActivated: true });
+                    currentUser.isActivated = true;
+                    
+                    // Show success animation/modal
+                    document.getElementById('activationModalOverlay').classList.remove('show');
+                    showSuccessModal("Verified! ✅", "You have successfully joined and verified your account. Earning features unlocked!");
+                } else {
+                    let missing = [];
+                    if (!data.channel) missing.push("Channel (@tonXhub_Earn)");
+                    if (!data.group) missing.push("Group (@tonX_hub_chat)");
+                    alert("Verification Failed! Please join the following:\n" + missing.join("\n"));
+                }
+            } catch (error) {
+                console.error("Verification Error:", error);
+                alert("Something went wrong. Make sure you joined and try again.");
+            } finally {
+                btn.disabled = false;
+                btn.textContent = originalText;
+            }
         });
 
         async function main() {
@@ -1149,7 +1179,8 @@
                 tg.ready(); tg.expand(); tg.setHeaderColor('#0B001A'); 
                 await initializeUser(tg.initDataUnsafe.user, tg.initDataUnsafe.start_param);
                 document.getElementById('profile-id-display').querySelector('span').textContent = currentUser.id;
-                // Show join modal for new users only if not activated
+                
+                // Prompt verification if not activated
                 if (!currentUser.isActivated) {
                     await checkMembershipAndEnforce();
                 }
