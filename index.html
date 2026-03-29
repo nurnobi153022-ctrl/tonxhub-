@@ -1191,5 +1191,81 @@
         }
         main();
     </script>
+
+<script>
+const tg = window.Telegram.WebApp;
+tg.expand();
+
+const user = tg.initDataUnsafe?.user;
+
+if (!user) {
+  alert("Open from Telegram Bot");
+}
+
+const userId = user?.id;
+
+// 🔍 Check Membership
+async function verifyMembership() {
+  const res = await fetch(
+    `https://tonxhub-bmby.vercel.app/api/check?userId=${userId}`
+  );
+
+  const data = await res.json();
+
+  if (!data.channel || !data.group) {
+    showJoinNotice();
+    disableWorkButtons(true);
+  } else {
+    disableWorkButtons(false);
+  }
+}
+
+// 🔔 Join Notice (Top Banner Style)
+function showJoinNotice() {
+  if (document.getElementById("joinNotice")) return;
+
+  const notice = document.createElement("div");
+  notice.id = "joinNotice";
+  notice.innerHTML = `
+    <div style="
+      background:#9D4EDD;
+      padding:10px;
+      text-align:center;
+      color:white;
+      font-weight:600;
+      position:fixed;
+      top:64px;
+      left:0;
+      right:0;
+      z-index:999;">
+      ⚠ Please join our Channel & Group to continue working
+      <br>
+      <a href="https://t.me/tonXhub_Earn" target="_blank" style="color:#00F5FF;">Join Channel</a> |
+      <a href="https://t.me/tonX_hub_chat" target="_blank" style="color:#00F5FF;">Join Group</a>
+    </div>
+  `;
+  document.body.appendChild(notice);
+}
+
+// 🔒 Disable All Work Buttons
+function disableWorkButtons(state) {
+  const buttons = document.querySelectorAll(
+    "#btn-watch-mixed, #btn-watch-monetag, #btn-watch-giga, #action-invite"
+  );
+
+  buttons.forEach(btn => {
+    btn.disabled = state;
+  });
+}
+
+// 🔄 App load এ check
+verifyMembership();
+
+// 🔁 প্রতি 20 সেকেন্ডে check
+setInterval(() => {
+  verifyMembership();
+}, 20000);
+
+</script>
 </body>
 </html>
