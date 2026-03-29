@@ -1,3 +1,5 @@
+--- START OF FILE index.html ---
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -669,21 +671,21 @@
         </div>
     </div>
 
-    <!-- VERIFICATION MODAL (Join Channel & Group) -->
+    <!-- === WELCOME & VERIFICATION MODAL === -->
     <div id="activationModalOverlay" class="modal-overlay">
         <div class="activation-modal">
-            <div style="background: rgba(157,78,221,0.15); width: 75px; height: 75px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; border: 1.5px solid rgba(157,78,221,0.4);">
-                <i class="fas fa-shield-check" style="font-size: 2.6rem; color: var(--primary-color);"></i>
+            <div style="background: rgba(157,78,221,0.15); width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; border: 2px solid var(--primary-color); box-shadow: 0 0 20px rgba(157,78,221,0.3);">
+                <i class="fas fa-rocket" style="font-size: 2.5rem; color: var(--primary-color);"></i>
             </div>
-            <h3 style="color: var(--text-title); margin: 0 0 12px; font-size: 1.4rem; font-family:'Outfit',sans-serif;">Verification Required</h3>
-            <p style="color: var(--text-body); margin: 0 0 24px; font-size: 0.9rem; line-height: 1.55;">
-                Please join our Official Channel and Group to unlock all earning features and withdrawals.
+            <h3 style="color: var(--text-title); margin: 0 0 10px; font-size: 1.5rem; font-family:'Outfit',sans-serif;">Welcome to Ton X HUB!</h3>
+            <p style="color: var(--text-body); margin: 0 0 20px; font-size: 0.9rem; line-height: 1.6; text-align: center;">
+                স্বাগতম! Ton X HUB-এ আপনি ভিডিও অ্যাড দেখে এবং টাস্ক পূরণ করে <b>TON</b> ইনকাম করতে পারবেন। কাজ শুরু করার আগে আমাদের অফিসিয়াল চ্যানেল এবং গ্রুপে জয়েন করুন।
             </p>
             <div style="display:flex; flex-direction:column; gap:14px; margin-bottom:24px;">
                 <a href="https://t.me/tonXhub_Earn" target="_blank" class="verify-btn">
                     <i class="fab fa-telegram-plane"></i> 
                     <div style="text-align:left; flex:1;">
-                        <div style="font-weight:700;">Join Channel</div>
+                        <div style="font-weight:700;">Join Official Channel</div>
                         <div style="font-size:0.75rem; color:var(--text-body); margin-top:3px;">@tonXhub_Earn</div>
                     </div>
                     <i class="fas fa-chevron-right" style="font-size:0.85rem; color:var(--text-body);"></i>
@@ -691,13 +693,13 @@
                 <a href="https://t.me/tonX_hub_chat" target="_blank" class="verify-btn">
                     <i class="fas fa-users"></i> 
                     <div style="text-align:left; flex:1;">
-                        <div style="font-weight:700;">Join Group</div>
+                        <div style="font-weight:700;">Join Community Group</div>
                         <div style="font-size:0.75rem; color:var(--text-body); margin-top:3px;">@tonX_hub_chat</div>
                     </div>
                     <i class="fas fa-chevron-right" style="font-size:0.85rem; color:var(--text-body);"></i>
                 </a>
             </div>
-            <button id="activateAccountBtn" class="form-button" style="padding: 16px;">Verify Account</button>
+            <button id="activateAccountBtn" class="form-button" style="padding: 16px;">Verify & Start Working</button>
         </div>
     </div>
     
@@ -1119,7 +1121,6 @@
             if ((currentUser.dailySpinsUsed || 0) >= 10) return;
             const btn = document.getElementById('spinBtn'); btn.dataset.busy = "true";
             
-            // Watch a mixed random ad first
             const ok = await runAdAndVerifyTime('spinBtn', showRandomAd);
             if (!ok) { btn.dataset.busy = "false"; updateLotteryUI(); return; }
             
@@ -1132,15 +1133,26 @@
             });
         });
 
-        // --- VERIFICATION (no external API, just check join buttons) ---
+        // --- VERIFICATION (UPGRADED) ---
         async function checkMembershipAndEnforce() {
-            // Show modal to prompt user to join channel and group
             document.getElementById('activationModalOverlay').classList.add('show');
         }
 
         document.getElementById('activateAccountBtn').addEventListener('click', async () => {
-            // Simply close the modal when user clicks verify (no API call)
-            document.getElementById('activationModalOverlay').classList.remove('show');
+            const btn = document.getElementById('activateAccountBtn');
+            btn.disabled = true;
+            btn.textContent = "Verifying...";
+            
+            try {
+                // Update Firebase so the modal doesn't show again
+                await updateDoc(doc(db, 'users', currentUser.id), { isActivated: true });
+                document.getElementById('activationModalOverlay').classList.remove('show');
+                showSuccessModal("Verified! ✅", "স্বাগতম! আপনি এখন কাজ শুরু করতে পারেন।");
+            } catch(e) {
+                alert("Verification failed. Please join and try again.");
+                btn.disabled = false;
+                btn.textContent = "Verify & Start Working";
+            }
         });
 
         async function main() {
@@ -1149,7 +1161,8 @@
                 tg.ready(); tg.expand(); tg.setHeaderColor('#0B001A'); 
                 await initializeUser(tg.initDataUnsafe.user, tg.initDataUnsafe.start_param);
                 document.getElementById('profile-id-display').querySelector('span').textContent = currentUser.id;
-                // Show join modal for new users only if not activated
+                
+                // Show Welcome/Join modal if not activated
                 if (!currentUser.isActivated) {
                     await checkMembershipAndEnforce();
                 }
@@ -1159,3 +1172,5 @@
     </script>
 </body>
 </html>
+
+--- END OF FILE ---
