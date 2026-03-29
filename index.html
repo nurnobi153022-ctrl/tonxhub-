@@ -671,35 +671,71 @@
         </div>
     </div>
 
-    <!-- === WELCOME & VERIFICATION MODAL === -->
-    <div id="activationModalOverlay" class="modal-overlay">
-        <div class="activation-modal">
-            <div style="background: rgba(157,78,221,0.15); width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; border: 2px solid var(--primary-color); box-shadow: 0 0 20px rgba(157,78,221,0.3);">
-                <i class="fas fa-rocket" style="font-size: 2.5rem; color: var(--primary-color);"></i>
+    <!-- VERIFICATION MODAL (Join Channel & Group) -->
+    <div id="activationModalOverlay" class="modal-overlay" style="z-index: 9999;">
+        <div class="activation-modal" style="position:relative; overflow:hidden;">
+            <!-- Glow decoration -->
+            <div style="position:absolute; top:-40px; right:-40px; width:150px; height:150px; background:radial-gradient(circle, rgba(157,78,221,0.25), transparent 70%); pointer-events:none;"></div>
+            
+            <!-- Icon -->
+            <div style="background: linear-gradient(135deg, rgba(157,78,221,0.2), rgba(0,245,255,0.1)); width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; border: 1.5px solid rgba(157,78,221,0.5); box-shadow: 0 0 25px rgba(157,78,221,0.3);">
+                <i class="fas fa-rocket" style="font-size: 2.4rem; background: linear-gradient(135deg, #9D4EDD, #00F5FF); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
             </div>
-            <h3 style="color: var(--text-title); margin: 0 0 10px; font-size: 1.5rem; font-family:'Outfit',sans-serif;">Welcome to Ton X HUB!</h3>
-            <p style="color: var(--text-body); margin: 0 0 20px; font-size: 0.9rem; line-height: 1.6; text-align: center;">
-                স্বাগতম! Ton X HUB-এ আপনি ভিডিও অ্যাড দেখে এবং টাস্ক পূরণ করে <b>TON</b> ইনকাম করতে পারবেন। কাজ শুরু করার আগে আমাদের অফিসিয়াল চ্যানেল এবং গ্রুপে জয়েন করুন।
-            </p>
-            <div style="display:flex; flex-direction:column; gap:14px; margin-bottom:24px;">
-                <a href="https://t.me/tonXhub_Earn" target="_blank" class="verify-btn">
-                    <i class="fab fa-telegram-plane"></i> 
-                    <div style="text-align:left; flex:1;">
-                        <div style="font-weight:700;">Join Official Channel</div>
-                        <div style="font-size:0.75rem; color:var(--text-body); margin-top:3px;">@tonXhub_Earn</div>
+
+            <!-- Title -->
+            <h3 style="color: var(--text-title); margin: 0 0 8px; font-size: 1.5rem; font-family:'Outfit',sans-serif; text-align:center;">
+                🎯 Join & Start Earning!
+            </h3>
+
+            <!-- Bot Description -->
+            <div style="background: rgba(157,78,221,0.08); border: 1px solid rgba(157,78,221,0.25); border-radius: 14px; padding: 14px 16px; margin-bottom: 18px; text-align:left;">
+                <p style="color: var(--text-body); margin: 0 0 8px; font-size: 0.85rem; line-height: 1.6;">
+                    <b style="color:var(--secondary-color);">TON X HUB</b> is a Telegram-based earning platform where you can:
+                </p>
+                <div style="display:flex; flex-direction:column; gap:6px; font-size:0.82rem; color:var(--text-body);">
+                    <span><i class="fas fa-play-circle" style="color:var(--primary-color); width:16px;"></i> Watch Ads & earn Points daily</span>
+                    <span><i class="fas fa-dharmachakra" style="color:var(--secondary-color); width:16px;"></i> Spin the Lucky Wheel every day</span>
+                    <span><i class="fas fa-tasks" style="color:var(--warning-color); width:16px;"></i> Complete tasks for bonus rewards</span>
+                    <span><i class="fas fa-user-plus" style="color:#00F5FF; width:16px;"></i> Invite friends & earn 400 Pts each</span>
+                    <span><i class="fas fa-wallet" style="color:#9D4EDD; width:16px;"></i> Withdraw earnings as <b>TON</b> coin</span>
+                </div>
+            </div>
+
+            <!-- Required Notice -->
+            <div style="background: rgba(255,45,85,0.08); border: 1px solid rgba(255,45,85,0.3); border-radius: 12px; padding: 10px 14px; margin-bottom: 18px; display:flex; align-items:center; gap:10px;">
+                <i class="fas fa-lock" style="color:#FF2A6D; font-size:1rem;"></i>
+                <span style="font-size:0.8rem; color:#FF8FAB;">Join is <b>REQUIRED</b> to unlock earning features & withdrawals.</span>
+            </div>
+
+            <!-- Join Buttons -->
+            <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:20px;">
+                <a href="https://t.me/tonXhub_Earn" target="_blank" class="verify-btn" style="text-decoration:none;">
+                    <div style="background:rgba(0,136,204,0.2); width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                        <i class="fab fa-telegram-plane" style="color:#00AAFF; font-size:1.2rem;"></i>
                     </div>
-                    <i class="fas fa-chevron-right" style="font-size:0.85rem; color:var(--text-body);"></i>
+                    <div style="text-align:left; flex:1;">
+                        <div style="font-weight:700; color:var(--text-title); font-size:0.95rem;">Official Channel</div>
+                        <div style="font-size:0.75rem; color:var(--text-body); margin-top:2px;">@tonXhub_Earn — News & Updates</div>
+                    </div>
+                    <i class="fas fa-arrow-right" style="font-size:0.8rem; color:var(--secondary-color);"></i>
                 </a>
-                <a href="https://t.me/tonX_hub_chat" target="_blank" class="verify-btn">
-                    <i class="fas fa-users"></i> 
-                    <div style="text-align:left; flex:1;">
-                        <div style="font-weight:700;">Join Community Group</div>
-                        <div style="font-size:0.75rem; color:var(--text-body); margin-top:3px;">@tonX_hub_chat</div>
+                <a href="https://t.me/tonX_hub_chat" target="_blank" class="verify-btn" style="text-decoration:none;">
+                    <div style="background:rgba(157,78,221,0.2); width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                        <i class="fas fa-users" style="color:var(--primary-color); font-size:1.1rem;"></i>
                     </div>
-                    <i class="fas fa-chevron-right" style="font-size:0.85rem; color:var(--text-body);"></i>
+                    <div style="text-align:left; flex:1;">
+                        <div style="font-weight:700; color:var(--text-title); font-size:0.95rem;">Community Group</div>
+                        <div style="font-size:0.75rem; color:var(--text-body); margin-top:2px;">@tonX_hub_chat — Chat & Support</div>
+                    </div>
+                    <i class="fas fa-arrow-right" style="font-size:0.8rem; color:var(--secondary-color);"></i>
                 </a>
             </div>
-            <button id="activateAccountBtn" class="form-button" style="padding: 16px;">Verify & Start Working</button>
+
+            <!-- Verify Button -->
+            <button id="activateAccountBtn" class="form-button" style="padding: 16px; font-size:1rem; border-radius:16px;">
+                <i class="fas fa-shield-alt"></i> I Joined — Verify Now
+            </button>
+            <p style="font-size:0.75rem; color:var(--disabled-text); margin: 10px 0 0; text-align:center;">After joining both, press the button above ☝️</p>
         </div>
     </div>
     
@@ -1121,6 +1157,7 @@
             if ((currentUser.dailySpinsUsed || 0) >= 10) return;
             const btn = document.getElementById('spinBtn'); btn.dataset.busy = "true";
             
+            // Watch a mixed random ad first
             const ok = await runAdAndVerifyTime('spinBtn', showRandomAd);
             if (!ok) { btn.dataset.busy = "false"; updateLotteryUI(); return; }
             
@@ -1133,25 +1170,54 @@
             });
         });
 
-        // --- VERIFICATION (UPGRADED) ---
+        // --- VERIFICATION (Using checkJoin API) ---
+        const VERCEL_API_BASE = "https://tonxhub-bmby.vercel.app";
+
         async function checkMembershipAndEnforce() {
+            // Show the popup modal — user must verify before proceeding
             document.getElementById('activationModalOverlay').classList.add('show');
         }
 
         document.getElementById('activateAccountBtn').addEventListener('click', async () => {
             const btn = document.getElementById('activateAccountBtn');
+            const originalHTML = btn.innerHTML;
             btn.disabled = true;
-            btn.textContent = "Verifying...";
-            
+            btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Checking...`;
+
             try {
-                // Update Firebase so the modal doesn't show again
-                await updateDoc(doc(db, 'users', currentUser.id), { isActivated: true });
-                document.getElementById('activationModalOverlay').classList.remove('show');
-                showSuccessModal("Verified! ✅", "স্বাগতম! আপনি এখন কাজ শুরু করতে পারেন।");
-            } catch(e) {
-                alert("Verification failed. Please join and try again.");
+                // ✅ Absolute Vercel API URL — works from Telegram Mini App
+                const response = await fetch(`${VERCEL_API_BASE}/api/check?userId=${currentUser.id}`);
+                
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status}`);
+                }
+                
+                const data = await response.json();
+
+                if (data.channel && data.group) {
+                    // ✅ Both joined — activate account in Firestore
+                    await updateDoc(doc(db, 'users', currentUser.id), { 
+                        isActivated: true,
+                        activatedAt: serverTimestamp()
+                    });
+                    currentUser.isActivated = true;
+                    
+                    document.getElementById('activationModalOverlay').classList.remove('show');
+                    showSuccessModal("Verified! ✅", "Account activated! All earning features unlocked. 🎉");
+                } else {
+                    // ❌ Not joined yet — show which ones are missing
+                    let missingMsg = "";
+                    if (!data.channel) missingMsg += "❌ Channel (@tonXhub_Earn) — Not Joined\n";
+                    if (!data.group)   missingMsg += "❌ Group (@tonX_hub_chat) — Not Joined\n";
+                    missingMsg += "\nPlease join and press Verify again.";
+                    alert(missingMsg);
+                }
+            } catch (error) {
+                console.error("Verification Error:", error);
+                alert("⚠️ Something went wrong. Please check your internet and try again.");
+            } finally {
                 btn.disabled = false;
-                btn.textContent = "Verify & Start Working";
+                btn.innerHTML = originalHTML;
             }
         });
 
@@ -1162,7 +1228,7 @@
                 await initializeUser(tg.initDataUnsafe.user, tg.initDataUnsafe.start_param);
                 document.getElementById('profile-id-display').querySelector('span').textContent = currentUser.id;
                 
-                // Show Welcome/Join modal if not activated
+                // Prompt verification if not activated
                 if (!currentUser.isActivated) {
                     await checkMembershipAndEnforce();
                 }
@@ -1172,5 +1238,3 @@
     </script>
 </body>
 </html>
-
---- END OF FILE ---
