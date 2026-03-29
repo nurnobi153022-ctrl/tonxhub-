@@ -1,5 +1,3 @@
---- START OF FILE index.html ---
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1134,11 +1132,7 @@
             });
         });
 
-        // --- VERIFICATION (Using checkJoin API) ---
-        async function checkMembershipAndEnforce() {
-            document.getElementById('activationModalOverlay').classList.add('show');
-        }
-
+        // --- VERIFICATION (Fixed Logic) ---
         document.getElementById('activateAccountBtn').addEventListener('click', async () => {
             const btn = document.getElementById('activateAccountBtn');
             const originalText = btn.textContent;
@@ -1146,27 +1140,36 @@
             btn.textContent = "Checking...";
 
             try {
-                // Fetch checkJoin logic from your API
-                const response = await fetch(`/api/checkJoin?userId=${currentUser.id}`);
+                // আপনার Vercel Domain ব্যবহার করা হয়েছে
+                const vercelUrl = `https://tonxhub-bmby.vercel.app/api/checkJoin?userId=${currentUser.id}`;
+                
+                const response = await fetch(vercelUrl);
+                if (!response.ok) throw new Error("API Connection Failed");
+
                 const data = await response.json();
 
-                if (data.channel && data.group) {
-                    // Update Firebase status
-                    await updateDoc(doc(db, 'users', currentUser.id), { isActivated: true });
-                    currentUser.isActivated = true;
-                    
-                    // Show success animation/modal
-                    document.getElementById('activationModalOverlay').classList.remove('show');
-                    showSuccessModal("Verified! ✅", "You have successfully joined and verified your account. Earning features unlocked!");
+                if (data.success && data.isJoined) {
+                    // Firebase update (রুলস অনুযায়ী error দিতে পারে, তাই try-catch এ রাখা হয়েছে)
+                    try {
+                        const userRef = doc(db, 'users', currentUser.id);
+                        await updateDoc(userRef, { isActivated: true });
+                        currentUser.isActivated = true;
+                        document.getElementById('activationModalOverlay').classList.remove('show');
+                        showSuccessModal("Verified! ✅", "Your account is now active.");
+                    } catch (firebaseErr) {
+                        console.error("Firebase Update Error:", firebaseErr);
+                        alert("API success, but Firebase rejected the update. Please check Firestore rules.");
+                        // রুলস যদি এক্টিভেশন ব্লক করে, তবে এখানে alert দেখা যাবে।
+                    }
                 } else {
-                    let missing = [];
-                    if (!data.channel) missing.push("Channel (@tonXhub_Earn)");
-                    if (!data.group) missing.push("Group (@tonX_hub_chat)");
-                    alert("Verification Failed! Please join the following:\n" + missing.join("\n"));
+                    let msg = "Please join correctly:";
+                    if (!data.channel) msg += "\n- Official Channel (@tonXhub_Earn)";
+                    if (!data.group) msg += "\n- Official Group (@tonX_hub_chat)";
+                    alert(msg);
                 }
             } catch (error) {
                 console.error("Verification Error:", error);
-                alert("Something went wrong. Make sure you joined and try again.");
+                alert("Something went wrong. Make sure you joined and try again. (Details: " + error.message + ")");
             } finally {
                 btn.disabled = false;
                 btn.textContent = originalText;
