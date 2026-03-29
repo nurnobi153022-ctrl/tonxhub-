@@ -1132,75 +1132,61 @@
             });
         });
 
-        // --- VERIFICATION SYSTEM (FIXED & REAL API) ---
-        
-        function disableWorkButtons(state) {
-            const buttons = document.querySelectorAll(
-                "#btn-watch-mixed, #btn-watch-monetag, #btn-watch-giga, #action-invite, #spinBtn, #claimPromoBtn"
-            );
-            buttons.forEach(btn => btn.disabled = state);
-        }
-
-        async function verifyMembership() {
-            if (!tg.initDataUnsafe?.user) return;
-            const userId = tg.initDataUnsafe.user.id;
-
-            try {
-                const res = await fetch(`https://tonxhub-bmby.vercel.app/api/check?userId=${userId}`);
-                const data = await res.json();
-
-                if (!data.channel || !data.group) {
-                    // যদি ইউজার কোনো একটিতে জয়েন না থাকে, পপ-আপ দেখাবে এবং বাটন লক করবে
-                    document.getElementById('activationModalOverlay').classList.add('show');
-                    disableWorkButtons(true);
-                    
-                    // Firestore এ যদি স্ট্যাটাস একটিভ থাকে কিন্তু সে গ্রুপে নেই, তবে ওটা ফলস করে দেওয়া হবে
-                    if (currentUser && currentUser.isActivated) {
-                        await updateDoc(doc(db, 'users', String(userId)), { isActivated: false });
-                        currentUser.isActivated = false;
-                    }
-                } else {
-                    // জয়েন থাকলে পপ-আপ বন্ধ এবং বাটন আনলক
-                    document.getElementById('activationModalOverlay').classList.remove('show');
-                    disableWorkButtons(false);
-                    
-                    // ডাটাবেসে ইউজারকে এক্টিভেটেড হিসেবে সেভ করবে
-                    if (currentUser && !currentUser.isActivated) {
-                        await updateDoc(doc(db, 'users', String(userId)), { isActivated: true });
-                        currentUser.isActivated = true;
-                    }
-                }
-            } catch (e) {
-                console.error("Membership Check Failed", e);
-            }
-        }
-
+        // --- VERIFICATION (Fixed Logic) ---
         document.getElementById('activateAccountBtn').addEventListener('click', async () => {
             const btn = document.getElementById('activateAccountBtn');
             const originalText = btn.textContent;
             btn.disabled = true;
             btn.textContent = "Checking...";
-            
-            await verifyMembership();
-            
-            btn.disabled = false;
-            btn.textContent = originalText;
+
+            try {
+                // আপনার Vercel Domain ব্যবহার করা হয়েছে
+                const vercelUrl = `https://tonxhub-bmby.vercel.app/api/checkJoin?userId=${currentUser.id}`;
+                
+                const response = await fetch(vercelUrl);
+                if (!response.ok) throw new Error("API Connection Failed");
+
+                const data = await response.json();
+
+                if (data.success && data.isJoined) {
+                    // Firebase update (রুলস অনুযায়ী error দিতে পারে, তাই try-catch এ রাখা হয়েছে)
+                    try {
+                        const userRef = doc(db, 'users', currentUser.id);
+                        await updateDoc(userRef, { isActivated: true });
+                        currentUser.isActivated = true;
+                        document.getElementById('activationModalOverlay').classList.remove('show');
+                        showSuccessModal("Verified! ✅", "Your account is now active.");
+                    } catch (firebaseErr) {
+                        console.error("Firebase Update Error:", firebaseErr);
+                        alert("API success, but Firebase rejected the update. Please check Firestore rules.");
+                        // রুলস যদি এক্টিভেশন ব্লক করে, তবে এখানে alert দেখা যাবে।
+                    }
+                } else {
+                    let msg = "Please join correctly:";
+                    if (!data.channel) msg += "\n- Official Channel (@tonXhub_Earn)";
+                    if (!data.group) msg += "\n- Official Group (@tonX_hub_chat)";
+                    alert(msg);
+                }
+            } catch (error) {
+                console.error("Verification Error:", error);
+                alert("Something went wrong. Make sure you joined and try again. (Details: " + error.message + ")");
+            } finally {
+                btn.disabled = false;
+                btn.textContent = originalText;
+            }
         });
 
         async function main() {
             try {
                 if (!tg.initDataUnsafe?.user) { document.body.innerHTML = `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:#0B001A;color:#fff;font-family:'Outfit',sans-serif;padding:32px;text-align:center;gap:16px;"><div style="font-size:3rem">🔒</div><div style="font-size:1.4rem;font-weight:900;background:linear-gradient(135deg,#9D4EDD,#00F5FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Ton X HUB</div><p style="color:#C8B6FF;">Open in Telegram to use this app.</p></div>`; return; }
                 tg.ready(); tg.expand(); tg.setHeaderColor('#0B001A'); 
-                
                 await initializeUser(tg.initDataUnsafe.user, tg.initDataUnsafe.start_param);
                 document.getElementById('profile-id-display').querySelector('span').textContent = currentUser.id;
                 
-                // অ্যাপ ওপেন করার সাথে সাথেই প্রথম চেক
-                verifyMembership();
-
-                // প্রতি ২০ সেকেন্ডে অটোমেটিক রিয়েল-টাইম চেক
-                setInterval(verifyMembership, 20000);
-
+                // Prompt verification if not activated
+                if (!currentUser.isActivated) {
+                    await checkMembershipAndEnforce();
+                }
             } catch (error) {}
         }
         main();
