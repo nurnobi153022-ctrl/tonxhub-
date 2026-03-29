@@ -25,7 +25,11 @@ export default async function handler(req, res) {
       const data = await response.json();
       if (!data.ok) return false;
       const status = data.result?.status;
-      return status === "member" || status === "administrator" || status === "creator";
+      return (
+        status === "member" ||
+        status === "administrator" ||
+        status === "creator"
+      );
     } catch {
       return false;
     }
@@ -34,6 +38,7 @@ export default async function handler(req, res) {
   const channelJoined = await checkMembership(CHANNEL);
   const groupJoined = await checkMembership(GROUP);
 
+  // Save to Firebase
   try {
     await fetch(
       `https://ton-xhub-default-rtdb.firebaseio.com/users/${userId}.json`,
@@ -47,9 +52,7 @@ export default async function handler(req, res) {
         }),
       }
     );
-  } catch (e) {
-    console.error("Firebase update failed:", e);
-  }
+  } catch (e) {}
 
   return res.status(200).json({
     channel: channelJoined,
