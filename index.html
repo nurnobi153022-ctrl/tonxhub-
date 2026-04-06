@@ -1028,6 +1028,7 @@
         }
 
         const handleAdClick = async (type, btnId, maxLimit, adFunc) => {
+            if (!currentUser) { alert('Please wait, loading...'); return; }
             const watchCount = type === 'mixed' ? currentUser.adsWatchedMixed : type === 'monetag' ? currentUser.adsWatchedMonetag : currentUser.adsWatchedGiga;
             if((watchCount || 0) >= maxLimit) return;
             const success = await runAdAndVerifyTime(btnId, adFunc);
@@ -1069,6 +1070,7 @@
         }
 
         async function fetchAndRenderTasks() {
+            if (!currentUser) return;
             const container = document.getElementById('task-list');
             container.innerHTML = '<div class="loader"></div>';
             try {
@@ -1085,10 +1087,14 @@
                     container.appendChild(card); count++;
                 });
                 if (count === 0) container.innerHTML = '<p style="text-align:center; color:var(--text-body);">No new tasks.</p>';
-            } catch (error) {}
+            } catch (error) { 
+                console.error('Task load error:', error);
+                container.innerHTML = '<p style="text-align:center;color:var(--danger-color);">Failed to load tasks. Please try again.</p>'; 
+            }
         }
 
         document.getElementById('task-list').addEventListener('click', async (e) => {
+            if (!currentUser) return;
             const button = e.target.closest('.ad-watch-btn'); if (!button || button.disabled) return;
             const { taskId, taskUrl, state } = button.dataset;
             if (state === 'start') {
@@ -1271,6 +1277,7 @@
         }
 
         document.getElementById('spinBtn').addEventListener('click', async () => {
+            if (!currentUser) { alert('⚠️ Please wait, app is loading...'); return; }
             if ((currentUser.dailySpinsUsed || 0) >= 10) return;
             const btn = document.getElementById('spinBtn'); btn.dataset.busy = "true";
             
@@ -1384,4 +1391,12 @@
             } catch (error) {
                 console.error("Main error:", error);
             }
-       
+        }
+
+        // ✅ Start the app
+        main();
+
+    </script>
+
+</body>
+</html>
