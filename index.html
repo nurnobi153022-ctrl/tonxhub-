@@ -333,28 +333,70 @@
         }
         @keyframes popIn { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         
-        /* VERIFICATION MODAL */
+        /* === TELEGRAM-STYLE VERIFICATION MODAL === */
+        #activationModalOverlay {
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(6px);
+        }
         .activation-modal { 
-            background: linear-gradient(145deg, rgba(30,15,50,0.99), rgba(11,0,26,1));
-            backdrop-filter: blur(15px); padding: 30px 24px; border-radius: 24px; 
-            width: 100%; max-width: 360px; text-align: center; 
-            border: 1.5px solid var(--primary-color); 
-            box-shadow: 0 0 40px rgba(157, 78, 221, 0.3); 
-            animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; 
+            background: #1c2333;
+            padding: 28px 20px 24px;
+            border-radius: 20px; 
+            width: calc(100% - 32px);
+            max-width: 340px;
+            text-align: center; 
+            border: none;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.5); 
+            animation: popIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; 
         }
-        .verify-btn { 
-            display: flex; align-items: center; gap: 12px; 
-            background: rgba(157,78,221,0.1); 
-            border: 1.5px solid var(--border-subtle); color: var(--text-title); 
-            padding: 16px; border-radius: var(--radius-btn); text-decoration: none; 
-            font-weight: 600; font-size: 0.95rem; transition: all 0.25s; 
+        .tg-shield-icon {
+            width: 72px; height: 72px;
+            background: radial-gradient(circle at 40% 35%, #2a4a7a, #1a3260);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 18px;
+            box-shadow: 0 4px 20px rgba(32,120,220,0.35);
         }
-        .verify-btn:hover { 
-            border-color: var(--secondary-color); color: var(--secondary-color); 
-            background: rgba(0, 245, 255, 0.1); 
-            transform: translateX(4px);
+        .tg-shield-icon i { font-size: 2rem; color: #4dabf7; }
+        .activation-modal h3 {
+            font-size: 1.3rem; font-family: 'Outfit', sans-serif;
+            color: #fff; font-weight: 800; margin: 0 0 8px;
         }
-        .verify-btn i { color: var(--secondary-color); font-size: 1.35rem; }
+        .activation-modal .tg-sub {
+            font-size: 0.82rem; color: #8899aa; margin: 0 0 20px; line-height: 1.5;
+        }
+        .tg-join-btn {
+            display: flex; align-items: center; gap: 12px;
+            background: #212d40; border: none;
+            color: #fff; padding: 14px 16px;
+            border-radius: 12px; text-decoration: none;
+            font-weight: 600; font-size: 0.93rem;
+            transition: background 0.2s;
+            margin-bottom: 10px;
+            cursor: pointer; width: 100%; box-sizing: border-box;
+            text-align: left;
+        }
+        .tg-join-btn:hover { background: #2a3a52; }
+        .tg-join-btn:active { background: #1a2a3a; transform: scale(0.98); }
+        .tg-join-btn .tg-btn-icon {
+            width: 38px; height: 38px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; font-size: 1.1rem;
+        }
+        .tg-join-btn .tg-btn-text { flex: 1; }
+        .tg-join-btn .tg-btn-text span { display: block; font-size: 0.75rem; color: #8899aa; font-weight: 400; margin-top: 2px; }
+        .tg-join-btn .tg-chevron { color: #4dabf7; font-size: 0.8rem; }
+        .tg-verify-btn {
+            width: 100%; padding: 15px; border: none; border-radius: 12px;
+            background: #2ea4e8; color: #fff;
+            font-weight: 700; font-size: 0.97rem; cursor: pointer;
+            font-family: 'Outfit', sans-serif; margin-top: 6px;
+            transition: background 0.2s, transform 0.15s;
+            letter-spacing: 0.03em;
+        }
+        .tg-verify-btn:hover { background: #1a8fd4; }
+        .tg-verify-btn:active { transform: scale(0.98); }
+        .tg-verify-btn:disabled { background: #2a3a52; color: #5a7080; cursor: not-allowed; }
         
         /* LOTTERY WHEEL CSS */
         .wheel-container { position: relative; width: 260px; height: 260px; margin: 0 auto; }
@@ -399,27 +441,58 @@
         }
         .ad-watch-btn:disabled { animation: shimmer-text 2s infinite; }
 
-        /* HOME LINKS ROW */
-        .home-links-row {
-            display: flex; gap: 12px; margin-top: 25px;
+        /* === HOME CATEGORY SECTION === */
+        .home-section-label {
+            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.2px;
+            color: var(--text-body); font-weight: 700; margin: 22px 0 12px;
+            padding-left: 4px; opacity: 0.75;
         }
-        .home-link-btn {
-            flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px;
-            padding: 14px; border-radius: 14px;
-            border: 1.5px solid var(--border-subtle);
-            background: rgba(157,78,221,0.08);
-            color: var(--text-title); font-size: 0.9rem; font-weight: 600;
-            text-decoration: none; transition: all 0.25s cubic-bezier(.4,0,.2,1);
+        .quick-actions-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+            margin-bottom: 12px;
+        }
+        .qa-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-subtle);
+            border-radius: 18px; padding: 18px 16px;
+            display: flex; flex-direction: column; gap: 10px;
+            cursor: pointer; transition: all 0.22s cubic-bezier(.4,0,.2,1);
+            text-decoration: none; position: relative; overflow: hidden;
+            box-shadow: var(--shadow-card);
+        }
+        .qa-card::after {
+            content: ""; position: absolute; inset: 0; border-radius: 18px;
+            opacity: 0; transition: opacity 0.22s;
+        }
+        .qa-card:hover { transform: translateY(-4px); border-color: var(--secondary-color); box-shadow: 0 8px 28px rgba(0,245,255,0.18); }
+        .qa-card:active { transform: scale(0.97); }
+        .qa-card .qa-icon {
+            width: 42px; height: 42px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.25rem;
+        }
+        .qa-card .qa-title { font-size: 0.92rem; font-weight: 700; color: var(--text-title); font-family: 'Outfit', sans-serif; }
+        .qa-card .qa-desc { font-size: 0.72rem; color: var(--text-body); margin-top: 1px; line-height: 1.4; }
+        .qa-card .qa-badge {
+            display: inline-block; font-size: 0.65rem; font-weight: 700;
+            padding: 3px 9px; border-radius: 99px;
+            font-family: 'Roboto Mono', monospace; margin-top: 2px;
+        }
+        .links-row-3 {
+            display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;
+            margin-top: 14px; margin-bottom: 4px;
+        }
+        .link-pill {
+            display: flex; flex-direction: column; align-items: center; gap: 6px;
+            padding: 14px 8px; border-radius: 16px;
+            background: var(--card-bg); border: 1px solid var(--border-subtle);
+            color: var(--text-title); font-size: 0.8rem; font-weight: 600;
+            text-decoration: none; transition: all 0.22s cubic-bezier(.4,0,.2,1);
             font-family: 'Outfit', sans-serif;
         }
-        .home-link-btn:hover {
-            border-color: var(--secondary-color);
-            background: rgba(0,245,255,0.1);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,245,255,0.25);
-        }
-        .home-link-btn:active { transform: scale(0.97) translateY(0); }
-        .home-link-btn i { color: var(--secondary-color); font-size: 1.15rem; }
+        .link-pill i { font-size: 1.3rem; }
+        .link-pill:hover { border-color: var(--secondary-color); background: rgba(0,245,255,0.08); transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,245,255,0.2); }
+        .link-pill:active { transform: scale(0.96); }
     </style>
 </head>
 <body>
@@ -461,31 +534,86 @@
                     <strong id="home-life">0 Pts</strong>
                 </div>
                 <div class="stat-item" style="border-color: rgba(157,78,221,0.35);">
-                    <span style="color: var(--primary-color);">Normal Invites</span>
+                    <span style="color: var(--primary-color);">Invites</span>
                     <strong id="home-normal-ref">0</strong>
                 </div>
                 <div class="stat-item" style="border-color: rgba(0,245,255,0.35);">
-                    <span style="color: var(--success-color);">Valid Referrals</span>
+                    <span style="color: var(--success-color);">Valid Refs</span>
                     <strong id="home-valid-ref">0</strong>
                 </div>
             </div>
 
-            <div class="action-buttons-vertical">
-                <button class="form-button" id="action-invite"><i class="fas fa-user-plus"></i> Invite & Earn 400 Pts</button>
-                <button class="form-button outline" id="action-promo-code"><i class="fas fa-ticket-alt"></i> Enter Promo Code</button>
+            <!-- Quick Actions -->
+            <p class="home-section-label">⚄1�7 Quick Actions</p>
+            <div class="quick-actions-grid">
+
+                <!-- Invite Card -->
+                <div class="qa-card" id="action-invite" style="border-color: rgba(157,78,221,0.4);">
+                    <div class="qa-icon" style="background: rgba(157,78,221,0.18);">
+                        <i class="fas fa-user-plus" style="color:#9D4EDD;"></i>
+                    </div>
+                    <div>
+                        <div class="qa-title">Invite Friends</div>
+                        <div class="qa-desc">Earn 400 Pts per valid referral</div>
+                        <span class="qa-badge" style="background:rgba(157,78,221,0.18);color:#C77DFF;">+400 Pts</span>
+                    </div>
+                </div>
+
+                <!-- Promo Code Card -->
+                <div class="qa-card" id="action-promo-code" style="border-color: rgba(255,214,0,0.25);">
+                    <div class="qa-icon" style="background: rgba(255,214,0,0.12);">
+                        <i class="fas fa-ticket-alt" style="color:#FFD600;"></i>
+                    </div>
+                    <div>
+                        <div class="qa-title">Promo Code</div>
+                        <div class="qa-desc">Redeem a code for bonus points</div>
+                        <span class="qa-badge" style="background:rgba(255,214,0,0.12);color:#FFD600;">Bonus Pts</span>
+                    </div>
+                </div>
+
+                <!-- Watch Ads Card -->
+                <div class="qa-card" id="action-go-ads" style="border-color: rgba(0,245,255,0.3);">
+                    <div class="qa-icon" style="background: rgba(0,245,255,0.12);">
+                        <i class="fas fa-play-circle" style="color:#00F5FF;"></i>
+                    </div>
+                    <div>
+                        <div class="qa-title">Watch Ads</div>
+                        <div class="qa-desc">Daily ads  1�7 earn up to 500 Pts</div>
+                        <span class="qa-badge" style="background:rgba(0,245,255,0.1);color:#00F5FF;">+10 Pts/Ad</span>
+                    </div>
+                </div>
+
+                <!-- Spin Wheel Card -->
+                <div class="qa-card" id="action-go-lottery" style="border-color: rgba(255,42,109,0.25);">
+                    <div class="qa-icon" style="background: rgba(255,42,109,0.12);">
+                        <i class="fas fa-dharmachakra" style="color:#FF6B9D;"></i>
+                    </div>
+                    <div>
+                        <div class="qa-title">Lucky Spin</div>
+                        <div class="qa-desc">Spin 10x daily  1�7 win up to 20 Pts</div>
+                        <span class="qa-badge" style="background:rgba(255,42,109,0.1);color:#FF6B9D;">10x / Day</span>
+                    </div>
+                </div>
+
             </div>
 
-            <div class="home-links-row">
-                 <a href="https://t.me/tonXhub_Earn" target="_blank" class="home-link-btn">
-                     <i class="fab fa-telegram-plane"></i> Channel
-                 </a>
-                 <a href="https://t.me/tonX_hub_chat" target="_blank" class="home-link-btn">
-                     <i class="fas fa-users"></i> Group
-                 </a>
-                 <a href="https://t.me/Play35GN" target="_blank" class="home-link-btn">
-                     <i class="fas fa-headset"></i> Support
-                 </a>
-             </div>
+            <!-- Community Links -->
+            <p class="home-section-label">🌐 Community</p>
+            <div class="links-row-3">
+                <a href="https://t.me/tonXhub_Earn" target="_blank" class="link-pill">
+                    <i class="fab fa-telegram-plane" style="color:#29B6F6;"></i>
+                    Channel
+                </a>
+                <a href="https://t.me/tonX_hub_chat" target="_blank" class="link-pill">
+                    <i class="fas fa-users" style="color:#9D4EDD;"></i>
+                    Group
+                </a>
+                <a href="https://t.me/Play35GN" target="_blank" class="link-pill">
+                    <i class="fas fa-headset" style="color:#FFD600;"></i>
+                    Support
+                </a>
+            </div>
+
         </section>
 
         <!-- ADS SECTION -->
@@ -671,70 +799,48 @@
         </div>
     </div>
 
-    <!-- VERIFICATION MODAL (Join Channel & Group) -->
+    <!-- VERIFICATION MODAL (Telegram Style) -->
     <div id="activationModalOverlay" class="modal-overlay" style="z-index:9999;">
         <div class="activation-modal">
 
-            <!-- Top Icon -->
-            <div style="width:72px;height:72px;background:linear-gradient(135deg,rgba(157,78,221,0.25),rgba(0,245,255,0.15));border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;border:1.5px solid rgba(157,78,221,0.5);box-shadow:0 0 28px rgba(157,78,221,0.3);">
-                <i class="fas fa-rocket" style="font-size:2.2rem;background:linear-gradient(135deg,#9D4EDD,#00F5FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;"></i>
+            <!-- Shield Icon -->
+            <div class="tg-shield-icon">
+                <i class="fas fa-shield-alt"></i>
             </div>
 
             <!-- Title -->
-            <h3 style="color:var(--text-title);margin:0 0 6px;font-size:1.45rem;font-family:'Outfit',sans-serif;">Join & Start Earning!</h3>
-            <p style="color:var(--text-body);font-size:0.82rem;margin:0 0 16px;line-height:1.5;">
-                TON X HUB থেকে Ads দেখে, Spin করে এবং Task সম্পন্ন করে TON Coin উপার্জন করুন।<br>
-                <span style="color:var(--secondary-color);font-size:0.78rem;">Earn TON by watching ads, spinning & completing tasks!</span>
-            </p>
+            <h3>Verification Required</h3>
+            <p class="tg-sub">Join our Official Channel and Group to<br>unlock all earning features.</p>
 
-            <!-- Bot Features -->
-            <div style="background:rgba(157,78,221,0.07);border:1px solid rgba(157,78,221,0.2);border-radius:14px;padding:14px;margin-bottom:16px;text-align:left;">
-                <div style="display:flex;flex-direction:column;gap:8px;font-size:0.82rem;color:var(--text-body);">
-                    <span><i class="fas fa-play-circle" style="color:var(--primary-color);width:18px;"></i> Watch Ads daily — earn Points instantly</span>
-                    <span><i class="fas fa-dharmachakra" style="color:var(--secondary-color);width:18px;"></i> Spin Lucky Wheel — up to 10x per day</span>
-                    <span><i class="fas fa-tasks" style="color:var(--warning-color);width:18px;"></i> Complete Tasks — bonus point rewards</span>
-                    <span><i class="fas fa-user-plus" style="color:#00F5FF;width:18px;"></i> Invite Friends — earn 400 Pts per referral</span>
-                    <span><i class="fas fa-wallet" style="color:#9D4EDD;width:18px;"></i> Withdraw Points as real <b style="color:var(--text-title);">TON coin</b></span>
+            <!-- Join Channel Button -->
+            <a href="https://t.me/tonXhub_Earn" target="_blank" class="tg-join-btn">
+                <div class="tg-btn-icon" style="background: rgba(41,182,246,0.18);">
+                    <i class="fab fa-telegram-plane" style="color:#29B6F6;"></i>
                 </div>
-            </div>
+                <div class="tg-btn-text">
+                    Join Official Channel
+                    <span>@tonXhub_Earn</span>
+                </div>
+                <i class="fas fa-chevron-right tg-chevron"></i>
+            </a>
 
-            <!-- Must Join Notice -->
-            <div style="background:rgba(255,42,109,0.08);border:1px solid rgba(255,42,109,0.35);border-radius:12px;padding:10px 14px;margin-bottom:16px;display:flex;align-items:center;gap:10px;text-align:left;">
-                <i class="fas fa-lock" style="color:#FF2A6D;font-size:1rem;flex-shrink:0;"></i>
-                <span style="font-size:0.8rem;color:#FF8FAB;line-height:1.4;"><b>Joining is REQUIRED</b> to unlock all earning features and withdrawals.</span>
-            </div>
-
-            <!-- Join Buttons -->
-            <div style="display:flex;flex-direction:column;gap:11px;margin-bottom:18px;">
-                <a href="https://t.me/tonXhub_Earn" target="_blank" class="verify-btn">
-                    <div style="background:rgba(0,136,204,0.2);width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                        <i class="fab fa-telegram-plane" style="color:#29B6F6;font-size:1.2rem;"></i>
-                    </div>
-                    <div style="text-align:left;flex:1;">
-                        <div style="font-weight:700;color:var(--text-title);font-size:0.92rem;">Official Channel</div>
-                        <div style="font-size:0.73rem;color:var(--text-body);margin-top:2px;">@tonXhub_Earn — News & Announcements</div>
-                    </div>
-                    <i class="fas fa-arrow-right" style="font-size:0.8rem;color:var(--secondary-color);"></i>
-                </a>
-                <a href="https://t.me/tonX_hub_chat" target="_blank" class="verify-btn">
-                    <div style="background:rgba(157,78,221,0.2);width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                        <i class="fas fa-users" style="color:var(--primary-color);font-size:1rem;"></i>
-                    </div>
-                    <div style="text-align:left;flex:1;">
-                        <div style="font-weight:700;color:var(--text-title);font-size:0.92rem;">Community Group</div>
-                        <div style="font-size:0.73rem;color:var(--text-body);margin-top:2px;">@tonX_hub_chat — Chat & Support</div>
-                    </div>
-                    <i class="fas fa-arrow-right" style="font-size:0.8rem;color:var(--secondary-color);"></i>
-                </a>
-            </div>
+            <!-- Join Group Button -->
+            <a href="https://t.me/tonX_hub_chat" target="_blank" class="tg-join-btn">
+                <div class="tg-btn-icon" style="background: rgba(157,78,221,0.18);">
+                    <i class="fas fa-users" style="color:#9D4EDD;"></i>
+                </div>
+                <div class="tg-btn-text">
+                    Join Community Group
+                    <span>@tonX_hub_chat</span>
+                </div>
+                <i class="fas fa-chevron-right tg-chevron"></i>
+            </a>
 
             <!-- Verify Button -->
-            <button id="activateAccountBtn" class="form-button" style="padding:15px;font-size:0.97rem;border-radius:16px;">
-                <i class="fas fa-shield-alt"></i> I Joined — Verify Now
+            <button id="activateAccountBtn" class="tg-verify-btn">
+                Verify Account
             </button>
-            <p style="font-size:0.72rem;color:var(--disabled-text);margin:10px 0 0;text-align:center;">
-                Join both above, then press the button ☝️
-            </p>
+
         </div>
     </div>
     
@@ -988,8 +1094,8 @@
             const button = e.target.closest('.ad-watch-btn'); if (!button || button.disabled) return;
             const { taskId, taskUrl, state } = button.dataset;
             if (state === 'start') {
-                tg.openLink(taskUrl); button.disabled = true; let c = 6; button.textContent = `⏳ ${c}s`;
-                const t = setInterval(() => { c--; button.textContent = `⏳ ${c}s`; if (c <= 0) { clearInterval(t); button.disabled = false; button.textContent = 'Claim ✓'; button.dataset.state = 'claim'; } }, 1000);
+                tg.openLink(taskUrl); button.disabled = true; let c = 6; button.textContent = `⏄1�7 ${c}s`;
+                const t = setInterval(() => { c--; button.textContent = `⏄1�7 ${c}s`; if (c <= 0) { clearInterval(t); button.disabled = false; button.textContent = 'Claim ✄1�7'; button.dataset.state = 'claim'; } }, 1000);
             } else if (state === 'claim') { 
                 button.disabled = true; button.textContent = '...';
                 try {
@@ -998,9 +1104,9 @@
                     const reward = taskSnap.data().rewardPoints || 0;
                     await updateDoc(doc(db, 'users', currentUser.id), { completedTasks: arrayUnion(taskId), pointBalance: increment(reward), lifetimePointsEarned: increment(reward) });
                     await updateDoc(doc(db, 'tasks', taskId), { completionCount: increment(1) });
-                    showSuccessModal("Task Done! ✅", `+${reward} Points added.`);
+                    showSuccessModal("Task Done! ✄1�7", `+${reward} Points added.`);
                     button.closest('div').remove(); fetchAndUpdateCurrentUser();
-                } catch(err) { alert('Failed'); button.disabled = false; button.textContent = 'Claim ✓'; }
+                } catch(err) { alert('Failed'); button.disabled = false; button.textContent = 'Claim ✄1�7'; }
             }
         });
 
@@ -1095,7 +1201,7 @@
                     t.update(doc(db, 'users', currentUser.id), { pointBalance: increment(p.rewardAmount), lifetimePointsEarned: increment(p.rewardAmount) });
                     t.update(promoRef, { currentUses: increment(1), usersClaimed: arrayUnion(currentUser.id) });
                     return p.rewardAmount;
-                }).then((amt) => { document.getElementById('promoModalOverlay').classList.remove('show'); showSuccessModal("Success! 🎟️", `Got ${amt} Pts.`); document.getElementById('promoCodeInput').value=""; fetchAndUpdateCurrentUser(); });
+                }).then((amt) => { document.getElementById('promoModalOverlay').classList.remove('show'); showSuccessModal("Success! 🎟︄1�7", `Got ${amt} Pts.`); document.getElementById('promoCodeInput').value=""; fetchAndUpdateCurrentUser(); });
             } catch(e) { alert(e.message); } finally { btn.disabled = false; btn.textContent = "Claim Reward"; }
         });
 
@@ -1105,6 +1211,20 @@
         
         document.getElementById('action-invite').addEventListener('click', () => document.getElementById('inviteModalOverlay').classList.add('show'));
         document.getElementById('action-promo-code').addEventListener('click', () => document.getElementById('promoModalOverlay').classList.add('show'));
+        
+        // Quick action cards  1�7 navigate to tabs
+        document.getElementById('action-go-ads')?.addEventListener('click', () => {
+            document.querySelectorAll('.bottom-nav-item, .content-section').forEach(el => el.classList.remove('active'));
+            document.querySelector('[data-tab-target="#ads-content"]').classList.add('active');
+            document.getElementById('ads-content').classList.add('active');
+            updateAdButtonStats();
+        });
+        document.getElementById('action-go-lottery')?.addEventListener('click', () => {
+            document.querySelectorAll('.bottom-nav-item, .content-section').forEach(el => el.classList.remove('active'));
+            document.querySelector('[data-tab-target="#lottery-content"]').classList.add('active');
+            document.getElementById('lottery-content').classList.add('active');
+        });
+        
         document.querySelectorAll('.close-modal-btn').forEach(b => b.addEventListener('click', (e) => e.target.closest('.modal-overlay').classList.remove('show')));
 
         document.querySelectorAll('.bottom-nav-item').forEach((link, idx) => {
@@ -1169,7 +1289,7 @@
             });
         });
 
-        // ✅ Vercel API base URL
+        // ✄1�7 Vercel API base URL
         const VERCEL_API = "https://tonxhub-bmby.vercel.app";
 
         // --- VERIFICATION SYSTEM ---
@@ -1186,34 +1306,34 @@
 
         // Call Vercel API to check if user joined channel & group
         async function checkJoinStatus(userId) {
-            const res = await fetch(`${VERCEL_API}/api/check?userId=${userId}`);
+            const res = await fetch(`${VERCEL_API}/api/checkJoin?userId=${userId}`);
             if (!res.ok) throw new Error("API error: " + res.status);
-            return await res.json(); // { channel: bool, group: bool }
+            return await res.json(); // { joined: bool, channel: bool, group: bool }
         }
 
         // Verify button click handler
         document.getElementById('activateAccountBtn').addEventListener('click', async () => {
             const btn = document.getElementById('activateAccountBtn');
             btn.disabled = true;
-            btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Checking...`;
+            btn.textContent = `⏄1�7 Checking...`;
 
             try {
                 const data = await checkJoinStatus(currentUser.id);
 
                 if (data.channel && data.group) {
-                    // ✅ Joined both — activate in Firestore
+                    // ✄1�7 Joined both  1�7 activate in Firestore
                     await updateDoc(doc(db, 'users', currentUser.id), {
                         isActivated: true,
                         activatedAt: serverTimestamp()
                     });
                     currentUser.isActivated = true;
                     hideJoinModal();
-                    showSuccessModal("Verified! ✅", "You joined successfully! All earning features are now unlocked. 🎉");
+                    showSuccessModal("Verified! ✄1�7", "You joined successfully! All earning features are now unlocked. 🎉");
                 } else {
-                    // ❌ Not joined yet
+                    // ❄1�7 Not joined yet
                     let msg = "Please join first:\n\n";
-                    if (!data.channel) msg += "❌ Official Channel (@tonXhub_Earn)\n";
-                    if (!data.group)   msg += "❌ Community Group (@tonX_hub_chat)\n";
+                    if (!data.channel) msg += "❄1�7 Official Channel (@tonXhub_Earn)\n";
+                    if (!data.group)   msg += "❄1�7 Community Group (@tonX_hub_chat)\n";
                     msg += "\nAfter joining, press Verify again.";
                     alert(msg);
                 }
@@ -1222,7 +1342,7 @@
                 alert("⚠️ Check failed. Please check your internet and try again.");
             } finally {
                 btn.disabled = false;
-                btn.innerHTML = `<i class="fas fa-shield-alt"></i> I Joined — Verify Now`;
+                btn.textContent = `Verify Account`;
             }
         });
 
@@ -1240,23 +1360,23 @@
                 await initializeUser(tg.initDataUnsafe.user, tg.initDataUnsafe.start_param);
                 document.getElementById('profile-id-display').querySelector('span').textContent = currentUser.id;
 
-                // ✅ EVERY TIME app opens — check join status from Telegram API
+                // ✄1�7 EVERY TIME app opens  1�7 check join status from Telegram API
                 // This catches users who leave after verifying
                 try {
                     const joinData = await checkJoinStatus(currentUser.id);
 
                     if (!joinData.channel || !joinData.group) {
-                        // Not in channel/group — force show popup and reset activation
+                        // Not in channel/group  1�7 force show popup and reset activation
                         if (currentUser.isActivated) {
-                            // They left after being activated — reset
+                            // They left after being activated  1�7 reset
                             await updateDoc(doc(db, 'users', currentUser.id), { isActivated: false });
                             currentUser.isActivated = false;
                         }
                         showJoinModal();
                     }
-                    // else: joined everything — no popup, carry on
+                    // else: joined everything  1�7 no popup, carry on
                 } catch (apiErr) {
-                    // Vercel API failed — fall back: show popup if not activated in Firebase
+                    // Vercel API failed  1�7 fall back: show popup if not activated in Firebase
                     console.warn("API check failed, using Firebase fallback:", apiErr);
                     if (!currentUser.isActivated) {
                         showJoinModal();
