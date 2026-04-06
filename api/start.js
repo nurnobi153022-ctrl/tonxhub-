@@ -24,7 +24,7 @@ export default async function handler(req, res) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         chat_id: chatId,
-        text: "🚀 Welcome to NEWTUBE TON BOT\n\nJoin our official channels & invite friends to earn:",
+        text: "🚀 Welcome to TONX HUB\n\nJoin our official channels & invite friends to earn:",
         reply_markup: {
           inline_keyboard: [
             [
