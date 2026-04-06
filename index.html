@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -544,7 +542,7 @@
             </div>
 
             <!-- Quick Actions -->
-            <p class="home-section-label">⚄1�7 Quick Actions</p>
+            <p class="home-section-label">⚡ Quick Actions</p>
             <div class="quick-actions-grid">
 
                 <!-- Invite Card -->
@@ -578,7 +576,7 @@
                     </div>
                     <div>
                         <div class="qa-title">Watch Ads</div>
-                        <div class="qa-desc">Daily ads  1�7 earn up to 500 Pts</div>
+                        <div class="qa-desc">Daily ads  →  earn up to 500 Pts</div>
                         <span class="qa-badge" style="background:rgba(0,245,255,0.1);color:#00F5FF;">+10 Pts/Ad</span>
                     </div>
                 </div>
@@ -590,7 +588,7 @@
                     </div>
                     <div>
                         <div class="qa-title">Lucky Spin</div>
-                        <div class="qa-desc">Spin 10x daily  1�7 win up to 20 Pts</div>
+                        <div class="qa-desc">Spin 10x daily  →  win up to 20 Pts</div>
                         <span class="qa-badge" style="background:rgba(255,42,109,0.1);color:#FF6B9D;">10x / Day</span>
                     </div>
                 </div>
@@ -1074,13 +1072,13 @@
             const container = document.getElementById('task-list');
             container.innerHTML = '<div class="loader"></div>';
             try {
-                const q = query(collection(db, 'tasks'), where("isApproved", "==", true), orderBy("createdAt", "desc"), limit(20));
+                const q = query(collection(db, 'tasks'), where("isActive", "==", true), orderBy("createdAt", "desc"), limit(20));
                 const snapshot = await getDocs(q);
                 container.innerHTML = '';
                 let count = 0;
                 snapshot.forEach(docSnap => {
                     const task = docSnap.data();
-                    if (currentUser.completedTasks?.includes(docSnap.id) || ((task.limit || 0) > 0 && (task.completionCount || 0) >= task.limit)) return;
+                    if (currentUser.completedTasks?.includes(docSnap.id) || ((task.userLimit || 0) > 0 && (task.completedCount || 0) >= task.userLimit)) return;
                     const card = document.createElement('div'); 
                     card.style = "background: var(--card-bg); padding:16px; border-radius:16px; border:1px solid var(--border-subtle); display:flex; justify-content:space-between; align-items:center; transition: border-color 0.2s; box-shadow: var(--shadow-card);";
                     card.innerHTML = `<div><h4 style="margin:0 0 6px; color:var(--text-title); font-family:'Outfit',sans-serif; font-size:1.05rem;">${task.title}</h4><p style="margin:0; font-size:0.85rem; color:var(--text-body);">+${(task.rewardPoints || 5)} Points</p></div><button class="ad-watch-btn" style="padding:10px 20px;" data-task-id="${docSnap.id}" data-task-url="${task.url}" data-state="start">Go</button>`;
@@ -1094,8 +1092,8 @@
             const button = e.target.closest('.ad-watch-btn'); if (!button || button.disabled) return;
             const { taskId, taskUrl, state } = button.dataset;
             if (state === 'start') {
-                tg.openLink(taskUrl); button.disabled = true; let c = 6; button.textContent = `⏄1�7 ${c}s`;
-                const t = setInterval(() => { c--; button.textContent = `⏄1�7 ${c}s`; if (c <= 0) { clearInterval(t); button.disabled = false; button.textContent = 'Claim ✄1�7'; button.dataset.state = 'claim'; } }, 1000);
+                tg.openLink(taskUrl); button.disabled = true; let c = 6; button.textContent = `⏰ ${c}s`;
+                const t = setInterval(() => { c--; button.textContent = `⏰ ${c}s`; if (c <= 0) { clearInterval(t); button.disabled = false; button.textContent = 'Claim ✅'; button.dataset.state = 'claim'; } }, 1000);
             } else if (state === 'claim') { 
                 button.disabled = true; button.textContent = '...';
                 try {
@@ -1103,10 +1101,10 @@
                     if(!taskSnap.exists()) throw "Not found";
                     const reward = taskSnap.data().rewardPoints || 0;
                     await updateDoc(doc(db, 'users', currentUser.id), { completedTasks: arrayUnion(taskId), pointBalance: increment(reward), lifetimePointsEarned: increment(reward) });
-                    await updateDoc(doc(db, 'tasks', taskId), { completionCount: increment(1) });
-                    showSuccessModal("Task Done! ✄1�7", `+${reward} Points added.`);
+                    await updateDoc(doc(db, 'tasks', taskId), { completedCount: increment(1) });
+                    showSuccessModal("Task Done! ✅", `+${reward} Points added.`);
                     button.closest('div').remove(); fetchAndUpdateCurrentUser();
-                } catch(err) { alert('Failed'); button.disabled = false; button.textContent = 'Claim ✄1�7'; }
+                } catch(err) { alert('Failed'); button.disabled = false; button.textContent = 'Claim ✅'; }
             }
         });
 
@@ -1201,7 +1199,7 @@
                     t.update(doc(db, 'users', currentUser.id), { pointBalance: increment(p.rewardAmount), lifetimePointsEarned: increment(p.rewardAmount) });
                     t.update(promoRef, { currentUses: increment(1), usersClaimed: arrayUnion(currentUser.id) });
                     return p.rewardAmount;
-                }).then((amt) => { document.getElementById('promoModalOverlay').classList.remove('show'); showSuccessModal("Success! 🎟︄1�7", `Got ${amt} Pts.`); document.getElementById('promoCodeInput').value=""; fetchAndUpdateCurrentUser(); });
+                }).then((amt) => { document.getElementById('promoModalOverlay').classList.remove('show'); showSuccessModal("Success! 🎟", `Got ${amt} Pts.`); document.getElementById('promoCodeInput').value=""; fetchAndUpdateCurrentUser(); });
             } catch(e) { alert(e.message); } finally { btn.disabled = false; btn.textContent = "Claim Reward"; }
         });
 
@@ -1212,7 +1210,7 @@
         document.getElementById('action-invite').addEventListener('click', () => document.getElementById('inviteModalOverlay').classList.add('show'));
         document.getElementById('action-promo-code').addEventListener('click', () => document.getElementById('promoModalOverlay').classList.add('show'));
         
-        // Quick action cards  1�7 navigate to tabs
+        // Quick action cards  →  navigate to tabs
         document.getElementById('action-go-ads')?.addEventListener('click', () => {
             document.querySelectorAll('.bottom-nav-item, .content-section').forEach(el => el.classList.remove('active'));
             document.querySelector('[data-tab-target="#ads-content"]').classList.add('active');
@@ -1289,7 +1287,7 @@
             });
         });
 
-        // ✄1�7 Vercel API base URL
+        // ✅ Vercel API base URL
         const VERCEL_API = "https://tonxhub-bmby.vercel.app";
 
         // --- VERIFICATION SYSTEM ---
@@ -1315,25 +1313,25 @@
         document.getElementById('activateAccountBtn').addEventListener('click', async () => {
             const btn = document.getElementById('activateAccountBtn');
             btn.disabled = true;
-            btn.textContent = `⏄1�7 Checking...`;
+            btn.textContent = `⏰ Checking...`;
 
             try {
                 const data = await checkJoinStatus(currentUser.id);
 
                 if (data.channel && data.group) {
-                    // ✄1�7 Joined both  1�7 activate in Firestore
+                    // ✅ Joined both  →  activate in Firestore
                     await updateDoc(doc(db, 'users', currentUser.id), {
                         isActivated: true,
                         activatedAt: serverTimestamp()
                     });
                     currentUser.isActivated = true;
                     hideJoinModal();
-                    showSuccessModal("Verified! ✄1�7", "You joined successfully! All earning features are now unlocked. 🎉");
+                    showSuccessModal("Verified! ✅", "You joined successfully! All earning features are now unlocked. 🎉");
                 } else {
-                    // ❄1�7 Not joined yet
+                    // ❌ Not joined yet
                     let msg = "Please join first:\n\n";
-                    if (!data.channel) msg += "❄1�7 Official Channel (@tonXhub_Earn)\n";
-                    if (!data.group)   msg += "❄1�7 Community Group (@tonX_hub_chat)\n";
+                    if (!data.channel) msg += "❌ Official Channel (@tonXhub_Earn)\n";
+                    if (!data.group)   msg += "❌ Community Group (@tonX_hub_chat)\n";
                     msg += "\nAfter joining, press Verify again.";
                     alert(msg);
                 }
@@ -1360,23 +1358,23 @@
                 await initializeUser(tg.initDataUnsafe.user, tg.initDataUnsafe.start_param);
                 document.getElementById('profile-id-display').querySelector('span').textContent = currentUser.id;
 
-                // ✄1�7 EVERY TIME app opens  1�7 check join status from Telegram API
+                // ✅ EVERY TIME app opens  →  check join status from Telegram API
                 // This catches users who leave after verifying
                 try {
                     const joinData = await checkJoinStatus(currentUser.id);
 
                     if (!joinData.channel || !joinData.group) {
-                        // Not in channel/group  1�7 force show popup and reset activation
+                        // Not in channel/group  →  force show popup and reset activation
                         if (currentUser.isActivated) {
-                            // They left after being activated  1�7 reset
+                            // They left after being activated  →  reset
                             await updateDoc(doc(db, 'users', currentUser.id), { isActivated: false });
                             currentUser.isActivated = false;
                         }
                         showJoinModal();
                     }
-                    // else: joined everything  1�7 no popup, carry on
+                    // else: joined everything  →  no popup, carry on
                 } catch (apiErr) {
-                    // Vercel API failed  1�7 fall back: show popup if not activated in Firebase
+                    // Vercel API failed  →  fall back: show popup if not activated in Firebase
                     console.warn("API check failed, using Firebase fallback:", apiErr);
                     if (!currentUser.isActivated) {
                         showJoinModal();
@@ -1386,8 +1384,4 @@
             } catch (error) {
                 console.error("Main error:", error);
             }
-        }
-        main();
-    </script>
-</body>
-</html>
+       
