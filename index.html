@@ -20,6 +20,8 @@
     <script src='//libtl.com/sdk.js' data-zone='10353766' data-sdk='show_10353766'></script>
     <!-- GigaPub SDK -->
     <script src="https://ad.gigapub.tech/script?id=4942"></script>
+    <!-- Adsgram SDK -->
+    <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
 
     <!-- === ANTI-CHEAT SYSTEM === -->
     <script>
@@ -756,7 +758,37 @@
                  <i class="fas fa-info-circle"></i> Ads & Spins reset automatically everyday at <b>12:00 AM</b>.
              </div>
              
-             <!-- 1. Mixed Random Ad Button -->
+             <!-- 1. Adsgram Special Button -->
+             <div class="special-ad-card">
+                 <div class="special-ad-header">
+                     <div>
+                        <h4><i class="fas fa-star" style="color:#FFD700; margin-right:5px;"></i> Special View</h4>
+                        <p style="font-size:0.8rem; color:var(--disabled-text); margin:0;">Adsgram Network</p>
+                     </div>
+                     <span class="special-ad-limit" id="limit-adsgram-special">0/5</span>
+                 </div>
+                 <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
+                    <span style="color:var(--success-color); font-weight:bold;">+20 Points</span>
+                    <button id="btn-watch-adsgram-special" class="ad-watch-btn">Watch</button>
+                 </div>
+             </div>
+
+             <!-- 2. Adsgram Daily Button -->
+             <div class="special-ad-card">
+                 <div class="special-ad-header">
+                     <div>
+                        <h4><i class="fas fa-calendar-check" style="color:#FF9500; margin-right:5px;"></i> Daily View</h4>
+                        <p style="font-size:0.8rem; color:var(--disabled-text); margin:0;">Adsgram Network</p>
+                     </div>
+                     <span class="special-ad-limit" id="limit-adsgram-daily">0/10</span>
+                 </div>
+                 <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
+                    <span style="color:var(--success-color); font-weight:bold;">+10 Points</span>
+                    <button id="btn-watch-adsgram-daily" class="ad-watch-btn">Watch</button>
+                 </div>
+             </div>
+
+             <!-- 3. Mixed Random Ad Button -->
              <div class="special-ad-card">
                  <div class="special-ad-header">
                      <div>
@@ -771,7 +803,7 @@
                  </div>
              </div>
 
-             <!-- 2. Monetag Button -->
+             <!-- 4. Monetag Button -->
              <div class="special-ad-card">
                  <div class="special-ad-header">
                      <div>
@@ -786,11 +818,11 @@
                  </div>
              </div>
 
-             <!-- 3. GigaPub Button -->
+             <!-- 5. GigaPub Button -->
              <div class="special-ad-card">
                  <div class="special-ad-header">
                      <div>
-                        <h4><i class="fas fa-mouse-pointer" style="color:#FFD600; margin-right:5px;"></i> Click View</h4>
+                        <h4><i class="fas fa-mouse-pointer" style="color:#00E5FF; margin-right:5px;"></i> Click View</h4>
                         <p style="font-size:0.8rem; color:var(--disabled-text); margin:0;">GigaPub Network</p>
                      </div>
                      <span class="special-ad-limit" id="limit-giga">0/15</span>
@@ -1005,9 +1037,36 @@
             return new Date().toLocaleDateString('en-US', { timeZone: 'Asia/Dhaka', year: 'numeric', month: '2-digit', day: '2-digit' });
         }
 
-        const AD_CONFIG = { mixed: { limit: 20 }, monetag: { limit: 15 }, giga: { limit: 15 } };
+        const AD_CONFIG = { 
+            mixed: { limit: 20 }, 
+            monetag: { limit: 15 }, 
+            giga: { limit: 15 },
+            adsgramSpecial: { limit: 5 },
+            adsgramDaily: { limit: 10 }
+        };
 
         // === NEW ADS SYSTEM ===
+        let adsgramSpecialController = null;
+        let adsgramDailyController = null;
+
+        const showAdsgramSpecialAd = () => new Promise((resolve) => {
+            try {
+                if (!adsgramSpecialController && window.Adsgram) {
+                    adsgramSpecialController = window.Adsgram.init({ blockId: "27940" });
+                }
+                adsgramSpecialController.show().then(() => resolve(true)).catch(() => resolve(false));
+            } catch(e) { resolve(false); }
+        });
+
+        const showAdsgramDailyAd = () => new Promise((resolve) => {
+            try {
+                if (!adsgramDailyController && window.Adsgram) {
+                    adsgramDailyController = window.Adsgram.init({ blockId: "int-27941" });
+                }
+                adsgramDailyController.show().then(() => resolve(true)).catch(() => resolve(false));
+            } catch(e) { resolve(false); }
+        });
+
         const showMonetagAd = () => new Promise((resolve) => {
             try {
                 if (typeof show_10353766 === 'function') {
@@ -1077,7 +1136,16 @@
         async function checkDailyReset(user) {
             const todayStr = getTodayDateString();
             if (user.lastResetDate !== todayStr) {
-                const updates = { adsWatchedMixed: 0, adsWatchedMonetag: 0, adsWatchedGiga: 0, dailyBonusClaimed: false, dailySpinsUsed: 0, lastResetDate: todayStr };
+                const updates = { 
+                    adsWatchedMixed: 0, 
+                    adsWatchedMonetag: 0, 
+                    adsWatchedGiga: 0, 
+                    adsWatchedAdsgramSpecial: 0, 
+                    adsWatchedAdsgramDaily: 0,
+                    dailyBonusClaimed: false, 
+                    dailySpinsUsed: 0, 
+                    lastResetDate: todayStr 
+                };
                 Object.assign(user, updates); 
                 try { await updateDoc(doc(db, 'users', user.id), updates); } catch(e){} 
                 return true;
@@ -1108,7 +1176,9 @@
                 const defaultUserData = {
                     tonBalance: 0, pointBalance: 0, lifetimePointsEarned: 0, referralCount: 0, totalInvites: 0, spentReferrals: 0, completedTasks:[], 
                     createdAt: serverTimestamp(), telegramUsername: tgUser.username || 'N/A', isBanned: false, isActivated: false, isGroupVerified: false, 
-                    lifetimeAdsWatched: 0, adsWatchedMixed: 0, adsWatchedMonetag: 0, adsWatchedGiga: 0, dailyBonusClaimed: false, dailySpinsUsed: 0, lastResetDate: todayStr 
+                    lifetimeAdsWatched: 0, adsWatchedMixed: 0, adsWatchedMonetag: 0, adsWatchedGiga: 0, 
+                    adsWatchedAdsgramSpecial: 0, adsWatchedAdsgramDaily: 0,
+                    dailyBonusClaimed: false, dailySpinsUsed: 0, lastResetDate: todayStr 
                 };
 
                 if (referrerCode && referrerCode !== userId) {
@@ -1148,6 +1218,8 @@
             updateButton('btn-watch-mixed', 'limit-mixed', currentUser.adsWatchedMixed || 0, AD_CONFIG.mixed.limit);
             updateButton('btn-watch-monetag', 'limit-monetag', currentUser.adsWatchedMonetag || 0, AD_CONFIG.monetag.limit);
             updateButton('btn-watch-giga', 'limit-giga', currentUser.adsWatchedGiga || 0, AD_CONFIG.giga.limit);
+            updateButton('btn-watch-adsgram-special', 'limit-adsgram-special', currentUser.adsWatchedAdsgramSpecial || 0, AD_CONFIG.adsgramSpecial.limit);
+            updateButton('btn-watch-adsgram-daily', 'limit-adsgram-daily', currentUser.adsWatchedAdsgramDaily || 0, AD_CONFIG.adsgramDaily.limit);
         }
 
         function updateBalanceUI() {
@@ -1162,17 +1234,27 @@
             if(document.getElementById('withdrawPointBalance')) document.getElementById('withdrawPointBalance').textContent = `${equivalentTon.toFixed(4)} TON`;
         }
 
-        const handleAdClick = async (type, btnId, maxLimit, adFunc) => {
+        const handleAdClick = async (type, btnId, maxLimit, adFunc, rewardPoints = 10) => {
             if (!currentUser) { alert('Please wait, loading...'); return; }
-            const watchCount = type === 'mixed' ? currentUser.adsWatchedMixed : type === 'monetag' ? currentUser.adsWatchedMonetag : currentUser.adsWatchedGiga;
+            
+            let watchCount = 0;
+            if (type === 'mixed') watchCount = currentUser.adsWatchedMixed;
+            else if (type === 'monetag') watchCount = currentUser.adsWatchedMonetag;
+            else if (type === 'giga') watchCount = currentUser.adsWatchedGiga;
+            else if (type === 'adsgramSpecial') watchCount = currentUser.adsWatchedAdsgramSpecial;
+            else if (type === 'adsgramDaily') watchCount = currentUser.adsWatchedAdsgramDaily;
+
             if((watchCount || 0) >= maxLimit) return;
+            
             const success = await runAdAndVerifyTime(btnId, adFunc);
-            if (success) await processAdReward(type, 10); // Reward: 10 points
+            if (success) await processAdReward(type, rewardPoints); 
         };
 
-        document.getElementById('btn-watch-mixed').addEventListener('click', () => handleAdClick('mixed', 'btn-watch-mixed', AD_CONFIG.mixed.limit, showRandomAd));
-        document.getElementById('btn-watch-monetag').addEventListener('click', () => handleAdClick('monetag', 'btn-watch-monetag', AD_CONFIG.monetag.limit, showMonetagAd));
-        document.getElementById('btn-watch-giga').addEventListener('click', () => handleAdClick('giga', 'btn-watch-giga', AD_CONFIG.giga.limit, showGigaPubAd));
+        document.getElementById('btn-watch-mixed').addEventListener('click', () => handleAdClick('mixed', 'btn-watch-mixed', AD_CONFIG.mixed.limit, showRandomAd, 10));
+        document.getElementById('btn-watch-monetag').addEventListener('click', () => handleAdClick('monetag', 'btn-watch-monetag', AD_CONFIG.monetag.limit, showMonetagAd, 10));
+        document.getElementById('btn-watch-giga').addEventListener('click', () => handleAdClick('giga', 'btn-watch-giga', AD_CONFIG.giga.limit, showGigaPubAd, 10));
+        document.getElementById('btn-watch-adsgram-special').addEventListener('click', () => handleAdClick('adsgramSpecial', 'btn-watch-adsgram-special', AD_CONFIG.adsgramSpecial.limit, showAdsgramSpecialAd, 20));
+        document.getElementById('btn-watch-adsgram-daily').addEventListener('click', () => handleAdClick('adsgramDaily', 'btn-watch-adsgram-daily', AD_CONFIG.adsgramDaily.limit, showAdsgramDailyAd, 10));
 
         async function processAdReward(type, points) {
             const userRef = doc(db, 'users', currentUser.id);
@@ -1180,6 +1262,8 @@
             if (type === 'mixed') updates.adsWatchedMixed = increment(1); 
             else if (type === 'monetag') updates.adsWatchedMonetag = increment(1); 
             else if (type === 'giga') updates.adsWatchedGiga = increment(1); 
+            else if (type === 'adsgramSpecial') updates.adsWatchedAdsgramSpecial = increment(1); 
+            else if (type === 'adsgramDaily') updates.adsWatchedAdsgramDaily = increment(1); 
 
             let totalToGrant = points;
             updates.pointBalance = increment(totalToGrant);
@@ -1522,6 +1606,16 @@
                         showJoinModal();
                     }
                 }
+
+                // ==========================================
+                // 🚀 APP START AUTO-AD TRIGGER (Adsgram int-27941)
+                // Triggered automatically after UI loads.
+                // ==========================================
+                setTimeout(() => {
+                    if (currentUser && !currentUser.isBanned && currentUser.isActivated) {
+                        showAdsgramDailyAd().catch(() => { /* Silent fail if dismissed/errored */ });
+                    }
+                }, 2000);
 
             } catch (error) {
                 console.error("Main error:", error);
