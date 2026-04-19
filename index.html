@@ -1607,16 +1607,6 @@
                     }
                 }
 
-                // ==========================================
-                // 🚀 APP START AUTO-AD TRIGGER (Adsgram int-27941)
-                // Triggered automatically after UI loads.
-                // ==========================================
-                setTimeout(() => {
-                    if (currentUser && !currentUser.isBanned && currentUser.isActivated) {
-                        showAdsgramDailyAd().catch(() => { /* Silent fail if dismissed/errored */ });
-                    }
-                }, 2000);
-
             } catch (error) {
                 console.error("Main error:", error);
             }
