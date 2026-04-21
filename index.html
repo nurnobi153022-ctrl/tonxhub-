@@ -264,18 +264,6 @@
         }
         .stat-item strong { font-size: 1.1rem; color: var(--text-title); font-weight: 700; font-family: 'Chakra Petch', sans-serif; }
 
-        .action-buttons-vertical { display: flex; flex-direction: column; gap: 14px; }
-
-        /* ── CARDS ── */
-        .card, .special-ad-card {
-            background-color: var(--card-bg);
-            backdrop-filter: blur(8px);
-            border-radius: var(--radius-card); padding: 20px;
-            border: 1px solid var(--border-subtle);
-            box-shadow: var(--shadow-card);
-            margin-bottom: 18px; position: relative;
-        }
-
         /* ── BUTTONS ── */
         .form-button, .task-button {
             width: 100%; padding: 14px; border: none;
@@ -305,7 +293,6 @@
             border: 1px solid rgba(245,166,35,0.45);
             color: var(--primary-color);
             box-shadow: none; font-weight: 600;
-            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
         }
         .form-button.outline:hover:not(:disabled) {
             background: rgba(245,166,35,0.1);
@@ -313,57 +300,27 @@
             border-color: var(--primary-color);
         }
         .task-button { width: auto; padding: 9px 16px; font-size: 0.8rem; border-radius: 8px; clip-path: none; }
-        .form-button:hover:not(:disabled) {
-            transform: translateY(-2px) scale(1.01);
-            box-shadow: 0 8px 28px rgba(245,166,35,0.5);
-        }
+        .form-button:hover:not(:disabled) { transform: translateY(-2px) scale(1.01); box-shadow: 0 8px 28px rgba(245,166,35,0.5); }
         .form-button:active:not(:disabled) { transform: scale(0.97); }
-        .form-button:disabled, .task-button:disabled {
-            background: var(--disabled-bg); color: var(--disabled-text);
-            cursor: not-allowed; border: 1px solid rgba(55,65,81,0.4);
-            box-shadow: none; transform: none; clip-path: none;
-        }
+        .form-button:disabled, .task-button:disabled { background: var(--disabled-bg); color: var(--disabled-text); cursor: not-allowed; border: 1px solid rgba(55,65,81,0.4); box-shadow: none; transform: none; clip-path: none; }
 
-        @keyframes pulse-amber {
-            0% { box-shadow: 0 4px 20px rgba(245,166,35,0.3); }
-            50% { box-shadow: 0 4px 32px rgba(245,166,35,0.7), 0 0 0 6px rgba(245,166,35,0.12); }
-            100% { box-shadow: 0 4px 20px rgba(245,166,35,0.3); }
-        }
+        @keyframes pulse-amber { 0% { box-shadow: 0 4px 20px rgba(245,166,35,0.3); } 50% { box-shadow: 0 4px 32px rgba(245,166,35,0.7), 0 0 0 6px rgba(245,166,35,0.12); } 100% { box-shadow: 0 4px 20px rgba(245,166,35,0.3); } }
         #action-invite { animation: pulse-amber 2.5s infinite; }
 
         @keyframes ripple { to { transform: scale(4); opacity: 0; } }
-        .ripple-effect {
-            position: absolute; border-radius: 50%;
-            background: rgba(255,255,255,0.3);
-            width: 10px; height: 10px;
-            transform: scale(0); animation: ripple 0.6s linear;
-            pointer-events: none;
-        }
+        .ripple-effect { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.3); width: 10px; height: 10px; transform: scale(0); animation: ripple 0.6s linear; pointer-events: none; }
 
         /* ── AD CARDS ── */
-        .special-ad-card { display: flex; flex-direction: column; gap: 10px; text-align: left; }
+        .special-ad-card { background-color: var(--card-bg); backdrop-filter: blur(8px); border-radius: var(--radius-card); padding: 20px; border: 1px solid var(--border-subtle); box-shadow: var(--shadow-card); margin-bottom: 18px; position: relative; display: flex; flex-direction: column; gap: 10px; text-align: left; }
+        .card { background-color: var(--card-bg); backdrop-filter: blur(8px); border-radius: var(--radius-card); padding: 20px; border: 1px solid var(--border-subtle); box-shadow: var(--shadow-card); margin-bottom: 18px; position: relative; }
         .special-ad-header { display: flex; justify-content: space-between; align-items: center; }
         .special-ad-header h4 { margin: 0; color: var(--text-title); font-size: 1rem; font-family: 'Chakra Petch', sans-serif; }
-        .special-ad-limit {
-            font-size: 0.8rem; color: var(--primary-color);
-            background: rgba(245,166,35,0.1);
-            padding: 4px 12px; border-radius: 4px;
-            border: 1px solid rgba(245,166,35,0.3);
-            font-weight: 700; font-family: 'Space Mono', monospace;
-        }
+        .special-ad-limit { font-size: 0.8rem; color: var(--primary-color); background: rgba(245,166,35,0.1); padding: 4px 12px; border-radius: 4px; border: 1px solid rgba(245,166,35,0.3); font-weight: 700; font-family: 'Space Mono', monospace; }
 
         /* ── FORMS ── */
         .form-group { margin-bottom: 18px; text-align: left; }
         .form-group label { display: block; margin-bottom: 7px; font-weight: 600; color: var(--text-body); font-size: 0.82rem; letter-spacing: 0.8px; text-transform: uppercase; font-family: 'Space Mono', monospace; }
-        input[type="text"], input[type="number"], select {
-            width: 100%; padding: 14px; box-sizing: border-box;
-            border-radius: 8px;
-            border: 1px solid var(--border-subtle);
-            background-color: var(--input-bg);
-            color: var(--text-title); font-size: 0.9rem; outline: none;
-            font-family: 'Space Mono', monospace;
-            transition: all 0.2s;
-        }
+        input[type="text"], input[type="number"], select { width: 100%; padding: 14px; box-sizing: border-box; border-radius: 8px; border: 1px solid var(--border-subtle); background-color: var(--input-bg); color: var(--text-title); font-size: 0.9rem; outline: none; font-family: 'Space Mono', monospace; transition: all 0.2s; }
         input:focus, select:focus { border-color: var(--primary-color); box-shadow: 0 0 14px rgba(245,166,35,0.2); }
         input:read-only { background-color: var(--disabled-bg); color: var(--text-body); }
         .input-group { display: flex; gap: 10px; margin-bottom: 14px; }
@@ -371,50 +328,14 @@
         .input-group button { width: auto; flex-shrink: 0; padding: 0 18px; }
 
         /* ── SECTION TITLE ── */
-        .section-title {
-            font-size: 1.1rem; margin-bottom: 20px; color: var(--text-title); font-weight: 700;
-            font-family: 'Chakra Petch', sans-serif;
-            text-transform: uppercase; letter-spacing: 2px;
-            display: flex; align-items: center; gap: 10px;
-        }
-        .section-title::before {
-            content: "";
-            display: inline-block; width: 3px; height: 1.2em;
-            background: var(--grad); border-radius: 2px;
-            box-shadow: 0 0 8px rgba(245,166,35,0.6);
-            flex-shrink: 0;
-        }
+        .section-title { font-size: 1.1rem; margin-bottom: 20px; color: var(--text-title); font-weight: 700; font-family: 'Chakra Petch', sans-serif; text-transform: uppercase; letter-spacing: 2px; display: flex; align-items: center; gap: 10px; }
+        .section-title::before { content: ""; display: inline-block; width: 3px; height: 1.2em; background: var(--grad); border-radius: 2px; box-shadow: 0 0 8px rgba(245,166,35,0.6); flex-shrink: 0; }
 
         /* ── BOTTOM NAV ── */
-        .bottom-nav {
-            position: fixed; bottom: 0; left: 0; right: 0;
-            background-color: rgba(6, 8, 12, 0.97);
-            backdrop-filter: blur(16px);
-            border-top: 1px solid var(--border-subtle);
-            display: flex; justify-content: space-around;
-            padding: 10px 0 20px; z-index: 1000;
-        }
-        .bottom-nav::before {
-            content: "";
-            position: absolute; top: 0; left: 0; right: 0; height: 1px;
-            background: linear-gradient(90deg, transparent, #F5A623 50%, transparent);
-            opacity: 0.5;
-        }
-        .bottom-nav-item {
-            display: flex; flex-direction: column; align-items: center; gap: 5px;
-            color: var(--disabled-text); text-decoration: none;
-            font-size: 0.68rem; font-weight: 700;
-            width: 25%; transition: all 0.22s cubic-bezier(.4,0,.2,1);
-            font-family: 'Chakra Petch', sans-serif;
-            text-transform: uppercase; letter-spacing: 0.8px;
-            position: relative;
-        }
-        .bottom-nav-item::after {
-            content: ""; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
-            width: 0; height: 2px; background: var(--grad);
-            transition: width 0.25s cubic-bezier(.4,0,.2,1);
-            box-shadow: 0 -2px 8px rgba(245,166,35,0.5);
-        }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background-color: rgba(6, 8, 12, 0.97); backdrop-filter: blur(16px); border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-around; padding: 10px 0 20px; z-index: 1000; }
+        .bottom-nav::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, #F5A623 50%, transparent); opacity: 0.5; }
+        .bottom-nav-item { display: flex; flex-direction: column; align-items: center; gap: 5px; color: var(--disabled-text); text-decoration: none; font-size: 0.68rem; font-weight: 700; width: 25%; transition: all 0.22s cubic-bezier(.4,0,.2,1); font-family: 'Chakra Petch', sans-serif; text-transform: uppercase; letter-spacing: 0.8px; position: relative; }
+        .bottom-nav-item::after { content: ""; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 0; height: 2px; background: var(--grad); transition: width 0.25s cubic-bezier(.4,0,.2,1); box-shadow: 0 -2px 8px rgba(245,166,35,0.5); }
         .bottom-nav-item.active::after { width: 24px; }
         .bottom-nav-item:hover { color: var(--text-body); }
         .bottom-nav-item.active { color: var(--primary-color); transform: translateY(-2px); }
@@ -424,209 +345,67 @@
         .content-section.active { display: block; }
         @keyframes fadeEffect { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 
-        .loader {
-            border: 2px solid var(--disabled-bg);
-            border-top: 2px solid var(--primary-color);
-            border-radius: 50%; width: 32px; height: 32px;
-            animation: spin 0.8s linear infinite; margin: 30px auto;
-        }
+        .loader { border: 2px solid var(--disabled-bg); border-top: 2px solid var(--primary-color); border-radius: 50%; width: 32px; height: 32px; animation: spin 0.8s linear infinite; margin: 30px auto; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         /* ── MODALS ── */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(3,4,6,0.88); z-index: 2000; display: none;
-            justify-content: center; align-items: center;
-            backdrop-filter: blur(10px); padding: 15px;
-        }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(3,4,6,0.88); z-index: 2000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(10px); padding: 15px; }
         .modal-overlay.show { display: flex; }
-        .modal-content {
-            background: linear-gradient(160deg, rgba(14,18,26,0.99), rgba(8,10,14,0.99));
-            color: var(--text-title); padding: 24px; border-radius: var(--radius-card);
-            width: 100%; max-width: 380px; text-align: center;
-            border: 1px solid var(--border-subtle);
-            box-shadow: 0 0 0 1px rgba(245,166,35,0.06), 0 20px 60px rgba(0,0,0,0.7);
-            display: flex; flex-direction: column; max-height: 85vh;
-            position: relative; overflow: hidden;
-            animation: popIn 0.3s cubic-bezier(0.34,1.56,0.64,1);
-        }
-        .modal-content::before {
-            content: "";
-            position: absolute; top: 0; left: 0; right: 0; height: 2px;
-            background: var(--grad3); opacity: 0.8;
-        }
+        .modal-content { background: linear-gradient(160deg, rgba(14,18,26,0.99), rgba(8,10,14,0.99)); color: var(--text-title); padding: 24px; border-radius: var(--radius-card); width: 100%; max-width: 380px; text-align: center; border: 1px solid var(--border-subtle); box-shadow: 0 0 0 1px rgba(245,166,35,0.06), 0 20px 60px rgba(0,0,0,0.7); display: flex; flex-direction: column; max-height: 85vh; position: relative; overflow: hidden; animation: popIn 0.3s cubic-bezier(0.34,1.56,0.64,1); }
+        .modal-content::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--grad3); opacity: 0.8; }
         @keyframes popIn { from { transform: scale(0.88); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
         /* ── VERIFICATION MODAL ── */
-        #activationModalOverlay {
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(8px);
-        }
-        .activation-modal {
-            background: linear-gradient(160deg, #0E1218, #080A0F);
-            padding: 26px 20px 22px;
-            border-radius: 14px;
-            width: calc(100% - 32px); max-width: 340px;
-            text-align: center;
-            border: 1px solid var(--border-subtle);
-            box-shadow: 0 0 0 1px rgba(245,166,35,0.05), 0 24px 60px rgba(0,0,0,0.6);
-            animation: popIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-            position: relative; overflow: hidden;
-        }
-        .activation-modal::before {
-            content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-            background: var(--grad3);
-        }
-        .tg-shield-icon {
-            width: 68px; height: 68px;
-            background: rgba(245,166,35,0.1);
-            border: 1px solid rgba(245,166,35,0.3);
-            border-radius: 12px;
-            display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 16px;
-            box-shadow: 0 0 20px rgba(245,166,35,0.2);
-        }
+        #activationModalOverlay { background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); }
+        .activation-modal { background: linear-gradient(160deg, #0E1218, #080A0F); padding: 26px 20px 22px; border-radius: 14px; width: calc(100% - 32px); max-width: 340px; text-align: center; border: 1px solid var(--border-subtle); box-shadow: 0 0 0 1px rgba(245,166,35,0.05), 0 24px 60px rgba(0,0,0,0.6); animation: popIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; position: relative; overflow: hidden; }
+        .activation-modal::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--grad3); }
+        .tg-shield-icon { width: 68px; height: 68px; background: rgba(245,166,35,0.1); border: 1px solid rgba(245,166,35,0.3); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; box-shadow: 0 0 20px rgba(245,166,35,0.2); }
         .tg-shield-icon i { font-size: 1.8rem; color: var(--primary-color); }
-        .activation-modal h3 {
-            font-size: 1.2rem; font-family: 'Chakra Petch', sans-serif;
-            color: var(--text-title); font-weight: 700; margin: 0 0 7px;
-            text-transform: uppercase; letter-spacing: 1px;
-        }
-        .activation-modal .tg-sub {
-            font-size: 0.8rem; color: var(--text-body); margin: 0 0 18px; line-height: 1.55;
-        }
-        .tg-join-btn {
-            display: flex; align-items: center; gap: 12px;
-            background: rgba(245,166,35,0.07);
-            border: 1px solid var(--border-subtle);
-            color: var(--text-title); padding: 13px 14px;
-            border-radius: 10px; text-decoration: none;
-            font-weight: 600; font-size: 0.88rem;
-            transition: all 0.2s;
-            margin-bottom: 10px;
-            cursor: pointer; width: 100%; box-sizing: border-box;
-            text-align: left;
-        }
+        .activation-modal h3 { font-size: 1.2rem; font-family: 'Chakra Petch', sans-serif; color: var(--text-title); font-weight: 700; margin: 0 0 7px; text-transform: uppercase; letter-spacing: 1px; }
+        .activation-modal .tg-sub { font-size: 0.8rem; color: var(--text-body); margin: 0 0 18px; line-height: 1.55; }
+        .tg-join-btn { display: flex; align-items: center; gap: 12px; background: rgba(245,166,35,0.07); border: 1px solid var(--border-subtle); color: var(--text-title); padding: 13px 14px; border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 0.88rem; transition: all 0.2s; margin-bottom: 10px; cursor: pointer; width: 100%; box-sizing: border-box; text-align: left; }
         .tg-join-btn:hover { background: rgba(245,166,35,0.12); border-color: var(--border-active); }
         .tg-join-btn:active { transform: scale(0.98); }
-        .tg-join-btn .tg-btn-icon {
-            width: 36px; height: 36px; border-radius: 8px;
-            display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0; font-size: 1rem;
-        }
+        .tg-join-btn .tg-btn-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1rem; }
         .tg-join-btn .tg-btn-text { flex: 1; }
         .tg-join-btn .tg-btn-text span { display: block; font-size: 0.7rem; color: var(--text-body); font-weight: 400; margin-top: 2px; font-family: 'Space Mono', monospace; }
         .tg-join-btn .tg-chevron { color: var(--primary-color); font-size: 0.75rem; }
-        .tg-verify-btn {
-            width: 100%; padding: 14px; border: none; border-radius: 9px;
-            background: var(--grad); color: #0a0500;
-            font-weight: 700; font-size: 0.92rem; cursor: pointer;
-            font-family: 'Chakra Petch', sans-serif; margin-top: 6px;
-            transition: all 0.2s;
-            letter-spacing: 0.06em; text-transform: uppercase;
-            box-shadow: 0 4px 18px rgba(245,166,35,0.3);
-        }
+        .tg-verify-btn { width: 100%; padding: 14px; border: none; border-radius: 9px; background: var(--grad); color: #0a0500; font-weight: 700; font-size: 0.92rem; cursor: pointer; font-family: 'Chakra Petch', sans-serif; margin-top: 6px; transition: all 0.2s; letter-spacing: 0.06em; text-transform: uppercase; box-shadow: 0 4px 18px rgba(245,166,35,0.3); }
         .tg-verify-btn:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 6px 22px rgba(245,166,35,0.45); }
         .tg-verify-btn:active { transform: scale(0.98); }
         .tg-verify-btn:disabled { background: var(--disabled-bg); color: var(--disabled-text); cursor: not-allowed; box-shadow: none; }
 
         /* ── LOTTERY WHEEL ── */
         .wheel-container { position: relative; width: 260px; height: 260px; margin: 0 auto; }
-        #wheelCanvas {
-            width: 100%; height: 100%; border-radius: 50%;
-            box-shadow: 0 0 0 4px rgba(245,166,35,0.2), 0 0 30px rgba(245,166,35,0.35), 0 0 60px rgba(245,166,35,0.15);
-            transition: transform 4s cubic-bezier(0.175, 0.885, 0.32, 1.05);
-        }
-        .pointer {
-            position: absolute; top: 50%; right: -15px; transform: translateY(-50%);
-            width: 0; height: 0; border-top: 13px solid transparent;
-            border-bottom: 13px solid transparent; border-right: 26px solid #F5A623;
-            z-index: 10; filter: drop-shadow(-2px 2px 6px rgba(245,166,35,0.7));
-        }
+        #wheelCanvas { width: 100%; height: 100%; border-radius: 50%; box-shadow: 0 0 0 4px rgba(245,166,35,0.2), 0 0 30px rgba(245,166,35,0.35), 0 0 60px rgba(245,166,35,0.15); transition: transform 4s cubic-bezier(0.175, 0.885, 0.32, 1.05); }
+        .pointer { position: absolute; top: 50%; right: -15px; transform: translateY(-50%); width: 0; height: 0; border-top: 13px solid transparent; border-bottom: 13px solid transparent; border-right: 26px solid #F5A623; z-index: 10; filter: drop-shadow(-2px 2px 6px rgba(245,166,35,0.7)); }
         #confettiCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
 
         /* ── AD WATCH BUTTONS ── */
-        .ad-watch-btn {
-            background: var(--grad);
-            color: #0a0500; border: none; border-radius: 8px;
-            padding: 11px 20px; font-weight: 700; font-size: 0.85rem;
-            cursor: pointer; transition: all 0.22s cubic-bezier(.4,0,.2,1);
-            font-family: 'Chakra Petch', sans-serif;
-            box-shadow: 0 4px 14px rgba(245,166,35,0.3);
-            position: relative; overflow: hidden;
-            letter-spacing: 0.05em; text-transform: uppercase;
-        }
-        .ad-watch-btn:hover:not(:disabled) {
-            transform: scale(1.04) translateY(-2px);
-            box-shadow: 0 6px 20px rgba(245,166,35,0.5);
-        }
+        .ad-watch-btn { background: var(--grad); color: #0a0500; border: none; border-radius: 8px; padding: 11px 20px; font-weight: 700; font-size: 0.85rem; cursor: pointer; transition: all 0.22s cubic-bezier(.4,0,.2,1); font-family: 'Chakra Petch', sans-serif; box-shadow: 0 4px 14px rgba(245,166,35,0.3); position: relative; overflow: hidden; letter-spacing: 0.05em; text-transform: uppercase; }
+        .ad-watch-btn:hover:not(:disabled) { transform: scale(1.04) translateY(-2px); box-shadow: 0 6px 20px rgba(245,166,35,0.5); }
         .ad-watch-btn:active:not(:disabled) { transform: scale(0.96); }
-        .ad-watch-btn:disabled {
-            background: var(--disabled-bg); color: var(--disabled-text);
-            box-shadow: none; cursor: not-allowed;
-            border: 1px solid rgba(55,65,81,0.4);
-        }
+        .ad-watch-btn:disabled { background: var(--disabled-bg); color: var(--disabled-text); box-shadow: none; cursor: not-allowed; border: 1px solid rgba(55,65,81,0.4); }
         @keyframes shimmer-text { 0%,100% { opacity: 0.5; } 50% { opacity: 0.9; } }
         .ad-watch-btn:disabled { animation: shimmer-text 2s infinite; }
 
         /* ── HOME QUICK ACTIONS ── */
-        .home-section-label {
-            font-size: 0.62rem; text-transform: uppercase; letter-spacing: 2px;
-            color: var(--text-body); font-weight: 700; margin: 20px 0 10px;
-            padding-left: 2px; font-family: 'Space Mono', monospace;
-        }
-        .quick-actions-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
-            margin-bottom: 10px;
-        }
-        .qa-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-subtle);
-            border-radius: 12px; padding: 16px 14px;
-            display: flex; flex-direction: column; gap: 8px;
-            cursor: pointer; transition: all 0.2s cubic-bezier(.4,0,.2,1);
-            text-decoration: none; position: relative; overflow: hidden;
-            box-shadow: var(--shadow-card);
-        }
-        .qa-card::before {
-            content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-            background: var(--grad); opacity: 0; transition: opacity 0.2s;
-        }
+        .home-section-label { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-body); font-weight: 700; margin: 20px 0 10px; padding-left: 2px; font-family: 'Space Mono', monospace; }
+        .quick-actions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+        .qa-card { background: var(--card-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 16px 14px; display: flex; flex-direction: column; gap: 8px; cursor: pointer; transition: all 0.2s cubic-bezier(.4,0,.2,1); text-decoration: none; position: relative; overflow: hidden; box-shadow: var(--shadow-card); }
+        .qa-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--grad); opacity: 0; transition: opacity 0.2s; }
         .qa-card:hover::before { opacity: 1; }
         .qa-card:hover { transform: translateY(-3px); border-color: var(--border-active); box-shadow: 0 8px 24px rgba(245,166,35,0.15); }
         .qa-card:active { transform: scale(0.97); }
-        .qa-card .qa-icon {
-            width: 40px; height: 40px; border-radius: 8px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.2rem;
-        }
+        .qa-card .qa-icon { width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
         .qa-card .qa-title { font-size: 0.88rem; font-weight: 700; color: var(--text-title); font-family: 'Chakra Petch', sans-serif; text-transform: uppercase; letter-spacing: 0.5px; }
         .qa-card .qa-desc { font-size: 0.7rem; color: var(--text-body); margin-top: 0; line-height: 1.4; }
-        .qa-card .qa-badge {
-            display: inline-block; font-size: 0.62rem; font-weight: 700;
-            padding: 3px 8px; border-radius: 4px;
-            font-family: 'Space Mono', monospace; margin-top: 1px;
-            letter-spacing: 0.3px;
-        }
+        .qa-card .qa-badge { display: inline-block; font-size: 0.62rem; font-weight: 700; padding: 3px 8px; border-radius: 4px; font-family: 'Space Mono', monospace; margin-top: 1px; letter-spacing: 0.3px; }
 
-        .links-row-3 {
-            display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;
-            margin-top: 12px; margin-bottom: 4px;
-        }
-        .link-pill {
-            display: flex; flex-direction: column; align-items: center; gap: 5px;
-            padding: 13px 8px; border-radius: 10px;
-            background: var(--card-bg); border: 1px solid var(--border-subtle);
-            color: var(--text-title); font-size: 0.72rem; font-weight: 700;
-            text-decoration: none; transition: all 0.2s cubic-bezier(.4,0,.2,1);
-            font-family: 'Chakra Petch', sans-serif; text-transform: uppercase; letter-spacing: 0.5px;
-        }
+        .links-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 12px; margin-bottom: 4px; }
+        .link-pill { display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 13px 8px; border-radius: 10px; background: var(--card-bg); border: 1px solid var(--border-subtle); color: var(--text-title); font-size: 0.72rem; font-weight: 700; text-decoration: none; transition: all 0.2s cubic-bezier(.4,0,.2,1); font-family: 'Chakra Petch', sans-serif; text-transform: uppercase; letter-spacing: 0.5px; }
         .link-pill i { font-size: 1.2rem; }
-        .link-pill:hover {
-            border-color: var(--border-active);
-            background: rgba(245,166,35,0.06);
-            transform: translateY(-2px); box-shadow: 0 5px 14px rgba(245,166,35,0.18);
-        }
+        .link-pill:hover { border-color: var(--border-active); background: rgba(245,166,35,0.06); transform: translateY(-2px); box-shadow: 0 5px 14px rgba(245,166,35,0.18); }
         .link-pill:active { transform: scale(0.96); }
     </style>
 </head>
@@ -967,17 +746,11 @@
     <!-- VERIFICATION MODAL (Telegram Style) -->
     <div id="activationModalOverlay" class="modal-overlay" style="z-index:9999;">
         <div class="activation-modal">
-
-            <!-- Shield Icon -->
             <div class="tg-shield-icon">
                 <i class="fas fa-shield-alt"></i>
             </div>
-
-            <!-- Title -->
             <h3>Verification Required</h3>
             <p class="tg-sub">Join our Official Channel and Group to<br>unlock all earning features.</p>
-
-            <!-- Join Channel Button -->
             <a href="https://t.me/tonXhub_Earn" target="_blank" class="tg-join-btn">
                 <div class="tg-btn-icon" style="background: rgba(0,229,255,0.12);">
                     <i class="fab fa-telegram-plane" style="color:#00E5FF;"></i>
@@ -988,8 +761,6 @@
                 </div>
                 <i class="fas fa-chevron-right tg-chevron"></i>
             </a>
-
-            <!-- Join Group Button -->
             <a href="https://t.me/tonX_hub_chat" target="_blank" class="tg-join-btn">
                 <div class="tg-btn-icon" style="background: rgba(245,166,35,0.12);">
                     <i class="fas fa-users" style="color:#F5A623;"></i>
@@ -1000,12 +771,9 @@
                 </div>
                 <i class="fas fa-chevron-right tg-chevron"></i>
             </a>
-
-            <!-- Verify Button -->
             <button id="activateAccountBtn" class="tg-verify-btn">
                 Verify Account
             </button>
-
         </div>
     </div>
     
@@ -1045,7 +813,6 @@
             adsgramDaily: { limit: 10 }
         };
 
-        // === NEW ADS SYSTEM ===
         let adsgramSpecialController = null;
         let adsgramDailyController = null;
 
@@ -1093,7 +860,6 @@
             return await choice(); 
         }
 
-        // Ripple effect on buttons
         document.querySelectorAll('.form-button, .ad-watch-btn').forEach(btn => {
             btn.addEventListener('click', function(e) {
                 const ripple = document.createElement('span');
@@ -1179,7 +945,7 @@
                     lifetimeAdsWatched: 0, adsWatchedMixed: 0, adsWatchedMonetag: 0, adsWatchedGiga: 0, 
                     adsWatchedAdsgramSpecial: 0, adsWatchedAdsgramDaily: 0,
                     dailyBonusClaimed: false, dailySpinsUsed: 0, lastResetDate: todayStr,
-                    isReferralRewarded: false // <-- NEW: Prevents multiple rewards for the same user
+                    isReferralRewarded: false // Secure Referral Marker
                 };
 
                 if (referrerCode && referrerCode !== userId) {
@@ -1196,7 +962,8 @@
             await checkDailyReset(currentUser); 
             updateBalanceUI(); 
             
-            const link = `https://t.me/tonXhubEarn_bot/TonXHub?startapp=${userId}`;
+            // Updated custom referral link as requested
+            const link = `https://t.me/tonxhubEarn_bot/MyTon?startapp=${userId}`;
             document.getElementById('modalReferralLinkInput').value = link;
 
             updateAdButtonStats(); updateLotteryUI();
@@ -1269,27 +1036,37 @@
             let totalToGrant = points;
             updates.pointBalance = increment(totalToGrant);
             updates.lifetimePointsEarned = increment(totalToGrant);
+            
+            // 1. Update basic info first
             await updateDoc(userRef, updates);
 
-            // === UPDATE: FULL REFERRAL REWARD SYSTEM ===
-            const currentAdsTotal = (currentUser.lifetimeAdsWatched || 0) + 1;
+            // 2. Update local object state to check referral instantly
+            currentUser.lifetimeAdsWatched = (currentUser.lifetimeAdsWatched || 0) + 1;
             
-            // If user watched >= 15 ads AND was referred AND hasn't given reward to referrer yet
-            if (currentAdsTotal >= 15 && currentUser.referredBy && !currentUser.isReferralRewarded) {
+            // 3. SECURE REFERRAL REWARD LOGIC
+            // User gets 400 pts and +1 Valid Ref ONLY if they reach 15 ads and haven't rewarded yet
+            if (currentUser.lifetimeAdsWatched >= 15 && currentUser.referredBy && !currentUser.isReferralRewarded) {
                 try {
                     await runTransaction(db, async (t) => {
+                        const userDocRef = doc(db, 'users', currentUser.id);
                         const refDocRef = doc(db, 'users', currentUser.referredBy);
+                        
+                        const userDoc = await t.get(userDocRef);
                         const refDoc = await t.get(refDocRef);
                         
-                        if(refDoc.exists()) {
-                            // 1. Give Referrer 400 points & 1 Valid Referral
+                        // Security verification inside transaction
+                        if(refDoc.exists() && !userDoc.data().isReferralRewarded) {
+                            // Give Referrer the reward
                             t.update(refDocRef, { 
                                 pointBalance: increment(REFERRAL_REWARD_POINTS), 
                                 lifetimePointsEarned: increment(REFERRAL_REWARD_POINTS), 
                                 referralCount: increment(1) 
                             });
                             
-                            // 2. Add history log for Referrer
+                            // Mark user so it never happens again
+                            t.update(userDocRef, { isReferralRewarded: true });
+                            
+                            // Record transaction
                             t.set(doc(collection(db, 'transactions')), { 
                                 userId: currentUser.referredBy, 
                                 type: 'Referral Reward', 
@@ -1297,20 +1074,14 @@
                                 pointAmount: REFERRAL_REWARD_POINTS, 
                                 createdAt: serverTimestamp() 
                             });
-                            
-                            // 3. Mark the current user so they don't trigger this again
-                            t.update(userRef, {
-                                isReferralRewarded: true
-                            });
                         }
                     });
-                    
-                    currentUser.isReferralRewarded = true; // Update local state immediately
+                    // Locally update after success
+                    currentUser.isReferralRewarded = true;
                 } catch(e) {
-                    console.error("Referral Reward Process Failed:", e);
+                    console.error("Referral Reward Transaction Failed:", e);
                 }
             }
-            // ============================================
 
             let msg = `+${points} Points`;
             showSuccessModal("Ad Complete", msg);
@@ -1547,24 +1318,20 @@
 
         // --- VERIFICATION SYSTEM ---
 
-        // Show the popup modal (blocks the UI)
         function showJoinModal() {
             document.getElementById('activationModalOverlay').classList.add('show');
         }
 
-        // Hide the popup modal
         function hideJoinModal() {
             document.getElementById('activationModalOverlay').classList.remove('show');
         }
 
-        // Call Vercel API to check if user joined channel & group
         async function checkJoinStatus(userId) {
             const res = await fetch(`${VERCEL_API}/api/checkJoin?userId=${userId}`);
             if (!res.ok) throw new Error("API error: " + res.status);
-            return await res.json(); // { joined: bool, channel: bool, group: bool }
+            return await res.json(); 
         }
 
-        // Verify button click handler
         document.getElementById('activateAccountBtn').addEventListener('click', async () => {
             const btn = document.getElementById('activateAccountBtn');
             btn.disabled = true;
@@ -1574,7 +1341,6 @@
                 const data = await checkJoinStatus(currentUser.id);
 
                 if (data.channel && data.group) {
-                    // ✅ Joined both  →  activate in Firestore
                     await updateDoc(doc(db, 'users', currentUser.id), {
                         isActivated: true,
                         activatedAt: serverTimestamp()
@@ -1583,7 +1349,6 @@
                     hideJoinModal();
                     showSuccessModal("Verified! ✅", "You joined successfully! All earning features are now unlocked. 🎉");
                 } else {
-                    // ❌ Not joined yet
                     let msg = "Please join first:\n\n";
                     if (!data.channel) msg += "❌ Official Channel (@tonXhub_Earn)\n";
                     if (!data.group)   msg += "❌ Community Group (@tonX_hub_chat)\n";
@@ -1613,23 +1378,17 @@
                 await initializeUser(tg.initDataUnsafe.user, tg.initDataUnsafe.start_param);
                 document.getElementById('profile-id-display').querySelector('span').textContent = currentUser.id;
 
-                // ✅ EVERY TIME app opens  →  check join status from Telegram API
-                // This catches users who leave after verifying
                 try {
                     const joinData = await checkJoinStatus(currentUser.id);
 
                     if (!joinData.channel || !joinData.group) {
-                        // Not in channel/group  →  force show popup and reset activation
                         if (currentUser.isActivated) {
-                            // They left after being activated  →  reset
                             await updateDoc(doc(db, 'users', currentUser.id), { isActivated: false });
                             currentUser.isActivated = false;
                         }
                         showJoinModal();
                     }
-                    // else: joined everything  →  no popup, carry on
                 } catch (apiErr) {
-                    // Vercel API failed  →  fall back: show popup if not activated in Firebase
                     console.warn("API check failed, using Firebase fallback:", apiErr);
                     if (!currentUser.isActivated) {
                         showJoinModal();
@@ -1641,10 +1400,8 @@
             }
         }
 
-        // ✅ Start the app
         main();
 
     </script>
-
 </body>
 </html>
