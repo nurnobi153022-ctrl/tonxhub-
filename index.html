@@ -1178,7 +1178,8 @@
                     createdAt: serverTimestamp(), telegramUsername: tgUser.username || 'N/A', isBanned: false, isActivated: false, isGroupVerified: false, 
                     lifetimeAdsWatched: 0, adsWatchedMixed: 0, adsWatchedMonetag: 0, adsWatchedGiga: 0, 
                     adsWatchedAdsgramSpecial: 0, adsWatchedAdsgramDaily: 0,
-                    dailyBonusClaimed: false, dailySpinsUsed: 0, lastResetDate: todayStr 
+                    dailyBonusClaimed: false, dailySpinsUsed: 0, lastResetDate: todayStr,
+                    isReferralRewarded: false // <-- NEW: Prevents multiple rewards for the same user
                 };
 
                 if (referrerCode && referrerCode !== userId) {
@@ -1270,19 +1271,47 @@
             updates.lifetimePointsEarned = increment(totalToGrant);
             await updateDoc(userRef, updates);
 
+            // === UPDATE: FULL REFERRAL REWARD SYSTEM ===
             const currentAdsTotal = (currentUser.lifetimeAdsWatched || 0) + 1;
-            if (currentAdsTotal === 15 && currentUser.referredBy) {
+            
+            // If user watched >= 15 ads AND was referred AND hasn't given reward to referrer yet
+            if (currentAdsTotal >= 15 && currentUser.referredBy && !currentUser.isReferralRewarded) {
                 try {
                     await runTransaction(db, async (t) => {
                         const refDocRef = doc(db, 'users', currentUser.referredBy);
                         const refDoc = await t.get(refDocRef);
+                        
                         if(refDoc.exists()) {
-                            t.update(refDocRef, { pointBalance: increment(REFERRAL_REWARD_POINTS), lifetimePointsEarned: increment(REFERRAL_REWARD_POINTS), referralCount: increment(1) });
-                            t.set(doc(collection(db, 'transactions')), { userId: currentUser.referredBy, type: 'Referral Reward', details: `Valid Ref UID: ${currentUser.id}`, pointAmount: REFERRAL_REWARD_POINTS, createdAt: serverTimestamp() });
+                            // 1. Give Referrer 400 points & 1 Valid Referral
+                            t.update(refDocRef, { 
+                                pointBalance: increment(REFERRAL_REWARD_POINTS), 
+                                lifetimePointsEarned: increment(REFERRAL_REWARD_POINTS), 
+                                referralCount: increment(1) 
+                            });
+                            
+                            // 2. Add history log for Referrer
+                            t.set(doc(collection(db, 'transactions')), { 
+                                userId: currentUser.referredBy, 
+                                type: 'Referral Reward', 
+                                details: `Valid Ref UID: ${currentUser.id}`, 
+                                pointAmount: REFERRAL_REWARD_POINTS, 
+                                createdAt: serverTimestamp() 
+                            });
+                            
+                            // 3. Mark the current user so they don't trigger this again
+                            t.update(userRef, {
+                                isReferralRewarded: true
+                            });
                         }
                     });
-                } catch(e) {}
+                    
+                    currentUser.isReferralRewarded = true; // Update local state immediately
+                } catch(e) {
+                    console.error("Referral Reward Process Failed:", e);
+                }
             }
+            // ============================================
+
             let msg = `+${points} Points`;
             showSuccessModal("Ad Complete", msg);
             await fetchAndUpdateCurrentUser();
