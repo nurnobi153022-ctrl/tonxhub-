@@ -11,3 +11,4 @@
 - DB error hole guard "fail open" kore — guard-er bug bot-ke kokhono dead korbe na.
 - Limit change korte chaile Vercel env: GUARD_USER_SOFT, GUARD_USER_HARD, GUARD_IP_SOFT, GUARD_IP_HARD, GUARD_BOT_SOFT, GUARD_BOT_HARD, GUARD_IP_MEM_PER_10S (kono env na dile default cholbe).
 - Deploy-er por ekbar `/api/admin/setup-indexes?secret=<BOT_TOKEN>` kholo (TTL index; na kholleo guard nijei bananor chesta kore).
+- নতুন ডোমেইন/প্রজেক্টে: Vercel env এ `BOT_TOKEN` + `TELEGRAM_WEBHOOK_SECRET` সেট করে Redeploy করো, তারপর `https://tonxhub.vercel.app/api/admin/set-webhook?secret=<BOT_TOKEN>&drop=1` একবার খোলো। `...&info=1` দিয়ে অবস্থা দেখা যায়।
