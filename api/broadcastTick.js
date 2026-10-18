@@ -16,7 +16,7 @@
 // cron-job.org (free, no cost, 1-minute granularity) is a good option:
 //   1. Sign up free at https://cron-job.org
 //   2. Create a new cronjob:
-//      URL: https://vyrova-xi.vercel.app/api/broadcastTick?secret=<BOT_TOKEN>
+//      URL: https://tonxhub.vercel.app/api/broadcastTick?secret=<BOT_TOKEN>
 //      Schedule: every 1 minute
 //   3. Save and enable it — leave it running permanently.
 // Once set up, every broadcast queued from the admin panel will keep
