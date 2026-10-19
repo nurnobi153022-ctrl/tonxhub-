@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   VYROVA — visual effects layer (no business logic lives here)
+   TON X HUB — visual effects layer (no business logic lives here)
    • atmosphere   : drifting clouds, light beam, champagne motes, scroll parallax
    • coin         : 3D V-coin + flat coin markup builders, tap-to-flip
    • micro        : press ripples + Telegram haptics, tab entrance helper,
@@ -29,7 +29,7 @@
     }
 
     /* ── coin markup ─────────────────────────────────────────────────────── */
-    // Gradients/symbols (#vyRim, #vyFace, #vy-v-coin …) live in the sprite at the top of index.html.
+    // Gradients/symbols (#vyRim, #vyFace, #vy-x-coin …) live in the sprite at the top of index.html.
     function faceSVG() {
         return '<svg viewBox="0 0 200 200" aria-hidden="true" focusable="false">' +
             '<circle cx="100" cy="100" r="99" fill="url(#vyRim)"/>' +
@@ -38,7 +38,7 @@
             '<circle cx="100" cy="100" r="84" fill="url(#vyFace)"/>' +
             '<circle cx="100" cy="100" r="76" fill="none" stroke="rgba(255,255,255,.38)" stroke-width="1.6" stroke-dasharray="1.2 5.4" stroke-linecap="round"/>' +
             '<circle cx="100" cy="100" r="84" fill="none" stroke="rgba(10,30,18,.35)" stroke-width="1.5"/>' +
-            '<use href="#vy-v-coin" x="44" y="42" width="112" height="112"/>' +
+            '<use href="#vy-x-coin" x="44" y="42" width="112" height="112"/>' +
             '<ellipse cx="78" cy="58" rx="58" ry="30" transform="rotate(-30 78 58)" fill="url(#vyGloss)"/>' +
             '<path d="M24 82 A80 80 0 0 1 96 22" stroke="rgba(255,255,255,.75)" stroke-width="2.4" stroke-linecap="round" fill="none" opacity=".7"/>' +
             '</svg>';
@@ -52,7 +52,7 @@
         var slices = '';
         for (var z = -7; z <= 7; z += 1.75) slices += '<i style="--z:' + z + 'px"></i>';
         var style = opts.size ? ' style="--coin-size:' + opts.size + 'px"' : '';
-        return '<div class="coin3d" data-coin role="img" aria-label="VYRO COIN"' + style + '>' +
+        return '<div class="coin3d" data-coin role="img" aria-label="TXH COIN"' + style + '>' +
             '<div class="coin3d-float"><div class="coin3d-tap"><div class="coin3d-body">' +
             '<div class="coin-edge">' + slices + '</div>' +
             '<div class="coin-face front">' + faceSVG() + '<i class="coin-sheen"></i></div>' +
