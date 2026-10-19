@@ -5,6 +5,36 @@
             "maxDuration": 30
         }
     },
+    "rewrites": [
+        {
+            "source": "/api/broadcastWorker",
+            "destination": "/api/ops?op=broadcastWorker"
+        },
+        {
+            "source": "/api/broadcastStatus",
+            "destination": "/api/ops?op=broadcastStatus"
+        },
+        {
+            "source": "/api/broadcastTick",
+            "destination": "/api/ops?op=broadcastTick"
+        },
+        {
+            "source": "/api/admin/check-chats",
+            "destination": "/api/ops?op=check-chats"
+        },
+        {
+            "source": "/api/admin/set-webhook",
+            "destination": "/api/ops?op=set-webhook"
+        },
+        {
+            "source": "/api/admin/setup-indexes",
+            "destination": "/api/ops?op=setup-indexes"
+        },
+        {
+            "source": "/api/cron/weeklyReferral",
+            "destination": "/api/ops?op=weeklyReferral"
+        }
+    ],
     "headers": [
         {
             "source": "/",
