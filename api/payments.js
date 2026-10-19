@@ -27,7 +27,7 @@ import {
 } from '../lib/constants.js';
 import { TON_RECEIVE_ADDRESS, randomTonMemo, buildTonDeepLink, fetchRecentTonTransactions } from '../lib/tonPay.js';
 
-const ADMIN_ID = process.env.ADMIN_TELEGRAM_ID;
+const ADMIN_ID = (process.env.ADMIN_ID || process.env.ADMIN_TELEGRAM_ID);
 const TASK_MODERATOR_ID = process.env.TASK_MODERATOR_ID;
 // A payment is accepted if it's at least this fraction of the sticker
 // price — a small tolerance for any wallet-side rounding of nanoTON.
