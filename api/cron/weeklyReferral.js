@@ -22,7 +22,7 @@ import { connectToDatabase } from '../../lib/mongodb.js';
 import { tgSend } from '../../lib/telegram.js';
 import { WEEKLY_REFERRAL_MIN_COUNT, WEEKLY_REFERRAL_MAX_WINNERS } from '../../lib/constants.js';
 
-const ADMIN_ID = process.env.ADMIN_TELEGRAM_ID;
+const ADMIN_ID = (process.env.ADMIN_ID || process.env.ADMIN_TELEGRAM_ID);
 
 export default async function handler(req, res) {
     const authHeader = req.headers['authorization'];
