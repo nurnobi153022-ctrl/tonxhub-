@@ -333,12 +333,13 @@ async function handleCheckJoin(req, res, db) {
     const userId = String(verified.user.id);
 
     try {
-        const [inChannel, inGroup, inProof] = await Promise.all([
+        // Payment Proof group is no longer required to join (channel + community only).
+        const [inChannel, inGroup] = await Promise.all([
             isMember(userId, OFFICIAL_CHANNEL),
             isMember(userId, COMMUNITY_GROUP),
-            isMember(userId, PAYMENT_PROOF_GROUP),
         ]);
-        const joined = inChannel && inGroup && inProof;
+        const inProof = true; // kept in the response shape for older clients
+        const joined = inChannel && inGroup;
 
         if (joined) {
             try {
@@ -346,70 +347,4 @@ async function handleCheckJoin(req, res, db) {
                 await maybeAwardReferralMilestones(db, userId, { channelVerified: true });
             } catch { /* non-blocking */ }
         } else {
-            // this DB read+write had no try/catch of its own, so a
-            // transient Mongo error here (not just isMember failing) fell
-            // through to the outer catch below, which used to return
-            // `joined: true` — see that fix for why this branch is wrapped now too.
-            try {
-                const existing = await db.collection('users').findOne({ _id: userId }, { projection: { channelVerified: 1 } });
-                if (existing?.channelVerified) {
-                    await db.collection('users').updateOne({ _id: userId }, { $set: { channelVerified: false } });
-                    return res.status(200).json({ joined: false, inChannel, inGroup, inProof, leftAfterVerifying: true });
-                }
-            } catch { /* non-blocking — worst case this one flag update is skipped, joined:false below still holds */ }
-        }
-
-        return res.status(200).json({ joined, inChannel, inGroup, inProof });
-    } catch (err) {
-        console.error('checkJoin error:', err);
-        // this used to return `joined: true` here, meaning
-        // ANY transient error (a DB blip, isMember throwing unexpectedly)
-        // waved the user through the join-gate as if they were a verified
-        // member, with nothing checked at all. Fail CLOSED instead — a
-        // genuine member just sees "not joined yet" for a moment and can
-        // tap "check now" again; a non-member correctly stays gated during
-        // the same failure window. Matches the fail-closed pattern used
-        // everywhere else in this codebase (see isMember() in telegram.js).
-        return res.status(200).json({ joined: false, error: 'check_failed' });
-    }
-}
-
-async function handleProfile(req, res, db) {
-    res.setHeader('Cache-Control', 'no-store, max-age=0');
-    const verified = verifyTelegramInitData(req.query.initData);
-    if (!verified.ok) return res.status(401).json({ ok: false, error: 'unauthorized', reason: verified.error });
-    const userId = String(verified.user.id);
-
-    const users = db.collection('users');
-    await ensureDailyReset(users, userId);
-
-    const user = await users.findOne({ _id: userId });
-    if (!user) return res.status(404).json({ ok: false, error: 'user_not_found' });
-
-    const { multiAccountSiblings, multiAccountFingerprint, ...safeUser } = user;
-    return res.status(200).json({ ok: true, user: safeUser });
-}
-
-export default async function handler(req, res) {
-    // 🛡️ Server Guard (3 layers) — runs BEFORE any DB connection
-    if (await guard(req, res)) return;
-
-    const { db } = await connectToDatabase();
-
-    if (req.method === 'POST') {
-        const { action } = req.body || {};
-        if (action === 'init') return handleInit(req, res, db);
-        if (action === 'switchAccount') return handleSwitchAccount(req, res, db);
-        if (action === 'acceptTerms') return handleAcceptTerms(req, res, db);
-        return res.status(400).json({ ok: false, error: 'unknown_action' });
-    }
-
-    if (req.method === 'GET') {
-        const { action } = req.query;
-        if (action === 'checkJoin') return handleCheckJoin(req, res, db);
-        if (action === 'profile') return handleProfile(req, res, db);
-        return res.status(400).json({ ok: false, error: 'unknown_action' });
-    }
-
-    return res.status(405).json({ ok: false, error: 'method_not_allowed' });
-            }
+            // this DB read+write had no try/catch of its o
