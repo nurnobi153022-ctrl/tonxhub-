@@ -291,7 +291,7 @@ async function cronCheckTaskCreate(db, txs, now) {
         tgSend(claimed.userId,
             `✅ <b>Payment Confirmed!</b>\n\n` +
             `📋 ${taskDoc.title}\n` +
-            `👥 ${taskDoc.limit} people will be able to complete it (+${TASK_CREATE_REWARD_PER_TASK_WTC} VYRO COIN each)\n\n` +
+            `👥 ${taskDoc.limit} people will be able to complete it (+${TASK_CREATE_REWARD_PER_TASK_WTC} TXH COIN each)\n\n` +
             `⏳ It's now waiting for admin review — once approved, it'll go live for everyone in the "⭐ Exclusive" tab. 🎉`
         ).catch(() => {});
 
@@ -302,7 +302,7 @@ async function cronCheckTaskCreate(db, txs, now) {
             `📋 ${taskDoc.title}\n` +
             `🔗 ${taskDoc.url}\n` +
             `👤 Type: ${taskDoc.verifyType === 'api' ? 'Channel/Group Join (API)' : 'Link'}\n` +
-            `👥 ${taskDoc.limit} slots · 💰 ${taskDoc.rewardWtc} VYRO COIN/person\n\n` +
+            `👥 ${taskDoc.limit} slots · 💰 ${taskDoc.rewardWtc} TXH COIN/person\n\n` +
             `Go to "🕐 Pending Review" in the admin panel to approve/reject.`;
         if (ADMIN_ID) tgSend(ADMIN_ID, reviewMsg).catch(() => {});
         if (TASK_MODERATOR_ID) tgSend(TASK_MODERATOR_ID, reviewMsg).catch(() => {});
