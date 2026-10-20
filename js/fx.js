@@ -1,7 +1,7 @@
 /* ═══════════════════════════════════════════════════════════════════════════
    TON X HUB — visual effects layer (no business logic lives here)
    • atmosphere   : drifting clouds, light beam, champagne motes, scroll parallax
-   • coin         : 3D V-coin + flat coin markup builders, tap-to-flip
+   • coin         : 3D X-coin + flat coin markup builders, tap-to-flip
    • micro        : press ripples + Telegram haptics, tab entrance helper,
                     sliding dock indicator, balance font-fit, splash progress
    Everything here is transform/opacity only, pauses when the app is hidden
@@ -170,33 +170,23 @@
         ind.style.setProperty('--nx', (ar.left - nr.left + ar.width / 2 - 11).toFixed(1) + 'px');
     }
 
-    /* restart the entrance animation of #tab-content (dir: 1 = from right, -1 = from left, 0 = none) */
+    /* Tab transition: ONE short fade + slide on the #tab-content host (compositor-only: opacity/transform).
+       Web Animations API instead of class toggling, so:
+         - nothing has to be force-reflowed to "restart" it,
+         - a newer navigation cancels the previous animation outright (it can never fight or delay the next one),
+         - CSS that targets children can't accidentally kill it.
+       dir: 1 = from right, -1 = from left, 0 = fade only.
+       prefers-reduced-motion → no motion at all. Low-end phones (html.lite) → a shorter fade, no slide. */
     function enterTab(host, dir) {
         if (!host) return;
-        clearTimeout(host._enterT);
-        host.classList.remove('tab-enter', 'from-left', 'from-right');
-        host.removeAttribute('data-stagger'); // the host itself can carry it too (not only its descendants)
-        host.querySelectorAll('[data-stagger]').forEach(function (n) { n.removeAttribute('data-stagger'); });
-        if (reduce) return;
-        void host.offsetWidth; // restart
-        host.classList.add('tab-enter');
-        if (dir) host.classList.add(dir < 0 ? 'from-left' : 'from-right');
-        // One entrance motion per element, never two stacked:
-        //  - screens with their own .anim-in choreography (Home) animate only through that
-        //  - every other screen staggers its first multi-block level (direction-aware)
-        var h = host;
-        while (h.children.length === 1) h = h.firstElementChild;
-        if (h.children.length && !h.querySelector(':scope > [class*="anim-in"]')) {
-            h.setAttribute('data-stagger', '');
-            Array.prototype.forEach.call(h.children, function (c, i) { c.style.setProperty('--i', Math.min(i, 8)); });
-        }
-        // Once the entrance has played, drop the markers. Otherwise every in-place re-render
-        // (claim, spin, timers, balance refresh) replays the whole entrance = the "double bounce".
-        host._enterT = setTimeout(function () {
-            host.removeAttribute('data-stagger');
-            host.querySelectorAll('[data-stagger]').forEach(function (n) { n.removeAttribute('data-stagger'); });
-            host.classList.remove('tab-enter', 'from-left', 'from-right');
-        }, 1300);
+        if (host._enterAnim) { try { host._enterAnim.cancel(); } catch (e) { /* already finished */ } host._enterAnim = null; }
+        if (reduce || !host.animate) return;
+        var dx = (lowEnd || !dir) ? 0 : (dir < 0 ? -14 : 14);
+        var frames = dx
+            ? [{ opacity: 0, transform: 'translate3d(' + dx + 'px,0,0)' }, { opacity: 1, transform: 'translate3d(0,0,0)' }]
+            : [{ opacity: 0 }, { opacity: 1 }];
+        var a = host._enterAnim = host.animate(frames, { duration: lowEnd ? 120 : 200, easing: 'cubic-bezier(.22,.61,.36,1)', fill: 'backwards' });
+        a.onfinish = a.oncancel = function () { if (host._enterAnim === a) host._enterAnim = null; };
     }
 
     /* shrink the balance font until it fits beside the coin */
