@@ -54,7 +54,7 @@ async function handleClaim(req, res, db) {
     return res.status(200).json({ ok: true, amount: gate.amount });
 }
 
-export default async function handler(req, res) {
+async function handlerImpl(req, res) {
     // 🛡️ Server Guard (3 layers) — runs BEFORE any DB connection
     if (await guard(req, res)) return;
 
@@ -73,4 +73,15 @@ export default async function handler(req, res) {
     }
 
     return res.status(405).json({ ok: false, error: 'method_not_allowed' });
+}
+
+// FIX F-16: safety net — an unexpected error (e.g. the database being unreachable on the free tier) now returns a
+// clean JSON 500 instead of a platform crash page; nothing internal is sent to the client.
+export default async function handler(req, res) {
+    try {
+        return await handlerImpl(req, res);
+    } catch (e) {
+        console.error('gift handler error:', e?.message);
+        if (!res.headersSent) return res.status(500).json({ ok: false, error: 'server_error' });
+    }
 }
