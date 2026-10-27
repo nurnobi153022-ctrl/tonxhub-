@@ -255,6 +255,9 @@ async function setupIndexes() {
     await db.collection('users').createIndex({ isBanned: 1 });
     // speeds up the weekly cron's top-N sort (api/cron/weeklyReferral.js)
     await db.collection('users').createIndex({ weeklyReferralCount: -1 });
+    // leaderboard / admin Top Referrers sort by referralCount; admin All Users list sorts by createdAt
+    await db.collection('users').createIndex({ referralCount: -1 });
+    await db.collection('users').createIndex({ createdAt: -1 });
     // partial TTL index: ONLY documents with isBanned:true expire
     // (60 days after bannedAt). A merely multiAccountFlag'd user (not yet
     // banned) is NEVER touched — this only deletes confirmed, admin-banned
@@ -319,7 +322,4 @@ async function setupIndexes() {
     );
     // partial TTL index: an unclaimed ('pending') gift auto-expires
     // 180 days after createdAt if it's just never been claimed — very
-    // generous, since a legitimate gift is normally claimed within days, but
-    // an abandoned pending gift sitting for 6 months is realistically never
-    // coming back to be claimed and has no further use. 'claimed' gifts are
-    // untouched by this index —
+    // generous, since a legitima
