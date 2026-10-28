@@ -179,12 +179,19 @@
        prefers-reduced-motion → no motion at all. Low-end phones (html.lite) → a shorter fade, no slide. */
     function enterTab(host, dir) {
         if (!host) return;
-        if (host._enterAnim) { try { host._enterAnim.cancel(); } catch (e) { /* already finished */ } host._enterAnim = null; }
+        // Interrupted entrance (a new tab tapped while the previous fade is still running): the new fade
+        // continues from the opacity the screen has RIGHT NOW instead of restarting at 0. Restarting at 0 made
+        // the whole screen blink to blank on every tap faster than the fade (visible flicker when tabbing quickly).
+        var from = 0;
+        if (host._enterAnim) {
+            try { var cur = parseFloat(getComputedStyle(host).opacity); if (cur > 0 && cur < 1) from = cur; } catch (e) { /* keep 0 */ }
+            try { host._enterAnim.cancel(); } catch (e) { /* already finished */ } host._enterAnim = null;
+        }
         if (reduce || !host.animate) return;
         var dx = (lowEnd || !dir) ? 0 : (dir < 0 ? -14 : 14);
         var frames = dx
-            ? [{ opacity: 0, transform: 'translate3d(' + dx + 'px,0,0)' }, { opacity: 1, transform: 'translate3d(0,0,0)' }]
-            : [{ opacity: 0 }, { opacity: 1 }];
+            ? [{ opacity: from, transform: 'translate3d(' + (dx * (1 - from)).toFixed(2) + 'px,0,0)' }, { opacity: 1, transform: 'translate3d(0,0,0)' }]
+            : [{ opacity: from }, { opacity: 1 }];
         var a = host._enterAnim = host.animate(frames, { duration: lowEnd ? 120 : 200, easing: 'cubic-bezier(.22,.61,.36,1)', fill: 'backwards' });
         a.onfinish = a.oncancel = function () { if (host._enterAnim === a) host._enterAnim = null; };
     }
