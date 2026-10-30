@@ -11,6 +11,11 @@
    • Deliberately NO backdrop-filter on Home cards: blur layers were the main scroll-jank cost on mid-range Androids.
    ═══════════════════════════════════════════════════════════════════════════ */
 
+/* ── SAFETY NET (kept first on purpose): if this file is ever cut short while uploading, icons can still never blow up to full size ── */
+.hx-qa-orb svg, .hx-h2-ico svg, .hx-ref-ico svg, .hx-lb-ico svg, .hx-banner-art svg { width: 24px; height: 24px; }
+.hx-cta svg, .hx-link svg, .hx-greet-go svg, .hx-lb-go svg, .hx-banner-go svg, .hx-game-go svg { width: 16px; height: 16px; }
+.hx-home button { appearance: none; -webkit-appearance: none; font-family: inherit; }
+
 .hx-home {
     --hx-green-1: #1D5C3C; --hx-green-2: #123D2C; --hx-green-3: #0A2A1C;
     --hx-gold: #C9A96A; --hx-gold-soft: #E9D49A;
@@ -156,8 +161,4 @@
 .hx-ref-txt { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .hx-ref-title { font-family: var(--font-display); font-weight: 600; font-size: 19px; letter-spacing: -0.015em; line-height: 1.15; }
 .hx-ref-sub { font-size: 12.5px; font-weight: 600; color: var(--ink-muted); }
-.hx-ref-stats { display: grid; grid-template-columns: 1fr 1fr; padding: 11px 6px; border-radius: 18px; background: rgba(226, 234, 219, 0.55); border: 1px solid rgba(47, 90, 64, 0.08); }
-.hx-ref-stat { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 0 6px; min-width: 0; text-align: center; }
-.hx-ref-stat + .hx-ref-stat { border-left: 1px solid rgba(47, 90, 64, 0.16); }
-.hx-ref-stat b { max-width: 100%; font-size: 21px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.15; color: var(--forest-900); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.hx
+.hx-ref-stats { display: grid; grid-template-columns: 1fr 1fr; padding: 11px 6px; border-radius: 18px; background: rgba(226, 234, 219, 0.55); b
