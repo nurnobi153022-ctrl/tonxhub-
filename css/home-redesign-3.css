@@ -1,0 +1,39 @@
+/* TON X HUB Home redesign — part 3 of 3 (split into small files so an upload can never cut one short). Load order matters: 1, 2, 3. */
+/* ═══ 9 · BOTTOM DOCK (presentation only, only while Home is open) ═════════════ */
+#app-root:has(#tab-content > .hx-home) .bottomnav { box-shadow: inset 0 1px 0 #fff, 0 22px 38px -16px rgba(18, 61, 44, 0.5), 0 1px 3px rgba(35, 70, 50, 0.1); border-color: rgba(47, 90, 64, 0.14); }
+#app-root:has(#tab-content > .hx-home) .nav-coin-body { box-shadow: 0 14px 22px -8px rgba(18, 61, 44, 0.6), 0 0 0 4px rgba(255, 255, 255, 0.96), 0 0 0 6px rgba(201, 169, 106, 0.75); }
+
+/* ═══ 10 · NARROW PHONES (320–360px) ═══════════════════════════════════════════ */
+@media (max-width: 380px) {
+    .hx-home { padding-left: 12px; padding-right: 12px; gap: 12px; }
+    .hx-bal { padding: 18px 14px 16px; min-height: 168px; }
+    .hx-bal-num { max-width: calc(100% - 104px); }
+    .hx-coin { width: 112px; height: 112px; right: 2px; }
+    .hx-coin .coin3d { --coin-size: 100px !important; }
+    .hx-qa-orb { width: 48px; height: 48px; } .hx-qa-orb svg { width: 22px; height: 22px; } .hx-qa { font-size: 12px; }
+    .hx-game-row { gap: 8px; } .hx-game { padding: 7px 7px 9px; border-radius: 20px; } .hx-game-name { font-size: 12.5px; } .hx-game-sub { font-size: 10.5px; }
+    .hx-greet-name { font-size: 16.5px; }
+}
+@media (max-width: 340px) { .hx-bal-label { letter-spacing: 0.08em; } .hx-bal-rate { font-size: 11px; } .hx-ref-stat b { font-size: 18px; } .hx-lv { padding-left: 9px; padding-right: 9px; } }
+
+/* ═══ 11 · RTL ═════════════════════════════════════════════════════════════════ */
+html[dir="rtl"] .hx-home .hx-greet-go svg, html[dir="rtl"] .hx-home .hx-lb-go svg, html[dir="rtl"] .hx-home .hx-game-go svg,
+html[dir="rtl"] .hx-home .hx-link svg, html[dir="rtl"] .hx-home .hx-banner-go svg { transform: scaleX(-1); }
+html[dir="rtl"] .hx-home .hx-qa + .hx-qa::before { left: auto; right: 0; }
+html[dir="rtl"] .hx-home .hx-ref-stat + .hx-ref-stat { border-left: none; border-right: 1px solid rgba(47, 90, 64, 0.16); }
+html[dir="rtl"] .hx-home .hx-game-go { right: auto; left: 6px; }
+
+/* ═══ 12 · MOTION GUARDS ═══════════════════════════════════════════════════════ */
+html.is-scrolling .hx-banner-art, html.is-scrolling .hx-bal::before, html.is-scrolling .hx-spark, html.is-scrolling .hx-wheel-disc, html.is-scrolling .hx-cta::after,
+html.is-scrolling .hx-ready::after, html.is-scrolling .hx-dc .dc-step.current .dc-node::after, html.is-scrolling .hx-dc .dc-claim-btn::after { animation-play-state: paused !important; }
+html.game-open .hx-wheel-disc, body:has(.sw-overlay) .hx-wheel-disc { animation-play-state: paused !important; }
+html.lite .hx-sec { animation: none; }
+html.lite .hx-banner-art, html.lite .hx-bal::before, html.lite .hx-spark, html.lite .hx-wheel-disc, html.lite .hx-cta::after, html.lite .hx-ready::after,
+html.lite .hx-dc .dc-step.current .dc-node::after { animation: none !important; }
+html.lite .hx-spark { display: none; }
+@media (prefers-reduced-motion: reduce) {
+    .hx-sec { animation: none; }
+    .hx-banner-art, .hx-bal::before, .hx-spark, .hx-wheel-disc, .hx-cta::after, .hx-ready::after, .hx-dc .dc-step.current .dc-node::after { animation: none !important; }
+    .hx-tap, .hx-qa-orb { transition: none; }
+}
+@media (max-width: 340px) { .hx-game-sub { -webkit-line-clamp: 3; min-height: 3.75em; } }
