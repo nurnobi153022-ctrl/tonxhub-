@@ -37,6 +37,10 @@
         {
             "source": "/api/cron/weeklyReferral",
             "destination": "/api/ops?op=weeklyReferral"
+        },
+        {
+            "source": "/api/cron/tick",
+            "destination": "/api/ops?op=tick"
         }
     ],
     "headers": [
@@ -84,6 +88,12 @@
                     "value": "no-cache, must-revalidate"
                 }
             ]
+        }
+    ],
+    "crons": [
+        {
+            "path": "/api/ops?op=tick",
+            "schedule": "0 14 * * *"
         }
     ]
 }
