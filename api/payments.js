@@ -13,8 +13,9 @@
 // ── cron entry point (called by an EXTERNAL cron service, e.g. cron-job.org —
 //    Vercel's own Cron Triggers only run once/day on the Hobby plan, far
 //    too slow for a "credited within 1-5 minutes" promise) ──
-//   POST /api/payments?cron=checkDeposits
-//   Header: Authorization: Bearer <CRON_SECRET>
+//   POST|GET /api/payments?cron=checkDeposits
+//   Header: Authorization: Bearer <CRON_SECRET>   (ba ?secret=<OPS_SECRET>)
+//   ⚡ Notun: eta ekhon /api/cron/tick (api/ops.js) theke-o chole — eki logic, lib/taskCreateCron.js
 //   Runs the Create Task on-chain deposit check.
 
 import { connectToDatabase } from '../lib/mongodb.js';
@@ -25,8 +26,9 @@ import { guard } from '../lib/guard.js';
 import {
     TASK_CREATE_PACKAGES, TASK_CREATE_ORDER_EXPIRY_MINUTES, TASK_CREATE_REWARD_PER_TASK_WTC,
 } from '../lib/constants.js';
-import { TON_RECEIVE_ADDRESS, randomTonMemo, buildTonDeepLink, fetchRecentTonTransactions } from '../lib/tonPay.js';
-import { opsAuthorized } from '../lib/opsAuth.js';
+import { TON_RECEIVE_ADDRESS, randomTonMemo, buildTonDeepLink } from '../lib/tonPay.js';
+import { cronAuthorized } from '../lib/opsAuth.js';
+import { runTaskCreateCheck, alertAdminThrottled } from '../lib/taskCreateCron.js';
 import { escHtml } from '../lib/telegram.js';
 
 const ADMIN_ID = (process.env.ADMIN_ID || process.env.ADMIN_TELEGRAM_ID);
@@ -230,100 +232,11 @@ async function taskcreateRouter(req, res, db) {
 // lib/referral.js).
 // ════════════════════════════════════════════════════════════════════
 
-async function cronCheckTaskCreate(db, txs, now) {
-    const orders = db.collection('taskCreateOrders');
-    const tasks = db.collection('tasks');
-
-    const expireResult = await orders.updateMany(
-        { status: 'pending', expiresAt: { $lte: now } },
-        { $set: { status: 'expired', expiredAt: now } }
-    );
-
-    const pendingCount = await orders.countDocuments({ status: 'pending' });
-    if (pendingCount === 0) return { expired: expireResult.modifiedCount, matched: 0 };
-
-    let matched = 0;
-    for (const tx of txs) {
-        const inMsg = tx.in_msg;
-        if (!inMsg || !inMsg.message) continue; // no comment → can't belong to any order
-        const memo = String(inMsg.message).trim();
-        if (!memo.startsWith('TC')) continue; // not one of ours — skip fast without a DB round-trip
-        const receivedNanoTon = Number(inMsg.value || 0);
-        if (!receivedNanoTon) continue;
-
-        const order = await orders.findOne({ memo, status: 'pending' });
-        if (!order) continue; // no matching pending order (already paid/expired/never existed)
-        if (receivedNanoTon < order.amountNanoTon * MIN_ACCEPT_RATIO) continue; // underpaid — leave pending until it expires
-
-        const txHash = tx.transaction_id?.hash || null;
-
-        // ⚠️ ATOMIC — gated on status:'pending' so this exact order (and
-        // therefore the task insert below) can never fire twice, no matter
-        // how many times this loop or a later run sees the tx again.
-        const claimed = await orders.findOneAndUpdate(
-            { _id: order._id, status: 'pending' },
-            { $set: { status: 'paid', paidAt: now, txHash, receivedNanoTon } },
-            { returnDocument: 'after' }
-        );
-        if (!claimed) continue; // lost the race to another concurrent run — already handled
-
-        // ── publish the task doc as pending-review, exactly once, gated
-        // behind the atomic flip above — see api/bot.js "🕐 Pending Review" ──
-        const taskDoc = {
-            title: claimed.draft.title,
-            url: claimed.draft.url,
-            channelId: claimed.draft.channelId,
-            category: 'exclusive',
-            verifyType: claimed.draft.verifyType,
-            rewardWtc: TASK_CREATE_REWARD_PER_TASK_WTC,
-            rewardCurrency: 'wtc',
-            rewardUsdt: null,
-            limit: claimed.taskCount,
-            completionCount: 0,
-            isApproved: false, // ⚠️ NOT live yet — see reviewStatus below
-            reviewStatus: 'pending_review',
-            createdAt: now,
-            createdBy: claimed.userId,
-            isUserCreated: true, // gates the 5-day post-completion TTL (models/schema.js), distinguishes from admin-created tasks with the same shape
-        };
-        const insertResult = await tasks.insertOne(taskDoc);
-        await orders.updateOne({ _id: claimed._id }, { $set: { createdTaskId: insertResult.insertedId } });
-
-        matched++;
-        // task-marketplace notifications
-        // switched from Bangla to English.
-        tgSend(claimed.userId,
-            `✅ <b>Payment Confirmed!</b>\n\n` +
-            `📋 ${escHtml(taskDoc.title)}\n` +
-            `👥 ${taskDoc.limit} people will be able to complete it (+${TASK_CREATE_REWARD_PER_TASK_WTC} TXH COIN each)\n\n` +
-            `⏳ It's now waiting for admin review — once approved, it'll go live for everyone in the "⭐ Exclusive" tab. 🎉`
-        ).catch(() => {});
-
-        // ⚠️ ping admin + task moderator so a paid task doesn't sit
-        // unnoticed in the queue. Best-effort, doesn't block the loop.
-        const reviewMsg =
-            `🆕 <b>New Task Waiting for Review</b>\n\n` +
-            `📋 ${escHtml(taskDoc.title)}\n` +
-            `🔗 ${escHtml(taskDoc.url)}\n` +
-            `👤 Type: ${taskDoc.verifyType === 'api' ? 'Channel/Group Join (API)' : 'Link'}\n` +
-            `👥 ${taskDoc.limit} slots · 💰 ${taskDoc.rewardWtc} TXH COIN/person\n\n` +
-            `Go to "🕐 Pending Review" in the admin panel to approve/reject.`;
-        if (ADMIN_ID) tgSend(ADMIN_ID, reviewMsg).catch(() => {});
-        if (TASK_MODERATOR_ID) tgSend(TASK_MODERATOR_ID, reviewMsg).catch(() => {});
-    }
-    return { expired: expireResult.modifiedCount, matched };
-}
-
 async function handleCronCheckDeposits(req, res, db) {
-    // FIX F-16: once ANY secret is configured (CRON_SECRET, or the OPS_SECRET shared with api/ops.js — header or
-    // ?secret=) the endpoint requires it. With none configured it stays open (legacy; the call is idempotent) so
-    // an already-running free external cron keeps working until you set OPS_SECRET and update its URL/header.
-    const authHeader = req.headers['authorization'];
+    // Auth: CRON_SECRET (Vercel Cron / cron-job.org Bearer) ba OPS_SECRET/BOT_TOKEN (?secret= ba Bearer).
+    // Kono secret-i set na thakle legacy-r moto open thake (idempotent), kintu warning dey — OPS_SECRET set korun.
     if (process.env.CRON_SECRET || process.env.OPS_SECRET) {
-        const okCron = !!process.env.CRON_SECRET && authHeader === `Bearer ${process.env.CRON_SECRET}`;
-        if (!okCron && !(process.env.OPS_SECRET && opsAuthorized(req))) {
-            return res.status(401).json({ ok: false, error: 'unauthorized' });
-        }
+        if (!cronAuthorized(req)) return res.status(401).json({ ok: false, error: 'unauthorized' });
     } else {
         console.warn('payments cron checkDeposits: no CRON_SECRET/OPS_SECRET set — endpoint is open');
     }
@@ -333,25 +246,11 @@ async function handleCronCheckDeposits(req, res, db) {
     }
 
     try {
-        const now = new Date();
-
-        // Both order types share the SAME receiving wallet, so one
-        // TonCenter fetch covers both checks below — no reason to hit the
-        // API twice per cron run.
-        const txs = await fetchRecentTonTransactions();
-
-        const taskCreateResult = await cronCheckTaskCreate(db, txs, now);
-
-        return res.status(200).json({
-            ok: true,
-            checked: txs.length,
-            taskCreate: taskCreateResult,
-        });
+        const taskCreate = await runTaskCreateCheck(db);
+        return res.status(200).json({ ok: true, taskCreate });
     } catch (err) {
         console.error('payments cron checkDeposits error:', err);
-        if (ADMIN_ID) {
-            await tgSend(ADMIN_ID, `🚨 <b>TON Deposit Check FAILED</b>\n\n<code>${String(err?.message || err).slice(0, 500)}</code>`).catch(() => {});
-        }
+        await alertAdminThrottled(db, `🚨 <b>TON Deposit Check FAILED</b>\n\n<code>${escHtml(String(err?.message || err).slice(0, 500))}</code>`);
         return res.status(500).json({ ok: false, error: 'server_error' });
     }
 }
@@ -367,7 +266,7 @@ async function handlerImpl(req, res) {
     const { db } = await connectToDatabase();
 
     // ── cron: POST /api/payments?cron=checkDeposits ──
-    if (req.method === 'POST' && req.query.cron === 'checkDeposits') {
+    if ((req.method === 'POST' || req.method === 'GET') && req.query.cron === 'checkDeposits') {
         return handleCronCheckDeposits(req, res, db);
     }
 
