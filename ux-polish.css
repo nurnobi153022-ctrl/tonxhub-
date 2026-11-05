@@ -1,0 +1,61 @@
+/* TON X HUB — UX polish layer (additive, visual only).
+   Uses existing brand tokens (--forest-*, --sage-*, --champagne-*) and existing class names.
+   No logic, API, or data is touched. Roll back by removing the <link> to this file. */
+
+/* Touch: no grey flash, no accidental text selection on controls, no double-tap zoom delay */
+button, .btn, .row-card, .game-tile, .nav-item, .nav-coin, .pill {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+button, .btn, .row-card, .game-tile { -webkit-user-select: none; user-select: none; }
+
+/* Keyboard / switch-access focus ring in brand champagne */
+:focus-visible {
+    outline: 2px solid var(--champagne-400);
+    outline-offset: 2px;
+    border-radius: 12px;
+}
+
+/* Premium press feedback (transform/opacity only, GPU-cheap) */
+.btn, .row-card, .game-tile, .stat-item {
+    transition: transform .16s cubic-bezier(.2,.8,.2,1), box-shadow .2s ease, filter .2s ease;
+}
+.btn:active:not(:disabled), .row-card:active, .game-tile:active, .stat-item:active {
+    transform: scale(.975);
+}
+.btn:disabled, .btn[disabled] { opacity: .55; filter: saturate(.7); cursor: not-allowed; }
+
+/* Hover lift only on devices that really hover (desktop preview, not Telegram touch) */
+@media (hover: hover) and (pointer: fine) {
+    .row-card:hover, .game-tile:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(35,70,50,.14); }
+}
+
+/* Touch targets: at least 44px for compact controls */
+.pager-btn { min-height: 44px; min-width: 44px; }
+.nav-item { min-height: 48px; }
+
+/* Cards: calmer, more consistent depth */
+.card { box-shadow: 0 1px 0 rgba(255,255,255,.9) inset, 0 8px 24px rgba(35,70,50,.08); }
+
+/* Readable numbers: balances, rewards and stats line up and don't jitter while counting */
+.stat-num, .row-badge, #home-balance-num, .pill { font-variant-numeric: tabular-nums; }
+
+/* Long titles never push layouts sideways on narrow phones */
+.row-title, .row-sub, .game-name { overflow-wrap: anywhere; }
+.row-body { min-width: 0; }
+
+/* Toasts stay clear of the notch / status bar */
+.toast { max-width: min(92vw, 420px); }
+
+/* Skeletons: slightly rounder, respect safe pacing */
+.skel { border-radius: 14px; }
+
+/* Honour system "reduce motion" globally as a safety net on top of existing rules */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
