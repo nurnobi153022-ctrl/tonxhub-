@@ -133,9 +133,9 @@ const VYROVA_ARROW_CONFIG = {
   theme: {},                   // e.g. {'--ac':'#...','--ac2':'#...','--bg':'#...','--font':'...'}
   tzOffsetHours: 6,            // Bangladesh Standard Time, UTC+6
   api: { base: '/api/earn' },  // TON X HUB backend (api/earn.js arrow* actions, lib/arrowPuzzle.js). Menu/Start stay disabled until /status is verified.
-  maxDaily: 3,                 // max attempts per Bangladesh day (a run counts when it STARTS)
+  maxDaily: 5,                 // max attempts per Bangladesh day (a run counts when it STARTS)
   cooldownMs: 1800000,         // at least 30 minutes between the START of one attempt and the next (the server enforces it; this is only the display default)
-  reward: { total: 30, perAd: 15 },  // TXH COIN per cleared level: Ad 1 = +15, Ad 2 = +15 (OPTIONAL). Credited by the BACKEND only.
+  reward: { total: 30, perAd: 15 },  // 30 TXH COIN per cleared level, paid by the BACKEND only after BOTH (mandatory) ads are verified.
   lives: 1,                    // lives per attempt: one blocked tap ends the run
   // Rewarded ads. DISABLED: no ad network is connected, so every ad step stays LOCKED (no coins, no retries, no progress past a gate).
   // Future provider contract: { show(slotEl, sessionId, purpose) -> Promise<{completed:true, proof}> }, purpose = 'reward1' | 'reward2' | 'retry'.
@@ -148,7 +148,7 @@ const VYROVA_ARROW_CONFIG = {
   VYROVA_ARROW_CONFIG.ads={enabled:true,provider:{show:(slot,sid,purpose)=>new Promise(resolve=>{
     let done=false;const fin=v=>{if(done)return;done=true;window.removeEventListener('message',on);clearTimeout(t);resolve(v)};
     const on=e=>{const d=e.data;if(e.source!==window.parent||e.origin!==location.origin||!d||d.vyrova!==true||d.type!=='arrow-ad-result'||d.sid!==sid)return;
-      fin(d.completed?{completed:true,proof:d.proof}:{completed:false})};
+      fin(d.completed?{completed:true,proof:d.proof,viewMs:d.viewMs}:{completed:false,reason:d.reason})};
     const t=setTimeout(()=>fin({completed:false}),180000);window.addEventListener('message',on);
     try{window.parent.postMessage({vyrova:true,type:'arrow-ad-request',sid,purpose},location.origin)}catch(err){fin({completed:false})}})}}}catch(e){}})();
 
@@ -268,7 +268,7 @@ const LocalStore={secure:false,key:'vyrova_arrow_v2',live:new Set(),
    GET  {base}/status -> {serverNow, used, max:3, limit:3, cooldownUntil:<ms epoch>, resetAt:<ms epoch>, pending:[{id,level,collected:0|1}], unlocked, done:[levels]}
         server: if the user has a 'started' attempt, mark it abandoned (a fresh page load means the old run ended). No retry gate.
    POST {base}/start  {level, token} -> {ok, id, used} | {ok:false, reason:'limit'|'cooldown'|'locked'|'ended', until}
-        server: day = date(now_utc+6h), max 3 attempts per day (UNIQUE(user_id, day, attempt_no)); refuse if now < last_start_at + 30 min
+        server: day = date(now_utc+6h), max 5 attempts per day (UNIQUE(user_id, day, attempt_no)); refuse if now < last_start_at + 30 min
         (last_start_at survives midnight); same token = same attempt (UNIQUE(token)); a start never resets the cooldown. Pending rewards never block a start.
    POST {base}/finish {id, won, abandoned, ms, mistakes, moves:[arrowId...]} -> {ok}
         server: only while the attempt is 'started'; re-run replay(level, moves) from this file's ENGINE. Valid win (0 mistakes) -> mark done, unlock next level,
@@ -287,7 +287,7 @@ const RemoteStore={secure:true,verified:false, // verified = true ONLY after the
   async status(){this.verified=false;const r=await this._f('arrowStatus');
     if(!r||r.ok!==true||r.secure!==true)throw new Error('backend_not_verified');this.verified=true;return r},
   start(level,token){return this._f('arrowStart',{level,token})},finish(id,res){return this._f('arrowFinish',{id,...res})},
-  gateAd(gateId,purpose,adSession,proof){return this._f('arrowGateAd',{gateId,purpose,adSession,proof})}};
+  gateAd(gateId,purpose,adSession,proof,viewMs){return this._f('arrowGateAd',{gateId,purpose,adSession,proof,viewMs})}};
 const store=()=>VYROVA_ARROW_CONFIG.api.base?RemoteStore:LocalStore;
 
 /* ============================ UI ============================ */
@@ -326,33 +326,35 @@ function mount(el,over){
   const PER=20;let page=-1,adBusy=false;
   const adOn=()=>C.ads.enabled&&C.ads.provider;
   const hhmm=ms=>new Date(ms).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
-  const elig=()=>{if(st.used>=st.max)return{ok:false,r:'limit',until:st.resetAt};
+  const elig=()=>{if((st.pending||[]).length)return{ok:false,r:'ads'};
+    if(st.used>=st.max)return{ok:false,r:'limit',until:st.resetAt};
     if(now()<st.cooldownUntil)return{ok:false,r:'cooldown',until:st.cooldownUntil};return{ok:true}};
-  const waitHTML=e=>e.r==='cooldown'?`<div class="cdwrap"><span>Next game available in:</span><b data-until="${e.until}">${fmt(e.until-now())}</b><span>at ${hhmm(e.until-skew)}</span></div>`
+  const waitHTML=e=>e.r==='ads'?`<p>Watch both ads above to unlock the next level.</p>`:e.r==='cooldown'?`<div class="cdwrap"><span>Next game available in:</span><b data-until="${e.until}">${fmt(e.until-now())}</b><span>at ${hhmm(e.until-skew)}</span></div>`
     :`<p>All ${st.max} attempts are used today. They reset at 00:00 Bangladesh time, in <b data-until="${e.until}">${fmt(e.until-now())}</b>.</p>`;
   let cd=null;
   function runCd(scope,done){clearInterval(cd);const els=[...scope.querySelectorAll('[data-until]')];if(!els.length)return;
     const t=()=>{let over=false;els.forEach(x=>{const m=+x.dataset.until-now();x.textContent=fmt(m);if(m<=0)over=true});if(over){clearInterval(cd);setTimeout(done,500)}};t();cd=setInterval(t,1000)}
-  const AD_NOTE='<p class="note">Rewarded ads aren’t available right now. You can keep playing and collect this reward later.</p>';
-  /* Reward card for ONE pending reward (Ad 1 = +15, Ad 2 = +15 optional). It never blocks anything: Skip & Continue / leaving keeps it saved. */
-  function rewardCard(pr,o){o=o||{};const on=adOn(),R=C.reward,c=pr.collected||0,pct=Math.round(100*c*R.perAd/R.total);
+  const AD_NOTE='<p class="note">Rewarded ads aren’t available right now. Try again in a moment.</p>';
+  /* Reward card for ONE pending reward. Watching BOTH ads (≥ 7 s each) is MANDATORY: it unlocks the next level and pays the coins
+     (30 TXH COIN, paid by the backend when the 2nd ad is verified). No skip: until both are done no new level/attempt can start. */
+  function rewardCard(pr,o){o=o||{};const on=adOn(),R=C.reward,c=pr.collected||0,pct=Math.round(100*c/2);
     const slot=`<div id="extraAttemptAdSlot" class="adslot" data-ad-state="${on?'ready':'disabled'}"></div>`;
-    return `<div class="sc rw" data-gid="${pr.id}"><h3>${o.title||'Game Finished!'}</h3>
-      <p class="earn">${o.sub||''}You earned up to <b>${R.total} TXH COIN</b>.</p>
-      <div class="meter"><div class="tot">${c*R.perAd}/${R.total}<small>TXH COIN</small></div><div class="bar"><i style="width:${pct}%"></i></div></div>${slot}
-      <button class="btn" id="adR1" ${on&&c===0?'':'disabled'}>${c>=1?'✓ Ad 1 collected':'Watch Ad 1'}: +${R.perAd} TXH COIN</button>
-      <button class="btn alt" id="adR2" ${on&&c===1?'':'disabled'}>Watch Ad 2: +${R.perAd} TXH COIN <span class="opt">OPTIONAL</span></button>
+    return `<div class="sc rw" data-gid="${pr.id}"><h3>${o.title||'Watch 2 ads to continue'}</h3>
+      <p class="earn">${o.sub||''}Watch <b>both ads</b> (at least 7 seconds each) to unlock the next level and earn <b>${R.total} TXH COIN</b>.</p>
+      <div class="meter"><div class="tot">${c}/2<small>ADS</small></div><div class="bar"><i style="width:${pct}%"></i></div></div>${slot}
+      <button class="btn" id="adR1" ${on&&c===0?'':'disabled'}>${c>=1?'✓ Ad 1 watched':'Watch Ad 1 (1/2)'}</button>
+      <button class="btn alt" id="adR2" ${on&&c===1?'':'disabled'}>Watch Ad 2 (2/2): +${R.total} TXH COIN <span class="opt">REQUIRED</span></button>
       ${o.more?`<p class="more">+${o.more} more reward${o.more>1?'s':''} waiting</p>`:''}
-      ${o.skip?'<button class="ghost skip" id="adSkip">Skip &amp; Continue</button>':'<p class="more">No rush: you can collect this any time.</p>'}${on?'':AD_NOTE}</div>`}
-  function wireGate(scope,after,onSkip){[['adR1','reward1'],['adR2','reward2']].forEach(([id,purpose])=>{const b=$('#'+id,scope);if(!b)return;
+      <p class="more">Both ads are required — the next level stays locked until you finish them.</p>${on?'':AD_NOTE}</div>`}
+  const AD_ERR={watch_time_too_short:'Please watch the ad for at least 7 seconds. Nothing was credited.',too_early:'Please wait a few seconds, then try again.',invalid_view_time:'That ad could not be verified.',wrong_step:'Please watch the ads in order.',no_gate:'Nothing to collect right now.',ad_busy:'Another ad is still running.',ad_no_fill:'No ad available right now. Try again soon.',ad_skipped:'The ad wasn’t finished. Nothing was credited.'};
+  function wireGate(scope,after){[['adR1','reward1'],['adR2','reward2']].forEach(([id,purpose])=>{const b=$('#'+id,scope);if(!b)return;
     b.onclick=async()=>{const card=b.closest('[data-gid]'),gid=card&&card.dataset.gid;if(adBusy||!gid)return;adBusy=true;scope.querySelectorAll('.rw .btn').forEach(x=>x.disabled=true);
       const slot=$('#extraAttemptAdSlot',scope),sid=uid();if(slot)slot.dataset.adPurpose=purpose;
-      try{const r=await C.ads.provider.show(slot,sid,purpose);if(!r||r.completed!==true)throw 0;
-        const res=await store().gateAd(gid,purpose,sid,r.proof);if(!(res&&res.ok))throw 0;
-        toast(`+${C.reward.perAd} TXH COIN collected.`)}
-      catch(e){toast('The ad wasn’t completed or couldn’t be verified. Nothing was credited. You can try again or skip.')}
-      adBusy=false;await refresh();after()}});
-    const sk=$('#adSkip',scope);if(sk)sk.onclick=()=>{if(onSkip)onSkip();after()}}
+      try{const r=await C.ads.provider.show(slot,sid,purpose);if(!r||r.completed!==true)throw (r&&r.reason)||'ad_skipped';
+        const res=await store().gateAd(gid,purpose,sid,r.proof,r.viewMs);if(!(res&&res.ok))throw (res&&res.reason)||0;
+        toast(purpose==='reward2'?`+${C.reward.total} TXH COIN collected. Next level unlocked!`:'Ad 1 done. Now watch Ad 2 to unlock the next level.')}
+      catch(e){toast(AD_ERR[e]||'The ad wasn’t completed or couldn’t be verified. Nothing was credited. Please try again.')}
+      adBusy=false;await refresh();after()}})}
 
   let selInit=false; // first open of the game: start on the player's furthest unlocked level instead of always level 1
   async function menu(){clearInterval(timer);g=null;root.innerHTML='<div class="wrap"><p>Loading…</p></div>';await refresh();if(!selInit&&!err){selInit=true;sel=Math.max(1,Math.min(100,st.unlocked||1));page=-1}drawMenu()}
@@ -364,16 +366,16 @@ function mount(el,over){
     root.innerHTML=`<div class="wrap home">
       <div class="top">${brand()}<div class="pill">Attempts left: <b>${left}/${max}</b></div></div>
       <div><h1>Arrow Puzzle</h1><p>Each arrow is a path. Tap one to slide it out the way its head points, but only if no other path is in its way. You get one life per attempt.</p></div>
-      <div class="top"><div class="pill">${e.r==='cooldown'?`Next play: <b>${hhmm(e.until-skew)}</b>`:e.r==='limit'?'Next play: after 00:00 BST':'Ready to play'}</div><div class="pill">30 min between attempts</div></div>
+      <div class="top"><div class="pill">${e.r==='ads'?'Watch 2 ads to continue':e.r==='cooldown'?`Next play: <b>${hhmm(e.until-skew)}</b>`:e.r==='limit'?'Next play: after 00:00 BST':'Ready to play'}</div><div class="pill">30 min between attempts</div></div>
       ${store().secure&&store().verified?'':!store().secure?'<div class="warn"><b>Local demo mode.</b> Attempt limits and the cooldown are stored on this device and are not secure, and coins can’t be credited. Set CONFIG.api.base to a backend to enforce them.</div>':''}
       ${err?`<div class="warn">${err}</div>`:''}
       <div class="pg"><button class="ghost" id="pv" ${page<=0?'disabled':''} aria-label="Previous levels">‹</button>
         <div class="pill">Levels ${page*PER+1}–${(page+1)*PER} (${st.done.length}/100 cleared)</div>
         <button class="ghost" id="nx" ${page>=pages-1?'disabled':''} aria-label="Next levels">›</button></div>
       <div class="levels">${lv}</div>
-      ${pr?rewardCard(pr,{title:`Level ${pr.level} reward`,sub:'Level cleared! ',more:pend.length-1}):''}
+      ${pr?rewardCard(pr,{title:`Level ${pr.level} cleared`,sub:'',more:pend.length-1}):''}
       ${e.ok?`<p>Starting a puzzle uses 1 of your ${max} daily attempts.</p>`:waitHTML(e)}
-      <button class="btn" id="go" ${e.ok&&!err?'':'disabled'}>${e.ok?`Start Level ${sel}`:e.r==='cooldown'?'Cooldown active':'All attempts used'}</button></div>`;
+      <button class="btn" id="go" ${e.ok&&!err?'':'disabled'}>${e.ok?`Start Level ${sel}`:e.r==='ads'?'Watch 2 ads first':e.r==='cooldown'?'Cooldown active':'All attempts used'}</button></div>`;
     root.querySelectorAll('.lv').forEach(b=>b.onclick=()=>{sel=+b.dataset.n;drawMenu()});
     $('#pv').onclick=()=>{page--;drawMenu()};$('#nx').onclick=()=>{page++;drawMenu()};
     $('#go').onclick=()=>begin(sel);wireGate(root,drawMenu);runCd(root,menu)
@@ -382,7 +384,7 @@ function mount(el,over){
   async function begin(level){
     if(starting)return;starting=true;clearInterval(cd);const btn=$('#go');if(btn)btn.disabled=true;
     try{const r=await store().start(level,uid());
-      if(!r.ok){toast({ended:'That attempt already ended.',limit:'No attempts left today.',cooldown:'The 30-minute cooldown is still running.',locked:'Level locked.'}[r.reason]||'Can’t start right now.');starting=false;return menu()}
+      if(!r.ok){toast({ended:'That attempt already ended.',ads_required:'Watch both ads first.',limit:'No attempts left today.',cooldown:'The 30-minute cooldown is still running.',locked:'Level locked.'}[r.reason]||'Can’t start right now.');starting=false;return menu()}
       if(r.cooldownUntil)st.cooldownUntil=r.cooldownUntil;play(level,r.id)}catch(e){toast('Network problem. No attempt was used if the start failed.');starting=false;menu()}
     starting=false}
 
@@ -439,14 +441,14 @@ function mount(el,over){
     const tot=gg.lv.arrows.length,cleared=tot-gg.left;
     let rid=null;try{rid=(await Promise.resolve(lastFin)).rewardId||null}catch(e){}
     const render=()=>{const e=elig();
-      const pr=rid&&won&&ok?(st.pending||[]).find(x=>x.id===rid):null,showCard=!!pr&&!skipped.has(rid);
-      const msg=won?(ok?(gg.level<100?`Level ${gg.level} cleared! Level ${gg.level+1} is unlocked.`:`Level ${gg.level} cleared!`)
+      const pr=rid&&won&&ok?(st.pending||[]).find(x=>x.id===rid):null,showCard=!!pr;
+      const msg=won?(ok?(gg.level<100?`Level ${gg.level} cleared! Watch both ads to unlock Level ${gg.level+1}.`:`Level ${gg.level} cleared! Watch both ads to collect your reward.`)
         :'Cleared, but the result couldn’t be saved. Check your connection, then return to the menu.'):(abandoned?'You gave up this run. The level stays open, try again when you’re ready.':'You tapped a blocked path and lost your only life. Try this level again when you’re ready.');
-      const act=!ok?'':(showCard?rewardCard(pr,{title:'Game Finished!',skip:true}):'')+(showCard?'':(e.ok?`<button class="btn" id="a1">${won?(gg.level<100?'Next level':'Play again'):`Retry Level ${gg.level}`}</button>`:waitHTML(e)));
+      const act=!ok?'':(showCard?rewardCard(pr,{title:'Watch 2 ads to continue'}):'')+(showCard?'':(e.ok?`<button class="btn" id="a1">${won?(gg.level<100?'Next level':'Play again'):`Retry Level ${gg.level}`}</button>`:waitHTML(e)));
       ov.innerHTML=`<div class="card ${won?'win':'lose'}"><h2>${won?'Puzzle cleared':'Game Over'}</h2><p>${msg}</p>
         <div class="stats"><div><b>${gg.level}/100</b>level</div><div><b>${won?fmt(ms).slice(-5):cleared+'/'+tot}</b>${won?'time':'paths cleared'}</div><div><b>${Math.max(0,st.max-st.used)}/${st.max}</b>attempts left</div></div>
         ${act}<button class="ghost" id="a2">Back to menu</button></div>`;
-      wireGate(ov,render,()=>skipped.add(rid));runCd(ov,async()=>{await refresh();render()});
+      wireGate(ov,render);runCd(ov,async()=>{await refresh();render()});
       const a1=$('#a1',ov);if(a1)a1.onclick=()=>{ov.remove();clearInterval(cd);sel=won&&gg.level<100?gg.level+1:gg.level;page=-1;begin(sel)};
       $('#a2',ov).onclick=()=>{clearInterval(cd);if(won&&gg.level<100)sel=gg.level+1;page=-1;menu()}};
     render()}

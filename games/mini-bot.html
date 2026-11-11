@@ -197,7 +197,7 @@ h2 { margin: 0; font-size: 32px; font-weight: 700; letter-spacing: .2em; margin-
 .exit{margin-top:10px}
 .exit[hidden]{display:none}
 
-/* ---------- Reward collection card (Ad 1 required for the first 15, Ad 2 OPTIONAL; never blocks the next game) ---------- */
+/* ---------- Reward collection card (BOTH ads mandatory: they unlock the next game and pay 30 TXH COIN) ---------- */
 .gate { margin: 0 0 12px; padding: 14px; border-radius: 18px; border: 1px solid rgba(120,220,255,.28); background: rgba(10,16,40,.72); text-align: left; }
 .gate[hidden] { display: none; }
 .gate h3 { margin: 0 0 4px; font-size: 15px; letter-spacing: .04em; color: #fff; }
@@ -268,18 +268,18 @@ h2 { margin: 0; font-size: 32px; font-weight: 700; letter-spacing: .2em; margin-
       <div class="rc-head"><span>TXH COIN reward</span><span class="rc-total">30<small>MAX PER GAME</small></span></div>
       <div class="rc-row">
         <div class="rc-ic"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6 .8-4.4 4.2 1.1 6L12 16.7 6.7 19.6l1.1-6L3.4 9.4l6-.8z"/></svg></div>
-        <div class="rc-txt">Watch Ad 1<small>After each game · +15 TXH COIN</small></div>
-        <div class="rc-val">+15</div>
+        <div class="rc-txt">Watch Ad 1<small>After each game · required</small></div>
+        <div class="rc-val">1/2</div>
       </div>
       <div class="rc-row">
         <div class="rc-ic"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6 .8-4.4 4.2 1.1 6L12 16.7 6.7 19.6l1.1-6L3.4 9.4l6-.8z"/></svg></div>
-        <div class="rc-txt">Watch Ad 2 · OPTIONAL<small>Bonus · +15 TXH COIN · skip any time</small></div>
-        <div class="rc-val">+15</div>
+        <div class="rc-txt">Watch Ad 2 · REQUIRED<small>Unlocks the next game · +30 TXH COIN</small></div>
+        <div class="rc-val">+30</div>
       </div>
       <div class="rc-row boss">
         <div class="rc-ic boss"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="3.2"/><path d="M12 1.5v4M12 18.5v4M1.5 12h4M18.5 12h4"/></svg></div>
-        <div class="rc-txt">3 games a day<small>30 minutes between games</small></div>
-        <div class="rc-val">3×</div>
+        <div class="rc-txt">5 games a day<small>30 minutes between games</small></div>
+        <div class="rc-val">5×</div>
       </div>
     </div>
     <div class="mbchips"><span class="mbchip" id="chipLeft">Attempts left: <b>–</b></span><span class="mbchip">30 min between games</span></div>
@@ -870,7 +870,7 @@ function startGame() {
   if (typeof EMBED === 'undefined' || !EMBED) { beginRun(); return; }           // standalone: free play
   if (startBusy || lockInfo().locked) { syncLock(); return; }
   startBusy = true; sfx.ui(); syncGate();
-  toHost({ type: 'run-start' });                                                  // the server decides: 3/day, 30 min apart (rewards never block)
+  toHost({ type: 'run-start' });                                                  // the server decides: 5/day, 30 min apart, both reward ads of the last game watched
 }
 function pauseGame() { if (G.mode !== 'play') return; setMode('pause'); showOv('ovPause'); sfx.ui(); drag = null; }
 function resumeGame() { if (G.mode !== 'pause') return; ac(); sfx.ui(); showOv(null); setMode('play'); last = performance.now(); }
@@ -897,37 +897,37 @@ function showOver() {
    run-start / run-end / exit go to the parent via postMessage, and the server's verdict comes back
    as {vyrova:'claim-result'}. The game only REPORTS its result; the server decides what is paid. */
 /* ---------- Reward + limit rules (server state arrives from the host app as `mb`) ----------
-   3 games a day · 30 minutes between games (the SERVER enforces both) · each game can pay up to 30 TXH COIN:
-   Ad 1 = +15, Ad 2 = +15 and OPTIONAL. Ads NEVER block the next game: an uncollected reward stays saved on the server
-   ("pending") and can be collected later. Standalone / no ad provider: mb stays null → free play. */
+   5 games a day · 30 minutes between games (the SERVER enforces both) · every game pays 30 TXH COIN, but ONLY after BOTH
+   ads (≥ 7 s each) are watched. Both ads are MANDATORY: until they are done the next game stays locked. An unfinished reward
+   stays saved on the server ("pending"), so closing the app never skips it. Standalone / no ad provider: mb stays null → free play. */
 let mb = null, pendingList = [], activeId = null, skippedOver = false, skew = 0, gateBusy = false, startBusy = false, gateMsg = '', lockTimer = null;
 const GATE_ERR = { ad_not_configured: 'Rewarded ads are not connected yet.', ad_sdk_missing: 'Ad could not load. Try again.', ad_no_fill: 'No ad available right now. Try again soon.',
   ad_skipped: 'The ad was not finished, so nothing was credited.', ad_unverified: 'The ad could not be verified.', ad_reused: 'That ad was already counted.', not_eligible: 'Your account is under review.',
-  too_early: 'Please wait a few seconds, then try again.', wrong_step: 'Please watch the ads in order.', no_gate: 'Nothing to collect right now.', ad_busy: 'Another ad is still running.' };
+  too_early: 'Please wait a few seconds, then try again.', watch_time_too_short: 'Please watch the ad for at least 7 seconds. Nothing was credited.', invalid_view_time: 'That ad could not be verified.', wrong_step: 'Please watch the ads in order.', no_gate: 'Nothing to collect right now.', ad_busy: 'Another ad is still running.' };
 const nowS = () => Date.now() + skew; // server clock
 const fmtT = ms => { const t = Math.max(0, Math.floor(ms / 1000)), h = Math.floor(t / 3600), m = String(Math.floor(t % 3600 / 60)).padStart(2, '0'), sc = String(t % 60).padStart(2, '0'); return h ? String(h).padStart(2, '0') + ':' + m + ':' + sc : m + ':' + sc; };
 function setMb(st) { mb = st && st.adsOn ? st : null; if (st && st.serverNow) skew = st.serverNow - Date.now(); pendingList = mb && Array.isArray(mb.pending) ? mb.pending : []; }
 function applyMb(st) { if (st && st.ok !== false) setMb(st); syncGate(); }
 function lockInfo() {
   if (!mb) return { locked: false };
-  if (mb.used >= mb.max) return { locked: true, label: 'No games left today', sub: 'Your 3 games reset after midnight (Bangladesh time).' };
+  if (pendingList.length) return { locked: true, label: 'Watch 2 ads to continue', sub: 'Watch both ads above to unlock the next game.' };
+  if (mb.used >= mb.max) return { locked: true, label: 'No games left today', sub: 'Your 5 games reset after midnight (Bangladesh time).' };
   const left = (mb.cooldownUntil || 0) - nowS();
   if (left > 0) return { locked: true, label: 'Cooldown active', cd: left, ticking: true };
   return { locked: false };
 }
-/* which saved reward a screen shows: the game-over screen shows the run that just ended; the start screen shows an older one */
-const rewardFor = over => over ? (skippedOver ? null : pendingList.find(p => p.id === activeId) || null) : (pendingList.find(p => p.id !== activeId) || null);
+/* the saved reward a screen shows: always the OLDEST unfinished one — both ads are mandatory before the next game */
+const rewardFor = () => pendingList[0] || null;
 function gateHtml(over) {
-  const e = rewardFor(over); if (!e) return '';
-  const per = e.perAd || 15, tot = e.total || 30, c = e.collected || 0, dis = gateBusy ? ' disabled' : '';
-  const more = pendingList.filter(p => p.id !== e.id && (over ? p.id !== activeId : true)).length;
-  return '<h3>' + (over ? 'Game Finished!' : 'Pending reward') + '</h3>' +
-    '<p>' + (over ? 'You earned up to <b>' + tot + ' TXH COIN</b>.' : 'You have an uncollected reward: up to <b>' + tot + ' TXH COIN</b>. Collect it any time.') + '</p>' +
-    '<div class="rwtot">' + (c * per) + '/' + tot + '<small>TXH COIN</small></div><div class="rwbar"><i style="width:' + Math.round(100 * c * per / tot) + '%"></i></div>' +
-    '<button class="btn primary" data-ad="reward1" data-gid="' + e.id + '"' + (c === 0 ? dis : ' disabled') + '>' + (c >= 1 ? '\u2713 Ad 1 collected' : 'Watch Ad 1: +' + per + ' TXH COIN') + '</button>' +
-    '<button class="btn alt" data-ad="reward2" data-gid="' + e.id + '"' + (c === 1 ? dis : ' disabled') + '>Watch Ad 2: +' + per + ' TXH COIN<span class="opt">OPTIONAL</span></button>' +
-    (over ? '<button class="btn skip" data-skip>Skip &amp; Continue</button>' : '') +
-    '<div class="gmsg">' + gateMsg + '</div>' + (more && !over ? '<p class="more">+' + more + ' more waiting</p>' : '');
+  const e = rewardFor(); if (!e) return '';
+  const tot = e.total || 30, c = e.collected || 0, dis = gateBusy ? ' disabled' : '';
+  const more = pendingList.length - 1;
+  return '<h3>' + (over ? 'Game Finished!' : 'Watch 2 ads to continue') + '</h3>' +
+    '<p>Watch <b>both ads</b> (at least 7 seconds each) to unlock the next game and earn <b>' + tot + ' TXH COIN</b>.</p>' +
+    '<div class="rwtot">' + c + '/2<small>ADS</small></div><div class="rwbar"><i style="width:' + Math.round(100 * c / 2) + '%"></i></div>' +
+    '<button class="btn primary" data-ad="reward1" data-gid="' + e.id + '"' + (c === 0 ? dis : ' disabled') + '>' + (c >= 1 ? '\u2713 Ad 1 watched' : 'Watch Ad 1 (1/2)') + '</button>' +
+    '<button class="btn alt" data-ad="reward2" data-gid="' + e.id + '"' + (c === 1 ? dis : ' disabled') + '>Watch Ad 2 (2/2): +' + tot + ' TXH COIN<span class="opt">REQUIRED</span></button>' +
+    '<div class="gmsg">' + gateMsg + '</div>' + (more > 0 ? '<p class="more">+' + more + ' more waiting</p>' : '');
 }
 function syncGate() { // rebuilds the reward cards — only when the STATE changes (never on the 1 s countdown tick, so taps are never lost)
   for (const [id, over] of [['gateStart', false], ['gateOver', true]]) {
@@ -938,7 +938,6 @@ function syncGate() { // rebuilds the reward cards — only when the STATE chang
       if (gateBusy) return; sfx.ui(); gateBusy = true; gateMsg = ''; syncGate();
       toHost({ type: 'ad-request', purpose: b.dataset.ad, gateId: b.dataset.gid });
     }));
-    const sk = el.querySelector('[data-skip]'); if (sk) sk.addEventListener('click', () => { sfx.ui(); skippedOver = true; syncGate(); });
   }
   syncLock();
 }
