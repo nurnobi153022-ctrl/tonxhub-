@@ -37,6 +37,11 @@ async function handleClaim(req, res, db) {
     const gifts = db.collection('gifts');
     const users = db.collection('users');
 
+    // Check the user BEFORE claiming, so a banned / missing user's gift is never burned as 'claimed' without being paid.
+    const user = await users.findOne({ _id: userId }, { projection: { isBanned: 1 } });
+    if (!user) return res.status(404).json({ ok: false, error: 'user_not_found' });
+    if (user.isBanned) return res.status(403).json({ ok: false, error: 'banned' });
+
     // ── ATOMIC — claim gated on status: 'pending' to prevent the same gift being claimed twice ──
     const gate = await gifts.findOneAndUpdate(
         { _id: giftObjId, userId, status: 'pending' },
@@ -45,11 +50,13 @@ async function handleClaim(req, res, db) {
     );
     if (!gate) return res.status(400).json({ ok: false, error: 'already_claimed_or_not_found' });
 
-    const user = await users.findOne({ _id: userId }, { projection: { isBanned: 1 } });
-    if (!user) return res.status(404).json({ ok: false, error: 'user_not_found' });
-    if (user.isBanned) return res.status(403).json({ ok: false, error: 'banned' });
-
-    await users.updateOne({ _id: userId }, { $inc: { wtcBalance: gate.amount, lifetimeWtcEarned: gate.amount } });
+    try {
+        await users.updateOne({ _id: userId }, { $inc: { wtcBalance: gate.amount, lifetimeWtcEarned: gate.amount } });
+    } catch (e) {
+        // credit failed → hand the gift back so it can be claimed again
+        await gifts.updateOne({ _id: giftObjId, status: 'claimed' }, { $set: { status: 'pending' }, $unset: { claimedAt: '' } }).catch(() => {});
+        throw e;
+    }
 
     return res.status(200).json({ ok: true, amount: gate.amount });
 }
