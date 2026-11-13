@@ -20,9 +20,9 @@
 //   weeklyReferralCount: 0,             // ⚠️ NEW — resets every Friday by api/cron/weeklyReferral.js
 //   totalInvites: 0,
 //   referredBy: null,
-//   referralStep1Done: false,           // verify করলে (30 TXH COIN referrer পায়)
-//   referralStep2Done: false,           // 10 task করলে (100 TXH COIN)
-//   referralStep3Done: false,           // 20 ads করলে (180 TXH COIN)
+//   referralStep1Done: false,           // referral milestone flags (once-only, set on the REFERRED user — lib/referral.js):
+//   referralStep2Done / Step5Done / Step6Done / Step7Done   // 1 join 200 · 2 five tasks 100 · 5 ten spins 200 · 6 game x5 300 · 7 first withdrawal 200
+//   referralValidDone: false,           // 5 tasks AND 20 ads reached → referrer's validReferralCount +1 (withdrawal gate)
 //   referralCommissionEarned: 0,        // ⚠️ NEW — lifetime sum of 10% withdraw commissions earned from referrals (see api/withdraw.js)
 //
 //   completedTasks: [],
