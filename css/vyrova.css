@@ -1538,3 +1538,22 @@ body:has(.game-host) .sg-cta::before, body:has(.game-host) .sg-cta::after, body:
 .pager-btn { flex: 0 0 auto; min-width: 92px; height: 38px; padding: 0 14px; font-size: 12.5px; }
 .pager-btn:disabled { opacity: 0.45; pointer-events: none; }
 .pager-info { flex: 1; text-align: center; font-size: 12.5px; color: var(--ink-muted); }
+
+/* ═══ WITHDRAWAL DETAILS (saved Binance UID / Tonkeeper address + change attempts) ═══ */
+.wd-saved-card { padding: 12px 14px; border-radius: 12px; background: var(--glass-bg); border: 1px solid var(--glass-border); margin-bottom: 10px; }
+.wd-saved-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; }
+.wd-saved-row + .wd-saved-row { border-top: 1px solid var(--border); }
+.wd-saved-row.is-active .wd-saved-name { color: var(--ink); }
+.wd-saved-ico { flex: none; width: 24px; display: flex; align-items: center; justify-content: center; color: var(--ink-muted); }
+.wd-saved-main { flex: 1; min-width: 0; }
+.wd-saved-name { font-size: 12.5px; font-weight: 700; color: var(--ink-muted); }
+.wd-saved-val { font-size: 12px; word-break: break-all; margin-top: 1px; }
+.wd-chip { flex: none; font-size: 11px; font-weight: 700; padding: 4px 9px; border-radius: 999px; background: rgba(107, 139, 108, 0.14); color: var(--ink-muted); white-space: nowrap; }
+.wd-chip.is-low { background: rgba(211, 188, 124, 0.28); color: #6B5316; }
+.wd-chip.is-locked { background: var(--danger-soft); color: var(--danger); }
+.wd-field-err { margin-top: 8px; padding: 9px 12px; border-radius: 12px; background: var(--danger-soft); color: var(--danger); font-size: 12.5px; font-weight: 600; line-height: 1.45; overflow-wrap: anywhere; }
+.wd-field-err[hidden] { display: none; }
+.wd-lock-note { margin: 8px 0 0; padding: 10px 12px; border-radius: 13px; background: var(--danger-soft); color: var(--danger); font-size: 12.5px; font-weight: 600; line-height: 1.45; }
+.wd-edit-actions { display: flex; gap: 8px; margin-top: 10px; }
+.wd-edit-actions .btn { flex: 1; }
+.wd-confirm-old { opacity: 0.75; text-decoration: line-through; }
