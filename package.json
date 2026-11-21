@@ -7,7 +7,8 @@
     "setup-db": "node models/schema.js",
     "test": "node --import ./tests/register.mjs --test tests/*.test.mjs",
     "test:e2e": "node --import ./tests/register.mjs --test --test-timeout=200000 tests/e2e/*.test.mjs",
-    "test:games": "node --import ./tests/games/register.mjs --test tests/games/*.test.mjs"
+    "test:games": "node --import ./tests/games/register.mjs --test tests/games/*.test.mjs",
+    "test:security": "node --import ./tests/sim-register.mjs tests/security-sim.mjs"
   },
   "dependencies": {
     "mongodb": "^6.10.0",
